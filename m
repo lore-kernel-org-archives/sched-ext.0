@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793979629;
-	b=B7x5uJmGNbCc2glX3QKI6WHLiWRHAiNtt92gqNvUh0LJnCnZihbBcFP6CQAL1t/g+TBL
-	 0qXBzFbbL1+vCdj/kfDRSP8+iEjgfvCYkrbA3MpJCRIAoHy7px6bhQQulGjmK81nhM+ar
-	 sslWH38Rg1gwRBEiLaeQPTyWCiTUqFbzG0tE1kESxLYgk3RIjF/cIC4ZflJvyxiULTfJn
-	 VxzoY8Q1i0CmlLomnDq4fR1Xt/P3Ypkg2t08QC/KgCUZrBGdRVCWBDKRCBEyUg8bBnX8n
-	 SRDgVWqZE7zzj+1CNRUcBNKfZ5cfOMPDcDN2p57Pmm/OyjmxooOxkZEQdHFWdVHae5A==
+	t=1793979812;
+	b=w6g5aXb/7ehodCdMtR0nF6gPE5x25i/h0wBjqrcIIyVB9dSH3qYvDZq6gnbKnSAp5s5l
+	 tJtF0GhRLF6fZHLAlj4MS4r+n/ZDockfUb4DTsvvjoaNDr2cA5CsHBB8nFohDaLY/QSdy
+	 ZHL+M02M7jO7JhnRpFLwD+Kn2KDhM1ydw0a064wKT7IEbYEMoqN0YMKsIOAJ4xvNA9T7a
+	 CysZyhieJgPWP2hYhQGMljC1bLFpLJ1ETz0wsv+F0gGKsODdaAsBF26bZJLq6UFZimP8b
+	 4xYFrYmK0jrtCPlPb7RMjxh+LYOrMpwPJi4pqN6dHVqIzTsbfiSYCCvDQDp/R2zwD7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793979629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793979812;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=apH/EhYm9c9k/UizJtRRsjt14DDwpxY9z8GRWCmP3gI=;
-	b=DyfUJtABLUeGisQ8yIr1CvIUaMHZNsWOQvC+yIWCB/HnW7fc1kfWCMVreKsKyWG8TREm
-	 C1l6gjGZoPpc5zMYDhS1ZGzJb9GVBdZW+8W6ojbprPWlot3Nqo8DjUjYoSPsFZGEqlT5y
-	 ivbEUGWB2uyMmaTBwM9OeCP/gb515BVsim7CTYXZZTcSzfhxYuI0bSnG52+eUNCNjsilY
-	 wqL8/21Z3kToAsA+fvsKb9Ww7JTyX9tEbu0NYXBafHkA/LPrcWeCgkTeJmELhUTa9w6oW
-	 11sicLfWSYZ7prtSiYV+9p3oDItHiS5w/S0boeaEVE+tHYs6vfqRErGTGO9HCGeSGCQ==
+	bh=AtWVKDZBwoPqftY86aAEdhaOHKhMZ6eqGCOf9h2MQhw=;
+	b=Lw8o2bSXZibFJuW47Q7gvUJFcStjjMIm6FHrOp4a+GbQjE8hDvVv0RZh94x8h/yPC9S7
+	 +ltybOYLw/9Db7GndBM1jsVFbeAkzCRQfCoA7oAILRotSNGUl1pnYjyh7+VR5pkSScUn/
+	 wu2PPcVUU81z+VDlSDPQEAA88CgPR/9Q/sWaPaDkuOwC9q6tZxn+Xwy5h4BA3rRI0IsKG
+	 UZCGXMnexjJoKAsIJN8BMbbSvgXXV5UWpGNZ1LeHWYYF6McmEyy7Z96k9jx/smiHr4+S1
+	 ShpfarrzZV6hQUZI+qoeNG1YAocmJCMpd19Jpl9SawvVkCjFcaQJgNGuhkB0jqjYfeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kcHbXowN;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nfPuyYJ0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5957606A326
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B80606A32D
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kcHbXowN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D48C1F0089F;
-	Fri,  6 Nov 2026 15:40:28 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nfPuyYJ0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940651F008A3;
+	Fri,  6 Nov 2026 15:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793979628;
-	bh=apH/EhYm9c9k/UizJtRRsjt14DDwpxY9z8GRWCmP3gI=;
+	s=k20260515; t=1793979811;
+	bh=AtWVKDZBwoPqftY86aAEdhaOHKhMZ6eqGCOf9h2MQhw=;
 	h=From:Subject:Reply-To:To:In-Reply-To:References:Date;
-	b=kcHbXowNSsxWq4txVCKbGqISjSXN8K7gAA9Ghb5RGF42zHe+wmkRj3Y7xz9PlTVHx
-	 H6eJ6mm9iTLY5nW+uCbR4oqPBkLkpd3iwD3YSMb9EEbkqCvROSsnba/Hc8RdOHjrkY
-	 AF6XavZ/8uuRwWU0mRxA86fYUWSRPyqC18+mZqB2wlKApZ/il84sJaxnTr0L+a8OaZ
-	 E3sq2MfAOfRqBO/JBGKEb+JHM14eELAzAyJhyPWR2FjuSuFObY/Ee4UMBH2yeuBWOW
-	 mmJfYhwHDIDkkKMdlJc8buJ+sorj66y5kug4lV1gLu6jZrn3ESZSgmDq8aWKIKiq5Q
-	 +MUNfLHCmOTFw==
-Message-ID: <sashiko-outbox-201717@kernel.org>
+	b=nfPuyYJ0pXPkdt0PEaOvlrmoEGvkD3ZpEW2KGJlRVtD1x0pDrsvCg+4AmbUiq/apN
+	 LhLxCxArjbUip3TqhqJh4LmB6V7RLEhbXwkbsgLBuYEpCkySRoWZDV/+AP6GQjCMSW
+	 6OcU3yqJ8cQEgcUoAqWC3KX6dtH0h5aIxWmA8wxM1PzNL7KvanEYJCUmsMaKngKXP2
+	 liAieS/bYsYIM6SPKGv32UAydWfe/m2hDqvaBqeudhlyUpvrkGPxqj1tOp8oTim5Eu
+	 V4JaFOiCblxZsQbodEWhBA0GoM+V7QPRN6GYpjhnYiqmgB+L6OK5X1NK384G6ruYQ8
+	 sZLOC+hHjeAAQ==
+Message-ID: <sashiko-outbox-201722@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 06/20 v3] sched/eevdf: Add min slice check when
- selecting CPU
+Subject: Re: [PATCH 01/20 v3] sched/eevdf: Decay positive lag of sleeping
+ entities
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Vincent Guittot" <vincent.guittot@linaro.org>, sched-ext@lists.linux.dev
-In-Reply-To: <20261106151947.3991524-7-vincent.guittot@linaro.org>
+In-Reply-To: <20261106151947.3991524-2-vincent.guittot@linaro.org>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-7-vincent.guittot@linaro.org>
+ <20261106151947.3991524-2-vincent.guittot@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 06 Nov 2026 15:40:27 +0000
+Date: Fri, 06 Nov 2026 15:43:31 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -60,214 +60,176 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [High] sched/fair: broken busy CPU ranking and SMT bias in
-  select_idle_capacity()
+Thank you for your contribution! Sashiko AI review found 2 potential
+issues to consider:
+- [Medium] sched/eevdf: decay_entity_lag() uses stale PELT loads and
+  h_load
+- [Medium] sched/eevdf: decay_entity_lag() uses zero or cross-CPU
+  exec_start
 --
 
-commit 67b6addf19b77860d43186abca2f383d2cb45b72
+commit af61170f82add576c62982c6213d87ccfac0159f
 Author: Vincent Guittot <vincent.guittot@linaro.org>
 
-sched/eevdf: Add min slice check when selecting CPU
+sched/eevdf: Decay positive lag of sleeping entities
 
-This commit adds a fallback CPU selection tier in select_idle_cpu(),
-select_idle_core(), and select_idle_capacity() that picks a CPU whose
-runqueue min_slice is larger than the waking task's slice when no idle CPU
-is found.
+This commit introduces decay_entity_lag() and calls it from
+enqueue_task_fair() on wakeup to decay the positive virtual lag of sleeping
+tasks based on their sleep duration and weight share on the previous
+runqueue.
 
 > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> index cfc99b94d9ce9..039dce244aaaf 100644
+> index 0feec172fd37e..5cd171f830d86 100644
 > --- a/kernel/sched/fair.c
 > +++ b/kernel/sched/fair.c
-[ ... ]
-> @@ -9091,24 +9123,26 @@ static int select_idle_cpu(struct task_struct *p,=
- struct sched_domain *sd, bool
->   *   ASYM_IDLE_THREAD_MISFIT          0   thread  Busy SMT sibling; capa=
-city
->   *                                                does not fit.
->   *
-> - * ASYM_IDLE_CORE_BIAS (-3) is an offset, not a state. On an idle core,
-> + * ASYM_IDLE_CORE_BIAS (-4) is an offset, not a state. On an idle core,
->   * fits +=3D ASYM_IDLE_CORE_BIAS rebases thread-tier ranks into the core=
- tier:
->   *
-> - *   ASYM_IDLE_THREAD_UCLAMP_MISFIT (-1) + BIAS -> ASYM_IDLE_UCLAMP_MISF=
-IT   (-4)
-> - *   ASYM_IDLE_THREAD_MISFIT         (0) + BIAS -> ASYM_IDLE_COMPLETE_MI=
-SFIT (-3)
-> + *   ASYM_IDLE_THREAD_UCLAMP_MISFIT (-1) + BIAS -> ASYM_IDLE_UCLAMP_MISF=
-IT   (-5)
-> + *   ASYM_IDLE_THREAD_MISFIT         (0) + BIAS -> ASYM_IDLE_COMPLETE_MI=
-SFIT (-4)
->   *
-> - * ASYM_IDLE_THREAD_FITS (-2) is never rebased because a fully-fitting i=
-dle-core
-> + * ASYM_IDLE_THREAD_FITS (-3) is never rebased because a fully-fitting i=
-dle-core
->   * candidate early-returns from select_idle_capacity().
->   */
->  enum asym_fits_state {
-> -	ASYM_IDLE_UCLAMP_MISFIT =3D -4,
-> +	ASYM_BUSY_FITS =3D -6,
-> +	ASYM_IDLE_UCLAMP_MISFIT,
->  	ASYM_IDLE_COMPLETE_MISFIT,
->  	ASYM_IDLE_THREAD_FITS,
-> +	ASYM_BUSY_THREAD_FITS,
->  	ASYM_IDLE_THREAD_UCLAMP_MISFIT,
->  	ASYM_IDLE_THREAD_MISFIT,
+> @@ -897,6 +897,91 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct=
+ sched_entity *se)
+>  	return avruntime - vlag !=3D se->vruntime;
+>  }
 > =20
->  	/* util_fits_cpu() bias for idle core */
-> -	ASYM_IDLE_CORE_BIAS =3D -3,
-> +	ASYM_IDLE_CORE_BIAS =3D -4,
->  };
-[ ... ]
-> @@ -9160,42 +9196,49 @@ select_idle_capacity(struct task_struct *p, struc=
-t sched_domain *sd, int target)
->  		if (!has_idle_core && --nr <=3D 0)
->  			return best_cpu;
-> =20
-> -		if (!choose_idle_cpu(cpu, p))
-> -			continue;
-> -
->  		fits =3D util_fits_cpu(task_util, util_min, util_max, cpu);
-> =20
-> -		/*
-> -		 * Perfect fit: capacity satisfies util + uclamp and the CPU
-> -		 * sits on a fully-idle SMT core, this is a !SMT system, or
-> -		 * there is no idle core to find.
-> -		 * Short-circuit the rank-based selection and return
-> -		 * immediately.
-> -		 */
-> -		if (fits > 0 && preferred_core)
-> -			return cpu;
-> -		/*
-> -		 * Only the min performance hint (i.e. uclamp_min) doesn't fit.
-> -		 * Look for the CPU with best capacity.
-> -		 */
-> -		else if (fits < 0)
-> +		if (choose_idle_cpu(cpu, p)) {
-> +			/*
-> +			 * Perfect fit: capacity satisfies util + uclamp and the CPU
-> +			 * sits on a fully-idle SMT core, this is a !SMT system, or
-> +			 * there is no idle core to find.
-> +			 * Short-circuit the rank-based selection and return
-> +			 * immediately.
-> +			 */
-> +			if (fits > 0 && preferred_core)
-> +				return cpu;
-> +			/*
-> +			 * Only the min performance hint (i.e. uclamp_min) doesn't fit.
-> +			 * Look for the CPU with best capacity.
-> +			 */
-> +			else if (fits < 0)
-> +				cpu_cap =3D get_actual_cpu_capacity(cpu);
-> +			/*
-> +			 * fits > 0 implies we are not on a preferred core, but the util
-> +			 * fits CPU capacity. Set fits to ASYM_IDLE_THREAD_FITS
-> +			 * so the effective range becomes
-> +			 * [ASYM_IDLE_THREAD_FITS, ASYM_IDLE_THREAD_MISFIT], where:
-> +			 *    ASYM_IDLE_THREAD_MISFIT - does not fit
-> +			 *    ASYM_IDLE_THREAD_UCLAMP_MISFIT - fits with the exception of UCL=
-AMP_MIN
-> +			 *    ASYM_BUSY_THREAD_FITS - fits with the exception of idleness
-> +			 *			      but can preempt current
-> +			 *    ASYM_IDLE_THREAD_FITS - fits with the exception of preferred_co=
-re
-> +			 */
-> +			else if (fits > 0)
-> +				fits =3D ASYM_IDLE_THREAD_FITS;
+> +/*
+> + * Signed add and clamp on underflow.
+> + *
+> + * Explicitly do a load-store to ensure the intermediate value never hits
+> + * memory. This allows lockless observations without ever seeing the neg=
+ative
+> + * values.
+> + */
+> +#define add_positive(_ptr, _val) do {                           \
+> +	typeof(_ptr) ptr =3D (_ptr);                              \
+> +	__signed_scalar_typeof(*ptr) val =3D (_val);              \
+> +	typeof(*ptr) res, var =3D READ_ONCE(*ptr);                \
+> +								\
+> +	res =3D var + val;                                        \
+> +								\
+> +	if (val < 0 && res > var)                               \
+> +		res =3D 0;                                        \
+> +								\
+> +	WRITE_ONCE(*ptr, res);                                  \
+> +} while (0)
 > +
-> +		} else if (fits > 0 && task_slice < get_rq_min_slice(cpu_rq(cpu))) {
-> +			fits =3D ASYM_BUSY_THREAD_FITS;
->  			cpu_cap =3D get_actual_cpu_capacity(cpu);
-> -		/*
-> -		 * fits > 0 implies we are not on a preferred core, but the util
-> -		 * fits CPU capacity. Set fits to ASYM_IDLE_THREAD_FITS
-> -		 * so the effective range becomes
-> -		 * [ASYM_IDLE_THREAD_FITS, ASYM_IDLE_THREAD_MISFIT], where:
-> -		 *    ASYM_IDLE_THREAD_MISFIT - does not fit
-> -		 *    ASYM_IDLE_THREAD_UCLAMP_MISFIT - fits with the exception of UCLA=
-MP_MIN
-> -		 *    ASYM_IDLE_THREAD_FITS - fits with the exception of preferred_core
-> -		 */
-> -		else if (fits > 0)
-> -			fits =3D ASYM_IDLE_THREAD_FITS;
-> +		} else {
-> +			continue;
-> +		}
+> +/*
+> + * Remove and clamp on negative, from a local variable.
+> + *
+> + * A variant of sub_positive(), which does not use explicit load-store
+> + * and is thus optimized for local variable updates.
+> + */
+> +#define lsub_positive(_ptr, _val) do {				\
+> +	typeof(_ptr) ptr =3D (_ptr);				\
+> +	*ptr -=3D min_t(typeof(*ptr), *ptr, _val);		\
+> +} while (0)
+> +
+> +static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq);
+> +static unsigned long task_h_load(struct task_struct *p);
+> +
+> +static __always_inline
+> +void decay_entity_lag(struct cfs_rq *cfs_rq, struct task_struct *p, int =
+flags)
+> +{
+> +	struct sched_entity *se =3D &p->se;
+> +	s64 delta_exec, vlag =3D se->vlag;
+> +	unsigned long cfs_load;
+> +	struct rq *rq;
+> +
+> +	WARN_ON_ONCE(se->on_rq);
+> +
+> +	/* Negative lag is managed by delayed dequeue path */
+> +	if (vlag <=3D 0)
+> +		return;
+> +
+> +	rq =3D rq_of(cfs_rq);
+> +
+> +	/* No fast access to prev rq task clock */
+> +	if (flags & ENQUEUE_MIGRATED)
+> +		return;
+> +
+> +	/* Compute sleep time */
+> +	delta_exec =3D rq_clock_task(rq) - se->exec_start;
+
+[Severity: Medium]
+Can se->exec_start be zero or hold another CPU's task clock here even when
+ENQUEUE_MIGRATED is not set?
+
+When a task is migrated (for instance via proxy_migrate_task() or as a
+sched_delayed task), enqueue_entity() clears se->exec_start to 0.  If that
+task is then dequeued before being picked to run (such as by
+proxy_needs_return() in ttwu_runnable(), or when pick_next_entity() finishes
+the delayed dequeue) and wakes on the same CPU, ENQUEUE_MIGRATED is not set,
+so rq_clock_task(rq) - se->exec_start equals the full CPU task clock since
+boot and zeroes se->vlag.
+
+Similarly, under CONFIG_CFS_BANDWIDTH, if a throttled task is migrated onto=
+ a
+destination cfs_rq that is also throttled, enqueue_task_fair() returns early
+via enqueue_throttled_task(p) before enqueue_entity() can clear
+se->exec_start, and tg_unthrottle_up() later calls enqueue_task_fair(rq, p,
+ENQUEUE_WAKEUP) without ENQUEUE_MIGRATED.  decay_entity_lag() then subtracts
+the previous CPU's se->exec_start from the new CPU's rq_clock_task(rq) and
+subtracts an unattached task_h_load(p) from cfs_load.
+
+> +	if (unlikely(delta_exec <=3D 0))
+> +		return;
+> +
+> +	/* For anything above ~4 seconds, save computation and clear the lag */
+> +	if (unlikely(delta_exec >> 32)) {
+> +		se->vlag =3D 0;
+> +		return;
+> +	}
+> +
+> +	/*
+> +	 * Use cfs' load and p's weight to estimate what would have been the
+> +	 * share for p. task's load contribution to cfs' load is replaced by
+> +	 * its weight.
+> +	 */
+> +	cfs_load =3D cfs_rq_load_avg(cfs_rq);
+> +	lsub_positive(&cfs_load, task_h_load(p));
+> +	if (cfs_load) {
+> +		unsigned long weight =3D scale_load_down(se->h_load.weight);
+> +
+> +		delta_exec *=3D weight;
+> +		delta_exec =3D div64_long(delta_exec, cfs_load + weight);
+> +	}
+> +
+> +	vlag -=3D calc_delta_fair(delta_exec, se);
+> +
+> +	/* vlag can't become neg while sleeping */
+> +	se->vlag =3D max(0, vlag);
+> +}
+
+[ ... ]
+
+> @@ -8185,6 +8238,9 @@ enqueue_task_fair(struct rq *rq, struct task_struct=
+ *p, int flags)
+>  	if (p->in_iowait)
+>  		cpufreq_update_util(rq, SCHED_CPUFREQ_IOWAIT);
 > =20
->  		/*
->  		 * If we are on a preferred core, translate the range of fits
-> -		 * of [ASYM_IDLE_THREAD_UCLAMP_MISFIT, ASYM_IDLE_THREAD_MISFIT] to
-> -		 * [ASYM_IDLE_UCLAMP_MISFIT, ASYM_IDLE_COMPLETE_MISFIT].
-> +		 * of [ASYM_BUSY_THREAD_FITS, ASYM_IDLE_THREAD_MISFIT] to
-> +		 * [ASYM_BUSY_FITS, ASYM_IDLE_COMPLETE_MISFIT].
->  		 * This ensures that an idle core is always given priority over
->  		 * (partially) busy core.
->  		 *
-> @@ -9219,15 +9262,17 @@ select_idle_capacity(struct task_struct *p, struc=
-t sched_domain *sd, int target)
-> =20
->  	/*
->  	 * A value in the [ASYM_IDLE_UCLAMP_MISFIT, ASYM_IDLE_COMPLETE_MISFIT]
-> -	 * range means the chosen CPU is in a fully idle SMT core. Values above
-> -	 * ASYM_IDLE_COMPLETE_MISFIT mean we never ranked such a CPU best.
-> +	 * range mean the chosen CPU is in a fully idle SMT core. Values
-> +	 * ASYM_BUSY_FITS or above ASYM_IDLE_COMPLETE_MISFIT mean we never
-> +	 * ranked such a CPU best.
->  	 *
->  	 * The asym-capacity wakeup path returns from select_idle_sibling()
->  	 * after this function and never runs select_idle_cpu(), so the usual
->  	 * select_idle_cpu() tail that clears idle cores must live here when the
->  	 * idle-core preference did not win.
->  	 */
-> -	if (has_idle_core && best_fits > ASYM_IDLE_COMPLETE_MISFIT)
-> +	if (has_idle_core && (best_fits > ASYM_IDLE_COMPLETE_MISFIT ||
-> +			      best_fits =3D=3D ASYM_BUSY_FITS))
->  		set_idle_cores(target, false);
-> =20
->  	return best_cpu;
+> +	if (task_wake)
+> +		decay_entity_lag(cfs_rq, p, flags);
 
-[Severity: High]
-Does select_idle_capacity() rank busy CPUs ahead of idle CPUs and idle SMT
-cores?
+[Severity: Medium]
+Does calling decay_entity_lag() before enqueue_hierarchy() and
+reweight_eevdf() use stale PELT load averages and a stale se->h_load.weight?
 
-In select_idle_capacity(), lower fits values are more preferred
-(fits < best_fits), and preferred_core is computed as
-!has_idle_core || is_core_idle(cpu).  is_core_idle() assumes its argument
-was already checked for idleness and only tests SMT siblings:
+When p wakes on its previous CPU without sync_entity_load_avg() having run
+(for example via the select_idle_sibling() fast path), p->se.avg.load_avg is
+still at its pre-sleep value because update_load_avg() is only called inside
+enqueue_hierarchy() -> enqueue_entity().  Meanwhile, if other tasks ran on =
+rq
+while p slept, p's blocked load contribution inside cfs_rq->avg.load_avg has
+already decayed; subtracting the undecayed task_h_load(p) from the decayed
+cfs_rq_load_avg(cfs_rq) eats into the active load of the other tasks (often
+clamping cfs_load to 0) and over-decays p->se.vlag as if the CPU had been
+idle.
 
-kernel/sched/fair.c:is_core_idle() {
-	for_each_cpu(sibling, cpu_smt_mask(cpu)) {
-		if (cpu =3D=3D sibling)
-			continue;
-
-		if (!idle_cpu(sibling))
-			return false;
-	}
-
-	return true;
-}
-
-On a partially busy SMT core where thread A is busy (fits > 0 and
-task_slice < get_rq_min_slice(cpu_rq(A))) and its sibling thread B is idle,
-is_core_idle(A) returns true while is_core_idle(B) returns false.  Busy
-thread A therefore gets preferred_core =3D=3D true and is biased from
-ASYM_BUSY_THREAD_FITS (-2) by ASYM_IDLE_CORE_BIAS (-4) to
-ASYM_BUSY_FITS (-6), whereas its idle sibling B gets
-ASYM_IDLE_THREAD_FITS (-3), so select_idle_capacity() stacks the waking
-task onto the busy thread instead of its idle sibling on the same core.
-
-Even on !SMT systems (or when has_idle_core is false), preferred_core is
-true for every CPU, biasing any fitting busy CPU with a larger min_slice to
-ASYM_BUSY_FITS (-6) so it beats completely idle cores/CPUs ranked at
-ASYM_IDLE_UCLAMP_MISFIT (-5) or ASYM_IDLE_COMPLETE_MISFIT (-4).  When
-has_idle_core is true and a candidate with ASYM_BUSY_FITS (-6) outranks an
-idle core (-5 or -4), best_fits =3D=3D ASYM_BUSY_FITS also calls
-set_idle_cores(target, false) while fully idle cores still exist in the
-domain.
+Under CONFIG_FAIR_GROUP_SCHED, calling task_h_load(p) before
+enqueue_hierarchy() also invokes update_cfs_rq_h_load() on unsynchronized
+group PELT averages and caches that stale cfs_rq->h_load for the rest of the
+current jiffy.  In addition, if p was reniced or had its group shares chang=
+ed
+while sleeping, reweight_task_fair() returned early while !se->on_rq, so
+se->h_load.weight is not updated until enqueue_hierarchy() and
+reweight_eevdf() run below.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106151947.3991=
-524-2-vincent.guittot@linaro.org?part=3D6
+524-2-vincent.guittot@linaro.org?part=3D1
