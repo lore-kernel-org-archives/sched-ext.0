@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793978396;
-	b=H0uz+OM/1F1mOQHwlZ+HiCS9gfLaUWH1okOOQcCui96s1uqmH/tVpdEsQHTF6UgKPxgG
-	 AEdpBHGO4oMt1VK5INKZw34qxPD+fCexgnX/2ZQc3IotaJP4Psa7U0TgXF/qSks4nuH66
-	 o2V0f24IbgmW6k10/Pl07hoKHOCy9OhIuyz7mTZA2fr51rsCQV4FkeU1aCalWRCjLgFtk
-	 XO4Kc0GtVpQFa6W8n9SXQTuo6JtkcgI+PBLNVJHXVwMhCFtAYVEnIzwIAajvtAO3C4089
-	 /alkkJ1ZBhmOQc6H+f2sFeLDzON9kxGmyww1PYVd4tBpZE+S3P5IeByC0Zh3lB+HQWw==
+	t=1793978398;
+	b=j3+T3Jo+t+n27uV+OHpnGzjmUil0EO5T5zBobOy0hzJJh7a3A6ayG7SK+0Wa+Oll9vGh
+	 uFmlt60weKF1ONygVlOS0v0NLIr5Y8zijhFVhUP6LfGbPfU4cKdFFmDa1AC6cE12j0u6v
+	 BJhuHnfNYfvG1xvlH3xrB1Ec3hKIwBKHT4wJ6+Ii1SWRuRW9zIJF/aRR+xgfEZ5vCf6o1
+	 OVAe7w9Q127VIWCovUAQ9ps/WRWvdK4c58hX3ot1nPv6+mFDav6BK0mMyn+e0djJPb/R1
+	 CgGqeo8rFI0BLlvcHzpWiYsMMIZR9TWCdjVzV4y3seiHYtQift4pOIYS60EEl0ri8aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793978396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793978398;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mqum8wvj/7Uuzw1gTiTBSXxhGiPLwY6qFIUmcHJ68Sg=;
-	b=s4HfZVlZ4baDmp0hymkLERAaTHNvCmi8ldo+Tj7//fJttkVY+TG3ld9e40+SR52ase3k
-	 YLS9hC8fIkQPK12F9kmOEYNsljDwDfvxz/dCqmBxRM45AYpN26XXDNAxjBslY0SgKmFxS
-	 eQDwPfhdf9RYwbilx6VG3xSODEoLYZVMuv1aY2Krvuof0YEygrPA/9BvbyWYOH+upWSqz
-	 mAHfLlswAUTrSzv81UqS4WvChbx4eyR7Czwyr1apBHx/+MaFUjFLtEVVBPDm4K/A+DDau
-	 mbsXmLzAYlD7LeVWaJ2Mu6/+GZRmFqYu6ATzdWgPWiOi5UvQ31n4rqyZTkZ8LT4ISRw==
+	bh=lQD/JukA7YFLaFe55TCX0scvCEQxeNBxiWugJcrZ3hk=;
+	b=qQK/PB+F1qdmuClUp+1da8R8zYyL62BkaGY72dIeyjxjDLKOkqwYH1IYFe983qA4nY4A
+	 gmn/g911iw9d///A4WzF/Yohzdt8VdngsbX1UeRy28b0D1YmG+x9M574jGX8k/0vrBsb6
+	 liF8TiNcgngtGRL+JYylU4tZo1MMhSlE+2kVq7Eqto5ckvfo7gQ+9BifjxaLrn6h2cHht
+	 r7nf1CB6QRkQ0WIcpRWQlTJ3zvcBjWmzX9XY6twuZja+h8Zx/7SFtA4GENnAAt+0DixJv
+	 3YmHfAv3bz20+kNfudmnjHVh0MszlpPGQvlYVNH0X7GBCnwNmSBOvZCfKdB6F+6+dGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linaro.org;
 	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=sTB9nXxW;
-	arc=none smtp.remote-ip=209.85.221.51
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pqcn0rFV;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A61D606D80A
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:19:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A61D606D80A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A660606A330
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:19:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9A660606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=sTB9nXxW
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-49318428d98so364595f8f.1
-        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 07:19:56 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pqcn0rFV
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a214af2076so5318555e9.0
+        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 07:19:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1793978395; x=1794583195; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1793978396; x=1794583196; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=mqum8wvj/7Uuzw1gTiTBSXxhGiPLwY6qFIUmcHJ68Sg=;
-        b=sTB9nXxWdOPN7QBE7hTO8v5C2lwIRWSPoba/XhI3tIJeI7hQpM6qcMfdrgj+tHigQW
-         f/rpkJDyiscbqs1Xy4Ln7KYcAOyYOzrM+CRGaruKhhq86CTsXZ/1RURsPIBxLjM2lzZy
-         q5gDA1ZuleuoJipMAjs2JIpeAfu34UxtfXBiPr3YH+wIw8GCPhqTwCG4Bz3QQ83wpDkP
-         0D+QaYVKjSnF6Jyfw+cZco0btWi3Cw3XSL6BttJrA7PDZnttfkp4mmRFpZJVmjn6WJPU
-         6cZIx1gteBqIJwK7HizhuMyVxG5LvH51L+GKygPtLVkWeP9FyVUYOPwg6RrPqU+yw9Im
-         6GAg==
+        bh=lQD/JukA7YFLaFe55TCX0scvCEQxeNBxiWugJcrZ3hk=;
+        b=pqcn0rFVq/weeJ5pKMVmv+/ZilK+OSrs7PeUKDTc8+gAi3+p5S1WYPQtbD8WusIJbx
+         uAy77nfbmoL+VYLAHsxkgHrXD12UbnHhKWPAtUDKlt1USobd0/gw8EPtgosMZONVijBB
+         4Iy6Q3iXmq/YthobVuCRnMwvG9QwzttwjI+9zxP7bvdjeB1a0QXiizs8d3vRntFmollM
+         uAd1iB+088OCkPj5wh8ng+XWLTtMIexuvh6UX27ieGQ/3l8TAYb2+cY/F/1pvQEgJDOw
+         YiO9F+0FiSGbce4mQKAUyEt4VooRXdZUIYSyVGslYtgYVljmoL487XvgqJHEGEzoGRig
+         rV5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793978395; x=1794583195;
+        d=1e100.net; s=20260707; t=1793978396; x=1794583196;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mqum8wvj/7Uuzw1gTiTBSXxhGiPLwY6qFIUmcHJ68Sg=;
-        b=SD+ehnNNVBqIun5It12Nqw0HRKrp1GigZ0PeJGOvtBlLkAWiJhXslTjq0gFqp3NDDl
-         0rt4fHn5o0Zf3j/uSfnZW4okemN1ZNiLrZcMesxlmjtBSTvzRJuqXOecITmRukk9yjhN
-         PKzXks0AHXjpbkpMsL+UAa+XyxIEg4/2xRmPckKdzQ79icA48EeBLexi7YwakrXRxeB3
-         cMY9iFp5TgxkuHLqbpypmSjumQSMJQNQAqMmWag5icL98vQ0vCQbHHNNr+1GTrn2Manh
-         xUC8mBB88JSCzmSsazWrIXYXR8v14oLC8av98D33DFq4EytLMDnbi6bHB1wWe+1lVOca
-         OYGA==
-X-Forwarded-Encrypted: i=1; AL+hErGOvKYTeZC8Hz0phjdEiyQLVNL8UhXmkVctErp+Wf4g0piadNC08qNCiT8lpAEIy+kc29J1ayBqgm4=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/aa9MxV9284bVq2BTiX12mcMeEZRf5e0xcRzO8+muoJerW5L86
-	MEl7+CyzbBq3LGTazngoTOoDKvk7FSbc8jk/ss8JqcEtMrXoiDm1W4iqOEHVU2xbl5E=
-X-Gm-Gg: AYBFou2mC8XC2U8RVOCZiAqKSBJmFw9zwvKEnPeBfTpdT1jmlsDpEbB2jBvwQq9LPiP
-	3SRGuZwxwIw6pUuM8nEyG5M+IWJz9LrIDgfK+Mj2bmscxFUlG24PUfyHDyRLmo/OsdgZhZ812NR
-	auu/CbFbauT14mxTctHgiec//fts2nHq5rPn1b9BCK4Hn21lAJpY6upwtw0dqBrGIGoLZt1ms+Y
-	Ncp0/zfQukdvh2/ChJkXPYNUxnUcfC9YixTBzj20IO7B8pQEj0htVJb2xRksvv05q/ap+yaAXiw
-	TPYJVMWdxXr9cMqgJeHCp4O3pXivs9x1YU3gD8Lpw+p6gfuZJhx+cQ8fmwY5yFgMvj4UrUjTn1t
-	/tvFcegKrwv0DuctZ2IB2YPAElWwqIzZgS2Z+AEsoZLR7XbEowfCm3danSPFbRCM/Zkn9B2Ou+u
-	j0aY9Vri1quj7p9s+XI8cvDybAtJcXbYIwBU+2aqohSjT9i+UAbEKfFbg4rEC9D4vtLDkAzbNMn
-	XJvfv7aslbtaqUJhGRAXBBYv5l/ZMA02j5yAT0q4E7t68ENM/nqb0fsLdZcxWyKc9x1Gdgn8lGF
-	GHqCOchDDCJbJpcTQAwIhfvBgtqGTI3f
-X-Received: by 2002:a05:6000:4312:b0:48d:f36e:fbcb with SMTP id ffacd0b85a97d-49274bc8429mr6643038f8f.14.1793978394356;
-        Fri, 06 Nov 2026 07:19:54 -0800 (PST)
+        bh=lQD/JukA7YFLaFe55TCX0scvCEQxeNBxiWugJcrZ3hk=;
+        b=F0IccMZZxq3g1zK4w5LjaXBLU/7nCEB5LRYaThG3iAWsDSEUdJi7OtjmK1jeR5RJPH
+         mUxx1fxGKSeZBpkUAdgBPo96z1OX+rByFtdAzzAgxm8Hm3UWJCFmopRB6YrnnZvGWNZy
+         +1ZZlv771vMspe65HF9tjtDlcsHUS6YeKreK4tO/nEavyJ/HfUQcFblsPiJKQIYlo8vX
+         A9gGENAfzMinShw4AxWHjPij2U/lCNjAQ6Qx2hmmU5PyPy37VdUlkZnm6+OCjWCnM+xz
+         xdWqiAnMTPvCydBi5n5m+LiwaeeYKXIyKQCqUAUi8pgXgsk1TU50QvdG9uRxlfp9urWB
+         WS7g==
+X-Forwarded-Encrypted: i=1; AKwUvBzuJMyETYcrqdCl5VughOqyS1HGZ+/r+x8N92OcmiH5ChUvx/YZvBdGNzGTGLddlXUT+bEYdenl+sY=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/s5Nl95JPPWXCfAqTCCYLiGTf4BH2y3cRWwGGxtZTa9nSPLMA1
+	BU4lzy5q+VD/9Bn/htRo9Y18uTJQTUdF585LH3+zaeW4pemQQ3FJpiMCQaQt9AxxLD0=
+X-Gm-Gg: AYBFou2yK1SsQMl40IHFpaFbaKiUyp//0pp3PivVcZI8p8c6uv8YYGgHxYcjUpsyUid
+	CKbph4jaiGKqfm0dGI3sgfAuf8Jmf3A25lgdjjG4+YjX175Peoyt2HlSXRx6MgrFdACmcv0XlTK
+	VB5Cl1Tny6T6T1x3pz4V+nFHtpvJvFujKiNQ310WKKt0FDxvbBUq7DM6kZKMRZMlSKXVJBDMy68
+	HExsvh9UkwpuaKwNmdKgfP9Chg9po5OgXRN0JdToYOwUXPjHVSiiJ16mm3GqR+FYFIS5S2mDG1r
+	2vH2e8pU6qWRuKMriyXRwmdhcUnggpSa3KmizytpsfXDnWPTqq6zgLy53UZc0pOkTfRJlV3hQj4
+	28KgCv6Yco5C/sEx1aZY+LtHQPLUVKPKDy5WvieqKCqMfsjfUOSss4zvwM7mmZyDn8/ViKYSqPR
+	ZtwtmsGhrl+E6JINIXbgSZpyzWs+95rgMUSHaCD88/UwXzbqqIRtmF/Eu555ni6RjOlPJuzFhl1
+	htBsoA3fGmrW5Uy0eeqYgNWrbE8H/BdHV753JihgOk8T+1eBtbomDr31Zm9L9lDCAcHSyLD3rVf
+	/hnvp/RsNuegiCz7cZ51JAKTcs0f2k39rS3KGbuui9+LlkA=
+X-Received: by 2002:a05:600c:6384:b0:4a2:167a:c939 with SMTP id 5b1f17b1804b1-4b6de9739f5mr48102355e9.21.1793978395940;
+        Fri, 06 Nov 2026 07:19:55 -0800 (PST)
 Received: from vingu-cube.home ([2a01:e0a:11f4:3020:ed97:32bc:977a:3b65])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5e23sm4477405f8f.45.2026.11.06.07.19.52
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5e23sm4477405f8f.45.2026.11.06.07.19.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2026 07:19:53 -0800 (PST)
+        Fri, 06 Nov 2026 07:19:55 -0800 (PST)
 From: Vincent Guittot <vincent.guittot@linaro.org>
 To: mingo@redhat.com,
 	peterz@infradead.org,
@@ -104,9 +104,9 @@ Cc: qyousef@layalina.io,
 	kayracizmeci@gmail.com,
 	tim.c.chen@linux.intel.com,
 	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 02/20 v3] sched/eevdf: Reset lag at wakeup when prev CPU has been idle
-Date: Fri,  6 Nov 2026 16:19:29 +0100
-Message-ID: <20261106151947.3991524-3-vincent.guittot@linaro.org>
+Subject: [PATCH 03/20 v3] sched/eevdf: Reset lag at wakeup when migrating and prev has been idle
+Date: Fri,  6 Nov 2026 16:19:30 +0100
+Message-ID: <20261106151947.3991524-4-vincent.guittot@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261106151947.3991524-1-vincent.guittot@linaro.org>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
@@ -124,86 +124,59 @@ Content-Transfer-Encoding: 8bit
 When prev CPU entered idle while a task was sleeping, we assume that the
 latter received enough running time and the lag can be cleared similarly to
 what happens for a negative lag.
-Track CPU's idle phase and save it when a task goes to sleep. Then check if
-the local CPU entered idle while the task was sleeping when enqueuing the
-waking task.
-This only applies if the task didn't migrate at wakeup.
+While migrating the waking task to a new cpu, Check if prev CPU entered
+idle in the meantime.
 
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 ---
- include/linux/sched.h |  1 +
- kernel/sched/fair.c   | 14 ++++++++++++--
- kernel/sched/sched.h  |  1 +
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 0cb03f9acfe3..3d31e9a698c3 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -593,6 +593,7 @@ struct sched_entity {
- 	u64				vruntime;
- 	/* Approximated virtual lag: */
- 	s64				vlag;
-+	u32				vlag_seq;
- 	/* 'Protected' deadline, to give out minimum quantums: */
- 	u64				vprot;
- 	u64				slice;
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 5cd171f830d8..79f53811274e 100644
+index 79f53811274e..945de0215abb 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -893,6 +893,7 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
- 			vlag = min(vlag, 0);
- 	}
- 	se->vlag = vlag;
-+	se->vlag_seq = cfs_rq->idle_seq;
+@@ -932,6 +932,27 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq);
+ static unsigned long task_h_load(struct task_struct *p);
  
- 	return avruntime - vlag != se->vruntime;
- }
-@@ -945,12 +946,18 @@ void decay_entity_lag(struct cfs_rq *cfs_rq, struct task_struct *p, int flags)
- 	if (vlag <= 0)
- 		return;
- 
--	rq = rq_of(cfs_rq);
--
- 	/* No fast access to prev rq task clock */
- 	if (flags & ENQUEUE_MIGRATED)
- 		return;
- 
-+	/* CPU has been idle in between so the lag has been removed */
-+	if (se->vlag_seq != cfs_rq->idle_seq) {
-+		se->vlag = 0;
++static __always_inline
++void entity_clear_lag(struct task_struct *p)
++{
++	struct sched_entity *se;
++	struct cfs_rq *cfs_rq;
++
++	if (READ_ONCE(p->__state) != TASK_WAKING)
 +		return;
-+	}
 +
-+	rq = rq_of(cfs_rq);
++	se = &p->se;
++	/* Negative lag implies delayed dequeue */
++	if (se->vlag <= 0)
++		return;
 +
- 	/* Compute sleep time */
- 	delta_exec = rq_clock_task(rq) - se->exec_start;
- 	if (unlikely(delta_exec <= 0))
-@@ -8376,6 +8383,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
- 
- 	dequeue_hierarchy(p, flags);
- 
-+	if (!(flags & DEQUEUE_SAVE) && !cfs_rq->h_nr_queued)
-+		cfs_rq->idle_seq++;
++	cfs_rq = &task_rq(p)->cfs;
 +
- 	if (sched_feat(PLACE_REL_DEADLINE) && !task_sleep) {
- 		se->deadline -= se->vruntime;
- 		se->rel_deadline = 1;
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 7d2ec527b8a2..24f9b7bd8f0f 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -689,6 +689,7 @@ struct cfs_rq {
- 	u64			sum_weight;
- 	u64			zero_vruntime;
- 	unsigned int		sum_shift;
-+	u32			idle_seq;
++	/* CPU has been idle in between so the lag has been removed */
++	if (se->vlag_seq != READ_ONCE(cfs_rq->idle_seq))
++		se->vlag = 0;
++}
++
+ static __always_inline
+ void decay_entity_lag(struct cfs_rq *cfs_rq, struct task_struct *p, int flags)
+ {
+@@ -10049,6 +10070,12 @@ static void migrate_task_rq_fair(struct task_struct *p, int new_cpu)
+ 	struct sched_entity *se = &p->se;
  
- #ifdef CONFIG_SCHED_CORE
- 	unsigned int		forceidle_seq;
+ 	if (!task_on_rq_migrating(p)) {
++		/*
++		 * Clear the positive lag of a waking task before migrating to
++		 * the new cpu.
++		 */
++		entity_clear_lag(p);
++
+ 		remove_entity_load_avg(se);
+ 
+ 		/*
 -- 
 2.53.0
 
