@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793978416;
-	b=aMGDkQzq1Px1JHYW+ns8QGUsZG2pvkWoJ0GkRU/Jk53z4TNBemK1SfSfdIWJwvzvhtNj
-	 1p/rCKfsDXY1hFgE2km067OF8nu9n13kL9FIRq/rimyh9/HVS+a2MvE+T19JX1Rowkk/m
-	 NSX4iRQGnsCWGcTLcCE4MPWDNmqF3uRvUDAI4b1kw1Dte+G8RYxZWrgVqa2Cxm2gOkcJe
-	 MIQqEv6NfheMf2bD5r9zHcyiU+zgARh8/QLNG8ue4B8+1pA2qeoB94qEM54yMcQIqmeAN
-	 pN3Js3jwLPOF1HYdND6EYwu7MmgM6Bbfzut1O0jJsHpozIP+qlbaqv8kooeD2fpFm5Q==
+	t=1793978422;
+	b=2Ly/BvTIDF9qN7vQtCnyJZNHGgBVcauRinVoaG2cWR73iA6+XHl+o3bSo30o2kbR93EO
+	 GFypE+eVRwXfyEYTWEhqU1cLJhKLwQWk0UHSbwq+Lum5LTz4hg35/pfspNKUzccXBviWT
+	 qliiuMhmQVTvwFTIYzn+Nh0ZHCR9yX1Q+g7G5F71MNka/dynkmbo7rLapyl86HQ1bJ3Oo
+	 sC03VxSSDs+1OIrBW0RbaVA/sN+XziDTPs3BwgWhXV/NEDjXPm8eV7VTiUEQHZ4MzLVgd
+	 w1EjSuJopGJGnfxex+zi4K58gzJdOV1s0YAOXuL778Sisf7Rqou9gM7mxYwY7aGV/2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793978416;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793978422;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X7cjgrh5Yg6Kt2t9tmwbzYSsxzemzPkOn8ZYOdbmvek=;
-	b=3TBdoMgbiPZ0AQU5DZmax3BgCkfB5NNqHCao0cRJ9AFKupSmfXxWNH6OiEUJ5LnHdBxD
-	 /eXEJj0zHuwuCSjrbRK/LlLdbvPDgHjXKTQdcI+qe9s7SeWjzkjnmTrjYLv/mPTVD2jWS
-	 BHvpnXVGcORUFdVlXAsP2ncPABmtYwMGBUHzGsX5GAs5+mToBMe7+J3XzLNzWafeqAOw+
-	 Dq2BnirDDDxoBVqPTEeOOf2BBOVux/fDV2ZUDZWRadNBKLFJwySOqTz6Vqj9bHJY5TEQM
-	 O1Cg3XxFGi3yfgKAzFaaUY/W8a0wE59BNyhiPt9SM5oPTLxclaAHawBwajoGghqHHSg==
+	bh=WkE6gJnDRs+XLmAou5XPy/YO7fax7WUEGWY0OkDdt7Y=;
+	b=4h6CClmQU+8UCSPcr3hiRglU0mBtEJT/Lu7afQWSlrNN7DQ183qgm8PURXZakuxaO3Yd
+	 Tbz9KIZQ9GlwNB0y0c7tyFcF9TtQvs26n8Pgw+pdGMK/Q0jXd4C4I0OdWKbVCZ2/W/d/2
+	 NCyM4mdgpkiAdvuXBh9eyYE72A7O9aiVz/EDGz8/qDmK7/uM5DcGcB8E/IJm2O8xppoOX
+	 xlW6Cz/QDDdPnk8BmRsy7oW583TeolEsFDjzfEUEYtZMvurDYXY7XKe5sk3a3yE+HPCB0
+	 DlzEKxZp2Ogdo/rLNH6vJ+Gp+6+rf5Xw5a8MmpcRBb7lFJjZXe3vebklDVZuesScSRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linaro.org;
 	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hDo0KFRq;
-	arc=none smtp.remote-ip=209.85.221.49
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b="IaZtV/GR";
+	arc=none smtp.remote-ip=209.85.221.45
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675E6606D83D
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:20:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 675E6606D83D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D03606D828
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:20:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A3D03606D828
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hDo0KFRq
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-492f563d1c6so238989f8f.3
-        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 07:20:15 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IaZtV/GR
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48e3b22e971so423748f8f.0
+        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 07:20:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1793978414; x=1794583214; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1793978420; x=1794583220; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=X7cjgrh5Yg6Kt2t9tmwbzYSsxzemzPkOn8ZYOdbmvek=;
-        b=hDo0KFRqXSW2H1MG44jmZg4SqIuFH71irMsLLSXSAvC1ghRSwGQx74eopK6IwXIlj8
-         OJ412w/1JbccjExQ7MNmEeA8lnT4m+uGUz1DDrAk0pU3uyVaOameVwyR4ZSPVRuJ08PF
-         Rzrk2Y6qbctL2fXkrG6/OM8/qgN5+rxtVuOjiJbnF1YVR3Wll9PlmjdhaYKmOw5IOip7
-         IpOLm+JdcqtnhSku9+yvnJf4WbKfBE24rNtRgeSqLZwXD6hcTuS6OtH6N6IHTia4+SYT
-         71diwIaz6IYsa16w7rPNWR1rF+x4uwfMyUYmLona8XRvle6/FSa9cgsKL85nTr/7pLPK
-         4fCQ==
+        bh=WkE6gJnDRs+XLmAou5XPy/YO7fax7WUEGWY0OkDdt7Y=;
+        b=IaZtV/GRAvofKMcTK7+gh2O1hL96snF3xaQoUymv7d47bPNy46WRaULd4QK6u3nluU
+         gvaUmFyiKAKVJj2mJdZlhuPlaGu3Smk0DM5yqPVCdS8zNXjVbNRRDcouvoj97bFzj1ZH
+         +7urqEWateiOY/8WWJLW9ufzfZt7swDZNAFBMGD+fiFFgziQ2fq+GaIpd8xYmkFVrPzW
+         9m5SCB64ZEGIEqsnJJoMwGtrfAHqVVZVGa9p2HZI2hB0ATXx+cm2tuMojbfF66yGYKXu
+         PFadhuqw/Pu41IPYZZU5fTG+C0Dt/lWd+ltIZ04zRHGQaVUEoTuLyysGYbxrKNW+3+V4
+         3rlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793978414; x=1794583214;
+        d=1e100.net; s=20260707; t=1793978420; x=1794583220;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=X7cjgrh5Yg6Kt2t9tmwbzYSsxzemzPkOn8ZYOdbmvek=;
-        b=FSt0++vk2lmgMuK8a0/Zxrz/oaX6XCz34/IFyxuWWsdt/R7T+Fc7MPqHBifzACFSNW
-         oCJ/KgAC1yGr34ZywFV7yS/kiIh+GqFOVEEv7Kt41IYS4KMyZ4yzDMgKn3ForQIcEThV
-         7JcQBDoEssaULKGYH2E75nSQ2/kcs6naf0OKaoSUhSCJquXvl8VOiHhXH4Vgfgf+0bQL
-         JNkbOyBUzus4J7nbjgS8GUJd/9kvmF1uCi60h+4nFo78+8NS5SYH2MwgwNG8RXo0Drtn
-         CdF5A4Gr6ln3v7QIWnvQ3pgD0LUUTe015oU7DuZP8bJO8SCZ1YrHxUgM1AInqx84XFFc
-         rY6g==
-X-Forwarded-Encrypted: i=1; AL+hErEiNDLUbQ27bG+/ULcA53knZJOuVC1pQDet7tubPWkI6OyO//xr/ojxD2LYZLJ0j4UhcModcDLynkE=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9mosA11zdeixAqsyD+p2geDZYvekpXC5SorQlWRbQS1N59SLdw
-	aDnA+56O7NI9SVegNG25pIOTdb+cg3moTjmqJr9ovVdwsZFzVREC8spJ0Wt9aVhFMQk=
-X-Gm-Gg: AYBFou19F1o4n5ekCwD9nKA4cbSkEqGYkOBvfseZzW56b7pYi2gTGPHZUSIXoM6HbYF
-	lMATtK0Azw1uPSHi2nxS7xs3IC557auQDA4oZ+QlxQfL22zQYA8uWD9B1ba6csWnPZADqlWzkZj
-	QiS237akyX+mIF+9K+RkZfAQY2VpZNase7oIAgzUdfybLqN+qAUuvqpTkLckXLF7ZuH82pYJv+C
-	j0qQy5NfWRCdvdugrjNjTvNs9PKMpdgngFhzMyKoLu1dL25ejFSrA2m5eYL8heaece00VedcANH
-	XHPeJ91s/cWZ2cY8q+nfl8rAUFsPoCZaHEu789mc8T9x6OH2m9iwPtS7kHw/nomcYlqfN47/Jpw
-	WHeHJfr/Ppit8Qq5sEiqz40YytQGXDwuIJmtmeZ36KBjVQm0FfiZHQTSji4q9ulDfKxXB0siHXT
-	tk/3duNMTWN2pa5VD+/QU04oMARVjayNhJVPKrfbwoM/XaEuVN9wOmvjpJnS+O/ytirSbTD5dPR
-	r2MFN7T2CdUqmkn2yaecTYJWHJMdr6VO+wg63bu3w4f054sVfF7Q5kZ85aHzB4OEiVGeWaDMBJA
-	VlygNPoJsl/bktS3B2ys/OiethDAjSxNm1AfX0UP7J0AAeo=
-X-Received: by 2002:a05:6000:22c1:b0:491:ef0a:1f5d with SMTP id ffacd0b85a97d-4927678d572mr6661924f8f.39.1793978413847;
-        Fri, 06 Nov 2026 07:20:13 -0800 (PST)
+        bh=WkE6gJnDRs+XLmAou5XPy/YO7fax7WUEGWY0OkDdt7Y=;
+        b=UdVkXf3otzv5/Hys1fo8LyMTHmf628q+4zQwEinIQ64b2zllJEanX6JB+MGuA4kyAQ
+         FsfUQix7uG91xrcCfrr3IoHEjdkug1LFuEqJd7iToo7Cp9lwc+8ThlsNOMp7QPmOKBBk
+         aC+mR7PkishXdD16BCtJ6dAvP4NiDsxt5ZUKiO6pHCnQDVVE41oSBwLEc3la8wYO66kL
+         t8qoaADc2+oBpPjt0IbCYzVFxZaDka3lSk+jX8jjCkMAoAStktbhdbgCIImDVy8WU85B
+         h6rlmwb6XSDQZwwHrrXpo8Lr/ZjGroa38nnpWA/+lP57yqVRLbF+S6woRfbbV6XHnakn
+         xopg==
+X-Forwarded-Encrypted: i=1; AL+hErHfo15ihsAzJgp5KbzgnXiwQuH6jPtd0ZBH8O8doMe5VXR9YbxxXuuenom1sSxQshNq7XnP0HaXsvA=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/QPvrE47SV13ykpYsGdnmZ6yDhlQ3NOIfxEUNIV4RW4ktwx0Pj
+	Gzm5MJtmF7gOoWOkm8Twrini8cD6ipzkrKgGUpVx3n0IWq+weVCDU7z147uTHM90tO0=
+X-Gm-Gg: AYBFou3MIFOTVfvrQBzZvJJYG3tt0Rm8n3Y221iVgSpfqFv8zou8e8H7gsKn/nIeFOZ
+	kgx2IT6wosL42r1eCxG++rhBTKm05yYsYjsQ41h2oRz6gKzr8MtOa8Jo6MkhyygUtUMBHaVTbKu
+	xF28kKvdNFoccVDBBiVugLZIG9+oQ6oqKHhPuuXBQnUs5S0kDthgC4Luf4RDIvtCaN2uMgZUYg4
+	kvPZ3C7zLz+esSh0HAIOpqs/+bvMKlkDeqO7lkL1kSQyNrBk8edN8l0PlT8ZjEFF9x+rFXoUMHT
+	RiJRVEO4UmpRE6VRBuWctMvyx7+0gyI32RMWbRgy8CvJtpwFm2qu5O0wN4s3hFENsTYQDTYp8qv
+	aginXtyGwYd95y+Uak+wBA9v59ZJ1n+v+exsxIZD5XN9XlwYEPoe3jw7DmlVUB2hy2CguQ3rzio
+	/B+n8Jb7PGOYxTGOny/t4ujBZ91gSwszkxHfvmfw+NlA3hxnIWiFGPNNXkXcMzhF2Cs7tixyh+k
+	sYdh9zusqK5wwgO7e9Lo03ex+12BPczQlCIZX77aDAvVmFHVY6ng5sN9ZpFsFoQ3obJMP2m+b7o
+	ZQQ6U15cqcTkvChlC5qowLQ4cKU73Rmc
+X-Received: by 2002:a5d:5f86:0:b0:491:fd47:5df3 with SMTP id ffacd0b85a97d-49272a3aef0mr6257082f8f.7.1793978419738;
+        Fri, 06 Nov 2026 07:20:19 -0800 (PST)
 Received: from vingu-cube.home ([2a01:e0a:11f4:3020:ed97:32bc:977a:3b65])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5e23sm4477405f8f.45.2026.11.06.07.20.12
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5e23sm4477405f8f.45.2026.11.06.07.20.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2026 07:20:12 -0800 (PST)
+        Fri, 06 Nov 2026 07:20:18 -0800 (PST)
 From: Vincent Guittot <vincent.guittot@linaro.org>
 To: mingo@redhat.com,
 	peterz@infradead.org,
@@ -104,9 +104,9 @@ Cc: qyousef@layalina.io,
 	kayracizmeci@gmail.com,
 	tim.c.chen@linux.intel.com,
 	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 13/20] sched/eevdf: Try to push short slice task on a better CPU
-Date: Fri,  6 Nov 2026 16:19:40 +0100
-Message-ID: <20261106151947.3991524-14-vincent.guittot@linaro.org>
+Subject: [PATCH 16/20 v3] energy model: Add a get previous state function
+Date: Fri,  6 Nov 2026 16:19:43 +0100
+Message-ID: <20261106151947.3991524-17-vincent.guittot@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261106151947.3991524-1-vincent.guittot@linaro.org>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
@@ -121,56 +121,66 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When a task is put back in the runnable list, we check if we should try to
-push it on a better CPU, i.e. when fair is preempted by a higher class or
-the task is preempted by another fair task.
+Instead of parsing the entire EM table everytime, add a function to get the
+previous state.
+
+Will be used in the scheduler feec() function.
 
 Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 ---
- kernel/sched/fair.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ include/linux/energy_model.h | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 980eda9c935a..3923587b66e0 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -10112,6 +10112,23 @@ static bool __check_pushable_fair_task(struct rq *rq, struct task_struct *p)
- 	return true;
+diff --git a/include/linux/energy_model.h b/include/linux/energy_model.h
+index c909a8ba22e8..89cf109cbca6 100644
+--- a/include/linux/energy_model.h
++++ b/include/linux/energy_model.h
+@@ -224,6 +224,26 @@ em_pd_get_efficient_state(struct em_perf_state *table,
+ 	return max_ps;
  }
  
-+static bool check_pushable_short_task(struct rq *rq, struct task_struct *p)
++static inline int
++em_pd_get_previous_state(struct em_perf_state *table,
++			 struct em_perf_domain *pd, int idx)
 +{
-+	struct sched_entity *pse = &p->se;
-+	struct cfs_rq *cfs_rq = &rq->cfs;
++	unsigned long pd_flags = pd->flags;
++	int min_ps = pd->min_perf_state;
++	struct em_perf_state *ps;
++	int i;
 +
-+	if (cfs_rq->h_nr_runnable <= 1)
-+		return false;
++	for (i = idx - 1; i >= min_ps; i--) {
++		ps = &table[i];
++		if (pd_flags & EM_PERF_DOMAIN_SKIP_INEFFICIENCIES &&
++		    ps->flags & EM_PERF_STATE_INEFFICIENT)
++			continue;
++		return i;
++	}
 +
-+	if (!entity_eligible(cfs_rq, pse))
-+		return false;
-+
-+	if (pse->slice < cfs_rq_max_slice(cfs_rq))
-+		return true;
-+
-+	return false;
++	return -1;
 +}
 +
- static bool fair_check_pushable_task(struct rq *rq, struct task_struct *p, struct task_struct *next)
+ /**
+  * em_cpu_energy() - Estimates the energy consumed by the CPUs of a
+  *		performance domain
+@@ -375,6 +395,18 @@ static inline struct em_perf_domain *em_pd_get(struct device *dev)
  {
- 	if (!__check_pushable_fair_task(rq, p))
-@@ -10120,6 +10137,12 @@ static bool fair_check_pushable_task(struct rq *rq, struct task_struct *p, struc
- 	if (next == p)
- 		return false;
- 
-+	if (next && next->sched_class != p->sched_class)
-+		return true;
-+
-+	if (check_pushable_short_task(rq, p))
-+		return true;
-+
- 	return false;
+ 	return NULL;
  }
- 
++static inline int
++em_pd_get_efficient_state(struct em_perf_state *table,
++			  struct em_perf_domain *pd, unsigned long max_util)
++{
++	return 0;
++}
++static inline int
++em_pd_get_previous_state(struct em_perf_state *table,
++			 struct em_perf_domain *pd, int idx)
++{
++	return -1;
++}
+ static inline unsigned long em_cpu_energy(struct em_perf_domain *pd,
+ 			unsigned long max_util, unsigned long sum_util,
+ 			unsigned long allowed_cpu_cap)
 -- 
 2.53.0
 
