@@ -1,96 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.224
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793921761;
-	b=BISJMxNoX3BTnt/waU5jh9Lu9W6b4ODya7HEKlE0lRZVSD9rRTxvt39i814BwAWcm4Tg
-	 0aago8cFDpZIdFIOD3qBynmDCJXdndHeANmDhbAmLLnZ7zOVjbbdti1hD6kj9wlAn5HQV
-	 EJUxn+9Hc5DlCPh4S7FG1WMnb48vXKDPf+UyY4DqPppQvpmi8sckvdiBuCQJ5jIYCoXQW
-	 j8ZKDYFS7Ta8UB29TrbdDtmEGFrGY2C/4xNwkLnCxP4+7OJ6+bbeeWISVBYk5znhXJ/tL
-	 LefvJn5rSsT57c6XVSvwFDHtGGyK9erY284j5sqy1GeU40PbDh3LPzJlYtW8s8B0boQ==
+	t=1793933088;
+	b=TZK4jmaZqvWHI6B7liNMWOGO8casrG79zwZGzAGFhxHlGoNvdvHY/6q3GWFaXpZIja5p
+	 z9NkGSv4lRZOqRZ/yrbb+ah4x7m9odaHfdg7xM7Esnl/JnrF1aLSyg8s+ddhB/xcYxOR7
+	 bwC4dLrjlaweVvIiEoejlKC9KYBYDpjlciPvfRguD3Y/C7ytLQ8p0SNtsKRxgNc51w3b0
+	 hQ7YALWmJodNEE3QMOUAIKpG0nB/lT+LJX10Y02rVvMbPmI4i/6aVliCa3LZWx+Us1tGk
+	 bavPsDW5+3amRNQyQ2P5zS/Vaz7p3As7lfEoWAKBZQu8rAL8riPmKRLNUknqXkzGvFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793921761;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Reply-To:
-	 In-Reply-To:References:Subject:Message-ID:Content-Transfer-Encoding:
-	 Date:MIME-Version:Content-Type;
-	bh=lTim76e2IE+ppzy+3kcH/03ezGYTvAc2KNoBIgsJ028=;
-	b=HqT+GnYJhVfjkPpsv0pQDTDWqtYNHZj52ENjtLHjX3vfJ2yT1MewEw8i9Eldo57fY3VE
-	 tVnhvms1B/4590WxA4euKgJbIaDmIRSmhYGXYooLh0wc0bmG7a2rA11XgKkYGk02q1BdX
-	 aXlrnwOw06ZA8/Xe/y9q8pX9l+cip98J/Tv2HPojX2+RoYvncFwPViBBVYRZm+uvEShSj
-	 WW7fjbQ1ptxL792XHWL4P1jdmy8z/890Bt0aD3GfSIGSd0Z1LjSN5qntu2yyibIr5hP93
-	 4czlPna8BXPXpcSlGUmxCGWhaDJEXUmzDUavUSY3ROgvYb6WNiMrScUyemi6KOnb2+g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793933088;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:From:Subject:To:CC:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
+	bh=DNSkwc/3EcdS5hqa3NzQ8KzdNccAfF8CD1FAU5JF//I=;
+	b=3ZNB3gAoNVKc2aHGpJMgGgHCZi6KfjGTqIl57Wd3iCBB5TCNOHweG0IgQAKuctIzI29V
+	 2M3rNPkkObniWYw/67I/7eyit6vR2WvynwWDvOcx6r8lZIZo+ZYNx9fWxBjBc7gWK2N13
+	 q3Oo0zJ9hNDhRWEfO85TA/SfmWKwMxB9PuMledBp5Oa24+6xnE4eEZjToQmszZUmFRqHi
+	 JByy4U2nHYS3BGgbzMwIgrCkuSWmOpRXgxXWL2fvZ3tN9YY+Ph+cLmLG3cApV+JHl9Rk+
+	 6wuIgkQ5pzwaTSkHz0FPwXCHK5q7hRUayUxlgs45q1gQHOJKaWZVxxLEslNd3g+N6QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=realtoradnan.com;
-	spf=pass smtp.mailfrom=realtoradnan.com;
-	dkim=pass header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=aOp21B3Z;
-	arc=none smtp.remote-ip=209.85.222.174
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=1gQVDAJ+;
+	arc=none smtp.remote-ip=113.46.200.224
+Received: from canpmsgout09.his.huawei.com (canpmsgout09.his.huawei.com [113.46.200.224])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E153606A31B
-	for <sched-ext@lists.linux.dev>; Thu,  5 Nov 2026 23:36:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6E153606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=realtoradnan.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtoradnan.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424A0606A326
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 02:44:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 424A0606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=aOp21B3Z
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-93e55db58cfso7235285a.1
-        for <sched-ext@lists.linux.dev>; Thu, 05 Nov 2026 15:36:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=realtoradnan.com; s=google; t=1793921759; x=1794526559; darn=lists.linux.dev;
-        h=content-type:mime-version:date:content-transfer-encoding:message-id
-         :subject:references:in-reply-to:reply-to:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=lTim76e2IE+ppzy+3kcH/03ezGYTvAc2KNoBIgsJ028=;
-        b=aOp21B3ZrUcYcUm0JVKo9O5L/PUnBYDY7VENkKw5EXPiCdOdZ99QocPtgleFm97NW0
-         m6jLgwtyDSvqpCoX1rLMA6ZIulAkOcjFywWyPswpouv+b0H76Pi9nbla6qAoquatgEa8
-         uJ/ZuxhAp3NU4yt53gz9QVPoUCFX4nNpRb8ke+bI79S51wjt1MSDehLa0FKncEaFdJ/l
-         YtW8dqkO+KQosc1DU61yVhjDzvY0cWOObawvEL1Hgc4OIqMwLz1y/cTzu0IGpbPLTsD/
-         5pJ4Pa7U5gYgz1v3ZQhCb2q1n9qHyXha7sn7PwBxUUt+08n9t7Ae90J10biDSWeS8ixn
-         ipAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793921759; x=1794526559;
-        h=content-type:mime-version:date:content-transfer-encoding:message-id
-         :subject:references:in-reply-to:reply-to:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=lTim76e2IE+ppzy+3kcH/03ezGYTvAc2KNoBIgsJ028=;
-        b=bYhTENI9pINYVvdNRdCGH/fwKRUD/lso+LXj9CqPP54jK6BsOevbx676mGJisF7Za6
-         Ez0VMTYcMebjksvYnv29Gn/ZrsbK18fbccjCrUxTD300PKD1J2vwugb7yhzrun25SFv0
-         Ahj5YabcDpdmIXW7ebLUkqLc207dVHmpQLkt1FWVM+A/0sJRCYj782plzVv1hYS4a/pm
-         eIfiEyQ4c24JTFjSJmM6KK0beJTAZ9blueLm5pK5qkHzarlHcETM8EHInZLVe59OdemG
-         OnV4Duvt9Z7yl6TSWLoK7N+2nUamdsfmBS1n3g+Uru+JRk0Rh4QGXeKW+Uju1mfAJTRH
-         EZLA==
-X-Gm-Message-State: APuU4Z9aHkBk1Yw1s1q6eRu2Qsv4T1HVmzBZfOXBVGlUh+L9VaY6RTsf
-	UOH6skkMxXzQg/JBIeYLCQA5DM0DaXPB3YTlgw729Tv46aRHw6jX3OPdN7goe3IdTaJXaiXuMKd
-	j45RR7sZIjFQ=
-X-Gm-Gg: AYBFou0RC5kKi/VO8t/qbpLnyUmAZWhWiiT+YkE/GNRDL3cg3i1j7Kd9uEHVzkDoFDZ
-	pvPzy3jawdt+qbPYlcsINyHJsFXcIp48EkpK/c37IzVjZ0hB+6DicSJAROuJn/MI5wlHf1ld8Sy
-	QOtwuOT4qQ7pnLt3lC5xBmbQ5t9D9/mIrsT5+KN9i5XzVBYkwabV5i/qvWtU+ESC4ytskuAk1hz
-	wtaqLKtczoSw5Zh/BW9gN6d2A4XvuEzccGXWC7oKY0u62E1OyIZbFFY5YDYktPKiW33I92XpbXS
-	FrkdKwRzxn3dW9SsAD9Iru+Md65skB7WnGPXMvXXBrGcJ8gli9LbB1Wv5mebrOt9K6OpY7FCkja
-	BzndWkKfdKuNLvICpFFbT4wVOe/AfegmSyYGkNc/rK48hB4jm7l4VS7f7VjPiXHQ+59g3mlCOho
-	R2INqksrm7Ev0/LeNcpmdRCJx2zRYkO2g5Gg/jPCgzo6Bsj7DcrdB/ZfdP1GyNzuB2AMRPqTF67
-	qQ+ZY9sErAwmn2yyq0U5fAnQg6kCd6O+jAPR9cL3sFuxiXs7eGLXWB5YJ7v3P5BmkfUUtKP7c9i
-	v0DAT3BIpqLDiMda7mg6dPXo1LKWOdorgdxwIY6YlBQ6pfbLIclCiu12/HjB4cvA7hURwMrG+or
-	WDUkDteinh/woDHsQfLz7e9O+vHsk3fnZ
-X-Received: by 2002:a05:620a:27d0:b0:93f:4d4e:ff66 with SMTP id af79cd13be357-945f338cd37mr116939985a.5.1793921759365;
-        Thu, 05 Nov 2026 15:35:59 -0800 (PST)
-Received: from realtoradnan.com (vmi3719417.contaboserver.net. [13.140.32.210])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-945f5bfc57asm5826885a.31.2026.11.05.15.35.57
-        for <sched-ext@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 15:35:58 -0800 (PST)
-From: Troy Cross <troy@realtoradnan.com>
-To: sched-ext@lists.linux.dev
-Reply-To: Troy Cross <troy@realtoradnan.com>
-In-Reply-To: <65c5db2e-bdd8-4266-b975-f786b8a8415d@realtoradnan.com>
-References: <2f393418-7255-4743-b185-248dbce5c845@realtoradnan.com>
- <65c5db2e-bdd8-4266-b975-f786b8a8415d@realtoradnan.com>
-Subject: RE: schedkit
-Message-ID: <c6355768-fbed-4c09-be9d-a64036551192@realtoradnan.com>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 05 Nov 2026 23:35:57 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=1gQVDAJ+
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=DNSkwc/3EcdS5hqa3NzQ8KzdNccAfF8CD1FAU5JF//I=;
+	b=1gQVDAJ+V2pZ6VkCT7rWg8VMd3m56tJLZDTUzhvBr/z9Qwr2mkr43r5MaMBEvLBMRu3zRTqZa
+	oOeNb09qnqe6udzw7m6ea7sAQ6T4+csRog/KrVrgKY754vC7Eair8m069l1N3CxBFhvVAWX0kLu
+	epF0H7uuQYY5mvuUuLDc1kA=
+Received: from mail.maildlp.com (unknown [172.19.163.127])
+	by canpmsgout09.his.huawei.com (SkyGuard) with ESMTPS id 4jLNms2nCrz1cySY;
+	Fri,  6 Nov 2026 10:44:29 +0800 (CST)
+Received: from kwepemk300016.china.huawei.com (unknown [7.202.195.98])
+	by mail.maildlp.com (Postfix) with ESMTPS id 92F1140572;
+	Fri,  6 Nov 2026 10:44:41 +0800 (CST)
+Received: from [10.67.109.218] (10.67.109.218) by
+ kwepemk300016.china.huawei.com (7.202.195.98) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 6 Nov 2026 10:44:41 +0800
+Message-ID: <1eac08a9-b5e9-b353-b9d1-1e2d32802993@huawei.com>
+Date: Fri, 6 Nov 2026 10:44:30 +0800
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -100,31 +61,48 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+From: Zhang Qiao <zhangqiao22@huawei.com>
+Subject: [PATCH sched_ext/for-7.4-fixes] sched_ext: Fix partial-SMT core
+ counting in calc_shard_layout()
+To: <sched-ext@lists.linux.dev>, Tejun Heo <tj@kernel.org>
+CC: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>, Hui Tang <tanghui20@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
+ kwepemk300016.china.huawei.com (7.202.195.98)
 
-The price is negotiable.
+A core is counted when its cpu is the first cpu of
+topology_sibling_cpumask(), which includes offline cpus. When the
+low-numbered siblings of a core are offline at root-enable time, no
+online sibling passes the test and the core is not counted. The
+resulting cores_per_shard and nr_large are then too small and the
+cores are spread unevenly across shards.
 
+Count a core when its cpu is the first sibling in @llc_cpus, matching
+the cores the build loop actually constructs.
 
+Fixes: e2c841b91bf9 ("sched_ext: Add CID sharding")
+Signed-off-by: Zhang Qiao <zhangqiao22@huawei.com>
+---
+ kernel/sched/ext/cid.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-On Wed, Nov 4, 2026 at 08:21 PM UTC Troy Cross =
-<troy@realtoradnan.com> wrote:
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index 8e04a8494e11..64572e39c865 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -64,7 +64,9 @@ static void calc_shard_layout(const struct cpumask *llc_cpus,
+u32 shard_size,
+  	for_each_cpu(cpu, llc_cpus) {
+ 		nr_cpus++;
+-		if (cpumask_first(topology_sibling_cpumask(cpu)) == cpu)
++		/* the low-numbered siblings may be offline */
++		if (cpumask_first_and(topology_sibling_cpumask(cpu),
++				      llc_cpus) == cpu)
+ 			nr_cores++;
+ 	}
+ -- 2.43.0
 
-> Sorry, just making sure you saw this.
->=20
->=20
->=20
-> On Mon, Nov 2, 2026 at 06:16 PM UTC Troy Cross =
-<troy@realtoradnan.com> wrote:
->=20
-> > Greetings,
-> >=20
-> >=20
-> > Do you have any interest in=C2=A0schedkit .com for 500 usd? i noticed =
-you own=C2=A0.io version, so maybe you will be interested in this one as =
-well.
-> >=20
-> >=20
-> > Sincerely,
-> >=20
-> >=20
-> > Troy
