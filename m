@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793980842;
-	b=k46FHN7cYJJ4T0m0ZCOBxvhqTO6/y7BGlofMXCSTlDFwkgTPIxPERjh8f2uhQIIhJuab
-	 ZeakC74ZZ4lIfdOR0Vej/rrIDO0KOvZJZi3s0msd3UfKYpoEuSNRGG1PhYL/oz6SvzUAy
-	 VUAteV6MQPD65QL9p98Pht1D5pJOMXaBXbwrc9Tj6viGWQzdn0m2exZaMre9sFww0vjWl
-	 rNZqi810/uJ6Fs38BKAFbbNc8rBsrUWZXAhOuAT6L4X6DQqrc7wi5ubeGeRjA5MzqopO7
-	 MDvFwsKWk3NxHViCuEctNh3dUGaWtoTX0xfiJGW1P6FxubhO5ZWQ58QZZy7f/icNWjg==
+	t=1793981573;
+	b=QgqHyEptgRiMBX7+hzq6Oqi2VzhngfxVCOjUW2RdAHP0JSgPdIig6Z3NN/CzPwzEJsWQ
+	 CVtgymco2vMG2M49ddYIEZM+cT0XaA15g+BCOjt3vVevkZPPTVPOqu4In2kFYed43xYor
+	 g0zz757ZBLh+LlJnmoF9fiKz8v3638E+8xnAhhtxumlB/BTJ+I3EA3WtxzfpSPpXTBuwS
+	 1DBsg6B3SoCZF+HfpNDznkElFTH101lC9tye1daKBezyJaITN+SqvK+z3nSI999fpU5ZD
+	 tny30IGE5RHoq8rWPU1wmWEut1XpkDhy9LlPv+JiOXN4EkP8WcfywhnzrtKcVMKuhPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793980842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793981573;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=U2fj1wx7x/MZTHzkaYY/7/zDMysPCxckUPzh+29/95o=;
-	b=zv5jD/lBOl+LwmGE66ZofEnFLgodT9gAeaUULWpziAH2WSU1rEIxgVOmT5r47aesaDPL
-	 2Vjre4MgIL7bWZwKlU2M5aw7DdRbqqc/0Wb2v/qE6KQ7iyAZhP+O4XP9v+IQk+htJouEN
-	 +U2VULTqn7FA+04M7/Q/gnNiq/pchc/1MnYNnkkjVMN8D7PJx2F82Lw5k6vIPySOSUaUd
-	 abb9Rp90dSofDiVpQCIIW0Qq+QyMF95eUSum20PS7ghR7+JKtqpjZsdX+Cf1aeajgWJ5n
-	 Hf+Jc2clzRJQWtX5r4b32t4ATPB3lzSdIpOChUu4B+MEHSdmh2ScPD+or5tX4/mdsAw==
+	bh=ry8wZen0uQaxXABvXKQzDrKRnGYk95Yp3bqTaxwmut0=;
+	b=KvueTUi7xCzeBQzR9Io8KHVraTs2pmVOG8ajSfDdd8+OwLas5cemF6nBn/uj+Edscahl
+	 QKXOievIx8ChgxfE5+rIw5HiBb9yrtsT9fQSDmDtentJuyJ+AxsfM4C5arV6oFaS+U5pt
+	 czBhkt3VmJOFztgMXP4bp1qjW4KnsQgCAZy7dUvc7RS73b47dtUzwQTevwCFWvPIWyUke
+	 T7/SFa8kponEoewubkPdYtM/O4pa27pxQgTrd1x+6xM5Mu2pfmc+djtluXpPzKuyapuSv
+	 E9dOCN4515uX17u67cxKD0tukPPPuswsliqlSyQ/8pwSz4SUzHd6V+8uuR/3J5g8vsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KLTsW2Go;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UTZPZnJZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C3A606A326
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 16:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5A9606A982
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 16:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KLTsW2Go
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1A41F0089F;
-	Fri,  6 Nov 2026 16:00:41 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UTZPZnJZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230081F0089F;
+	Fri,  6 Nov 2026 16:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793980841;
-	bh=U2fj1wx7x/MZTHzkaYY/7/zDMysPCxckUPzh+29/95o=;
+	s=k20260515; t=1793981572;
+	bh=ry8wZen0uQaxXABvXKQzDrKRnGYk95Yp3bqTaxwmut0=;
 	h=From:Subject:Reply-To:To:In-Reply-To:References:Date;
-	b=KLTsW2Go+KWh7kys6afalHN7+aGXpSN0ypnqY7HkiRmDQ3M1HCjsNCQoyIW7vWT7o
-	 dJDkvOx9bhfurHiCoTV/hDHUweQhKJSMfmRrIl8etkzfuuN0ZvINCiWu9NuGTOPLpp
-	 vCQtwbPG89dcuUqISRtEkcNTemmn4/C8gM1xhdYW7ewO31oSTk3HuS5tGcLL1AMpWu
-	 YM0rk0yZa4bx8Y7W4lVsGUwW71B9rimncIjzIQZZKyZO2Hji7OsVgKrksJ0lAAAguS
-	 BFdws89CpvXz6P1ZPB9UVUVIsgOqjl6ZA03rWj3IblFbz3pd33ac05qzocmd6P99/L
-	 Bn6qylH2HkDhw==
-Message-ID: <sashiko-outbox-201755@kernel.org>
+	b=UTZPZnJZhToHOQwZNrHNAUD8uNohCdkz0A4GRVtoSFMGI4m+f5kWL7xRO8fHs2VU+
+	 CtFfYR+yWe+/dpPT7FBlrNxQVscyBjPMesu8DlJK0UCmr1ArlRAxPsm6t3dNTy/eG2
+	 CzUKjrPbKYAJgttjoOf1mnBd4sgIh79AQxnkeWRSJdaCSS2zXL05Q/hA11fVRh0Blq
+	 luV//PpFnOy4wULXWjvuQutsbyknq/0iKLwl9qunZA1BqfNy1FCLU8Jf5/ss+1qgid
+	 Ui5VNxa5trYkXHpGMw4k7P9biTu5h5bXvUzCr6Vt6edwPu993h+RqWOz1DWAwNqvgL
+	 V3v/144sGaYHg==
+Message-ID: <sashiko-outbox-201777@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 09/20 v3] sched/fair: Optimize push task mechanism for
- fair
+Subject: Re: [PATCH 13/20] sched/eevdf: Try to push short slice task on a
+ better CPU
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Vincent Guittot" <vincent.guittot@linaro.org>, sched-ext@lists.linux.dev
-In-Reply-To: <20261106151947.3991524-10-vincent.guittot@linaro.org>
+In-Reply-To: <20261106151947.3991524-14-vincent.guittot@linaro.org>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-10-vincent.guittot@linaro.org>
+ <20261106151947.3991524-14-vincent.guittot@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 06 Nov 2026 16:00:40 +0000
+Date: Fri, 06 Nov 2026 16:12:51 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -60,116 +60,108 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Medium] sched/fair: unpinned rq lock and double clock update in
-  fair_push_task()
+Thank you for your contribution! Sashiko AI review found 2 potential
+issues to consider:
+- [High] sched/fair: fair_check_pushable_task() pushes !se.on_rq and
+  idle-next tasks
+- [High] sched/fair: fair_check_pushable_task() pushes proxy-exec owners
+  and donors
 --
 
-commit 9e72e6e57764d3850fa10b1a2d1c221ab1149151
+commit 016c5e088e8b372064ad1e24d8191243bb3c5d70
 Author: Vincent Guittot <vincent.guittot@linaro.org>
 
-sched/fair: Optimize push task mechanism for fair
+sched/eevdf: Try to push short slice task on a better CPU
 
-This commit replaces the runqueue unlock and task_rq_lock() sequence in
-fair_push_task() with a raw_spin_trylock() on next_task->pi_lock and
-open-coded task migration to new_rq.
+This commit extends fair_check_pushable_task() to mark a fair task as
+pushable when preempted by another scheduling class or when it is an
+eligible short-slice task.
 
 > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> index e37f8b55a2934..e2999d3f88e46 100644
+> index 980eda9c935a8..3923587b66e0e 100644
 > --- a/kernel/sched/fair.c
 > +++ b/kernel/sched/fair.c
-> @@ -10148,8 +10148,7 @@ static bool fair_push_task(struct rq *rq)
->  {
->  	struct task_struct *next_task;
->  	int prev_cpu, new_cpu;
-> -	struct rq_flags rf;
-> -	struct rq *cur_rq;
-> +	struct rq *new_rq;
+> @@ -10112,6 +10112,23 @@ static bool __check_pushable_fair_task(struct rq=
+ *rq, struct task_struct *p)
+>  	return true;
+>  }
 > =20
->  	next_task =3D pick_next_pushable_fair_task(rq);
->  	if (!next_task)
-> @@ -10158,38 +10157,41 @@ static bool fair_push_task(struct rq *rq)
->  	if (is_migration_disabled(next_task))
->  		return true;
-> =20
-> -	/* We might release rq lock */
-> -	get_task_struct(next_task);
-> -
->  	prev_cpu =3D rq->cpu;
-> =20
->  	/*
-> -	 * We need to release rq lock and take both task and rq w/o
-> -	 * triggering a deadlock.
-> +	 * The safe lock ordering for task and rq is task 1st then rq but we
-> +	 * already get the rq so just try to get task too. If task is already
-> +	 * locked, it is waiting for the rq's lock and it is about to change
-> +	 * task state so skipping the push sequence in order to speed up the
-> +	 * release of the lock is the best choice.
->  	 */
-> -	raw_spin_rq_unlock(rq);
-> -
-> -	cur_rq =3D task_rq_lock(next_task, &rf);
-> -
-> -	/* Task already migrated */
-> -	if (cur_rq->cpu !=3D prev_cpu)
-> -		goto skip_push;
-> +	if (!raw_spin_trylock(&next_task->pi_lock))
-> +		return true;
-> =20
->  	new_cpu =3D select_task_rq_fair(next_task, prev_cpu, 0);
-> =20
->  	/* Task doesn't need to migrate */
->  	if (new_cpu =3D=3D prev_cpu)
-> -		goto skip_push;
-> +		goto no_push;
+> +static bool check_pushable_short_task(struct rq *rq, struct task_struct =
+*p)
+> +{
+> +	struct sched_entity *pse =3D &p->se;
+> +	struct cfs_rq *cfs_rq =3D &rq->cfs;
 > +
-> +	new_rq =3D cpu_rq(new_cpu);
+> +	if (cfs_rq->h_nr_runnable <=3D 1)
+> +		return false;
+> +
+> +	if (!entity_eligible(cfs_rq, pse))
+> +		return false;
+> +
+> +	if (pse->slice < cfs_rq_max_slice(cfs_rq))
+> +		return true;
+> +
+> +	return false;
+> +}
+> +
+>  static bool fair_check_pushable_task(struct rq *rq, struct task_struct *=
+p, struct task_struct *next)
+>  {
+>  	if (!__check_pushable_fair_task(rq, p))
+> @@ -10120,6 +10137,12 @@ static bool fair_check_pushable_task(struct rq *=
+rq, struct task_struct *p, struc
+>  	if (next =3D=3D p)
+>  		return false;
 > =20
-> -	update_rq_clock(cur_rq);
-> -	cur_rq =3D move_queued_task(cur_rq, &rf, next_task, new_cpu);
-> +	deactivate_task(rq, next_task, 0);
-> +	set_task_cpu(next_task, new_cpu);
-> +	raw_spin_rq_unlock(rq);
-> =20
-> -skip_push:
-> -	task_rq_unlock(cur_rq, next_task, &rf);
-> +	raw_spin_rq_lock(new_rq);
-> +	WARN_ON_ONCE(task_cpu(next_task) !=3D new_cpu);
-> +	activate_task(new_rq, next_task, 0);
-> +	wakeup_preempt(new_rq, next_task, 0);
-> +	raw_spin_rq_unlock(new_rq);
-> =20
-> -	/* Restore rq state */
-> +	/* Restore rq lock state */
->  	raw_spin_rq_lock(rq);
+> +	if (next && next->sched_class !=3D p->sched_class)
+> +		return true;
+> +
+> +	if (check_pushable_short_task(rq, p))
+> +		return true;
+> +
+>  	return false;
+>  }
 
-[Severity: Medium]
-Does replacing move_queued_task() with open-coded locking and
-deactivate_task(rq, next_task, 0) trigger double-clock-update warnings and
-skip runqueue lock pinning?
+[Severity: High]
+Can fair_check_pushable_task() queue a task onto rq->cfs.pushable_tasks
+when p->se.on_rq is 0 or when next is rq->idle?
 
-fair_push_task() runs from __balance_callbacks() after the caller has
-updated rq's clock (setting RQCF_UPDATED in rq->clock_update_flags) and
-called rq_unpin_lock(), which leaves RQCF_UPDATED set.  Calling
-deactivate_task(rq, next_task, 0) without DEQUEUE_NOCLOCK calls
-dequeue_task() -> update_rq_clock(rq) while RQCF_UPDATED is still set,
-triggering WARN_ON_ONCE(rq->clock_update_flags & RQCF_UPDATED) under
-WARN_DOUBLE_CLOCK and setting SCX_RQ_CLK_VALID after rq_unpin_lock() has
-already invalidated it.
+In put_prev_task_fair(), fair_add_pushable_prev() runs even when se->on_rq
+is 0, and __check_pushable_fair_task() only checks task_on_rq_queued(p) and
+p->se.sched_delayed.  When throttle_cfs_rq_work() throttles a running task,
+it calls dequeue_task_fair() (clearing p->se.on_rq) while leaving p->on_rq
+as TASK_ON_RQ_QUEUED.  Because next->sched_class !=3D p->sched_class also
+matches idle_sched_class (instead of checking sched_class_above()),
+switching to idle or another task queues the throttled task onto
+rq->cfs.pushable_tasks.  fair_push_task() can then migrate it to an
+unthrottled remote CPU where enqueue_throttled_task() clears p->throttled
+and lets it escape CFS bandwidth enforcement, or dequeue_task_fair() can
+take the early task_is_throttled() return and leave a dangling node in
+pushable_tasks.
 
-On new_rq, using raw_spin_rq_lock() and raw_spin_rq_unlock() instead of
-rq_lock()/rq_unlock() (or attach_one_task()) skips rq_pin_lock() and
-rq_unpin_lock().  Because the previous lock holder on new_rq also left
-RQCF_UPDATED set upon rq_unpin_lock(), activate_task() -> enqueue_task() ->
-update_rq_clock(new_rq) triggers the same RQCF_UPDATED warning on new_rq,
-bypasses lockdep pinning and assert_balance_callbacks_empty(), and leaves
-SCX_RQ_CLK_VALID set after unlocking new_rq.
+Similarly, under CONFIG_SCHED_PROXY_EXEC, proxy_needs_return() calls
+dequeue_block_task() before proxy_reset_donor() -> put_prev_task_fair(),
+re-adding p to pushable_tasks after dequeue_task_fair() has already run and
+before __block_task() clears p->on_rq.
 
-Passing DEQUEUE_NOCLOCK to deactivate_task() (since rq's clock was updated
-before __balance_callbacks()) and using attach_one_task(new_rq, next_task)
-would avoid both issues.
+[Severity: High]
+Under CONFIG_SCHED_PROXY_EXEC, can fair_check_pushable_task() cause
+fair_push_task() to migrate a currently running mutex owner or a blocked
+donor task?
+
+If a running fair task p owns a mutex held across put_prev_set_next_task()
+when a blocked waiter is picked as the next donor, put_prev_task_fair()
+adds p to rq->cfs.pushable_tasks, and find_proxy_task() then selects p to
+keep running as rq->curr without calling set_next_task_fair().  Because
+pick_next_pushable_fair_task() only warns on task_current(rq, p) rather
+than skipping task_on_cpu(rq, p), fair_push_task() deactivates and migrates
+p to another CPU while it is actively executing on the local CPU.
+
+In addition, __check_pushable_fair_task() does not check
+task_is_blocked(p), so a mutex-blocked fair donor deselected in
+put_prev_task_fair() can be pushed away from its mutex owner's CPU via
+set_task_cpu(), clobbering p->wake_cpu.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106151947.3991=
-524-2-vincent.guittot@linaro.org?part=3D9
+524-2-vincent.guittot@linaro.org?part=3D13
