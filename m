@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793978426;
-	b=LmsuJB5coXyL47CO85OBnItUOd6GwrsmkmIvR+51znoUE7VX9NEV0T9MNuBGlWuIng9r
-	 zivSYBXoTCrTnFgA4o38Enb8AS1IrfbHWduXGfpPRWTjywyyjPIdoIcxACfl27TrQxPNt
-	 MVz6YON6QaLGCMlMFWB27N90xyqi9305m4D+JZ72xaE8jlVXbNoO9RzFUPBS3M+AFKFtG
-	 1wB5SUj110vWbm0mTlMv1B/KJ966R6lNZFj0+ID/2sjLFVh7G4rNYOxprmOn3IRhJW0M+
-	 WUvXJ35c2xQ/AQ6v2sP7QxAuQ3YOV4ltt4cXpUwdHgwrg5hnadipcfVAQOUkqX54MGA==
+	t=1793978429;
+	b=FCpGqloFEQZgARTXmVWouietBc2QSGSCVqUEzOmLS2VvL+uHCWo+ynoOaHl77HVbUaC9
+	 Ljpa5jhGM5LfQy+nhp73gWFGTGHXLLyesF2qZBPDlgWzd7XBF55tJysPdLpxMxqF83g7C
+	 Oj2W4eugsHBEzbFpIXNH8WJTuVb0Qgk7inyoHl2y8Nxy1t32fTNelVfnD6ZzZXak/EMJ1
+	 bDuj9hkAd8joytvWH2I70egMnFp0Tnc94DztmrDba/AIXPZWoR15HiGBaKZCpKTYkQc2g
+	 X/MPDru3MjxSlAal5OQaIY5RyOKl9BlHhlMdNDd0Ob3Y7H2CZ+m9dwhihIxdPnow5+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793978426;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793978429;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fjXC0m7vB3Xiy5SvbhOFI4wpy3VxvAkCMaqlqhn8FJg=;
-	b=hlKmVFGg/uvtJeG6rd7uF5YK+JX4a4LYqkibHE3LO2GuS7rPPs/WgzYWvOIA+P6VaBL0
-	 wCZlvuc+A1/cfaY+ExYfV1jDPuo6XxucYTH/C4JCioLgBrXd+2IsHcNGVdG/GhacTNtPa
-	 wFZ7K6QOYZIe8PDQHi3WeLAmsBdt985J5HeTfRG0Uy6AEJ63Jyz6FmXKb18XhUHBiwXf7
-	 4xG9DdtFdDowTfic2lXUEQG/Z9+25GutzuhawACXc6ZqnYRP3gj2KT3PNRyORIeQEGy8b
-	 ULKd76fjCpL/J7Z6UjttQ2JAPbFVxb8VK2PpME2LVO692o7f1fh5V+yBCuJwtKmjHcw==
+	bh=ST6MD8nmbeHSATr23Q5RjwDAfq9V48NFRR4Gq9s30TE=;
+	b=H4HD2Ljy3wT1R171omgiu2rr04yG/pLFG0XgncaIJ27SuUr1R4NbGdZBn8ITMAqpGMyy
+	 lXzR4zSYBhOwbkc9ErGOOzGciQIWLSnlPgZIWajqwG5nmwDuZ66HcT44l6X0UtrrvQSly
+	 M++7n9o18ObMLl1nwiWRhuOXhdljNqBryAIClGwVip6qmuV/t06jYiAnymSGs22/T7opE
+	 IMr+6MwgIHDVdrPgYcB+AaU2F858J+/IRlb/aOSIEGvlGyN4JPT7ixkH38jHR1SnI0xc6
+	 Z06OpPxm8GQK/FXVk/LEhD7Zz0fiT7paUvce8Xcn3pxHk4WRQ3sO6yvS9KmxWA+iRQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linaro.org;
 	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oY2FMiUO;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=g3SSXtRo;
+	arc=none smtp.remote-ip=209.85.128.42
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B68060A2606
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:20:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7B68060A2606
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AB860A261B
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:20:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04AB860A261B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oY2FMiUO
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a208d93758so7849335e9.3
-        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 07:20:26 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=g3SSXtRo
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4b7252a32c8so6507925e9.0
+        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 07:20:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1793978425; x=1794583225; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1793978427; x=1794583227; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=fjXC0m7vB3Xiy5SvbhOFI4wpy3VxvAkCMaqlqhn8FJg=;
-        b=oY2FMiUOeATW8jm3Hg03ABGjlocI/edBpFsBG280NG38LFWpiNwICoYCM77MXCv9BS
-         C00SpHEi1Wa5v0C19kBLjqNRsZ936aWHgOnEzuco8iaRZM1HvQwq+gK/WXkRckLllnts
-         00hjZdQiexjwWXr35zSxFqfZXIL79uIHbTv8g4VrXUj5+WN0kaCtRG4Ae67BxQwC1Jkh
-         KHh1kzRyd2jN2WHTGSrF8XC9XzqyCG4dv2niHUfuHRHWgzfzAwDY3H2Ce8PXLonq/ruk
-         y+rxdTmBM6XuWShHVn1JHZWVWQW2EC/gTohxDKR46nQX9VT++EdgBux/Vda6ALfMs9AF
-         V8Kw==
+        bh=ST6MD8nmbeHSATr23Q5RjwDAfq9V48NFRR4Gq9s30TE=;
+        b=g3SSXtRo+0J68qGFgndA03VhUHJI4a4OYgCAgAKTp6/ni7jUEoKWTOgNRZOudyKWqo
+         PdNe1AvIyB2uEiDhlqOWcMpKypv/e5+RvittSjOugWvT7V8bclE6x40ic65uoF09jDjJ
+         C6JDPISwt70NQT2mQde1WuRdpV3YVQF6zFMOpRXm+gOdVU38S0SV+0h/rczSaax6wFS/
+         d2EDY3eol4Be7fi+cw8fcDiB36TIHYpinopsL60d1QaWeNOtk6NkUCsvuthYwRMzhq7Y
+         VHwheeLdfMuTjm0PS9NTWRnsFP00czBgUcoD1QqOuU+3yJ/4//jirj4ajihUWn//X/D4
+         qxdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793978425; x=1794583225;
+        d=1e100.net; s=20260707; t=1793978427; x=1794583227;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=fjXC0m7vB3Xiy5SvbhOFI4wpy3VxvAkCMaqlqhn8FJg=;
-        b=arcNakNaQHYfZM9SzsV1qs6N2W6MapzXG2yWovKWtAvbKGNS6o5QhSeTDnrkc0q9Zi
-         X1zh9elauJtzKPMp9suHn6rhErgPamzCoXaxma0hm9hu2iJ4wDuuIKQ+O0fcpJGF42vB
-         noxie4XaSITfG8lhviW+Nz/g1LFmqyxby6b1lczhDeg/pAcnEwfJOOVwTVN07okl59Iy
-         jZ8e/3WRDM2q45b38Lu0O6KxX37/zqCIXlccJ8ydoMgxeLXIiOGsJ3qbTAkvZeE5wWp8
-         a6WdjpqUq0KRHTuHkxojcgF5tu5GpRpYeGm9f86AzrCJ8JesoEXE35jUubeSXA4qy2Kp
-         5ZOA==
-X-Forwarded-Encrypted: i=1; AL+hErFMxvjj7UevfPedeFmsMumokh4iPfbGSwQcrFRGzP8me1/7wPPJv3g4xizmyOgUmFdDqGgcJJ+zdzw=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/Lge9xH4wx+J1z41fwrw84m72ft4mlFzfUpK4BawQzv2Bc83aZ
-	m2tnsD3PhnjSY6ifkfuo9+iJeoTfcyqRb0P0NlBmPd23mquNHESl2vitYM6B1YosUJ0=
-X-Gm-Gg: AYBFou25wl9p94O6XOuj7oyUkK8n0isKrl3S8zOo1LVDgy5ATWq/0yxTXFy6V5T8tR1
-	G0SzcYivhuo3T46WieJ1wJAbZ5YQmaiyi2t8+mhd1HPuEd0LgLRLgjpMbPUqKarJIKyJRXoRFcX
-	L5lYeEsOCSBP4bYhsrhHhAywjHgKUKNqnUvHX5b5gbnkOOA6oXj97zIIFBUp4gST6AQBLkwVoi6
-	9JfPp/V/kC/hB/bsWzo/G89vl1j5/aHUowfC6zO9n0UopTDMvVIChmVxpgTpKluJOrstdFh6UaG
-	zMnx1N2yuCB1OVLr6bmWKif0mXr/vTgjrMlaQjB/gpv2UAO2O3AzK+BPEHZVBbopH6d7+s0om+x
-	fywGAXeBpmMoI1hV+gNpEspDRfrwQ8GZFU1Wyr+yYT9bFiD/thpU1V5k5iTqag/mD2ZWIim65QS
-	k/R2rxgEGi1iyMnRStCe+cacjk15QDM6GGBiFqHroO70MdIDe3MsxPDWb1AT6CBJ1Gw054rBZB/
-	LOGnu9y/QDyH81bvIa5IX/ImTRniz6eqzfZJNRoAvHXeBPs1t5DtVT566dDEDTYbjnqaupN+f4A
-	9JiKri42pf2dunoGS61MkrsTvfphKS0OVtxM2oJoEHv4VK0=
-X-Received: by 2002:a05:6000:22c1:b0:48d:eec6:308b with SMTP id ffacd0b85a97d-492765a4011mr6585904f8f.21.1793978424778;
-        Fri, 06 Nov 2026 07:20:24 -0800 (PST)
+        bh=ST6MD8nmbeHSATr23Q5RjwDAfq9V48NFRR4Gq9s30TE=;
+        b=CVQtsh6YaWPi4OZcI7CDZQQhaqMr9DJpSTIH63zw71jTzHP9PTSeNcRfewFjoM8zK4
+         c0UWIjWphj/IIbh2KAxVlqtMQlvg/tzTR8tpLSXAAPH5mjB754wCEd4nn6q5dyUgPzKH
+         vHUnCpNIdXKI9CVLC0Xf22HU8zi18Lz4r0ZF/7dAkewNW/KISzqvCHNjHWxnKhOuz422
+         w/uy4bb9DpEQc/Zpm6/3gKhskCNWgeEwnaLNh8e7dlQpERdZdIuTxFgkS1BMh+Q/hwe1
+         JhL3e2ET42Naqjc3czAnVTYZ8DSdD42XPhxgjEi50a4cLyNj2eqXCJQloUJdpWB8aPCi
+         UwyA==
+X-Forwarded-Encrypted: i=1; AKwUvByboD7q1A3+sSZ3tN4T/YuDpOOw8OxL3dXaOp5T4rfKBZJm7/KARTEHXwTiWsz5Ik88tK70oh64Szc=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+qcO/logQKRbJWN2No91gKQtWBkj0LTqvvo1AMMalD/+Pjlhvk
+	tDanKLPEYQMEAeznipIKVo4V2XuMI2LkW/pQISSg4m1e3YrUlpNE4m/Y5ITXnhVsDWM=
+X-Gm-Gg: AYBFou0kvq89ErwN1c7XHLW3hhRH0QXLkrhR/cCBxaKPULnJKMC6P+ZSI9HiFrJJmSO
+	lc7SajQXUy9P9Jg4CQCct+JowFiltonNz2JstLNGgm4ADe7KZvI09sSKjb+CAHgQtH9rB0RXzlG
+	z7Vrzhs2Nfuouu8/94M2T0RO8ykm+2jgs5jtF41KJEn6+vcrN+GprJ9JhwLopwhBWBhL/iPCs0y
+	gFZ/dcJkRpjqeGN4x7PlNuyjee8lbXdOqIkt3ACCZ3z1BZczIunChT9QmUnJR2Ja5h1lRwD3dK2
+	DoecME0dlwjDCTZn02xZGHHxu97rSHcXudHIWl6N5NUKzLIb3KGHHZn7A0/F2E7bbUq58pJwg0H
+	dr/zdYKWOEcHxxGqkGVY2Pheb2pvXMnnJDQ9KwWacH3y64gf+DIn0hSAyzPMrFKeiA1jFSDShOy
+	Ftm6Zjhy4EXwZ4iktL+27cFFjncifaviLGz/NuoetA9j0Z89wD/K3O3saeLD9VISyJbU8oFnYCT
+	ydIU+p4QTLjgk0PrHNk0sCCOlwZ4vdL2CLD8QvywbJF/Xv+6EhoHp2YuGxA4Kf9m+k+i0JZqzdn
+	pdMf8dHot2ap4+7ENBPD+pLs2LWOL8x4FBM93ZMvgrJOQlg=
+X-Received: by 2002:a05:600c:3111:b0:4b1:2026:6b41 with SMTP id 5b1f17b1804b1-4b6dff87640mr49109825e9.30.1793978427419;
+        Fri, 06 Nov 2026 07:20:27 -0800 (PST)
 Received: from vingu-cube.home ([2a01:e0a:11f4:3020:ed97:32bc:977a:3b65])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5e23sm4477405f8f.45.2026.11.06.07.20.23
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5e23sm4477405f8f.45.2026.11.06.07.20.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2026 07:20:24 -0800 (PST)
+        Fri, 06 Nov 2026 07:20:25 -0800 (PST)
 From: Vincent Guittot <vincent.guittot@linaro.org>
 To: mingo@redhat.com,
 	peterz@infradead.org,
@@ -104,9 +104,9 @@ Cc: qyousef@layalina.io,
 	kayracizmeci@gmail.com,
 	tim.c.chen@linux.intel.com,
 	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 19/20 v3] sched/fair: Take into account slice in EAS
-Date: Fri,  6 Nov 2026 16:19:46 +0100
-Message-ID: <20261106151947.3991524-20-vincent.guittot@linaro.org>
+Subject: [PATCH 20/20 v3] sched/fair: Fix tasks stacking on same idle CPU
+Date: Fri,  6 Nov 2026 16:19:47 +0100
+Message-ID: <20261106151947.3991524-21-vincent.guittot@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261106151947.3991524-1-vincent.guittot@linaro.org>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
@@ -121,50 +121,63 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the cost is the same, take into account the slice of a task to try to
-select a CPU where is will run first.
+When tasks wake up simultaneously, they can easily stack on the same idle
+CPU but only one will run immediately. For others, a different CPU might
+finally be a better choice. Take advantage of the push callback to try to
+find another CPU for those tasks which lost the fight and haven't been
+picked.
+
+Call also sched_class->wakeup_preempt for the higher class so fair can be
+prepared of handling several tasks stacked on the CPU. Other class returns
+immadiately.
 
 Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 ---
- kernel/sched/fair.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ kernel/sched/core.c |  1 +
+ kernel/sched/fair.c | 16 ++++++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index a1a3aa45ecf6..ef4cbcca2437 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -2311,6 +2311,7 @@ void wakeup_preempt(struct rq *rq, struct task_struct *p, int flags)
+ 		rq->next_class->wakeup_preempt(rq, p, flags);
+ 		resched_curr(rq);
+ 		rq->next_class = p->sched_class;
++		rq->next_class->wakeup_preempt(rq, p, flags);
+ 	}
+ 
+ 	/*
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index ea117c3d0dd7..da9c4416f1b5 100644
+index da9c4416f1b5..262626455497 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -9885,13 +9885,22 @@ static bool update_best_cpu(struct energy_cpu_stat *target,
- 			    int prev, struct sched_domain *sd,
- 			    struct task_struct *p)
- {
-+	unsigned long task_slice = p->se.slice;
- 	bool target_idle = choose_idle_cpu(target->cpu, p);
- 	bool min_idle = choose_idle_cpu(min->cpu, p);
-+	bool target_first, min_first;
+@@ -10649,10 +10649,22 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
+ 	/*
+ 	 * XXX Getting preempted by higher class, try and find idle CPU?
+ 	 */
+-	if (p->sched_class != &fair_sched_class ||
+-	    donor->sched_class != &fair_sched_class)
++	if (p->sched_class != &fair_sched_class)
+ 		return;
  
- 	/*  Select the one which is idle */
- 	if (target_idle != min_idle)
- 		return target_idle;
- 
-+	target_first = task_slice < get_rq_min_slice(cpu_rq(target->cpu));
-+	min_first = task_slice < get_rq_min_slice(cpu_rq(min->cpu));
++	if (donor->sched_class != &fair_sched_class) {
++		/*
++		 * When rq is idle, several tasks can select this rq at wakeup
++		 * without knowing others did the same. Give another chance to
++		 * select another rq if not picked.
++		 */
++		if (sched_class_above(&fair_sched_class, donor->sched_class) &&
++		    entity_eligible(cfs_rq, pse))
++			fair_add_pushable_short(rq, p);
 +
-+	/*  Select the one where you can run first */
-+	if (target_first != min_first)
-+		return target_first;
++		return;
++	}
 +
- 	/* Favor previous CPU */
- 	if (target->cpu == prev)
- 		return true;
-@@ -10055,7 +10064,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
- 			 */
- 			if (target_perf < min_stat.min_perf)
- 				find_pd_cost(pd->em_pd, target_perf, &target_stat);
--			else if (!update_best_cpu(&target_stat, &min_stat, prev_cpu, sd))
-+			else if (!update_best_cpu(&target_stat, &min_stat, prev_cpu, sd, p))
- 				continue;
+ 	if (unlikely(se == pse))
+ 		return;
  
- 			/* Save the new most efficient CPU of the PD */
 -- 
 2.53.0
 
