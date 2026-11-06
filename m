@@ -1,53 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793990925;
-	b=KxOcneuv7BNDISmzXe8u+Q9s8VYvkwGNYU6Uky8Gc1fhn13Uu2UStu9itftyIix+Dm69
-	 M7KsEYS3jJCEDseGdg3OW9NjQT5CEe6hSUzvMHiYZVdcCR82clXEG+BUHG/BfjRm3b1RJ
-	 B3/zYneGQoZzAUYr5GtgVoEBfivuLCNx+H6hdTIhY0KOCiY45/SGqq7AkaF/w/snVjC99
-	 r5MKQktCkQy1NSejNeZA3nQJLnmMHzY+qqEtQ8vi5483VE5wO97WSXafZ3h23Fl21muJw
-	 N6tdxO2m/KJsfJV7IIGJGb1neh7Fkhj2CKPgTZNgiHVeJX/IErG4d2rNUzrgW1Gv3IA==
+	t=1793994954;
+	b=OYzJ+NSgqXB/iZz4ebzU0Fa19E5a7JEMvCjUmWMFJ9Hwb4S9lVMosiA//PHIezlPWLKF
+	 7kr7iH99uLJf1evKmIvLL2ZLBBROy9Wh5XZhg1UcWbUs5NfwdXQsYPpJyvq3gCZviBIFh
+	 kjguaTiZiJ5WKwjHR/bl8bRYb3bMZbZdQlrZ9JuoHDjoR1G6su2hiRBM9Mc9/SBpZHP12
+	 6f6J/1K3QzNNraNBQP99SxBt6twBgt0coNDRYehk56DSGwYuZSHMcLDzp5a6XkO95fspD
+	 N7FrJtLRGe+MRoeEiwVuud84mVq9ye9CaS+NubKSReLrVl+E7/197HSF03dVx7ZL90w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793990925;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=FYah2t2N3a3eOWWExaca0/JbpChilT/7eRA9w9v9nhg=;
-	b=5LKvSMrUfkJtobIEbfCtAkP5KulevRivjz9PLu5x2+nQpN1wCXI2Zcz4lekSSRA1Zhl9
-	 oLCSfhqBgRsLuS4o4DTTrVDWD5W1mi1330R/bj3vObdRA4UUqbetQ56m0ulpPeBHc4EH1
-	 6zFHNpXmTItYBO43VGJvM5h/PNwNBxnn+0LB0T2baYz9c7nothXQgtbIPEV1zxzG4n4Nk
-	 SSEEO7JgJc/QWF9ypM7nlbNXliNxbv4+z2o0G3PV+Toc8Ge4NGIdFUg6Y+7CgO3k+SZ8T
-	 jT1bka1EWPt83rjYEQTQj3VeKjCm50Pp34WETftpi4C1ja5xYTRYkCxT7OvOKlPonxA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793994954;
+	h=Received:DKIM-Signature:Content-Type:MIME-Version:Message-Id:
+	 In-Reply-To:References:Subject:From:To:Cc:Date;
+	bh=CVnrDRD14RkQVFOP831KmPYjio0EhE/Z8ExMuIwhgaA=;
+	b=S4ms/BpsnIHpUUQbOhX1Ki64sNZv2u3fJfR08OBO3hT90lEJ2GM4ZSL4PNmM1JLqsTSC
+	 ggXVST6Ws/MIBem6M1Pyi5swPTEGWEIA0FzjlYWqL4Zeh0qt0AoBf75L/MH4crGRpnEUf
+	 PsH3T5yTmjRIhs9kZagX6nqVCWAsflWtAVs5BaDiaUZTUzaFHzq4MTJC4BogofSm5HyA8
+	 mh3J4dfeWxEPr1lBCE+uXj5uJbGIDzv99bbOvxbqkztvJDMQz4rkoUOw63/6/WZf947JV
+	 TWiMhqepLXV2JdFBuYRpo90ASo6kYAGi0SPyvv1Ottvk3VyFGBDWqK0pgCpJC+Ie2kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ljn3zH3q;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=B4itSoeh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB149606A334
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 18:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D565606A32F;
+	Fri,  6 Nov 2026 19:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ljn3zH3q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5519B1F008A1;
-	Fri,  6 Nov 2026 18:48:44 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=B4itSoeh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928D81F008A1;
+	Fri,  6 Nov 2026 19:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793990924;
-	bh=FYah2t2N3a3eOWWExaca0/JbpChilT/7eRA9w9v9nhg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Ljn3zH3qOCduP0LutBCPBj4N7NrnkAOw6bhfMkI2bDkRrcKFzZIz60MdnGVSBbj2B
-	 hwsvEL/fwY8p5B3NYcyPCqgHrHY9zqmzh1zsTHNp4AnsEvBFwgLBe61jaenJbZJqdJ
-	 Ne1Rv657wdXBIKb+0i0AYldRLwKrHZWkMGrQ6m+proXlFNxiWONfEh0X/aAS/dqvgS
-	 rC8moAmV1XRcBPIU/Tt7gJgi2U/k8wXda9yTS3viYVujpcUoCNAuQW5DcCqnq+xuK1
-	 HZ9exEfoRvaD2H8hiyJjxqtS9vrSrVHMOXZWL5XNhX4xxfvN7FS58xgJQ1+Nf4S4aW
-	 8aVfCQ31+ppIg==
-Date: Fri, 06 Nov 2026 08:48:43 -1000
-Message-ID: <8b54675a18fdf659a1c913784d5a27e9@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Zhang Qiao <zhangqiao22@huawei.com>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Hui Tang <tanghui20@huawei.com>
-Subject: Re: [PATCH sched_ext/for-7.4-fixes] sched_ext: Fix partial-SMT core counting in calc_shard_layout()
-In-Reply-To: <1eac08a9-b5e9-b353-b9d1-1e2d32802993@huawei.com>
-References: <1eac08a9-b5e9-b353-b9d1-1e2d32802993@huawei.com>
+	s=k20260515; t=1793994954;
+	bh=CVnrDRD14RkQVFOP831KmPYjio0EhE/Z8ExMuIwhgaA=;
+	h=In-Reply-To:References:Subject:From:To:Cc:Date;
+	b=B4itSoehTAdlgPLd1obhUJeN+qkvCKJbDDTwW9xTtElsNnSnKFVfcGKrxfLMgC/YS
+	 4kjTk93659roj5mozArUqiY2yA3E64SAY1JZw5DRLs2BpjKPA0MNX7YXA3si7wyDNe
+	 7AbYPepCaU/kOljEqD5gSNl7EOE0pYqUPbHxfB/LEJ6pfhp9zAWL41OvkXr2WeKBZZ
+	 usMSh9kpqYGmaPBiuRQzzKetVEDFZQ6Wuy0S+i/+IZMlJCign+yaxeX705prAbEqQk
+	 lxteo/YeHr99NPJjDSCFtkSjEWTJOCQek7t2i6HMq/UFZ50lHwE2sm7wBh2sJWmgfk
+	 mgpNKNw5LBqZg==
+Content-Type: multipart/mixed; boundary="===============5974966905912842169=="
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -57,36 +49,135 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-Id: <d8c4fb5ce3e465c9c9e562c851d586ef8e5cc43d85d61998f63f2c48d431778e@mail.kernel.org>
+In-Reply-To: <20261106094343.174905-3-radu.m.toader@gmail.com>
+References: <20261106094343.174905-3-radu.m.toader@gmail.com>
+Subject: Re: [PATCH 2/2] softirq: Treat an interrupted idle task as idle in tick_irq_exit()
+From: bot+bpf-ci@kernel.org
+To: radu.m.toader@gmail.com,peterz@infradead.org,mingo@redhat.com,tj@kernel.org,tglx@kernel.org
+Cc: juri.lelli@redhat.com,vincent.guittot@linaro.org,dietmar.eggemann@arm.com,rostedt@goodmis.org,bsegall@google.com,mgorman@suse.de,vschneid@redhat.com,kprateek.nayak@amd.com,void@manifault.com,arighi@nvidia.com,changwoo@igalia.com,frederic@kernel.org,anna-maria@linutronix.de,bigeasy@linutronix.de,joshdon@google.com,haoluo@google.com,brho@google.com,linux-kernel@vger.kernel.org,sched-ext@lists.linux.dev,bpf@vger.kernel.org,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
+Date: Fri,  6 Nov 2026 19:55:53 +0000 (UTC)
+
+--===============5974966905912842169==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 
-Hello, Qiao.
+> softirq: Treat an interrupted idle task as idle in tick_irq_exit()
 
-On Fri, Nov 06, 2026 at 10:44:30AM +0800, Zhang Qiao wrote:
-> A core is counted when its cpu is the first cpu of
-> topology_sibling_cpumask(), which includes offline cpus. When the
+TL;DR: Commit message only: claims the new is_idle_task() gate is "strictly
+wider", but it also now covers idle-injection kthreads (PF_IDLE) and not some
+early-boot cases; the changelog should say so.
 
-AFAICS topology_sibling_cpumask() includes offline cpus only on mips and
-sparc64. x86, arm64, riscv, powerpc, loongarch and s390 clear an offlined
-cpu from its siblings' masks. Which arch did you hit this on?
+>     softirq: Treat an interrupted idle task as idle in tick_irq_exit()
+>
+>     tick_irq_exit() only runs tick_nohz_irq_exit() if sched_core_idle_cpu(),
+>     which is idle_cpu() unless core scheduling is built in. idle_cpu() is
+>     false when the run queue has tasks while the idle task runs.
+>
+>     That is the normal state of a CPU under sched_ext whose BPF scheduler
+>     holds back a runnable task of that CPU in one of its queues, e.g. a task
+>     of a cgroup at its CPU limit: the task stays queued on the CPU's run
+>     queue and counts in rq->nr_running, while the CPU sits in the idle loop.
+>
+>     tick_nohz_irq_exit() is what marks an idle CPU as idle again for the
+>     scheduler clock after an interrupt in the idle loop
+>     (TS_FLAG_IDLE_ACTIVE, sched_clock_idle_sleep_event()). Without it, the
+>     next exit from the idle loop doesn't resynchronize the CPU's sched_clock
+>     with sched_clock_idle_wakeup_event(). With an unstable sched_clock, e.g.
+>     under kvm-clock without a stable TSC, the clock of a CPU in tick-stopped
+>     idle is clamped to its last stamp plus a tick, so a task picked after a
+>     reschedule IPI (which doesn't go through irq_enter()) starts with a
+>     stale exec_start, and the next tick charges the whole idle stretch to
+>     it. A cgroup holding one such task was charged twice the CPU time it
+>     could possibly have used; numbers are in the cover letter.
+>
+>     Commit 548796e2e70b ("sched/core: introduce sched_core_idle_cpu()")
+>     fixed this same gate for the other case of "the idle task runs while
+>     nr_running > 0", forced idle under core scheduling, where the symptom
+>     was too little idle time in /proc/stat. sched_ext made that state
+>     reachable without CONFIG_SCHED_CORE, and there the symptom is idle time
+>     charged to a task as runtime.
+>
+>     Ask whether the idle task is running, which covers both cases. CPUs
+>     whose run queue is really empty are unaffected; a CPU interrupted
+>     between leaving the idle loop and switching to a task has need_resched()
+>     set or has already left the idle accounting, see tick_nohz_irq_exit().
+>     sched_core_idle_cpu() has no users left and goes.
+>
+>     The new gate is strictly wider than the old one, and deliberately so.
+>     idle_cpu() is idle_rq(), rq->curr == rq->idle && !rq->nr_running &&
+>     !rq->ttwu_pending, so besides the two cases above it also skipped a CPU
+>     idling with a wakeup queued by TTWU_QUEUE whose IPI has not run yet.
+>     That case is now covered too, on any kernel and not just under
+>     sched_ext. It is the same latch failure for a shorter window, so
+>     covering it looks right rather than merely harmless, but it was reached
+>     by reading the code and not measured on its own. What keeps the wider
+>     gate from giving a CPU idle accounting it should not have is that
+>     tick_nohz_irq_exit() tests TS_FLAG_INIDLE itself and only does the idle
+>     bookkeeping inside the idle loop.
+>
+>     Compile-tested in four x86_64 defconfig variants - SCHED_CORE=y with
+>     NO_HZ_FULL=y, SCHED_CORE=n, NO_HZ_COMMON=n, and SCHED_CLASS_EXT=y with
+>     SCHED_CORE=y and NO_HZ_FULL=y - with no new warnings at W=1.
+>
+>     Tooling: the bug was found and this patch and changelog were written by
+>     Claude Opus 5 (Claude Code), in a session measuring cgroup CPU limit
+>     enforcement under sched_ext. All of the patch and all of the changelog
+>     are tool-generated; the cover letter says what was and was not measured.
+>     By the threat model in Documentation/process/threat-model.rst this is a
+>     regular bug and not a vulnerability: it misreports CPU time under a
+>     legitimate configuration and crosses no privilege or isolation boundary.
+>
+>     Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+>     Signed-off-by: Radu Toader <radu.m.toader@gmail.com>
+>
 
-> +		/* the low-numbered siblings may be offline */
-> +		if (cpumask_first_and(topology_sibling_cpumask(cpu),
-> +				      llc_cpus) == cpu)
+The commit message says "The new gate is strictly wider than the old one,
+and deliberately so", and lists the newly covered cases as nr_running > 0
+while the idle task runs, and a queued TTWU_QUEUE wakeup. Is that accurate?
 
-The comment describes one scenario rather than what the test does, which
-isn't very useful. Can you state the rule instead? e.g.
+is_idle_task() tests PF_IDLE on current, which is a different predicate
+from rq->curr == rq->idle.  play_idle_precise() sets PF_IDLE on a
+SCHED_FIFO kthread and then loops on do_idle():
 
-  /*
-   * scx_cid_init() forms each core from the siblings in
-   * @llc_cpus. The sibling mask may include cpus outside
-   * @llc_cpus, so count a core at its first sibling in @llc_cpus.
-   */
+kernel/sched/idle.c:play_idle_precise() {
+    ...
+	current->flags |= PF_IDLE;
+    ...
+	while (!READ_ONCE(it.done))
+		do_idle();
+    ...
+}
 
-The fix looks right, but the patch is whitespace damaged and doesn't
-apply. Can you send v2 with git send-email?
+During idle injection rq->curr is that kthread, so the old gate was false
+(except on nohz_full CPUs), while the new gate is true whenever
+need_resched() is clear.  Interrupts during injected idle will now run
+tick_nohz_irq_exit() with TS_FLAG_INIDLE set, which does
+tick_nohz_clock_sleep(), updates ts->idle_entrytime, and may start kcpustat
+idle accounting.  This affects users such as intel_powerclamp,
+cpuidle_cooling and idle_inject, and is not limited to sched_ext.
 
-Thanks.
+Peter Zijlstra raised the same point on the earlier posting: "So
+is_idle_task() is also true for idle-injection tasks. I *think* that is
+also right in this case, but it wasn't mentioned."  No reply or changelog
+update addressing it is visible.
 
---
-tejun
+Conversely, PF_IDLE is set by cpu_startup_entry(), not by init_idle(), so
+a CPU running its idle task before that point (rq->curr == rq->idle,
+nr_running == 0) satisfied idle_cpu() but does not satisfy
+is_idle_task(current).  That looks harmless, since TS_FLAG_INIDLE is only
+set inside do_idle() and nohz_full CPUs are still covered by
+tick_nohz_full_cpu(cpu), but it means the gate is not strictly wider.
+
+Could the commit message name the idle injection case among the newly
+covered states, and replace "strictly wider" with wording that matches the
+PF_IDLE semantics?
+
+
+---
+AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
+See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
+
+CI run summary: https://github.com/kernel-patches/bpf/actions/runs/42280840441
+--===============5974966905912842169==--
