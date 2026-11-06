@@ -1,115 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793978437;
-	b=k1UQf2fnffvwueClWlliU+y6sVLAgiwbcg3bPVkTidXSIrULk0B+FzrBL3HwBH9IsD8o
-	 uCQ13T7j4W/PrapoS0nFAZygUeY0QBKOE+6VO0Nl2EFWPGXJxcv5HGYGUIk0ikEy4qGbV
-	 UgcbaXsovt46lL4FixaZEWk3Pqg+Y4L9RWgnjURsAeUQBkV4YY+IBaN4MwVRCchWsRWNr
-	 d8NZTkxWHfZoy0g7JGKMgINt9Ksprj64nQfeX4oFzcqLyroXFf9rRVktwETG2AuLcG6BD
-	 qTubjYPTsRJa9XV2PoQ8A0VLx7UKdG/nokv9hfXZ0raQH30AV638eeUjNDCbXQ4OhBQ==
+	t=1793979582;
+	b=oVxIsgYEzYDSW6z/pltAuTLK9IOOHNR4EhPRC7j0rhkm7/4LxhmsQXy01YJRYGlu8F07
+	 wDuwxrHPvLD7PiU7NbxaqiEm5AsOztW2c/yNO+8bhzoiLC1pEcJjclDhgvXd9kqTOk80l
+	 kLlx19swrG5ONc9Zigc7syDF6Y0qvxo1HyLkNeJA+P2tks2ALMxHFbRCwK/pGZF0/88xg
+	 OnC6q07cdLnyXsE8WyZOqblud7QQiHFh2EJW7j5gCeSmk4HSKwl2fxLIfNIXhc2LVRYSA
+	 1lAbBW/YP7xnte/zcSljFxKN1cpMNCSc2F7x1fPy3TrPXckRQNeuJHMhSzj/jMLCmOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793978437;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=43QcRTZ2xbLW2eh4U1VgtQuQohzOHYlTBhBh08gkyrE=;
-	b=yhv+f4oU6OQYaY9I1qCylJtdCyLo9kMeEblGSHvwY0xJewxjOjg61qEJKWanJ0q9Rvpx
-	 k07uf1IWe0Gk0LTNbsD3rZ5407K4YgPLgC6R0vR0bcJ7Ea3FxYPrrtFrnb/N8tsT/EG6e
-	 Wuhq6AaTOi6O7rtKOKegl/Cr1C5JOO1PM7kMkB+0RiN7Rvpm3UmFnvJacnCcx4W9a/z9u
-	 1I3JG1334KCRcED4NUku60kjou4WPhXaqG7INrAUsIGwqucTXffhs68bOENmy+TZzbRc7
-	 IdaH94+fsKz6LKz1hY1LSPsx1xkr5b508NCJfzURWNKK+88M03MN6WY9gqJqkAcjjoQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793979582;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=m2MOwziZgOA/mLSX0c95iPjgK4yw2bfTBfiBdo3jZ18=;
+	b=pXAdc0H4+qIwm/xyki3rHTqoEdpPKrM9ICa18zAs0Th1Wf5GfRA1sYlnHT4u60vz+hef
+	 yhMth/lCu5ut128L/+V2Y2sBP3GDeijSJynJK6afV21ownSrQTVSO7xB+8yVxMazxjpOL
+	 288kqSXMeWDcVLPWn18jCacmnoelXZjL7oVs2QENmPZObA9RzzR7UddC/7RxEcYzsozm3
+	 9Ojl689bf/B1d89/eTkNNrvp9LQgcN4bF5+WEIGHneSb0vm02Oub+bz4eVuv4r1vZtAg6
+	 90rmjO7OwhIvilkvLY/9Bm8S82tn7i2LxX5VR/FDthx78vkaRkuKfTsQ1L5oo6ZcMYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=JIohktWY;
-	arc=none smtp.remote-ip=209.85.221.44
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Lg+TTFqO;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FACD606A339
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:20:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6FACD606A339
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5686C606A326
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=JIohktWY
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-49376eb635fso239844f8f.1
-        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 07:20:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1793978416; x=1794583216; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=43QcRTZ2xbLW2eh4U1VgtQuQohzOHYlTBhBh08gkyrE=;
-        b=JIohktWYXDOSol+IDd85t2QV5kkc65gGfAbZ3cq9yOmDYNC2QcO3CkgET2W2ipqcJn
-         YL5IQ0+/HYiCewugaimuFsSRel3dffeNBH/eF0kUPfbJFrTx0N0Zum9piCwINR3T4YD8
-         Gx92LUhOxI59iS0QjJEP+/fBlf9PZTtyQaAHOFJgG5ixfDDytvYI90cllV1Zp6l1bnj3
-         OBFWcKgtCNw29jOIo3WghhQKMka7S5RE4Pc+gbBXxTV+U0wLNmCd38pFSffHx7a5zuig
-         0L5/HIw4WpSDL/7xPC4nOF9AtaVvcbzs/5j2+hjdh/P9GpsB+jFsmNAt1xSptjSAGdGm
-         ROnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793978416; x=1794583216;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=43QcRTZ2xbLW2eh4U1VgtQuQohzOHYlTBhBh08gkyrE=;
-        b=hb1bAuJ9gQnUcIW6vh3wuSfCMG+l8L2mqzqelKo9b1zV6js5BN0JDc5gutEFFzjZgw
-         s2dJppDJsaVt5R4Ivp8LD5MVK2S/UsMO+BAOpuHeNEqurglpWaR9y0nnkv/tddUaMRPz
-         r6XXk2az1Kh6s5vZE4k008ncpkGNYRlOblt3gILZZMp5j2YsJwniW/BiEpTaeqSwVDhD
-         JLEa75Cscyqc76DS++Eb9H7D2Zr15ICI3hqIQO6hU7gWVwPnrK10LVC6Fxb7m9E4VMCc
-         VCzmSj6bo3Re+PglsXIexT7hxbH5ahSieMtC4pq2pm/Y42Nj6BZWj+e+8Mq/HOCZLujH
-         61iA==
-X-Forwarded-Encrypted: i=1; AL+hErEnNTe+1ZF+gW+aYk6IP2mRFwPJlJ+vjk7UZUnATUtNUCvVGnlo1Zgnf3BxLpQwan/lvtHXI9jX8nE=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/pNyQ7PJcNxE0sZ39QA6h7LWGYHblexJcxuxv2PDxtCALM1vLm
-	s+3opx5GwoOSEhSZxZvZ5utgqqCXP4EeStcTWSdRjuDyHSG0OqoTGZQkOtp37kslZP0=
-X-Gm-Gg: AYBFou3lc5WjBBm8GbXRW85QkeL4XJCLbSqrBaXE2wNYxPYHfEHszUBz+QCKqNo++rB
-	8yFE0MnHmwo1KnVLgqGg4Q6/F/N35iH7iNC2SrHKROyW7QAslIH+Ux7V7Y4zSCGAsrAOyZ1svJ2
-	GpOvgdUccYTYOxCwQlrebSB3dPKdXW4d4aonyOf5rTbmwATKnsxW7sJnZRFtZu7egEOHpEGrCnm
-	4Q9bNU9+VXCoieKJuWLNpSGSYVca8EVuyGk26bVy7SGQ0rLNMwdE9OCJrt1Lz7zJNJF9/IhE/WM
-	6uX3InNc+egfY4D82sAH02is3S2EDlckejaMRbix3TjGYpp36XeLQbMOalpNis/25EYLKKDdBp4
-	HS8mjXLVISJArVHj1ZG/5g5O5ulXEVbLxQCyrUd6LJIydbvBA/wyH3B+KozLvDVDDVQ7flRSwCC
-	eOY66s/05CcjZPre0S+ot6WlcO3rGAjsAVqrnqJlJziH/ZDZo7XnCd2H164TynRFtxbHt/il3+B
-	t+XH0nwvj91ZMhyiR+EZkM2M6YvuS5EBwtzULFDBRl52Byo1nRb+jQ6Axbb0LY9gk/sU4lDdQnj
-	PZe/nRxSdkPUYiwzXP4Ccfb1hX18iz4c1na91fIkMSazE4I=
-X-Received: by 2002:a05:6000:460c:b0:48e:c84:5be6 with SMTP id ffacd0b85a97d-49275fe4e54mr5481109f8f.14.1793978416458;
-        Fri, 06 Nov 2026 07:20:16 -0800 (PST)
-Received: from vingu-cube.home ([2a01:e0a:11f4:3020:ed97:32bc:977a:3b65])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5e23sm4477405f8f.45.2026.11.06.07.20.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2026 07:20:14 -0800 (PST)
-From: Vincent Guittot <vincent.guittot@linaro.org>
-To: mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
-	kprateek.nayak@amd.com,
-	linux-kernel@vger.kernel.org,
-	lukasz.luba@arm.com,
-	rafael@kernel.org,
-	linux-pm@vger.kernel.org,
-	tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	sched-ext@lists.linux.dev
-Cc: qyousef@layalina.io,
-	christian.loehle@arm.com,
-	pierre.gondois@arm.com,
-	sshegde@linux.ibm.com,
-	kayracizmeci@gmail.com,
-	tim.c.chen@linux.intel.com,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 14/20 v3] sched/eevdf: Push short slice task that are not picked
-Date: Fri,  6 Nov 2026 16:19:41 +0100
-Message-ID: <20261106151947.3991524-15-vincent.guittot@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Lg+TTFqO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43291F0089F;
+	Fri,  6 Nov 2026 15:39:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793979581;
+	bh=m2MOwziZgOA/mLSX0c95iPjgK4yw2bfTBfiBdo3jZ18=;
+	h=From:Subject:Reply-To:To:In-Reply-To:References:Date;
+	b=Lg+TTFqOxPiBhIreIQHgio5BFii4cMALUB59/LnKEarx58MzqjZME4WT0wXO8+x7B
+	 OX2FaWOjn+iEaOnbAKGXf5jvMUlkvHQzvKZRxVK/pazv8Fe9PoLeBaP3yNRAIWhjfF
+	 UPs+4W5yB5t9HeWkzt5o5+mVULsbPVzLu+TU7V3KI/s4dgBLKF5EUUOb8wB1yLyfaG
+	 sQgubv0I2Et+yHKK+gOuTlpQ9/n3KDfQHZS6Kx4oOpOF4+r6DRmKlpIrUFabDuM1xE
+	 5eVvoiJ9UKt8jTa0hEUbyOIvxEhU6whNbQnyEYs0x6NKmWRQUrmyygetQqbirKIx/Q
+	 ktY4iWjMHwljg==
+Message-ID: <sashiko-outbox-201714@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 07/20 v3] sched/fair: Prepare select_task_rq_fair() to
+ be called for new cases
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Vincent Guittot" <vincent.guittot@linaro.org>, sched-ext@lists.linux.dev
+In-Reply-To: <20261106151947.3991524-8-vincent.guittot@linaro.org>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+ <20261106151947.3991524-8-vincent.guittot@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 06 Nov 2026 15:39:41 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -118,53 +59,86 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Even when set as next buddy, a number of event can prevent short slice
-task to be picked. Add the task in the pushable list in case it is not
-picked so it get a chance to be pushed on a better CPU.
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [Medium] sched/fair: wrong util_est accounting in cpu_util() for
+  queued tasks in EAS
+--
 
-This can typically happen when several short slice tasks are pushed on the
-same CPU at wake up.
+commit f7c7d33efb0b25325db58a563bdf908f556cfdaa
+Author: Vincent Guittot <vincent.guittot@linaro.org>
 
-If the task is picked, it will be removed from the pushable list before we
-queue the callback otherwise we will look for a better CPU.
+sched/fair: Prepare select_task_rq_fair() to be called for new cases
 
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
----
- kernel/sched/fair.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+This commit updates select_task_rq_fair() and its helpers so that runqueue
+selection can be invoked for already-queued runnable tasks outside of
+wake-up, exec, and fork, routing those cases through EAS and
+select_idle_sibling().
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 3923587b66e0..894bee51b99a 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -10273,6 +10273,12 @@ static void fair_add_pushable_prev(struct rq *rq, struct task_struct *prev,
- 		__fair_add_pushable_task(rq, prev);
- }
- 
-+static void fair_add_pushable_short(struct rq *rq, struct task_struct *p)
-+{
-+	if (sched_push_task_enabled() && __check_pushable_fair_task(rq, p))
-+		__fair_add_pushable_task(rq, p);
-+}
-+
- static int active_load_balance_cpu_stop(void *data);
- 
- /*
-@@ -10723,8 +10729,10 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
- preempt:
- 	cancel_protect_slice(se);
- 
--	if (preempt_action == PREEMPT_WAKEUP_SHORT)
-+	if (preempt_action == PREEMPT_WAKEUP_SHORT) {
- 		set_short_buddy(cfs_rq, pse);
-+		fair_add_pushable_short(rq, p);
-+	}
- 
- 	resched_curr_lazy(rq);
- }
--- 
-2.53.0
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index 039dce244aaaf..8f99c8bf1a80d 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+[ ... ]
+> @@ -9912,7 +9924,7 @@ static int find_energy_efficient_cpu(struct task_st=
+ruct *p, int prev_cpu)
+> =20
+>  	target =3D prev_cpu;
+> =20
+> -	sync_entity_load_avg(&p->se);
+> +	sync_task_load_avg(p);
+>  	if (!task_util_est(p) && p_util_min =3D=3D 0)
+>  		return target;
+> =20
+> @@ -10060,46 +10072,55 @@ static int find_energy_efficient_cpu(struct tas=
+k_struct *p, int prev_cpu)
+[ ... ]
+> -		if (!is_rd_overutilized(this_rq()->rd)) {
+> -			new_cpu =3D find_energy_efficient_cpu(p, prev_cpu);
+> -			if (new_cpu >=3D 0)
+> -				return new_cpu;
+> -			new_cpu =3D prev_cpu;
+> -		}
+> +	/*
+> +	 * We don't want EAS to be called for exec or fork but it should be
+> +	 * called for any other case such as wake up or push callback.
+> +	 */
+> +	if (!is_rd_overutilized(this_rq()->rd) && want_sibling) {
+> +		new_cpu =3D find_energy_efficient_cpu(p, prev_cpu);
+> +		if (new_cpu >=3D 0)
+> +			return new_cpu;
+> +	}
 
+[Severity: Medium]
+When find_energy_efficient_cpu() is called for a task that is already
+queued on prev_cpu, does cpu_util() miscalculate util_est across the
+performance domain?
+
+find_energy_efficient_cpu(), eenv_pd_busy_time(), and eenv_pd_max_util()
+evaluate each CPU in the performance domain by calling cpu_util(cpu, p,
+dst_cpu, ...).  While cpu_util() guards util_avg and runnable_avg updates
+with add_task and sub_task, its UTIL_EST handling assumes EAS is only
+called on wake-up (when p is dequeued) and that a queued task is only
+passed for its own CPU via cpu_util_without():
+
+kernel/sched/fair.c:cpu_util() {
+    ...
+		if (dst_cpu =3D=3D cpu)
+			util_est +=3D _task_util_est(p);
+		else if (p && unlikely(task_on_rq_queued(p) || current =3D=3D p))
+			lsub_positive(&util_est, _task_util_est(p));
+    ...
+}
+
+When p is queued on prev_cpu, cfs_rq->avg.util_est on prev_cpu already
+includes _task_util_est(p).  Evaluating cpu =3D=3D prev_cpu with dst_cpu =
+=3D=3D
+prev_cpu adds _task_util_est(p) a second time, and evaluating any other
+CPU in the performance domain with dst_cpu !=3D cpu subtracts
+_task_util_est(p) from that unrelated CPU's util_est, skewing capacity
+fitness checks and energy estimates in EAS.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106151947.3991=
+524-2-vincent.guittot@linaro.org?part=3D7
