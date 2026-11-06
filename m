@@ -1,99 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793982150;
-	b=gqid0uagZb92C77LzLmBShB88lb7M/HIF97kMw09jFfEYRTy3j/UK74VD5EDaXxshfni
-	 yrdc/SsXLMMwMP/zpfWqZR2kqLlf/TE5nn3PizMN99LhGZ3uY1AOA+uxmnbercmQxCpDG
-	 JHetNV7u5B1lwjrKQ3o+NdQyngRqAG0x/DYVmXYP5sjgxz/GcF1DYiVThrOQjG/RzkwrA
-	 PoaEME7q7VsFhn7Kh6Ob+q6HM0X3plW7IX+fvWAcygJlDt35tmDELtwe4/6tcbqYcdOEj
-	 3b/mA7sK9te3HzjCWymv0aY9fgB0ul5CaOLGBuQ4A+A5g8jY8pN48uXNR+kcUQEvBfw==
+	t=1793982386;
+	b=sLFdDSjtdKe9ekxSu7XTxWmgt5pcRl7hx28zReV9L5B3bJktKd/1RiSWB5eyEtBwHVrF
+	 S42joRHb+jqTW43RcxiCnYypwiiw40jWuAiosdSlXKFQ4/dBXTi2bV2Bqknt7WuCG18Tt
+	 WlTxx+JxgPRTfUrX+0tHdGY9oOjEwHN6L5WEoLEy605u4ojgQ3sUu/WjS6HJ9SkCDlDnF
+	 M0EwmAJXShD5OvGSixiWUlv7TlCnMIzW0sAyk7RqXjHvHw1e3JAZtyWnsuhTvK7XIw8Bi
+	 hidsbi3rXv2q/BQp/mFb1dg89/EoB/oDPUrrz6Y/j8tf431gZADPtKqmquoe/Kt6M0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793982150;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=5qoJPw+qIEyXRRR0ruoMunl9bad/9mwg4HzwIER48nI=;
-	b=VwrCTHd7Or5e7WzfQv7KRbDH1YVp6qQAIcjtYtz2NRXTF452mW48/ce2c4FkNPfGk5TM
-	 HA5K6vAp/ARcuaBXbqsRf6KTGc+H1rGNvpcGkZ6mWOAv8TtwLKWshP8tvxwvi1EzV3fCj
-	 K/t/IFh/RCgngzDOhchazCRpLnTQkDbQHrpHdoh+jhce7TZHfVXhvwMphYHqLjfBozJBE
-	 jzNl5Fb4DyAxyDvUedAeIja+vnpTWnRfHdsvle1vXc8hPqSquB861EIJVfMZhCjurvd3N
-	 S9rkvYUf2otJn56NPUbTEm/8AnhJrnfKqRMM31xRmG2vRJhTTqL19RhDGE3XALEvakw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793982386;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=6+gwqdPWOIDjmUui4M6/kwgrUtcBEmWZC0K9ykQ0dJs=;
+	b=Hrz/rJRUejaw7X5md6y0iCc3TWAiiRcO3asEuzDTeUYhi0FiNZhiapguC2xC9bcEbgRu
+	 umQ9IcfVavlzHmwkRI9R9lkTBRs8sQHspXbED+zvo+5tomAohvU+G+a59FC9jRrdQ0vBd
+	 nPdJOl6h362tLTGXdDRB6tzDrjTSJtIv9y9MtTb+AIP5xDF+gI50gT6/WOjFjYBkZZo7U
+	 yWfhXZSJz9rvw40jVFCDIDIsNYjw1OpMAdVjq9x/9NY6Puk3qjYSefi6YMTg6bNMR7rlA
+	 PFjBwQQBufGCsyF82lw6G2K9wE2rbXnrqeKbUSpmejoCxwy7a3f9jqnlROQmRPZ7CMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WBn+REG5;
-	arc=none smtp.remote-ip=209.85.128.42
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nv5LkjEg;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C79606A326
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 16:22:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B0C79606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D34606A326
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 16:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WBn+REG5
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a1bc97805eso859185e9.2
-        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 08:22:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793982148; x=1794586948; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=5qoJPw+qIEyXRRR0ruoMunl9bad/9mwg4HzwIER48nI=;
-        b=WBn+REG5OYp5yaRrkagtK/POg0I8iWYdAlZYBvWkL3nwLh6rLyGWu601+0L/1bUSYI
-         eLhpkS58iwNXwfw0kud4yxUdT5tNYtirP0OPUPqyjwxG5V8NH5lb7U4+IPg57eBdpkwA
-         FdSQeFzVUEqd0GIvNRloYfqbhfNCz8x1NvrzTn2EiDFViIbGZ4ArhlQU9bc72ceagEdI
-         LkdohvsBF2913EqYX1he/xaZaeQyqBL1x5RcUTjAzcWcW2QnADcwCtqCGcFDWEd25Dx5
-         Ud7Lt40jP9PK2UTCVFo/07be+ac8om7VMKCFOnzQVMbF+hjW3KbVNWGJe3kuA+rHSvwf
-         2NAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793982148; x=1794586948;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5qoJPw+qIEyXRRR0ruoMunl9bad/9mwg4HzwIER48nI=;
-        b=dd/vutzmcm3qpOsaXYphQ5DNU1CVCW0Ty0DORyxdKp6xS8WMK/+S5SmqF1KvWelsOS
-         fi/r76HZgWcN8kD2l2aLV7/Yi5MOjaTDsREVvJ2KLY2H1or0ewFUIHnwLIZrKgSuXeys
-         5gXZMQunYVPeVkkNugHA9LRSqBeD74XKGH3teHhHsjeuRUaikV21y0iUn6SJ7EDTztQC
-         nH+h+Zu2BTSbr5GmO+QvnXnKycr3D4P0yj3TFM2MSNKo+Ya4njciuc+sw6YcktktI2ur
-         6ATcZ/zlpGFRRWmwvmeo5PVXv4BaN1+EfTwrv4KtDwLJZg+CtkfhkSrH78jdn/B+yGb9
-         T5Tg==
-X-Forwarded-Encrypted: i=1; AL+hErFkcl+X1vlpiIXUohoHirWFnJV81KUuzuvWg96nNU1ic0QK8zgOUyfg+dRoAriIbS2R6rlPGvVZUc4=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9QGRGIPqF82SLxlkks+nQ7N/OYQlLguLRdaN6zKiSkLkxKc7WG
-	8ULJQHi6wXYYHtqV5868tpLAB8WaM6zlshSavVBd4gra7EcZp69WfL0s
-X-Gm-Gg: AYBFou2UKtrUP5uODjLR6ZgzDzw869OB9zhHqMsnF5TkfRLbAQk4Wjt4F9N6qQXVmCx
-	IQc+CEfFYdKycwtOW66C5tUYeEugXaA43HQ1y7qbi1hb8mkTrHrvpM81sThKFtcIeCsEE82MOHi
-	SFCV8pZ20cFnZWp6NU+z9jGgvyvTBG8TpZ8xuhFH8DC+My8DWuGYxloKOHkpEG9mKKqIAs5YeHj
-	Y75G1hLgUD1Sl1xPooJY6I/J6aW0GyDxqP5r0ps2kPENWBnwPjT2Zqt4JGIjbkAQ1uWmte1LD2I
-	Htg236DbGtHUrhveDtyddDqSmWF/JJ5r83a9DuuFN35k2apmjEY8ienY4Ht03zPIrFa/upug2k+
-	67YXEEd0syQi1Tm6XAq2d+sBTsAmAG8SO2E4c8brmnQQ3qkYSAW8WREzLdYl0h2xVqNFam92tDl
-	w+EZOXWZxAntAPUjLqiY6FJIcd+VYX+ZdVoO/uBXS7amV5q7/6ThuIG33n4n6+mCGhTyLkbf++U
-	h11o7XrRV4+5pzyHC0VYt3amRqhtr16SaCnDc9pgd1p1NJK500Brr+WNhj2s8qSoja/RzanJwdu
-	V/23PgJmCHZa5vIb3jzZiIX2JhxeR8oEa4cpyuDHPz19iSyKk3+ltWU=
-X-Received: by 2002:a05:6000:645:b0:48c:6611:82 with SMTP id ffacd0b85a97d-49272a3ab3fmr5316957f8f.1.1793982147441;
-        Fri, 06 Nov 2026 08:22:27 -0800 (PST)
-Received: from scheduler.schedules ([85.100.66.184])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d087a3c5sm3952650f8f.0.2026.11.06.08.22.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2026 08:22:26 -0800 (PST)
-Date: Fri, 6 Nov 2026 19:22:22 +0300
-From: Kayra Cizmeci <kayracizmeci@gmail.com>
-To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, 
-	vschneid@redhat.com, kprateek.nayak@amd.com, linux-kernel@vger.kernel.org, 
-	lukasz.luba@arm.com, rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org, 
-	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
-	sched-ext@lists.linux.dev, qyousef@layalina.io, christian.loehle@arm.com, 
-	pierre.gondois@arm.com, sshegde@linux.ibm.com, tim.c.chen@linux.intel.com
-Subject: Re: [PATCH 02/20 v3] sched/eevdf: Reset lag at wakeup when prev CPU
- has been idle
-Message-ID: <au38gSTzmvPKmqWT@scheduler.schedules>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nv5LkjEg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B011F0089F;
+	Fri,  6 Nov 2026 16:26:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793982386;
+	bh=6+gwqdPWOIDjmUui4M6/kwgrUtcBEmWZC0K9ykQ0dJs=;
+	h=From:Subject:Reply-To:To:In-Reply-To:References:Date;
+	b=nv5LkjEg5oHoFTrOLOpBumMbl3M1mtL+3AiTdVBQz403el3HkW5AKOVL/j/96sDrP
+	 ZqxE7jsvEO+KvdipHxbn9SlRbVCqJJ2paMDPb2aSEy79JuOGSMgzYEssS+5GK9m303
+	 6bgsJJhO/Qmrk/A85xN9fQdicYaM8pG8rjYZnqPOCzEkI+jrEB1oWaR2u4bBwyCLFf
+	 9xuTf/egBnhHk019sSWOYsHjnnNdz7/bvW/LB/9rbe5fpqmHokZJO3Ogh+YgZj6ymx
+	 wjFt0DzcYOE8b1eq5WxT6Qfr1PJMMSWhwlZaoDXuzzWduvX9xCR15ibQMmVyqFRGxR
+	 TUe8TpQS5ngLg==
+Message-ID: <sashiko-outbox-201803@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 19/20 v3] sched/fair: Take into account slice in EAS
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Vincent Guittot" <vincent.guittot@linaro.org>, sched-ext@lists.linux.dev
+In-Reply-To: <20261106151947.3991524-20-vincent.guittot@linaro.org>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-3-vincent.guittot@linaro.org>
+ <20261106151947.3991524-20-vincent.guittot@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 06 Nov 2026 16:26:25 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -102,23 +58,65 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261106151947.3991524-3-vincent.guittot@linaro.org>
 
-On Fri, Nov 06, 2026 at 04:19:29PM +0100, Vincent Guittot wrote:
-> @@ -8376,6 +8383,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
->  
->  	dequeue_hierarchy(p, flags);
->  
-> +	if (!(flags & DEQUEUE_SAVE) && !cfs_rq->h_nr_queued)
-> +		cfs_rq->idle_seq++;
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [Medium] sched/fair: slice check on idle CPUs in update_best_cpu()
+  prefers SCHED_IDLE
+--
 
-This needs WRITE_ONCE, no?  3/20 uses READ_ONCE().
+commit 94c14b8b01a87751cdea1dbf5bbcde621aa150bb
+Author: Vincent Guittot <vincent.guittot@linaro.org>
 
+sched/fair: Take into account slice in EAS
 
-Cheers,
+This commit updates update_best_cpu() in Energy Aware Scheduling to compare
+the waking task's slice against each candidate runqueue's min_slice when
+energy costs are equal.
 
-Kayra
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index ea117c3d0dd71..da9c4416f1b5c 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -9885,13 +9885,22 @@ static bool update_best_cpu(struct energy_cpu_sta=
+t *target,
+>  			    int prev, struct sched_domain *sd,
+>  			    struct task_struct *p)
+>  {
+> +	unsigned long task_slice =3D p->se.slice;
+>  	bool target_idle =3D choose_idle_cpu(target->cpu, p);
+>  	bool min_idle =3D choose_idle_cpu(min->cpu, p);
+> +	bool target_first, min_first;
+> =20
+>  	/*  Select the one which is idle */
+>  	if (target_idle !=3D min_idle)
+>  		return target_idle;
+> =20
+> +	target_first =3D task_slice < get_rq_min_slice(cpu_rq(target->cpu));
+> +	min_first =3D task_slice < get_rq_min_slice(cpu_rq(min->cpu));
+> +
+> +	/*  Select the one where you can run first */
+> +	if (target_first !=3D min_first)
+> +		return target_first;
 
+[Severity: Medium]
+Can this slice comparison prefer a CPU running SCHED_IDLE tasks over a
+completely empty idle CPU when both target_idle and min_idle are true?
+
+choose_idle_cpu() returns true both for an empty CPU (available_idle_cpu())
+and for a CPU running only SCHED_IDLE tasks (choose_sched_idle_rq()).  On
+an empty runqueue, __update_rq_min_slice() resets rq->min_slice to 0, so
+task_slice < get_rq_min_slice() is false.  On a CPU with a queued
+SCHED_IDLE task, rq->min_slice holds that task's slice, so task_slice <
+get_rq_min_slice() is true whenever p->se.slice is shorter.
+
+When both candidate CPUs pass choose_idle_cpu(), execution falls through
+if (target_idle !=3D min_idle) and returns at if (target_first !=3D min_fir=
+st),
+selecting the SCHED_IDLE CPU over a completely idle CPU and bypassing the
+prev_cpu and nr_running checks below.  Should the slice check be skipped
+when target_idle is true?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106151947.3991=
+524-2-vincent.guittot@linaro.org?part=3D19
