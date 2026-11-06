@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793980315;
-	b=2VgB/U61YOQGAkJuw3/LWzRMr2pgU92qEov9fqe5WdLZZH4gIpMFtnJavi9jOfMKnjKH
-	 AOV5zLWOKAj9MOEecbDdKGBNSjpgM08hEpHCimqRAEgt3uop8+UJowjC8m/gMKg5nInDe
-	 azuCcuIrbkUL1BH0/iwL40JZ+1+/dS0KTMA4Ka/4Id8b8wcAHgAZUghwRjL0iEZsYUG4U
-	 tSoJ2UZKPoAZlg4JiLlQHsPT2Hscpb4jFCxNw1IV0PZV73xmSLd8W+bGLgmTMS9EevhG5
-	 vI3ccNxE76+UXzAU1R3+wV6S+iSvqpfEbsEHvbsoSnozC7Jm3as3bnxxfW7vw+I4d/Q==
+	t=1793980842;
+	b=k46FHN7cYJJ4T0m0ZCOBxvhqTO6/y7BGlofMXCSTlDFwkgTPIxPERjh8f2uhQIIhJuab
+	 ZeakC74ZZ4lIfdOR0Vej/rrIDO0KOvZJZi3s0msd3UfKYpoEuSNRGG1PhYL/oz6SvzUAy
+	 VUAteV6MQPD65QL9p98Pht1D5pJOMXaBXbwrc9Tj6viGWQzdn0m2exZaMre9sFww0vjWl
+	 rNZqi810/uJ6Fs38BKAFbbNc8rBsrUWZXAhOuAT6L4X6DQqrc7wi5ubeGeRjA5MzqopO7
+	 MDvFwsKWk3NxHViCuEctNh3dUGaWtoTX0xfiJGW1P6FxubhO5ZWQ58QZZy7f/icNWjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793980315;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793980842;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=91JI+yvUQ5ZY1tTORn4r2SloSv4vb/kr9Y1CPLV/xfc=;
-	b=Jwqn/nQWf6ZDxWh+o9xMlu12TIvAgh8QgcDbNAB0gG7WWG4F//VG9PUodIY7VdSNIbE4
-	 rShsnwiJSqnsb5vH3xPlHL/2dcSoFqg5zpTQZglYvpGS6+7uA2jNCb2UEU63ahiYzXd0A
-	 FjrY0gtGd6BYj1yrGfW8+892KDv+g3fTCr6tVsXYZQ4hNDx004qyYadCua6dYxSjCgS1x
-	 rXnhcxKCFn2HEvQfjJMN9aykzyjRh5V75tMQOddl68jxLfa9HQe9qXJTBpi1irNz6aGwY
-	 ZO36eXfNMdsNmcf7vFl9mn30lcEelR/2V26IaBICmCeK2BaJ/PBVUE7Ht/jCUC1rBPg==
+	bh=U2fj1wx7x/MZTHzkaYY/7/zDMysPCxckUPzh+29/95o=;
+	b=zv5jD/lBOl+LwmGE66ZofEnFLgodT9gAeaUULWpziAH2WSU1rEIxgVOmT5r47aesaDPL
+	 2Vjre4MgIL7bWZwKlU2M5aw7DdRbqqc/0Wb2v/qE6KQ7iyAZhP+O4XP9v+IQk+htJouEN
+	 +U2VULTqn7FA+04M7/Q/gnNiq/pchc/1MnYNnkkjVMN8D7PJx2F82Lw5k6vIPySOSUaUd
+	 abb9Rp90dSofDiVpQCIIW0Qq+QyMF95eUSum20PS7ghR7+JKtqpjZsdX+Cf1aeajgWJ5n
+	 Hf+Jc2clzRJQWtX5r4b32t4ATPB3lzSdIpOChUu4B+MEHSdmh2ScPD+or5tX4/mdsAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EZEnWpzK;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KLTsW2Go;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D155C606A329
-	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 15:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C3A606A326
+	for <sched-ext@lists.linux.dev>; Fri,  6 Nov 2026 16:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EZEnWpzK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D8E1F008A1;
-	Fri,  6 Nov 2026 15:51:54 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KLTsW2Go
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1A41F0089F;
+	Fri,  6 Nov 2026 16:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793980314;
-	bh=91JI+yvUQ5ZY1tTORn4r2SloSv4vb/kr9Y1CPLV/xfc=;
+	s=k20260515; t=1793980841;
+	bh=U2fj1wx7x/MZTHzkaYY/7/zDMysPCxckUPzh+29/95o=;
 	h=From:Subject:Reply-To:To:In-Reply-To:References:Date;
-	b=EZEnWpzKPUWcZSo26EUNQr3TpIk8HHRiYo7v4xvqc6VkzovmuE2wbMCy+G0oCaKZ2
-	 eqBEhr874gf+YAEpHdFjzyTZLBLXifYmqRLVsiFGU2O2iWUOEX9ekBFd+UwVzui5HV
-	 RHDUwuCZvxlF03yzxGX/7cEHFldpReyj9KeKS3kyrbJCIPvHT1zYaA4Q9MFm4N1/W+
-	 8mvblaXr8+Qem9DhV0nYVY+ramZ9fbfCdRPqvd1SubHcn0bhi5xTiOQL66NvzoVMjK
-	 HxXLHKPNs1+lQTLdjDt3rXnD2DIzDnKOdyh4UjK9AZGx7RJLLmXGcTemx899FhKGy4
-	 r6FzKJrkDDAYA==
-Message-ID: <sashiko-outbox-201739@kernel.org>
+	b=KLTsW2Go+KWh7kys6afalHN7+aGXpSN0ypnqY7HkiRmDQ3M1HCjsNCQoyIW7vWT7o
+	 dJDkvOx9bhfurHiCoTV/hDHUweQhKJSMfmRrIl8etkzfuuN0ZvINCiWu9NuGTOPLpp
+	 vCQtwbPG89dcuUqISRtEkcNTemmn4/C8gM1xhdYW7ewO31oSTk3HuS5tGcLL1AMpWu
+	 YM0rk0yZa4bx8Y7W4lVsGUwW71B9rimncIjzIQZZKyZO2Hji7OsVgKrksJ0lAAAguS
+	 BFdws89CpvXz6P1ZPB9UVUVIsgOqjl6ZA03rWj3IblFbz3pd33ac05qzocmd6P99/L
+	 Bn6qylH2HkDhw==
+Message-ID: <sashiko-outbox-201755@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 12/20 v3] sched/fair: Support not wakeup case in
- select_idle_sibling
+Subject: Re: [PATCH 09/20 v3] sched/fair: Optimize push task mechanism for
+ fair
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Vincent Guittot" <vincent.guittot@linaro.org>, sched-ext@lists.linux.dev
-In-Reply-To: <20261106151947.3991524-13-vincent.guittot@linaro.org>
+In-Reply-To: <20261106151947.3991524-10-vincent.guittot@linaro.org>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-13-vincent.guittot@linaro.org>
+ <20261106151947.3991524-10-vincent.guittot@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 06 Nov 2026 15:51:53 +0000
+Date: Fri, 06 Nov 2026 16:00:40 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -62,46 +62,114 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 1 potential
 issue to consider:
-- [Low] sched/fair: kernel-doc parameter mismatch for @rq in
-  idle_rq_without()
+- [Medium] sched/fair: unpinned rq lock and double clock update in
+  fair_push_task()
 --
 
-commit ab3889b91b4dc4e984d6982f09014756fc8d7899
+commit 9e72e6e57764d3850fa10b1a2d1c221ab1149151
 Author: Vincent Guittot <vincent.guittot@linaro.org>
 
-sched/fair: Support not wakeup case in select_idle_sibling
+sched/fair: Optimize push task mechanism for fair
 
-This commit updates choose_idle_cpu() to check whether a runqueue would be
-idle without an already-enqueued task p, and renames idle_cpu_without() to
-idle_rq_without() to take a struct rq pointer.
+This commit replaces the runqueue unlock and task_rq_lock() sequence in
+fair_push_task() with a raw_spin_trylock() on next_task->pi_lock and
+open-coded task migration to new_rq.
 
 > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> index f2a0d2c2bb632..980eda9c935a8 100644
+> index e37f8b55a2934..e2999d3f88e46 100644
 > --- a/kernel/sched/fair.c
 > +++ b/kernel/sched/fair.c
-
-[ ... ]
-
-> @@ -12968,23 +12985,21 @@ static unsigned int task_running_on_cpu(int cpu=
-, struct task_struct *p)
->  }
+> @@ -10148,8 +10148,7 @@ static bool fair_push_task(struct rq *rq)
+>  {
+>  	struct task_struct *next_task;
+>  	int prev_cpu, new_cpu;
+> -	struct rq_flags rf;
+> -	struct rq *cur_rq;
+> +	struct rq *new_rq;
 > =20
->  /**
-> - * idle_cpu_without - would a given CPU be idle without p ?
-> + * idle_rq_without - would a given CPU be idle without p ?
->   * @cpu: the processor on which idleness is tested.
->   * @p: task which should be ignored.
->   *
->   * Return: 1 if the CPU would be idle. 0 otherwise.
->   */
-> -static int idle_cpu_without(int cpu, struct task_struct *p)
-> +static int idle_rq_without(struct rq *rq, struct task_struct *p)
+>  	next_task =3D pick_next_pushable_fair_task(rq);
+>  	if (!next_task)
+> @@ -10158,38 +10157,41 @@ static bool fair_push_task(struct rq *rq)
+>  	if (is_migration_disabled(next_task))
+>  		return true;
+> =20
+> -	/* We might release rq lock */
+> -	get_task_struct(next_task);
+> -
+>  	prev_cpu =3D rq->cpu;
+> =20
+>  	/*
+> -	 * We need to release rq lock and take both task and rq w/o
+> -	 * triggering a deadlock.
+> +	 * The safe lock ordering for task and rq is task 1st then rq but we
+> +	 * already get the rq so just try to get task too. If task is already
+> +	 * locked, it is waiting for the rq's lock and it is about to change
+> +	 * task state so skipping the push sequence in order to speed up the
+> +	 * release of the lock is the best choice.
+>  	 */
+> -	raw_spin_rq_unlock(rq);
+> -
+> -	cur_rq =3D task_rq_lock(next_task, &rf);
+> -
+> -	/* Task already migrated */
+> -	if (cur_rq->cpu !=3D prev_cpu)
+> -		goto skip_push;
+> +	if (!raw_spin_trylock(&next_task->pi_lock))
+> +		return true;
+> =20
+>  	new_cpu =3D select_task_rq_fair(next_task, prev_cpu, 0);
+> =20
+>  	/* Task doesn't need to migrate */
+>  	if (new_cpu =3D=3D prev_cpu)
+> -		goto skip_push;
+> +		goto no_push;
+> +
+> +	new_rq =3D cpu_rq(new_cpu);
+> =20
+> -	update_rq_clock(cur_rq);
+> -	cur_rq =3D move_queued_task(cur_rq, &rf, next_task, new_cpu);
+> +	deactivate_task(rq, next_task, 0);
+> +	set_task_cpu(next_task, new_cpu);
+> +	raw_spin_rq_unlock(rq);
+> =20
+> -skip_push:
+> -	task_rq_unlock(cur_rq, next_task, &rf);
+> +	raw_spin_rq_lock(new_rq);
+> +	WARN_ON_ONCE(task_cpu(next_task) !=3D new_cpu);
+> +	activate_task(new_rq, next_task, 0);
+> +	wakeup_preempt(new_rq, next_task, 0);
+> +	raw_spin_rq_unlock(new_rq);
+> =20
+> -	/* Restore rq state */
+> +	/* Restore rq lock state */
+>  	raw_spin_rq_lock(rq);
 
-[Severity: Low]
-Should the kernel-doc comment for idle_rq_without() document @rq instead
-of @cpu to match the updated parameter list and avoid W=3D1 kernel-doc
-warnings?
+[Severity: Medium]
+Does replacing move_queued_task() with open-coded locking and
+deactivate_task(rq, next_task, 0) trigger double-clock-update warnings and
+skip runqueue lock pinning?
+
+fair_push_task() runs from __balance_callbacks() after the caller has
+updated rq's clock (setting RQCF_UPDATED in rq->clock_update_flags) and
+called rq_unpin_lock(), which leaves RQCF_UPDATED set.  Calling
+deactivate_task(rq, next_task, 0) without DEQUEUE_NOCLOCK calls
+dequeue_task() -> update_rq_clock(rq) while RQCF_UPDATED is still set,
+triggering WARN_ON_ONCE(rq->clock_update_flags & RQCF_UPDATED) under
+WARN_DOUBLE_CLOCK and setting SCX_RQ_CLK_VALID after rq_unpin_lock() has
+already invalidated it.
+
+On new_rq, using raw_spin_rq_lock() and raw_spin_rq_unlock() instead of
+rq_lock()/rq_unlock() (or attach_one_task()) skips rq_pin_lock() and
+rq_unpin_lock().  Because the previous lock holder on new_rq also left
+RQCF_UPDATED set upon rq_unpin_lock(), activate_task() -> enqueue_task() ->
+update_rq_clock(new_rq) triggers the same RQCF_UPDATED warning on new_rq,
+bypasses lockdep pinning and assert_balance_callbacks_empty(), and leaves
+SCX_RQ_CLK_VALID set after unlocking new_rq.
+
+Passing DEQUEUE_NOCLOCK to deactivate_task() (since rq's clock was updated
+before __balance_callbacks()) and using attach_one_task(new_rq, next_task)
+would avoid both issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106151947.3991=
-524-2-vincent.guittot@linaro.org?part=3D12
+524-2-vincent.guittot@linaro.org?part=3D9
