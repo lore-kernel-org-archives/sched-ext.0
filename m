@@ -1,101 +1,109 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794017715;
-	b=angcg6PKx13njdMcapWLhWXnNfOslhFWBxyjXHGgJnjyFbpkn+aJQhekQgx1nzkMNlWc
-	 rT+TuaB0UGP1tKTUXTTl56GOV1SnHjbrohFei5v/uApTOVABecw4lJ5gLAZ5zM6UMlBVn
-	 GD/2Nr1Ba3Gx16sp/fuUwC26TYB9g3wZMRMIGPuzZJw4e0T6qP2ayFiTFz2zRtFJvFnxF
-	 zwpKb3krgOxVRlKUUUleQa38R6Vq7YvMwlv6bp2DobQuD1UNF6Rx54hSOgaue83KvQygH
-	 1F50JPYfSnrvIuJgriwjYdxupdjmDO4SuqXJE5T0Zrq+i4PrbZLafM+3651rbOkDISg==
+	t=1794017718;
+	b=iy5PQih1lfcnC4/UuIs7FDlaznTjFJFUHmY7fRyr0Rj06ZHGG6rUm9TJB6zfGHMBIesh
+	 nM8eTpc3QjET3I3OssjcB2eYHcx9YWFd19YhKZQqEr8wUDEhPeB5APWqzUA0B0NJ0X4hh
+	 6s5mEOXeUR9yYtlcPCxzFdMRe6+mSiofnFN8auK/asNY2SoUEO/ncgeQr1XmZ6hVGN9UE
+	 Ulx9Gg82GsOU862fMDgWgh5B61F37a81GahFt8hlxZlDV0rzbHDtgN1fX90xbKgbDlwRG
+	 sMzZT6Mkr0/wLCGmgqrilFz0tc9hqeqwoT/TsqVVaa8aQdvuuYGhHoLSfCb6u+ecgog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794017715;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794017718;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dc9ewNRLy/KDUCgVc1zw7V1amTwtToITL8ldPoKTuCM=;
-	b=tR2n3tXP392jTNhU4c2iXLjcSN7OM1wKRebxKkoFFG9rFYwl03U92Llp38yzoFfvBkCw
-	 QQlMGQY3yMwGuZ9DbobHyrHeqEb0zYllwSspv4aPocn5Y+XdqJtzCt21TopfXjmbKQlhM
-	 xr8Ej/W3+0bYR76h1YGvnwLpbGNjuPcsyOF1MbNErtot16bUXG0bTG1TKCVQ2XqD00Iad
-	 MhvhXOI04mGPbmg9B/yUAhLBPAx62g9rpXDTdJYPEiBd6OwV5gQTUjwLS2uLnp2Ke3mMR
-	 UlxIRhHf6l1vk7XL9Y7Ypkorq9ZWDPMs1zLYZkAyhTAhh+SNlwv69BvbvEwDOv0yd1A==
+	bh=wikFKZw4t4TcuII1gnI7d31HqgOIm3ag7690hAeyUhA=;
+	b=uJfXOaCyt3Wb4Ua3SvTKZtv0WPz2DViRXPhrIk7p6fiAWeEljExKAlCIjBrDu9foQ22L
+	 jBbrT7sapNB9FBxufPv9t72mCeElEE2NCtMi+soEt2mMpKiGtoHjCGGD+BscyxTm9rycx
+	 CZNYMYX93s5zUIZm60J7JkBCnnnTnMpIIe3m7/fBy0JO39NAXIuNhfvAIg/wCTtSFPnj1
+	 hhckoKmQmVnfji9JyzGMeSlYtwSXE/NuH5dY/07nziLz9wiJtHSHYDbHp4vOXrpWjBNVy
+	 g0wUE6/MJh5Gs806gTIYoo7wfEyZCTg7I2MVeqLPC4GmlyvWhw2l7/YZrn1fwOIvs2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OlMSxjvu;
-	arc=none smtp.remote-ip=209.85.221.44
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZH13vwMk;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82279606A336
-	for <sched-ext@lists.linux.dev>; Sat,  7 Nov 2026 02:15:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 82279606A336
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC9C606D802
+	for <sched-ext@lists.linux.dev>; Sat,  7 Nov 2026 02:15:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0DC9C606D802
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OlMSxjvu
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-48e4831c028so1261205f8f.0
-        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 18:15:15 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZH13vwMk
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so12893885e9.2
+        for <sched-ext@lists.linux.dev>; Fri, 06 Nov 2026 18:15:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794017714; x=1794622514; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794017716; x=1794622516; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=dc9ewNRLy/KDUCgVc1zw7V1amTwtToITL8ldPoKTuCM=;
-        b=OlMSxjvuVT8o727BnWxPQmIv5DCV0NeaWd36WhyZQV4CdITj9Spla23HfOX5TAdiPh
-         u+D6S7UVmJjwVVSXchvyvyYwoHWpoIDi55ua9FpGtqT1UxaCDkC4YKNS6YW5PCvkt9V3
-         uX6Z3FBn2dO2mM3uo6bRx4pKsDRnPT5Est6doCTUm1jAqLY/eHwmv0XWQNJXg6icdLdX
-         nPcyQXqDS7EwNV2Pz1s6AZSA7CUM+s8uurzMQwmB17IsTT4Uh8PVqqpwwvCl+KyIERAX
-         /l+InJ72S2gZMhUTFf6t2esYg7EMuzcG5KicoO4QUT7I6MMCz8/tMWjwQWjLTd9pAMuG
-         aqXg==
+        bh=wikFKZw4t4TcuII1gnI7d31HqgOIm3ag7690hAeyUhA=;
+        b=ZH13vwMk4pbqpkLNG7JlkIKwFXfNj8OngPc8qdZ+cGoTtehZFfNP5HLOZXIcv+6x0D
+         JEnkW+u1Aux7Ki7VGjpUIuwappSVW7iPFYHWj5wd/dIEzlzhUjaB4TPJ1BJtCb/O+jFm
+         8ZRTpiaSbqsQitL19DCetO85YW4YIxdVHT5Vr+B74IUE2q53UxMJKq2PdR8R7L4BwTfH
+         ESEd7Acf2WqoDodYHytIO9u3iijoR4y04gR9cf5otPVKu/UT1PdfouUD86V4wjxMikRX
+         tsQVZJT9PbiN1pyWjxPl74me94ghLFTs9Q6e1Xz/n4Vc82UU0Pe5s9v8sXyEaLZab8od
+         vZow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794017714; x=1794622514;
+        d=1e100.net; s=20260707; t=1794017716; x=1794622516;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dc9ewNRLy/KDUCgVc1zw7V1amTwtToITL8ldPoKTuCM=;
-        b=Op+zipy3ONobz90MU8NEhxJUXxThxsgmuji++1a2qNEoKKiP+bKxrKSXT8XGA+g9jm
-         sb0rAS+Dr+dAsN0aEe9jjnebbDrSnIYOHq9wcn+q3++ZLfF/MbRE7w6uyOHEVj9WM7Kk
-         opmmN4K2xAQqUQpTdrkz3n+fWVdWaCO3SqGtWtQw7dTbEB6gX91Oml3XSovc5xx8OMA/
-         ID2km2O83ENxEtr43nL4SGxcu6M57WS2xWSubyQcwEAQQEj+ofZJwhT2XU4FovuMgmOp
-         Zb5Mx2YRzUUhQOPzaBSFVeAaEaWWV+MLxPjhS2M03BU6vC4q4RawkSGqipXAaoO1CjH5
-         IoOw==
-X-Forwarded-Encrypted: i=1; AL+hErHshEoSeya+rPCjK3/OJ3Y3Vlb2wCtFn6LEDdbfoqordZyKOwcKUY1U9QspzUy7exthw7oemsG+J/U=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/6up/gWBntc4/sM5krXo9d6pW+n0TjZtZJxEjONXuPCG4HkZfz
-	sOJ31wEzETsXlA/1oUbC2PJcfapJpv4WAhlz+pn4UNlZpW2hwUzrnZkP
-X-Gm-Gg: AYBFou2ERbZeKWsFi1ncckbedt2us/0B+eDw3TlHvL1kFOlUKgGzEz+I3rTtjacNKiC
-	H5ZBhsxeYrgMpp6KwJGGAbsg7IPPtAInl2biMKF3FMy29y2eMGuhMAzFPJ7pg0EdE9D93ecCiIL
-	BXq6h5QOSgPqHaXJvgF2pn244rEpSvoB7RbCRSDbOckRndaV5PoP6DADTpY8Lqdzic5GV+L6zRp
-	b7hEr62S5EQjRKbgsJm3bsvwB77R5YhADprxrAuUHr/LNzFrah6B9vwrqeJK1jy7VF+lgr5bwsi
-	vyaLisAsjxxSNlnzlM5NBLC90xfyvNpWFuK7Bertl8PsaG1Fks5w8oPbUoi7t/nr+m62ot25fIY
-	DHj/F8hz5f9hgAwGJy3tcZof87T7Vy5NOGj+j99Hxr/vPjYmlanP6p57hRO5PBbIf4pgV+jiNTC
-	gbmWrU7fPsJseFziep7B6kJvyVX0PU/UkzipFyunWbWgrbAG77anI5YUTVlJzVnZKgazL/BqGj+
-	GqOd1HgX/pMAshbG3o7adJWf0JbPwItYuSy12AgXtPorqEpLrGFWB4Zssho2tN0LMRmChEOqk1j
-	EraK6lxNwuyMC94SYNMjAl8QcBHiEyiKVAX6CGOqWZvq6bvnrZCmhXJn2gyfDpL1gLjty7xPfy9
-	KOVAjcjyLkSSMufS9rjVWejk=
-X-Received: by 2002:a05:6000:41c3:b0:48b:108:48cf with SMTP id ffacd0b85a97d-49275b1bcfamr7936541f8f.25.1794017713547;
-        Fri, 06 Nov 2026 18:15:13 -0800 (PST)
+        bh=wikFKZw4t4TcuII1gnI7d31HqgOIm3ag7690hAeyUhA=;
+        b=bXupbHOI7U+ueDdRL28fh90AuVCRLnyITlfpw/hPlk+IFkXBgAMJLN9np6b36SqR3P
+         2i6CLL9se+LPu/Dr7LYUMupOCQrJPZ0E+O9sK4sSM5RtFnrbBmepqdWFqwUpXzWqooKa
+         gXYXB1KwrFniTmnMvty5ZvH38YvERJMtE4tdGbufTnnISQojWAamoE3enL+nzHJXpY3H
+         vM/K3HiOlyF4Na11XJgj9dAGxnWTcf2QvYeVuUV8AMHXcCFKhRoWlP9bx9udGXnJ5NRu
+         ahwnE+TwBsqCuoBJyVswmkfV5sEV0VKJVYpN0PI5TA2a0poBfRnci7PZnaKMEyvG8Fos
+         tivA==
+X-Forwarded-Encrypted: i=1; AKwUvByqZVL9kaUH3JQ5nWUjIMcnc9jiaYPDLP/RZNtwg4f0RFnN6ofYmf6F5vGhK079W3w15HQlefsHCWw=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8Jzk7yZkK2jtJJhiAYcb8qeu0girwYCOsPy+9cbH+UGddNpvtS
+	EIIbk1IqSpCE8O5z3bqwh9/pwGkHFdD7vsWeBgrLJxx3Jbfz2hT34wOu
+X-Gm-Gg: AYBFou0N3KRQdlZBcUHahDkJfnxGOxWTW83I+hlipngjrJo85SLcXwTMSjIh5FHLaYz
+	SJT6rOX9A6tUbpZcIVjuU6FpdQw5aBwswbJdtb/aeQWRbqaaeExXRqSBus3ua/58JpL/61m1yKP
+	MYhBLbeND0tzTuqHyyUkusw1D4h034z0bdwpaE+6fSkF5jQrVKSwd8EwOSiVe/sCYSmnDztiLv4
+	eqk6bzEhgNi9paUZj0y+YpwQMRnwBOrj+GR1euFrx7Z/flPH6IIlKFo1T40woIQr9X7d/Vz4jYt
+	s74tuA/1vpoR34ii7lV9cH+yu1M9yqnE0goqeDw/FxNSMWG79cbtkuiaGTSlWYn8Onlt8TIn9D9
+	x78nbVkirIeJKbGVz/cdsJY2oU5vbpR+TBZN7DhGJ3XGAa+IEUOJc3WjutHrzjELyJWfmj9+JkM
+	CJomieSuppI6cNAcZz1/6Df79cf654qSGEgks2CuVGfovb2ri3jVYoB59ME8jsLoMiEXzHS4zvZ
+	iChTYAvhDUQexJT0qh8/tc69Yf7hR4cEOrzeKcYayYeNMct3bn0YjWZroKPyE7iqlN1CM5Z5c6+
+	n9VxuegRGE/LvgSQV0p1NXuiQNzZJvLk1Z2eqgRxgJFNkun8EpQEhedb8T3Tt/JnHGGnE13R87T
+	hxA==
+X-Received: by 2002:a05:600c:4e8e:b0:4a1:f377:5c68 with SMTP id 5b1f17b1804b1-4b6e054a25cmr71898355e9.34.1794017716295;
+        Fri, 06 Nov 2026 18:15:16 -0800 (PST)
 Received: from localhost.localdomain ([86.124.84.219])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5f11sm6367449f8f.49.2026.11.06.18.15.11
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-492d7cc5f11sm6367449f8f.49.2026.11.06.18.15.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2026 18:15:13 -0800 (PST)
+        Fri, 06 Nov 2026 18:15:15 -0800 (PST)
 From: Radu Toader <radu.m.toader@gmail.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: peterz@infradead.org,
-	mingo@redhat.com,
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: mingo@redhat.com,
+	tj@kernel.org,
 	tglx@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
+	frederic@kernel.org,
+	anna-maria@linutronix.de,
+	bigeasy@linutronix.de,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com,
+	rostedt@goodmis.org,
+	bsegall@google.com,
+	mgorman@suse.de,
+	vschneid@redhat.com,
+	kprateek.nayak@amd.com,
 	linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev,
 	bpf@vger.kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Add scx_tickbug, a scheduler that holds a task on an idle CPU
-Date: Sat,  7 Nov 2026 02:15:06 +0000
-Message-ID: <20261107021509.968928-1-radu.m.toader@gmail.com>
+Subject: Re: [PATCH 2/2] softirq: Treat an interrupted idle task as idle in tick_irq_exit()
+Date: Sat,  7 Nov 2026 02:15:07 +0000
+Message-ID: <20261107021509.968928-2-radu.m.toader@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <au4HhnJoKvJ6GPJT@slm.duckdns.org>
-References: <20261106094343.174905-1-radu.m.toader@gmail.com> <20261106094343.174905-2-radu.m.toader@gmail.com> <au4HhnJoKvJ6GPJT@slm.duckdns.org>
+In-Reply-To: <20261106102315.GT1813469@noisy.programming.kicks-ass.net>
+References: <20261106094343.174905-1-radu.m.toader@gmail.com> <20261106094343.174905-3-radu.m.toader@gmail.com> <20261106102315.GT1813469@noisy.programming.kicks-ass.net>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -107,37 +115,36 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 06, 2026 at 06:59:50AM -1000, Tejun Heo wrote:
-> Thanks for catching the bug. However, this scheduler is more of an one-off
-> debug code and I'm not sure we want to carry this in tree. Maybe put it in a
-> github gist or sth and point to it from the fix patch?
+On Fri, Nov 06, 2026 at 11:23:15AM +0100, Peter Zijlstra wrote:
+> So is_idle_task() is also true for idle-injection tasks. I *think* that
+> is also right in this case, but it wasn't mentioned.
+>
+> That is, we can have tasks that are not rq->idle for which
+> is_idle_task()/PF_IDLE is true, those tasks will also 'run' an idle
+> state, see play_idle_precise() and its users.
 
-Fair enough. v2 is the one-line fix on its own.
+You are right on both counts, and it should have been mentioned. v2
+names it.
 
-Rather than a gist, the fix points at the v1 posting of this patch in
-the archive, so the link cannot rot and needs no account:
+I agree it is also right here, for the same reason the idle task needs
+it: during injection the CPU does run an idle state. play_idle_precise()
+sets PF_IDLE and loops on do_idle(), so TS_FLAG_INIDLE is set and
+tick_nohz_irq_exit() has exactly the work to do there that it has for
+the idle task. What it is not is confined to sched_ext - it reaches the
+idle_inject() users, intel_powerclamp and cpuidle_cooling - and v2 says
+so rather than leaving that for a reviewer to find.
 
-  https://lore.kernel.org/lkml/20261106094343.174905-2-radu.m.toader@gmail.com/
+Writing it up also showed that my claim the new gate is "strictly wider"
+than the old one is wrong, so it is gone. PF_IDLE is set by
+cpu_startup_entry() and not by init_idle(), so a CPU on its idle task
+before that point satisfies idle_cpu() but not is_idle_task(current).
+Nothing is lost there, since TS_FLAG_INIDLE is only set inside do_idle()
+and so tick_nohz_irq_exit() had nothing to do, and nohz_full CPUs are
+covered by tick_nohz_full_cpu(cpu) either way. But the gates overlap
+rather than one containing the other, and v2 states that instead.
 
-One offer before I drop it entirely. tools/testing/selftests/sched_ext
-already carries nohz_tick, which asserts that a finite-slice EXT task
-restarts the scheduler tick after an idle interval on a NOHZ_FULL CPU.
-The condition this scheduler holds could be asserted there as a selftest
-instead of carried as an example scheduler in tools/sched_ext. If a
-regression guard for this is worth having I will post it separately; if
-not, the archive link is enough and I will leave it alone.
-
-Either way, the reproducer turned out to have a bug of its own, which
-the CI review found on the same posting: an untagged task pinned to the
-target CPU starved in the shared DSQ, because the target CPU stops
-consuming that DSQ while it is holding something and no other CPU may
-take a task pinned there. With two tagged tasks handing off it could sit
-until the watchdog unloaded the scheduler, which contradicts the "the
-machine stays usable" claim in the commit message. Dispatching anything
-with nr_cpus_allowed == 1 to its local DSQ fixes it. Noting it here in
-case someone takes the thing out of the archive.
-
-Thanks for the quick look.
+Patch 1 is dropped from v2 at Tejun's request; the reproducer stays in
+the archive and the fix links to it.
 
 Disclosure: this reply was written by Claude Opus 5 (Claude Code) and
 sent on my behalf, in the same session as the patch; the patch changelog
