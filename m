@@ -1,99 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794238655;
-	b=C0fWlpMY5amf/Trj4XJjGjr+3p9ydLV95KvNMvRIZyZKqcCbyv/7mBcSQ2F1fdzKm9r5
-	 ltFHpj91AnydikFtJYNIgeTSstslkOy1cqrAylLTuR/wd4Ara36fdIbKI44rGYGI4sNZE
-	 vI+3BFcuyqoGdvZa802OoGO228GqfdaVS8TmgVk6JqqS769G382/CFzZNcJgLCVRB9iuo
-	 uFwMdQAuniTEwT5x8A4NpDG4oyzZ3/ywF4+SOLExCZbDhJZTWvWLsYkqryjgeYmkt7IgM
-	 u8wdc6KNeYk7LEQip/b6tW8zCBTbCi7rpJVq9n5fPf+E0vQ6syewO3X2qZOfGxOdiwA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794238655;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=67EAGkQ4nFUyxDwDN3EnN/s3MSpyl1/wArd3b/Zl6F8=;
-	b=Esm8tbBGNvOmgXucUbJ0G5y1eD2ajAFDX3Kl1klfO06YOB+UweDEkjEFwiMt5vLnQFaY
-	 lNu9JZ/uugQyH/oMzmuqNZ4h8CHVh7rwTi4Vp8A9h/jZNCSJ6jbF9dACF2Pw5UawGFTel
-	 A9jkEQsPWfBMx3nbmZOU7o/2w+JRG/cnOHiZ36IQAEEmvpe+0BCUWiI0NWjgL6hPDtDpw
-	 zPXwQfgfsFkjeXFldu8sIhxRrKu1DnB/T3ajYkENyThlpfddNjHV3x0vNbO8D7hUSoAe8
-	 IefUERvxRK9XOpVNGSerwGMHOaujWTAMGBlXyb8HeFQeL9t0FDoPZS8EDUn3bN2FHPg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=n0UJZxxT;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.92.199
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794239149;
+	b=1CQ6S/LUIo4yueoRfV/JJ4QSSQBXv/7AfnGkScWS8t07NF+HGmP9K3YpeY8cKI358men
+	 LvIF0w9xVo0EzFPcLki6Efx/yMbzbXsWng29DERxnIIRicpuMJ6nXgQVQl/05scWkY3Qk
+	 BkblG6ywOyK9XbZzFsIZPTOekma3T78pUfM3hwj7VkgWLOzeVMQh29YglIOMS76zLzIAY
+	 /wu3QVq9gzt5CxHvNLLBPiVjkcS59pgAQ4jruop57UBjhb/3oQGF4dZUWFeTh7fEMFEfS
+	 mhaN2GpwfPfOIsXeI6Nn6kw4hvbDkAS9oIoI1otG1cCuixSSHIRrK1Pt3pKOee1OtoQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794239149;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=9Q+7RmGiXiMjZGRgbB4DLZQo/PrtHeW7nZ+vrrlEwbs=;
+	b=DKffXfz2PByq3wUqPzVnTpPx2sdThCWoum09w7zYjcgkk99sBAhKNi3AyqhvEyrnqNGi
+	 EXixCxeji6f+rYZf856FssG/YrrcVKfX+QYXgPxldXwLZ8BK5h5u44VFyY/lpD5bUKfqM
+	 hwTMs0LL8jT5RvY8nrdjlLhX9yuZMzKpNKtFMsT+ZX5kfOIoS5ws2QoVpSrQtiLyI9QSJ
+	 ciBSMRVX/brky0MxekIFfA0/UQjthoQFaPW+jzQZ07+njJrMzcF7iqrILZmUnbCCdcyRn
+	 pToL+grdfN4Fx/C6e5Q42f6lngPDdrDFVIDzTPROrZkiTWWhAc0KYmMvBg7E96UJ7ZQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=infradead.org;
+	spf=pass smtp.mailfrom=infradead.org;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=V+586NAv;
+	arc=none smtp.remote-ip=90.155.92.199
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD51606A325
-	for <sched-ext@lists.linux.dev>; Mon,  9 Nov 2026 15:37:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7DD51606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82698606A336;
+	Mon,  9 Nov 2026 15:45:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 82698606A336
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=n0UJZxxT
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6ae305e3bd9so1679884a12.0
-        for <sched-ext@lists.linux.dev>; Mon, 09 Nov 2026 07:37:35 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794238654; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MYeFODZBlkR3cNyjyZ5eXNrTV2X5uI8GLeljLZG0YKGbdH75n+czF9ijAcrHHgKdI/
-         vW/JrNeUV42yhIsxRfhooGB5S05cEgqNClB6JKEtrhxjS/2qe6pt+E9gotF8s+3WqSLD
-         IukgHhNxtohit02NLHyP41E578giSXI1jYSNXzgUEh21WrN/BfYLE4He6YH8/My9WYGp
-         RBZ8IVAidLJSCKuoMbaB8QaEnUtjk3YfPXDSPbA4P0pAYe/mqIz4KquZddC1f3S/S1tB
-         t0Hnvyo8qor/8vu9zost0UImrUG7FxP1UEJjVtBPNlNC3HSFcw7gJ2HYXu5s887mZk6B
-         2I6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=67EAGkQ4nFUyxDwDN3EnN/s3MSpyl1/wArd3b/Zl6F8=;
-        fh=J5glp+N2r7KrsSZ079dKnFCWDyGkMFo1oI2E4Ai3vaY=;
-        b=jBy21ls6HUnsp5c2Q0HeoJDZYZx3YLLbxV83/PSnAHr+RPNZL5/ri+YAcQoJSqfEnr
-         KDXNybE5laMNdFwP9VcTSd7NWPxSE7bKQ6ITGl2I8U93HIf92YPoFR7yOu9S93mqcG46
-         T3zbvuJulUMmf0njWq3nI0isnM7WcQE7OTKqGHFhRdXFa2IkVgvX5TKuwjx4Tqgd1udx
-         S29cgsJSronxLdiGskWiYO96nLtA+Sug4aRSjShuyV4agQdYGckSzSkfjun144FXO2h5
-         rWURj6vT6WX9IFqHiFvVW5gKbHm6pPqUadQ2CdFxXjHjhFCiIRp+AaLRyvb9ETIHvtJ3
-         HBFQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794238654; x=1794843454; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=67EAGkQ4nFUyxDwDN3EnN/s3MSpyl1/wArd3b/Zl6F8=;
-        b=n0UJZxxT93+Agk10vcIchy4CdqVgikbRIvUABKJyAtX9yAiW9TjVA+tdKhXF2Q3mxB
-         JeC3RPPN3E+opiq8ERNqJ0JgGLOI5MUDPW7lY0DPZqC146Vm6NpjLUBnPTLWUyTaxNbU
-         HzPmlKHyjkRNuFMyEssVkH7EV1xhRSn/v21nbZ9rcYfvPrvnA3hNJhxqfnp0yBE0463U
-         qH8W0vwBTNWmWMM81X2Fk/HiT27V0rHAvenkHAxeOVtODEHLZQtR1Wr0kzPFzQgpHjMZ
-         YwLvMjEmJckZzZjkT6NaIob9cWggXJTZxoj6wyMxTGvDlaK0GOWuNgLc/EeH1FJgeuPZ
-         Ww8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794238654; x=1794843454;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=67EAGkQ4nFUyxDwDN3EnN/s3MSpyl1/wArd3b/Zl6F8=;
-        b=MHSVo84ZlLlvpDICX/NofZBnNCRahXVCtl75/cUsqgD0fDB4RP2eG/Oh++9aVetPyF
-         eW2+0xL8qVFzuPyKLvVKkhvif0jwi1V9dfTEal5UGUkQrI4J9l4T4isB0Ta/tqs8i3ga
-         2oc7sZRnWD9La2jqTJ7o3i/uiyfjDWN57xDIYDXT2Ra/Lw2n9GAtUUASNq8Y822Rxelj
-         6G9WQccxG1McZKYd+gV8i1Pa+aUrzZ18OTLO8oLK+EgOhZu1m+P5pJgCO0HiACFry7yH
-         dnu82DYuA6tdrxEvgjOzugVAMJZvCEOr0K1V8r6C/7ZJ+LRjyKPrAtmXX5i0EQebmvGI
-         lUCw==
-X-Forwarded-Encrypted: i=1; AL+hErHp5e5nQpahr1qoU8xbBvl2EjpKpEjtl+2y3lyyElBy8xfKeR8vCAXPiuF45RUR66wJtMe0WQRDKFs=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8m1UrFav96jS40kreijKQrTgQf8bab/OxXtUtIGY7+SGFJ8ewa
-	2oBT6rAlqXl/e2LIycZliz7CxM7k4GauIGtPOoh0MVzwco4H175NGdp7qrs/RurG83lQhMKpz6K
-	FWYJ9yWskDHyo3/rPVPIKWJAzEq3Gp4uIi5o9i1IPGw==
-X-Gm-Gg: AYBFou37x4DISxDoQYeIa5SaVP6QhzZ46UAu70YdB+YguUuIViP7T/fmCzFuxlJkg4g
-	thVt1KNP7yFuxFnej9U2jaUzxhky8++B5EZVPZefA/f8Awk6jeaEDdRFLDJhH+UcwRHzheTeZsi
-	uetGiQT2L9EfOOPv7vp1ZxtImI33xVAIxQxuMS/B3ARJ4msOnwhMjCfp0vzSdAvrow2+rFkkt8n
-	4v0El4Xr19RgGs1QkDb9luPyhpxHFk/Uf+1+gUTmysNJSuKKlJItikpMPOj5H0coV0pJRHTB6ga
-	2L3OL3VwpcGgg+5UZtu8c/sDi1s2gblPZGTcP/dymOmV9/sHiMCDpNJY24rDB/2L+GPXz7G3uiK
-	TzquYj47FA6g0x42q8avqMaHLY8XswJVxpHrSmwwmNw5SCoYElBfm1Hcp31mj35wG/o2DgQ==
-X-Received: by 2002:a05:6402:5289:b0:6b4:602d:f1f7 with SMTP id
- 4fb4d7f45d1cf-6b7224201a5mr2863676a12.20.1794238653840; Mon, 09 Nov 2026
- 07:37:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=V+586NAv
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=9Q+7RmGiXiMjZGRgbB4DLZQo/PrtHeW7nZ+vrrlEwbs=; b=V+586NAvw1i5hM4ViF1nQH9Z2H
+	64twHzsJNk3IHZBrWoUXQiwDt5YK51Yl2YRB26u8iC0TwIJFvKdzvrW7lXTdbg09fM6oxd5vzX3xz
+	stg1z8N+YyWiR3Fp+NvVqzreEOi0x0U8CUSyP9UJ25U3DVoZeusM3VgfcZqQrwvyxhkvGwbfO/YG8
+	1jeJFZmSpzMc3XczDenhjezDVMVPzIcWuqYT60CfnGjHgBsrFN0i0iBBXA+21TGWt9V9AghkwHUdG
+	MlOxGZkJ5JvBG6a3HJ1vOsNR3cpX8gwTeGo8D5gjPJQ843sDIFjekqIZJ6wx/h41Z0xoJsnqLJKZo
+	WYhXXnsA==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+	id 1xQRYw-00000006teL-3Mit;
+	Mon, 09 Nov 2026 15:45:39 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 873B230057E; Mon, 09 Nov 2026 16:45:36 +0100 (CET)
+Date: Mon, 9 Nov 2026 16:45:36 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: Kayra Cizmeci <kayracizmeci@gmail.com>, mingo@redhat.com,
+	juri.lelli@redhat.com, dietmar.eggemann@arm.com,
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+	vschneid@redhat.com, kprateek.nayak@amd.com,
+	linux-kernel@vger.kernel.org, lukasz.luba@arm.com,
+	rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org,
+	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+	sched-ext@lists.linux.dev, qyousef@layalina.io,
+	christian.loehle@arm.com, pierre.gondois@arm.com,
+	sshegde@linux.ibm.com, tim.c.chen@linux.intel.com
+Subject: Re: [PATCH 02/20 v3] sched/eevdf: Reset lag at wakeup when prev CPU
+ has been idle
+Message-ID: <20261109154536.GK1779021@noisy.programming.kicks-ass.net>
+References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+ <20261106151947.3991524-3-vincent.guittot@linaro.org>
+ <au38gSTzmvPKmqWT@scheduler.schedules>
+ <CAKfTPtDXo8_3tfXt=UH+BKyO1rJCWjRAVXjO5nFVHO1NBd8LyA@mail.gmail.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -103,76 +78,37 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-7-vincent.guittot@linaro.org> <au7SabL5pfbsApyB@scheduler.schedules>
- <20261109135553.GC2668564@noisy.programming.kicks-ass.net> <avHR3lIV2TB9SWSZ@scheduler.schedules>
-In-Reply-To: <avHR3lIV2TB9SWSZ@scheduler.schedules>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Mon, 9 Nov 2026 16:37:21 +0100
-X-Gm-Features: AclHuK811qKUEGatxNoqg1c1GOx20pgleT3TGIXPs1QZ03pxVoNJcJkfBXVbIS8
-Message-ID: <CAKfTPtCQP5uhmFOyJimoOA4zsVT5k3TUCDS28JOLrCcxoO1Oyg@mail.gmail.com>
-Subject: Re: [PATCH 06/20 v3] sched/eevdf: Add min slice check when selecting CPU
-To: Kayra Cizmeci <kayracizmeci@gmail.com>, Peter Zijlstra <peterz@infradead.org>
-Cc: mingo@redhat.com, juri.lelli@redhat.com, dietmar.eggemann@arm.com, 
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, vschneid@redhat.com, 
-	kprateek.nayak@amd.com, linux-kernel@vger.kernel.org, lukasz.luba@arm.com, 
-	rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org, 
-	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
-	sched-ext@lists.linux.dev, qyousef@layalina.io, christian.loehle@arm.com, 
-	pierre.gondois@arm.com, sshegde@linux.ibm.com, tim.c.chen@linux.intel.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKfTPtDXo8_3tfXt=UH+BKyO1rJCWjRAVXjO5nFVHO1NBd8LyA@mail.gmail.com>
 
-On Mon, 9 Nov 2026 at 15:15, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
->
-> On Mon, Nov 09, 2026 at 02:55:53PM +0100, Peter Zijlstra wrote:
-> > On Sat, Nov 07, 2026 at 11:57:12AM +0300, Kayra Cizmeci wrote:
+On Mon, Nov 09, 2026 at 04:27:14PM +0100, Vincent Guittot wrote:
+> On Fri, 6 Nov 2026 at 17:22, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
 > >
-> > > (My editor got crazy, so I had to copy this diff :<)
+> > On Fri, Nov 06, 2026 at 04:19:29PM +0100, Vincent Guittot wrote:
+> > > @@ -8376,6 +8383,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
 > > >
-> > > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> > > index 262626455497..8b0dd858f332 100644
-> > > --- a/kernel/sched/fair.c
-> > > +++ b/kernel/sched/fair.c
-> > > @@ -8876,10 +8876,8 @@ static inline int sched_balance_find_dst_cpu(struct sched_domain *sd, struct tas
+> > >       dequeue_hierarchy(p, flags);
 > > >
-> > >  static inline bool choose_sched_slice_rq(struct rq *rq, struct task_struct *p)
-> > >  {
-> > > -   if (p->se.slice < get_rq_min_slice(rq))
-> > > -           return true;
-> > > -
-> > > -   return false;
-> > > +   return p->se.slice < get_rq_min_slice(rq) &&
-> > > +           READ_ONCE(rq->curr)->sched_class == &fair_sched_class;
-> > >  }
+> > > +     if (!(flags & DEQUEUE_SAVE) && !cfs_rq->h_nr_queued)
+> > > +             cfs_rq->idle_seq++;
 > >
-> > that wants to be rcu_dereference_all() or somesuch, rather than
-> > READ_ONCE().
->
-> Ah, my bad :-).
->
-> >
-> > The think I noticed is that it will only select one slice_cpu; it will
-> > not consider another once its has found one.
-> >
-> > This means it picks the oldest option, rather than the most recent one.
+> > This needs WRITE_ONCE, no?  3/20 uses READ_ONCE().
+> 
+> I hesistated to make it WRITE_ONCE but i concluded that it was not
+> strictly necessary because the READ_ONCE is only used to compare the
+> value but not use it for any computation or sync so if the compiler
+> wants to do any kind of optimization what we really care is : is it
+> equal or not ? so any intermediate value that we would read would be
+> ok
 
-Yes, I followed the same logic as when finding an idle CPU to limit overhead.
+Right, so without WRITE_ONCE() the compiler is allowed to write the word
+in random order byte writes. When comparing only cares about equality,
+any intermediate messed up state is not equal. And since we were
+incrementing, we're not supposed to be equal to any previous snapshot.
 
->
-> So you mean by the time CPU loop ends, the CPU that we selected
-> might not be a good option anymore.
->
-> > And given this is all racy as heck, the most recent one might in fact be
-> > the better choice. It will have had less time to go stale.
+Therefore all is well.
 
-patch 20 takes care of such situation whereas several task select the same CPU
-
-> >
->
-> Makes sense to me. So then we gonna overwrite slice_cpu everytime we
-> find a new one?
->
->
-> Cheers,
->
-> Kayra
+That said; we should either document the above reasoning, or just do
+WRITE_ONCE() and get all the sanitizers off our back, because I'm
+certain that KCSAN is going to complain about this.
