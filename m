@@ -1,59 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.92.199
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794239149;
-	b=1CQ6S/LUIo4yueoRfV/JJ4QSSQBXv/7AfnGkScWS8t07NF+HGmP9K3YpeY8cKI358men
-	 LvIF0w9xVo0EzFPcLki6Efx/yMbzbXsWng29DERxnIIRicpuMJ6nXgQVQl/05scWkY3Qk
-	 BkblG6ywOyK9XbZzFsIZPTOekma3T78pUfM3hwj7VkgWLOzeVMQh29YglIOMS76zLzIAY
-	 /wu3QVq9gzt5CxHvNLLBPiVjkcS59pgAQ4jruop57UBjhb/3oQGF4dZUWFeTh7fEMFEfS
-	 mhaN2GpwfPfOIsXeI6Nn6kw4hvbDkAS9oIoI1otG1cCuixSSHIRrK1Pt3pKOee1OtoQ==
+	t=1794239669;
+	b=tmzQxnOJT+5LKeRk2pw6ERlvFDDcMwPuK1uhhSgvMyeeiAS52R3JsVtNlOMWL10XHPsJ
+	 lNV+DJiaWJvErG4WebJ5BLqD6EYx3lUdPDjjjp+MaOGJyY9rJxapZ73cvvQTA4/gPhELz
+	 cwAGtW/5PgWfV5qp4seJGlNoYW0+RX0s3RDdrU5lmtx0OVoL4/4rO/qpSFDVWPoh2/6T7
+	 Dm3tdD6AwgBUe7C06bQ8bfbNrzQGexvRUhIKRv+DtqjnJabccAqRs/Qqh6xA94Cv7K/5E
+	 /JVFUvEuo4d2U0/B4G5Z8g5VbE45B2Qy4nb6YUmtnjZoZyzL8ZPKXWuCMt2aMsl+ZyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794239149;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794239669;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:MIME-Version:Content-Type:
 	 Content-Disposition:In-Reply-To;
-	bh=9Q+7RmGiXiMjZGRgbB4DLZQo/PrtHeW7nZ+vrrlEwbs=;
-	b=DKffXfz2PByq3wUqPzVnTpPx2sdThCWoum09w7zYjcgkk99sBAhKNi3AyqhvEyrnqNGi
-	 EXixCxeji6f+rYZf856FssG/YrrcVKfX+QYXgPxldXwLZ8BK5h5u44VFyY/lpD5bUKfqM
-	 hwTMs0LL8jT5RvY8nrdjlLhX9yuZMzKpNKtFMsT+ZX5kfOIoS5ws2QoVpSrQtiLyI9QSJ
-	 ciBSMRVX/brky0MxekIFfA0/UQjthoQFaPW+jzQZ07+njJrMzcF7iqrILZmUnbCCdcyRn
-	 pToL+grdfN4Fx/C6e5Q42f6lngPDdrDFVIDzTPROrZkiTWWhAc0KYmMvBg7E96UJ7ZQ==
+	bh=ujVbWQubLASE++avGWW5U3iuvslvg2L/fGbHxKmiOFA=;
+	b=e0n+1pujoakoCOg2R0qekvaU6nm0q1tTCaUjEmBPzwWYm4prrPytZiwbDpTHZzbw1MC+
+	 OWQBw6J0yoSAcrkWEh7GlZY/QmD2u28e+RB4KlhE6MunHMaGs5xODyUoHicE07kJOLgyd
+	 jHfQHnCQm5sqymqDLt1Or4URxTlWDnB2WceknXp/T7vN7co9y1sYR7uu85Np52OMt3y0K
+	 0bargkasTon5W0RKbD4g1Cv90W1Xbi5Rn9ARIqq7VhatWGrea/c5v0ayMRivdJuCQe9LT
+	 EI/j92BF/uQadmzwmuZGl1KoCmx8g5Hh7ESCUeDh7iRgxp46oa7eozbwzHxW+M6oYfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=infradead.org;
 	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=V+586NAv;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=lf7omZ+E;
 	arc=none smtp.remote-ip=90.155.92.199
 Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82698606A336;
-	Mon,  9 Nov 2026 15:45:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 82698606A336
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C854D606A331;
+	Mon,  9 Nov 2026 15:54:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C854D606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=V+586NAv
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=lf7omZ+E
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
 	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=9Q+7RmGiXiMjZGRgbB4DLZQo/PrtHeW7nZ+vrrlEwbs=; b=V+586NAvw1i5hM4ViF1nQH9Z2H
-	64twHzsJNk3IHZBrWoUXQiwDt5YK51Yl2YRB26u8iC0TwIJFvKdzvrW7lXTdbg09fM6oxd5vzX3xz
-	stg1z8N+YyWiR3Fp+NvVqzreEOi0x0U8CUSyP9UJ25U3DVoZeusM3VgfcZqQrwvyxhkvGwbfO/YG8
-	1jeJFZmSpzMc3XczDenhjezDVMVPzIcWuqYT60CfnGjHgBsrFN0i0iBBXA+21TGWt9V9AghkwHUdG
-	MlOxGZkJ5JvBG6a3HJ1vOsNR3cpX8gwTeGo8D5gjPJQ843sDIFjekqIZJ6wx/h41Z0xoJsnqLJKZo
-	WYhXXnsA==;
+	bh=ujVbWQubLASE++avGWW5U3iuvslvg2L/fGbHxKmiOFA=; b=lf7omZ+EGsTICAxB5HN+fQ1hYr
+	ujKdcGAg4j5qg5iymRJQisgrz/9rbOUJxNzNPcG72PEONaTEIf4smP1Al28UCu4j+V+2g8quOUSjO
+	3Qhw2ny8d2EqKzAGuAIPOH1pbvUzT8KCH75pF7S2beBnqMcMVwaP6DmwCWo/YHypA7OV5x88dSIsQ
+	2by+LhlZcVjBxj+bn/OE2mqVjGNk7jyi/rPvF630PR2xipETxlT+uimeXOjTVmYS+Lh0dEa1qWIKd
+	jHuurlSOiX+7nGhrptDvbI9IE91ghDef6oyLv+By+1WwnjZ9VH1Nxyv1JurYh3o+Z7bHI7rb+2CIi
+	/lFetYcQ==;
 Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
 	by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xQRYw-00000006teL-3Mit;
-	Mon, 09 Nov 2026 15:45:39 +0000
+	id 1xQRhM-00000006u8H-01cp;
+	Mon, 09 Nov 2026 15:54:20 +0000
 Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 873B230057E; Mon, 09 Nov 2026 16:45:36 +0100 (CET)
-Date: Mon, 9 Nov 2026 16:45:36 +0100
+	id AD05D301142; Mon, 09 Nov 2026 16:54:18 +0100 (CET)
+Date: Mon, 9 Nov 2026 16:54:18 +0100
 From: Peter Zijlstra <peterz@infradead.org>
 To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: Kayra Cizmeci <kayracizmeci@gmail.com>, mingo@redhat.com,
-	juri.lelli@redhat.com, dietmar.eggemann@arm.com,
+Cc: mingo@redhat.com, juri.lelli@redhat.com, dietmar.eggemann@arm.com,
 	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
 	vschneid@redhat.com, kprateek.nayak@amd.com,
 	linux-kernel@vger.kernel.org, lukasz.luba@arm.com,
@@ -61,14 +60,12 @@ Cc: Kayra Cizmeci <kayracizmeci@gmail.com>, mingo@redhat.com,
 	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
 	sched-ext@lists.linux.dev, qyousef@layalina.io,
 	christian.loehle@arm.com, pierre.gondois@arm.com,
-	sshegde@linux.ibm.com, tim.c.chen@linux.intel.com
-Subject: Re: [PATCH 02/20 v3] sched/eevdf: Reset lag at wakeup when prev CPU
- has been idle
-Message-ID: <20261109154536.GK1779021@noisy.programming.kicks-ass.net>
+	sshegde@linux.ibm.com, kayracizmeci@gmail.com,
+	tim.c.chen@linux.intel.com
+Subject: Re: [PATCH 08/20 v3] sched/fair: Add push task mechanism for fair
+Message-ID: <20261109155418.GL1779021@noisy.programming.kicks-ass.net>
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-3-vincent.guittot@linaro.org>
- <au38gSTzmvPKmqWT@scheduler.schedules>
- <CAKfTPtDXo8_3tfXt=UH+BKyO1rJCWjRAVXjO5nFVHO1NBd8LyA@mail.gmail.com>
+ <20261106151947.3991524-9-vincent.guittot@linaro.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -80,35 +77,75 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAKfTPtDXo8_3tfXt=UH+BKyO1rJCWjRAVXjO5nFVHO1NBd8LyA@mail.gmail.com>
+In-Reply-To: <20261106151947.3991524-9-vincent.guittot@linaro.org>
 
-On Mon, Nov 09, 2026 at 04:27:14PM +0100, Vincent Guittot wrote:
-> On Fri, 6 Nov 2026 at 17:22, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
-> >
-> > On Fri, Nov 06, 2026 at 04:19:29PM +0100, Vincent Guittot wrote:
-> > > @@ -8376,6 +8383,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
-> > >
-> > >       dequeue_hierarchy(p, flags);
-> > >
-> > > +     if (!(flags & DEQUEUE_SAVE) && !cfs_rq->h_nr_queued)
-> > > +             cfs_rq->idle_seq++;
-> >
-> > This needs WRITE_ONCE, no?  3/20 uses READ_ONCE().
-> 
-> I hesistated to make it WRITE_ONCE but i concluded that it was not
-> strictly necessary because the READ_ONCE is only used to compare the
-> value but not use it for any computation or sync so if the compiler
-> wants to do any kind of optimization what we really care is : is it
-> equal or not ? so any intermediate value that we would read would be
-> ok
+On Fri, Nov 06, 2026 at 04:19:35PM +0100, Vincent Guittot wrote:
 
-Right, so without WRITE_ONCE() the compiler is allowed to write the word
-in random order byte writes. When comparing only cares about equality,
-any intermediate messed up state is not equal. And since we were
-incrementing, we're not supposed to be equal to any previous snapshot.
+> +static bool __check_pushable_fair_task(struct rq *rq, struct task_struct *p)
+> +{
+> +	if (!task_on_rq_queued(p))
+> +		return false;
+> +
+> +	if (p->se.sched_delayed)
+> +		return false;
+> +
+> +	if (p->nr_cpus_allowed <= 1)
+> +		return false;
+> +
+> +	return true;
+> +}
+> +
+> +static bool fair_check_pushable_task(struct rq *rq, struct task_struct *p, struct task_struct *next)
+> +{
+> +	if (!__check_pushable_fair_task(rq, p))
+> +		return false;
+> +
+> +	if (next == p)
+> +		return false;
+> +
+> +	return false;
+> +}
 
-Therefore all is well.
+> +static void fair_remove_pushable_task(struct rq *rq, struct task_struct *p)
+> +{
+> +	if (sched_push_task_enabled())
+> +		plist_del(&p->pushable_tasks, &rq->cfs.pushable_tasks);
+> +}
+> +
+> +static void __fair_add_pushable_task(struct rq *rq, struct task_struct *p)
+> +{
+> +	plist_del(&p->pushable_tasks, &rq->cfs.pushable_tasks);
+> +	plist_node_init(&p->pushable_tasks, p->prio);
+> +	plist_add(&p->pushable_tasks, &rq->cfs.pushable_tasks);
+> +}
+> +
+> +static void fair_add_pushable_prev(struct rq *rq, struct task_struct *prev,
+> +				   struct task_struct *next)
+> +{
+> +	if (sched_push_task_enabled() && fair_check_pushable_task(rq, prev, next))
+> +		__fair_add_pushable_task(rq, prev);
+> +}
 
-That said; we should either document the above reasoning, or just do
-WRITE_ONCE() and get all the sanitizers off our back, because I'm
-certain that KCSAN is going to complain about this.
+
+Can't we add the 'p->nr_cpus_allowed > 1' condition to rq->cfs_tasks and
+use that, rather than adding yet another list? I mean, its used for
+migration, so excluding all pinned tasks actually makes sense.
+
+Also, I'm still not sure why we need a plist. The rq->cfs_tasks list is
+MRU per set_next_task_fair() moving the current task to the front.
+
+So reserve iterating rq->cfs_tasks, skipping blocked and current and
+such, should get you much the same over-all.
+
+That is, why can't push_task_fair() be something like:
+
+	list_for_each_entry_reserve(p, rq->cfs_tasks, se.group_node) {
+
+		if (!can_push_task(p,..))
+			continue;
+
+		...
+	}
+
+This would result in pushing the task that has not ran longest; which I
+think makes most sense. Hmm?
