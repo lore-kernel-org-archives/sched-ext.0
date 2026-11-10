@@ -1,99 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.48
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794317538;
-	b=HWctZpEeHdcU7Yz+vJpSprrbciD5JtVQZdhM0ad7mTN6F5Hfoe8Ax/T363eosIVMcjNk
-	 WjYtswXdgDaE9xU/5ALvW8TYRbYaYC43TCyBXI1WcteVAwWKa/y4BML4nEZSXV0y/ycxv
-	 mcvj/okhtSVrvqSU+l+wrs9bz9X4Pu23j/heD27oBOzkC1zr/vU8NCnmHf3r7rNX5NOLC
-	 TMvyrp0EKM/b9kiESu/lSzN/QGHqd7YMj6Lyh++blSU/jIzaFkAdB5S3osSdqP70a7elh
-	 e4VLxPZYVG8lB/2fn4bab9wHQt3pQZAtbrm0dNaWGozU8pUbGMHFrDwfZzbEbjU+xGA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794317538;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.69
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794323942;
+	b=xUno4ybRwigs47U17gBSkglWZePyUwhV6kmLNqJdvlp5OZZNtMvkqp9si5ea+DNF65A6
+	 4J9dnQDdNTdTbfUwCigb1hj3yHLaAmG9tbBWsrknYkzIM5D3YR3iMlNH+w0q7o7dxRmrz
+	 62ucdhSQj/f3SkA9FQzyVYJOHLjCxKa/7iiranBone6oRUbLZ1oJWCz2qxKBYuZLXXaii
+	 zvHSgxAB6ET7JOTQkfEkY9dLxowLLecst8Ykp0FPCYf1+Hu0Gzk1bEajkK5GyxZH9A4r2
+	 WVe7hNu8O158PFhpFd7tFR9pM2xaDHuJx0xxxqrBmcjmEaG/61O4LF/YQ8lxYrWT/cg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794323942;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=Pj4rH1eXEm9TWaNRKej2G25c6TaNFuIIDHh9BKw0CNc=;
-	b=PogWK1/AoZr9R8xGNdbIQ4IjQ3VVCyNgdjEVfr/X6hK3gub9SNwijN+wazwYUuE3sfQe
-	 KJkT8mBtoHUiz652c0q59364ToUH8DCuAQ1O6SRNT4BHo76nF5S88Acq0tTbtbfRaNsKc
-	 bLOQ4v8FsVq/MHtzz2gILHwI8FyRTvrUHub0S1uKOv/EupHvivNPAAfwi/botDr4+qx46
-	 hdPV43fvbELc0R0is7lb22kGhieFF262448wA01+B5hkNJ8rq/d1JKMv9z1SI6wh0V0uo
-	 DNSgHvs1xGVz+vHo0JT3MGTfmDdvLUa6f+eiq59Z8M5pf0DNGabcswoKrKZ8LyzKTow==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ISrFcgit;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.48
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
+	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=meXl6cdPMOiFQd1MWbHvUuZLpLChUkZmfs0n7XP8iAY=;
+	b=NhD47IhwxWeNs0n4wAjbOxDIJhGKTxr6IxTc+01bFLJuF0fOkNXqeYRkthGDHwrTqMbe
+	 13nCPeB9rs2WpOzvkZJYOELBnLY41ujySuKEVll+pUaIbqhBjlDICp5vlij79H6AjhH3J
+	 xs9ec/gsR5/Yn4ORkZLljzSqW859RD4IGmuGxVipF1lKcOefpd6Gmt54LEIS6uGk+Pn+j
+	 hhgAQyCkKuDCbQneM2J2PCJP+3k35iv4vH+x1F1CP8SthCHZjl+37b5mGNnhlvtiPGO/a
+	 qc54MVACALDw3ZAsqqlHRDVnGeP7+AQggSvflEOQb7UbO0Vbdr+rYA8VKEwOkeS9gog==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=oqv8UAoP;
+	arc=none smtp.remote-ip=209.85.218.69
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF27606ACDF
-	for <sched-ext@lists.linux.dev>; Tue, 10 Nov 2026 13:32:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BF27606ACDF
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628A960A260F
+	for <sched-ext@lists.linux.dev>; Tue, 10 Nov 2026 15:19:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 628A960A260F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ISrFcgit
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-1b244fb7fffso2492588c88.1
-        for <sched-ext@lists.linux.dev>; Tue, 10 Nov 2026 05:32:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794317537; cv=none;
-        d=google.com; s=arc-20260327;
-        b=klyKBswFSDzH/TaM2GWI6WpRX3eCOMVSNmTjfDV23WuMeiBM090+LAp7kY9MP2+n9Z
-         gLKPg/DpfRU4zTq/T9dhZZ2SMxU3NbHW5dW8vZ66k3j0bUCUpnkTjv2NyjzhAIQgKSpD
-         Sit/l62o/CbEIi6XyqZcny7JBfM9zCAF3qdgvxZrggvWkzAwx/4TyVMKy70XiQoG8WGc
-         m/Q+BEVLD2GV/rtE0UIyea67Xlhpy30sid/SzB4HWxBQdnEIAWXz99bymkUwfhxCfzhF
-         5BHyngwzf/1Jt+GEqi+5QPl5HXjIRC5QNq40aJs3BibjfnbCofSOT6/wM7fm/8LpOOFx
-         Uu7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=Pj4rH1eXEm9TWaNRKej2G25c6TaNFuIIDHh9BKw0CNc=;
-        fh=2Gvz7Bt0XS9vLQK5d43az0XGCbC0cNvDhN8QxOxDHLg=;
-        b=C7JEGOXEoC27gxeNrdCb8rI3FJvnLbrVqiJBXbWMi/bQtgyPfaHFky9LIYVNZgS7+A
-         6bZxqc4LpzYu5s3CSRiUs9NT02IOjtwbP9r1qoULvtQwPfEPNKwojwNBhoTJSkC3cqp1
-         COVpZGWo7iCeRXIosW5r6fEF+30qmwFIptsmMHxd7BzdCx1JJLL83kD80PUTPOi86gGh
-         X7GvfCuOA1Qoy6Rtf+UG019JGtE0gXLIDCHpPwoc+wUQvFNl2kPHN19AeVVBPtelaVfa
-         RhnqW5k6PtTrX/nAwTmwzhWoYKqqqOwpWi9rttoQStRDPUFIpkTqWNi21QZSqKfbhpsI
-         7C3g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=oqv8UAoP
+Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c50593b3eebso45360966b.0
+        for <sched-ext@lists.linux.dev>; Tue, 10 Nov 2026 07:19:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794317537; x=1794922337; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Pj4rH1eXEm9TWaNRKej2G25c6TaNFuIIDHh9BKw0CNc=;
-        b=ISrFcgitMxbhDE4U0XGPXxDr/jePCwyzrpAShlCXetQVN94EphqBjKXuZkBOWoU9FS
-         ktlqKM1w5rGJiOAM9DqZXGGzQS2crc27uA7WlDw2w7+nJrbnwyrZfJtrKrxxWXiIbwiV
-         NfDmkcqMbysDJieRXTVi36fYgVaYGuxkaMUlUDP7IJGj2tYCA+lSBIQ8Ibrd9rh8IEzV
-         +8ClFHAKIfGVJoMMCgmBwj8ye/d+lS8/gV/zFUjjhtb2wokz7TeqVP+CA8EYOVn6sXVL
-         cuFvIyWTZCUY433xOKyEG995lJQrsDUw0GY4d5zW/MOIFIeBN7/7PlcmLw99bZVBLFbY
-         Y1oQ==
+        d=google.com; s=20260707; t=1794323941; x=1794928741; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=meXl6cdPMOiFQd1MWbHvUuZLpLChUkZmfs0n7XP8iAY=;
+        b=oqv8UAoPDG2wM1d3kKzKqjKnLldP08vmM7ZPZ7lXfUxhBu1YeAd8jf+gBQeuLnkZFR
+         69jk3K7wt5Zc9Qyr3Tdlyx+vdua3YdFFscUEyko+yWr5Z99Es2TSmjfjrD68HYotTyTb
+         lJMBAi/oJc9eT+VjIeQtncLavDzpl+UT2iXeiMxfHNZ7rTEyjmC/zJ52acvaf1XpkZkm
+         FRMAM9DC0pic3LhtfddCAYalHc+S7Vme0VYMog3b0PBQtP8IPkMDzAI7bDVCUU+QW/C6
+         AJZVFSETOMNd8mGJHmG500TUsxz/rFGRqtCs7/0HgHpvPNdu+oI9aDYaRDv9Aoieykuo
+         A5fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794317537; x=1794922337;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Pj4rH1eXEm9TWaNRKej2G25c6TaNFuIIDHh9BKw0CNc=;
-        b=PKsMtuJJ1QXz858cC5IiRox9Z23lI9/25Wj/7OublGqs5NDjILm0WKYPi51ZCP/lU7
-         SXJXyn2OBouo9yuk+h2UU5tJTUvm4Cg0Ahc6sgEuPRq5bLoP7Ld3X9uqF7Sd6/Odl1UG
-         Vl9Cg2RIwFoAeywIUFCH97CQf/2eTQ+yw+DUtBX+xP2HF8xvsBb/97CmuT/Dpgl/Qv+2
-         7IR4Q0XvjxzTMux32VwXc/JlyVYVvHprkKYYa3+beX2vl49ul1GsCygz58trjqh73inD
-         L+geMDojWKLWTHjjZLdOHOvS72+86vYsqCg8UnlZ7ZWJnL7aqCdfB1P9MtgeLPYFTflQ
-         PMSw==
-X-Forwarded-Encrypted: i=1; AL+hErGde7DnUt7wKekz1aDGoSEkyfQAabu5HbLy5CE3HLdYsg3ec8wrXhugWv0h3CWu+Z5BasNNCrwdvUk=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/lVDi0OIP7/RjVeqhYv6LwTqICAlBtAxkN88C0H6vGi92n10Ff
-	CdJ1gsI4sA4GVnS3Z4/fVwRSg2tjjYwG45/Alv47rOvIDrCDMCNz8r+4vdazifrDWZE7vL9QBjM
-	DwOCH6psKNwAyMstSlYB8HSsvn47vgunr8ptUSfZmXA==
-X-Gm-Gg: AYBFou1d7S2hj8sizn2oVxwjoKSnnAePAFx550+JQhCBs8nOVrjTkVeI9aF9m5fMEK0
-	vi0der+MW/cynhdjqnPwn4T/hN/UAKiHDxM6ZbDDwAwp/Vd70OJB+BPjkEWRpg13jm5gY422fi+
-	lWTj07lFnFvWCbFJN7cj4e4rfihBEvPZnx8J1rPrKME3ojG1GFQ7vcrCJb7XVJgfWdOl8LV88C0
-	AUK8qLg5qkTIM5/xqq0D2FYgm/f90Y/YQEcBB5+HLlDot6+zAcOa8c7tc71mVX/cUXRzn4LlSFT
-	pHUB/7ZAcmlgpSw59LwAEtaa08Ni9HtuzO3GvV12tyScQBbLnJIYXlwWK3KhNCi8/3f4nO5asEg
-	iUs99LL1HcoYNMMzWzMjGXaGaAxfq1njtnU4GVYF5qmax1WaUt+4zoDscTNXEodjeCdDnaw==
-X-Received: by 2002:a05:7022:7f01:b0:1b2:43ac:d3a3 with SMTP id
- a92af1059eb24-1b3b5fee2aamr3361789c88.24.1794317537291; Tue, 10 Nov 2026
- 05:32:17 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794323941; x=1794928741;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=meXl6cdPMOiFQd1MWbHvUuZLpLChUkZmfs0n7XP8iAY=;
+        b=jp7RNVHJHnRWr8LHH6Ulb0vRlG7OF6mDD9xjseuBHE7Hx60yX2WarEG2xTQcCwTmMQ
+         TPTox1FaMgKHsJsUPDomDQR4AV6RnlAWgGmXtw5BN6lpKq1e5gUmV04nPLo6h6fJk8Vo
+         /CpAFDksvxfgsrscx2/KgWNYqa2QeL4wpoxCbiOgiufl80vTIonqqR434H+CUnk1mGFU
+         LfmvveesB5Rqaji4FlAO5gJLFxZ7sZ0f/2Z1cyctWwU23fTgwcotoNaQSb+Vaqn+q7/2
+         5cUa85OGt2XvrkfkNU3EWvCME+l5U3zUwKxsHeBOBdjPHmP7kmnW6RqJ6LQYrqnJ/96Q
+         +kJA==
+X-Forwarded-Encrypted: i=1; AL+hErFwZra13Hf7CHMqibeePqBxeQ4T3ZPZd1HdjP/S4WNdz5kYOn7ysyDRhJ3Q6ySdkH7QmygrqItBIZU=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/P0hsJwUrcicyvqOMg8HVgqmRN0xHzhXeSfCdQ3VTX2Di0CAcO
+	k7vfP/rwkOV10fqqWRdUu/7jHVVNoeDGLyevlquEsziZ/qGDat7umbR5i2oCZK0yrRaXwj1myEv
+	3UDAxcpw20e6PIBxj0Q==
+X-Received: from ejdx2.prod.google.com ([2002:a17:906:2962:b0:c50:519f:c790])
+ (user=michalblk job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:907:3d05:b0:c34:c5e8:1dc5 with SMTP id a640c23a62f3a-c504951a77bmr241791266b.20.1794323940348;
+ Tue, 10 Nov 2026 07:19:00 -0800 (PST)
+Date: Tue, 10 Nov 2026 15:18:57 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -102,100 +75,289 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-7-vincent.guittot@linaro.org> <au7SabL5pfbsApyB@scheduler.schedules>
- <CAKfTPtBfXOcAd=5RkYepRn15Hg=id9FQ3jh1tQoewOtUSrsjHw@mail.gmail.com> <avIh4MZjVyQuF6Yo@scheduler.schedules>
-In-Reply-To: <avIh4MZjVyQuF6Yo@scheduler.schedules>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Tue, 10 Nov 2026 14:32:01 +0100
-X-Gm-Features: AclHuK_-u2urQ3RFkBLSdBCNdaeJlRcvSlcfMQXUBnI1scU56PsAWcpbh6wLOOg
-Message-ID: <CAKfTPtALwo_aQ_31nF631_7hs1YfYzNUXdY1zC=jUB7P7_QRmw@mail.gmail.com>
-Subject: Re: [PATCH 06/20 v3] sched/eevdf: Add min slice check when selecting CPU
-To: Kayra Cizmeci <kayracizmeci@gmail.com>
-Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, 
-	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com, 
-	linux-kernel@vger.kernel.org, lukasz.luba@arm.com, rafael@kernel.org, 
-	linux-pm@vger.kernel.org, tj@kernel.org, void@manifault.com, 
-	arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev, 
-	qyousef@layalina.io, christian.loehle@arm.com, pierre.gondois@arm.com, 
-	sshegde@linux.ibm.com, tim.c.chen@linux.intel.com
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.0.506.g506a7eabc5-goog
+Message-ID: <20261110151857.1864222-1-michalblk@google.com>
+Subject: [PATCH v3 RESEND] sched: Lift cgroup update locking to core to
+ prevent CFS/SCX divergence
+From: Michal Blaszczyk <michalblk@google.com>
+To: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>
+Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt <rostedt@goodmis.org>, 
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
+	Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>, Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, Michal Blaszczyk <michalblk@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 9 Nov 2026 at 20:56, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
->
-> On Mon, Nov 09, 2026 at 04:55:23PM +0100, Vincent Guittot wrote:
-> > On Sat, 7 Nov 2026 at 09:57, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
-> > >
-> > >
-> > > Hi Vincent,
-> > >
-> > >
-> > > Sashiko reviewed this one so I'll just put here my own concerns instead
-> > > of repeating.
-> >
-> > Regarding sashiko's feedback about cpu state ranking, I chose this
-> > ranking on purpose.
-> > For !SMT :
-> > - 7 CPU is idle and fully fits (i.e. return immediately)
-> > - 6 CPU fully fits and is not idle but we can preempt current because
-> > of slice so the task will run on the best CPU immediately
-> > - 5 CPU is idle but doesn't fit uclamp min. On such a CPU, the task
-> > can easily miss its deadline
-> > - 4 CPU is idle but doesn't fit at all. This is even worse
-> >
-> > For SMT
-> > - 7:CPU is idle and fully fits (i.e. return immediately)
-> > - 6: CPU is busy and fully fits. Although CPU is not idle, task can
-> > preempt current because of its slice and run immediately on a CPU.
-> > This is similar to an idle CPU (and maybe even better). While writing
-> > this, I realize that I should probably check the lag too
-> > - 5: CPU is idle but doesn't fit uclamp min. On such a CPU, the task
-> > can easily miss its deadline
-> > - 4: CPU is idle but doesn't fit at all. This is even worse than -5
-> > - 3: CPU is idle and fits for task but sibling is busy
-> > - 2: CPU and sibling are busy and fits for task and like-6 task will
-> > run immediately
-> > - 1: CPU is idle and doesn't fit uclamp and sibling is busy
-> >   0: CPU is idle but doesn't fit at all, and sibling is busy.
-> >
-> > Note that with the push mecanism we could look for another CPU for the
-> > task that will be preempted
-> >
->
-> Thanks for the great explanation! My only concern is on 6 and 2, as I
-> explained in my first message, below.
->
-> Sashiko also pointed out other concerns, it would be good to check them
-> all out.
+Concurrent writes to cgroup control files (such as cpu.shares or
+cpu.weight) can lead to state divergence between CFS and SCX.
 
-Yeah, will fix the set_idle_cores too
+For instance, in cpu_shares_write_u64(), the CFS update is serialized
+by shares_mutex (internal to fair.c), but this lock is dropped before
+scx_group_set_weight() is called. The latter only acquires a read
+semaphore (scx_cgroup_ops_rwsem), allowing multiple threads to evaluate
+and act on the sched_ext update concurrently.
 
->
-> > >
-> > >
-> > > Look here:
-> > >
-> > > CPU1: CPU2:
-> > > FA    RA
-> > >       FC
-> > >
-> > > CPU2 has 1 RT and 1 Fair tasks named RA and FC.
-> > > Let's say RA is running on CPU2 and FC's slice is 10 ms.
-> > >
-> > > And let's say FA has 8 ms slice, and a fair task named TC is waking up
-> > > with 9 ms slice:
-> > >
-> > > * We look to CPU1, 9 < 8 is false so we return false
-> > >
-> > > * We look to CPU2, 9 < 10 is true so we return it.
-> > >
-> > > But the problem is, CPU2 has a RT task running and we are going to
-> > > compete with the RT task. In that case it can be worse than CPU1.
-> > >
->
->
-> Thanks,
->
-> Kayra
+This serialization gap allows concurrent writes to interleave.
+As a result, the recorded state in CFS, the SCX internal bookkeeping
+(e.g., tg->scx.weight), and the BPF scheduler itself can end up operating
+on completely distinct parameters (pairwise distinct values).
+
+Similar races are present in tg_set_bandwidth(), cpu_idle_write_s64(),
+cpu_weight_write_u64(), and cpu_weight_nice_write_s64().
+
+Fix this by moving the CFS locking up into the core layer in
+`kernel/sched/core.c`. By acquiring these locks directly in the core
+write handlers, both the CFS and SCX callbacks are executed atomically
+under the same lock.
+
+Fixes: 819513666966 ("sched_ext: Add cgroup support")
+Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+---
+
+Notes:
+    RESEND:
+    - No changes since v3, rebased onto tip/sched/core. It also applies
+      cleanly to mainline.
+    - Added Andrea's Reviewed-by and Tejun's Acked-by from v3.
+    - Peter agreed with lifting the locking into the core on v1 [1], and
+      Tejun asked him to pick up v3 [2].
+    - Retested on tip/sched/core with x86_debug.config. The sched_ext
+      selftests pass, and stressing all cpu.* knobs and autogroup nice
+      values while attaching and detaching a sched_ext scheduler triggers no
+      lockdep or other reports. In a temporary test whose BPF scheduler
+      spins for 5ms in ops.cgroup_set_{weight,idle,bandwidth}() while
+      another value gets written, cpu.weight, cpu.idle and cpu.max diverged
+      from what the BPF scheduler saw in 30 of 30 rounds each without this
+      patch, and in none with it.
+    
+    v3: https://lore.kernel.org/r/20260824074913.2468177-1-michalblk@google.com
+    - Renamed the shares and cfs_constraints mutexes.
+    
+    v2: https://lore.kernel.org/r/20260821140818.1559100-1-michalblk@google.com
+    - Lifted the existing CFS locks up into the core layer instead of
+      introducing a new global mutex.
+    
+    v1: https://lore.kernel.org/r/20260820160956.910663-1-michalblk@google.com
+    
+    [1] https://lore.kernel.org/r/20260821072653.GD4120091@noisy.programming.kicks-ass.net
+    [2] https://lore.kernel.org/r/e9cd7bd7c303b57d8716c4a8cab35058@kernel.org
+
+ kernel/sched/core.c  | 35 +++++++++++++++++++++++------------
+ kernel/sched/fair.c  | 25 +++++++++++++------------
+ kernel/sched/sched.h |  7 +++++++
+ 3 files changed, 43 insertions(+), 24 deletions(-)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 175b52a7ea793..8b4e4a6f4ae02 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9783,6 +9783,8 @@ static int cpu_uclamp_max_show(struct seq_file *sf, void *v)
+ }
+ #endif /* CONFIG_UCLAMP_TASK_GROUP */
+ 
++DEFINE_MUTEX(cpu_weight_mutex);
++
+ #ifdef CONFIG_GROUP_SCHED_WEIGHT
+ static unsigned long tg_weight(struct task_group *tg)
+ {
+@@ -9800,7 +9802,10 @@ static int cpu_shares_write_u64(struct cgroup_subsys_state *css,
+ 
+ 	if (shareval > scale_load_down(ULONG_MAX))
+ 		shareval = MAX_SHARES;
+-	ret = sched_group_set_shares(css_tg(css), scale_load(shareval));
++
++	guard(mutex)(&cpu_weight_mutex);
++
++	ret = sched_group_set_shares_locked(css_tg(css), scale_load(shareval));
+ 	if (!ret)
+ 		scx_group_set_weight(css_tg(css),
+ 				     sched_weight_to_cgroup(shareval));
+@@ -9815,8 +9820,6 @@ static u64 cpu_shares_read_u64(struct cgroup_subsys_state *css,
+ #endif /* CONFIG_GROUP_SCHED_WEIGHT */
+ 
+ #ifdef CONFIG_CFS_BANDWIDTH
+-static DEFINE_MUTEX(cfs_constraints_mutex);
+-
+ static int __cfs_schedulable(struct task_group *tg, u64 period, u64 runtime);
+ 
+ static int tg_set_cfs_bandwidth(struct task_group *tg,
+@@ -9835,13 +9838,6 @@ static int tg_set_cfs_bandwidth(struct task_group *tg,
+ 
+ 	burst = (u64)burst_us * NSEC_PER_USEC;
+ 
+-	/*
+-	 * Prevent race between setting of cfs_rq->runtime_enabled and
+-	 * unthrottle_offline_cfs_rqs().
+-	 */
+-	guard(cpus_read_lock)();
+-	guard(mutex)(&cfs_constraints_mutex);
+-
+ 	ret = __cfs_schedulable(tg, period, quota);
+ 	if (ret)
+ 		return ret;
+@@ -10093,6 +10089,8 @@ static u64 cpu_period_read_u64(struct cgroup_subsys_state *css,
+ 	return period_us;
+ }
+ 
++static DEFINE_MUTEX(cpu_max_mutex);
++
+ static int tg_set_bandwidth(struct task_group *tg,
+ 			    u64 period_us, u64 quota_us, u64 burst_us)
+ {
+@@ -10135,6 +10133,13 @@ static int tg_set_bandwidth(struct task_group *tg,
+ 					burst_us + quota_us > max_bw_runtime_us))
+ 		return -EINVAL;
+ 
++	/*
++	 * Prevent race between setting of cfs_rq->runtime_enabled and
++	 * unthrottle_offline_cfs_rqs().
++	 */
++	guard(cpus_read_lock)();
++	guard(mutex)(&cpu_max_mutex);
++
+ #ifdef CONFIG_CFS_BANDWIDTH
+ 	ret = tg_set_cfs_bandwidth(tg, period_us, quota_us, burst_us);
+ #endif /* CONFIG_CFS_BANDWIDTH */
+@@ -10233,6 +10238,8 @@ static int cpu_idle_write_s64(struct cgroup_subsys_state *css,
+ {
+ 	int ret;
+ 
++	guard(mutex)(&cpu_weight_mutex);
++
+ 	ret = sched_group_set_idle(css_tg(css), idle);
+ 	if (!ret)
+ 		scx_group_set_idle(css_tg(css), idle);
+@@ -10409,7 +10416,9 @@ static int cpu_weight_write_u64(struct cgroup_subsys_state *css,
+ 
+ 	weight = sched_weight_from_cgroup(cgrp_weight);
+ 
+-	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
++	guard(mutex)(&cpu_weight_mutex);
++
++	ret = sched_group_set_shares_locked(css_tg(css), scale_load(weight));
+ 	if (!ret)
+ 		scx_group_set_weight(css_tg(css), cgrp_weight);
+ 	return ret;
+@@ -10446,7 +10455,9 @@ static int cpu_weight_nice_write_s64(struct cgroup_subsys_state *css,
+ 	idx = array_index_nospec(idx, 40);
+ 	weight = sched_prio_to_weight[idx];
+ 
+-	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
++	guard(mutex)(&cpu_weight_mutex);
++
++	ret = sched_group_set_shares_locked(css_tg(css), scale_load(weight));
+ 	if (!ret)
+ 		scx_group_set_weight(css_tg(css),
+ 				     sched_weight_to_cgroup(weight));
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index d4cc0caee6265..0cad2d48a4d7b 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -15789,13 +15789,11 @@ void init_tg_cfs_entry(struct task_group *tg, struct cfs_rq *cfs_rq,
+ 	se->parent = parent;
+ }
+ 
+-static DEFINE_MUTEX(shares_mutex);
+-
+ static int __sched_group_set_shares(struct task_group *tg, unsigned long shares)
+ {
+ 	int i;
+ 
+-	lockdep_assert_held(&shares_mutex);
++	lockdep_assert_held(&cpu_weight_mutex);
+ 
+ 	/*
+ 	 * We can't change the weight of the root cgroup.
+@@ -15830,36 +15828,40 @@ static int __sched_group_set_shares(struct task_group *tg, unsigned long shares)
+ 	return 0;
+ }
+ 
+-int sched_group_set_shares(struct task_group *tg, unsigned long shares)
++int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares)
+ {
+ 	int ret;
+ 
+-	mutex_lock(&shares_mutex);
++	lockdep_assert_held(&cpu_weight_mutex);
++
+ 	if (tg_is_idle(tg))
+ 		ret = -EINVAL;
+ 	else
+ 		ret = __sched_group_set_shares(tg, shares);
+-	mutex_unlock(&shares_mutex);
+ 
+ 	return ret;
+ }
+ 
++int sched_group_set_shares(struct task_group *tg, unsigned long shares)
++{
++	guard(mutex)(&cpu_weight_mutex);
++	return sched_group_set_shares_locked(tg, shares);
++}
++
+ int sched_group_set_idle(struct task_group *tg, long idle)
+ {
+ 	int i;
+ 
++	lockdep_assert_held(&cpu_weight_mutex);
++
+ 	if (tg == &root_task_group)
+ 		return -EINVAL;
+ 
+ 	if (idle < 0 || idle > 1)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&shares_mutex);
+-
+-	if (tg->idle == idle) {
+-		mutex_unlock(&shares_mutex);
++	if (tg->idle == idle)
+ 		return 0;
+-	}
+ 
+ 	tg->idle = idle;
+ 
+@@ -15904,7 +15906,6 @@ int sched_group_set_idle(struct task_group *tg, long idle)
+ 	else
+ 		__sched_group_set_shares(tg, NICE_0_LOAD);
+ 
+-	mutex_unlock(&shares_mutex);
+ 	return 0;
+ }
+ 
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index a4df59c9c9b60..5826f6c3b23d8 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -599,7 +599,10 @@ extern void sched_release_group(struct task_group *tg);
+ extern void sched_move_task(struct task_struct *tsk, bool for_autogroup);
+ 
+ #ifdef CONFIG_FAIR_GROUP_SCHED
++extern struct mutex cpu_weight_mutex;
++
+ extern int sched_group_set_shares(struct task_group *tg, unsigned long shares);
++extern int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares);
+ 
+ extern int sched_group_set_idle(struct task_group *tg, long idle);
+ 
+@@ -607,6 +610,10 @@ extern void set_task_rq_fair(struct sched_entity *se,
+ 			     struct cfs_rq *prev, struct cfs_rq *next);
+ #else /* !CONFIG_FAIR_GROUP_SCHED: */
+ static inline int sched_group_set_shares(struct task_group *tg, unsigned long shares) { return 0; }
++static inline int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares)
++{
++	return 0;
++}
+ static inline int sched_group_set_idle(struct task_group *tg, long idle) { return 0; }
+ #endif /* !CONFIG_FAIR_GROUP_SCHED */
+ 
+
+base-commit: d7e670601af6c564ccf6d3b2ddf70ee4f41a6d1c
+-- 
+2.56.0.506.g506a7eabc5-goog
+
