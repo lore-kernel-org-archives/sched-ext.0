@@ -1,57 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794315562;
-	b=lLuQjvSVL1NxSjxObuS1WVzSMdm/6rdk2whSJ1WeBFt99zfspzdHIgxS2SsFybXhI08s
-	 e7Yy7X7qS9cXpiJLXNibYbTogEBygspujXIMT6iQW7zV5bJIT7xyf80AYHzosL4l6e56k
-	 5d6ShQUjOa/aCcCbD8dyQULAAym64gP7BAo175MfNokvFvMp5jtGw988wYHB70RkMHGEj
-	 ySzcyZAa8hcCi0Gfh4Q+7nuOWsZNQ17X69ud4vWh0G9miNC8UsPt2E9XxDZOuAEQccz/Y
-	 MvyItyOBUSNvnZgXABB0XoxhsnZFYH5Jcjbxc3Sta9XmdUsAkHakW2NTDGw2+xtvLQg==
+	t=1794315670;
+	b=eylOiPrdTRsL7b8OnGGDdV5PdMyPvSs09awnJ8JxJgXGD4X1NttToXkLzoGkroelCKZI
+	 74LJAbWo5vjaq7doi2uWKJ+GrglgMv4CHBCSfhraywO3FYSc9hhUm7Ul2pyUKWCJqqyZY
+	 9aBdgy1OkF/Up2OZrGVVxQPj9RwGdcedOslHfnM8dxTu0lefXDvYRVzFBLC5Qlvr5gmhj
+	 ZlaG1iQHPk6NsEMTnEJ7izHuCvMved7OnMizh7udWvOFalcvHRI0qhCEP0Xgd4G1M3P1o
+	 Tdr6jf2UkR8WqoVpU9Et1vtlBBTC9T6wOskXIW89UQhXOT6jebE+N92Xhc+9Kw/eA8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794315562;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794315670;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=SdPGvMQkLBdL+5h8W1zif0+nxivxkxEgV80Gq0TGRzw=;
-	b=nM+ELkL+lt4BoP5elwJoKX4kUvEKNhV5qmHyUVxSu11NiF6lhfktam1DO7LqydCEzpuM
-	 S+Z698uOsQrJvtNvTkzsNrbUNRUQt+wcNkW8PJfbLQ5IHUa5k+k9E3zMF9HNxwdCUjhNl
-	 LOrmSMwnJDZ7tZew+4oIMnd7AlEptBMyIpdZ2MUdP1vb4PUIQQpWi9YcYvkx4qmV4sfqb
-	 PngutKFayEDvzPvYMjo3ONrGjSuS/A8B7s3fU18FEM+exIBm2VE1H0ik2qqoYXhtCF05e
-	 D/eRjEIATWgjooc6IK37alJAAL2Avf1skawhcH5iBeWkBWJhk0DugRJ0x7d9b0khn8w==
+	bh=6TUsKtfw8LK+ehUFve3c8+TC971fmmWHnjkflx04kRU=;
+	b=Q73/EGqAPFcH21NWcMEg7bknHA9o+Fo/uGDJKRwBypIQx5LUquaThMS4nib9SdASIoqf
+	 WYGBz/HEfdEbMKZoLM3TibmBe73yBhIq1MwrJmVMu8bOFA1CWWn32ccDOZsx860m6tFoD
+	 KoqXR/GzWLuh0oNh458mytrL0rhlmJfASxnshBz6smrHAO+V8ZGyP4RIb6mqVj+jcdGIF
+	 VRzWIiHRThA8aTPHlEgjK/1WOFZtbmxoKzC778/QG3IYoIeO+SFQNo3sIqAcTDJ997xRT
+	 FeBYOILAKtMnoQvbr7uD5Iu1A08aGyHCSRtzPevqI0ABhQS5GBlZr5lHJapqMCzHfNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mjmckKbv;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Txc+oLsS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1DA606D5CC;
-	Tue, 10 Nov 2026 12:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E225A606A7C2;
+	Tue, 10 Nov 2026 13:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mjmckKbv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627491F0089F;
-	Tue, 10 Nov 2026 12:59:21 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Txc+oLsS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855D21F0089F;
+	Tue, 10 Nov 2026 13:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794315561;
-	bh=SdPGvMQkLBdL+5h8W1zif0+nxivxkxEgV80Gq0TGRzw=;
+	s=k20260515; t=1794315669;
+	bh=6TUsKtfw8LK+ehUFve3c8+TC971fmmWHnjkflx04kRU=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mjmckKbvLG1N3XZ3Ot11MNwSiVERdxtjqq4KIKRGHx6wvEXnzt4NpE6/5jxuAOS+o
-	 CThDq7T+G6E7xxDIJLb9OwjC6DSEdyHbC9aYy6gXpNUBJNkGZb0lXFV4lCs+z/N691
-	 VAWdo3h32DtKfAzwKbtnaR4PwtnJ1Nc68wtqCBR88N5hGsl8pEC8YMlQDfZEi4VkzS
-	 dq4U8MQGsqxdGG9jZIZftSJGzDpfDSC4knNJsNPrTVpHoUjpyeHCm7u+1I5nGt5MkB
-	 +WSzKeUBoNkd5MrowNUCsu7MV3ZLxmJbLmkO4YMowaDzuYXXUTCrXldfWlaLo6q9jN
-	 sekjRneg0Okvw==
-Message-ID: <sashiko-outbox-207063@kernel.org>
+	b=Txc+oLsSTya5a/uDMzUi9SyNJUdNPjbkWqSzUyNPQLOZdU3Wyhv3kDcxBU+6EOmsa
+	 6JYB0dacGUIaHf/v3K0zckowF7XZlnzQoMhxiwcCrYxMoIsTQzXvcoxBfnwM5ZFtcb
+	 4p4rMGXoLWBR4w82/jVeiqP4dL3TO+JdVney9yBXmYX5ndLAvfS2ZzHFOtBl+oyQw8
+	 Sj1idliO6yT1cNyD0HUDyAWcPYJ+kQp2W1Yx1xoKNdckm0K/aWJtFlM/Y9ERNnbb6q
+	 9eImmXMneBJ5erNerVYNpU0BhH5EUlxqUpq6pQiCkGdW/hT9wVDa9GuxkZw9l8KM+p
+	 OdgqQeRKkGYsA==
+Message-ID: <sashiko-outbox-207066@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 3/9] tools/sched_ext: scx_pair: Don't abort when the
- dispatching cgroup goes away
+Subject: Re: [PATCH] sched_ext: make DSQ iterator stay drained after NULL
 Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tao Cui" <cui.tao@linux.dev>
+To: "Kang Chen" <k.chen@smail.nju.edu.cn>
 Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
-In-Reply-To: <20261110125001.4167503-4-cui.tao@linux.dev>
-References: <20261110125001.4167503-1-cui.tao@linux.dev>
- <20261110125001.4167503-4-cui.tao@linux.dev>
+In-Reply-To: <20261110125113.2935742-1-k.chen@smail.nju.edu.cn>
+References: <20261110125113.2935742-1-k.chen@smail.nju.edu.cn>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 10 Nov 2026 12:59:20 +0000
+Date: Tue, 10 Nov 2026 13:01:09 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -61,58 +59,69 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Medium] sched_ext: scx_pair: leaked active_mask bit in try_dispatch()
-  stalls pair
+Thank you for your contribution! Sashiko AI review found no new issues
+in this patch, but noticed 1 related pre-existing issue it does not
+introduce:
+- [High] sched_ext: recursive dsq->lock deadlock via
+  bpf_iter_scx_dsq_next() in tracing [1]
 --
 
-commit 0bc135e247824dc3899acf0f6cf608c43ee6328b
-Author: Tao Cui <cuitao@kylinos.cn>
+commit 892356944fb79fb9f40ab2f24779b6976bd4ec25
+Author: Kang Chen <k.chen@smail.nju.edu.cn>
 
-tools/sched_ext: scx_pair: Don't abort when the dispatching cgroup goes away
+sched_ext: make DSQ iterator stay drained after NULL
 
-This commit changes try_dispatch() in scx_pair to mark the CPU pair as
-draining and return instead of calling scx_bpf_error() when looking up the
-current cgroup ID in cgrp_q_idx_hash fails.
+This commit records a drained flag in the DSQ iterator cursor once
+nldsq_cursor_next_task() returns NULL so subsequent calls to
+bpf_iter_scx_dsq_next() continue returning NULL.
 
-> diff --git a/tools/sched_ext/scx_pair.bpf.c b/tools/sched_ext/scx_pair.bp=
-f.c
-> index 0d61b7b812db6..d38d3a078adee 100644
-> --- a/tools/sched_ext/scx_pair.bpf.c
-> +++ b/tools/sched_ext/scx_pair.bpf.c
-> @@ -478,8 +478,16 @@ static int try_dispatch(s32 cpu)
->  	/* again, it'd be better to do all these with the lock held, oh well */
->  	vptr =3D bpf_map_lookup_elem(&cgrp_q_idx_hash, &cgid);
->  	if (!vptr) {
-> -		scx_bpf_error("failed to lookup q_idx for cgroup[%llu]", cgid);
-> -		return -ENOENT;
-> +		/*
-> +		 * @cgid can disappear from under us: pair_cgroup_exit()
-> +		 * drops the hash entry when the cgroup is going away.
-> +		 * Mark the pair as drained and let the next dispatch
-> +		 * expire it instead of taking the whole scheduler down.
-> +		 */
-> +		bpf_spin_lock(&pairc->lock);
-> +		pairc->draining =3D true;
-> +		bpf_spin_unlock(&pairc->lock);
-> +		goto out_maybe_kick;
->  	}
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index ebdf7b91f9d37..f2bfd43d75526 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
 
-[Severity: Medium]
-Does this path need to clear in_pair_mask from pairc->active_mask and return
--EAGAIN, like the empty-cgroup path just below?
+[ ... ]
 
-Before dropping pairc->lock to look up cgid in cgrp_q_idx_hash,
-try_dispatch() sets pairc->active_mask |=3D in_pair_mask.  Jumping to
-out_maybe_kick returns 0 without dispatching a task, so pair_dispatch() sto=
-ps
-retrying and the current CPU goes idle with its bit still set in
-pairc->active_mask.  When the sibling CPU enters try_dispatch() and sees
-pairc->draining set, it checks pairc->active_mask, assumes this idle CPU is
-still running a task from the old cgroup, and bails out without switching to
-the next cgroup in top_q, stalling the pair.
+> @@ -11028,13 +11030,24 @@ __bpf_kfunc int bpf_iter_scx_dsq_new(struct bpf=
+_iter_scx_dsq *it, u64 dsq_id,
+>  __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_sc=
+x_dsq *it)
+>  {
+>  	struct bpf_iter_scx_dsq_kern *kit =3D (void *)it;
+> +	struct task_struct *p;
+> =20
+> -	if (!kit->dsq)
+> +	if (!kit->dsq || (kit->cursor.flags & __SCX_DSQ_ITER_DRAINED))
+>  		return NULL;
+> =20
+>  	guard(raw_spinlock_irqsave)(&kit->dsq->lock);
+
+[Severity: High]
+This problem wasn't introduced by this patch, but can bpf_iter_scx_dsq_next=
+()
+and bpf_iter_scx_dsq_destroy() deadlock [1] on kit->dsq->lock when
+called from a BPF tracing program?
+
+The DSQ iterator kfuncs are registered in scx_kfunc_ids_any and are not
+listed in scx_kfunc_ids_no_tracing, so scx_kfunc_context_filter() allows
+BPF_PROG_TYPE_TRACING programs to call them.  If a tracing program runs
+while the current CPU already holds the same user DSQ's lock, iterating that
+DSQ attempts to acquire kit->dsq->lock recursively on the same CPU:
+
+scx_dispatch_enqueue()
+  raw_spin_lock(&dsq->lock)
+  ...
+  scx_error()
+    trace_sched_ext_exit()
+      <BPF tracing prog>
+        bpf_iter_scx_dsq_next()
+          raw_spin_lock_irqsave(&kit->dsq->lock)  <-- spins forever
+
+Adding the DSQ iterator kfuncs to scx_kfunc_ids_no_tracing would prevent
+tracing programs from calling them.
+
+[1] https://sashiko.dev/#/bug/linux-243627bf-8f5e-401e-a2af-0b6c5d9b3088
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110125001.4167=
-503-1-cui.tao@linux.dev?part=3D3
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110125113.2935=
+742-1-k.chen@smail.nju.edu.cn?part=3D1
