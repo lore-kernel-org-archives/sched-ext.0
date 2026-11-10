@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794338865;
-	b=T0M7y+4aLWqIGYeY1ysDqsDox3TC7e0sEGTXvzCUahwIOR+kqlaOvLvYnpbSsbVSpVl1
-	 jCDYGHB9asxTFZ4ml6KzWfQhjWp0f/yzZcENnDc6CTkq6jvvoXYpcOSnkcL2zCA18glLz
-	 l304FcwFrk/DRj9QTxFV0DKBMExbsMH4mNu55rFdSk5U6L9cU+Q7HC6VdGZtA0pc3Eq4F
-	 m/NcKae8uw3Dkb0/xXhLSn3PClmW53mPS165PE9rdX8lIG6TJN3uQ7ztyLo3z8SAq2+PP
-	 NuGvzuN1v6HMYqfQCw7u4+cNqMAXzHSk7n2q/krKLcV8C+gWp8hMLRIWsYZdC8cD4gA==
+	t=1794339480;
+	b=LgVkRmawVOiaaaAbi0m4BMmP+87utQaZtSzsFJYmnuDzWIBvHo/Onm9a9PcElmIjO4BE
+	 waBt52AQ/9+DNwbTyTpNHH+YnwyGeVmAiB2TQdDvAcuJ0SOsUKTaXLPcB86LTzD9kRdBy
+	 01etiMcxZYz7y197JO7KPxl9dAWU+ON6teaNxIU6Xx3T9XxiCkMvfVbbiZyb5I/W9jLyx
+	 EKfKnCo0XznhD3za7vA6HaMhexvBPJ3u9C3IvOHNJNyTd4G/F07L7JQd7UaDri+fa/UHC
+	 kCvLvjmQZG+E1+iWx8u+nFghZ8Vbw47VCWNKgM7CGtmF4FlGSOKvWnrlklwp0CgYU0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794338865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794339480;
 	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
 	bh=g8oRdUIPNrM19I+aRr6Xrjnpls3CINQLfjEu+H+Ojoc=;
-	b=wsQ6Kavn+UHTwdoCvBRSV8FcD7ZAdU/1Rr6xKYAf0h7hrUF/ysWfx7Y6BRAt/3T1Mzzr
-	 tJ9jCyMsnUdlbKAM6ClEAk+bphjt2IH+PDg71u4ID7mSD/aaWffWW63YhVz6SwbJUx9/1
-	 PK9i0fjb+LvDRhRUG+yBG59EGQHa7G2F8/1spCv8LYGn+jwNIJGYjvDAjk1zKSN1n5/P7
-	 HXRufDA/CgZmPHO0Un4ne47dJ/IIRBknjqtrHAaKzGmObOj+jTY/Weu7Qb9RwMEf+qx3l
-	 ohyb1LhKWxov7Lw0oA1yRIxvl0yTaOB1wXUU38tcWtLeeLF+sWt8uEEUX9YBaONWuyA==
+	b=KtjJf/tV/dFKoLR1A0/HbYTm11dtLWzKH1pHfFZH7aYMEIiU+nfX2woia5ZJfkH9DiD9
+	 /3aTt9pPgYpBYC6JPXaYAaA/lhlPHCGIMxUUs7nvSq0fDTDc3bBi5xKCsZqo4OlMnsJCp
+	 aFMTlq0wLUu5+yFS8ctwHrCcOhZ9Pzp/2fKe9f3DhzPpVpqZILCpTjwLooHkG3hpwP2QS
+	 V5VlNPeSn8dfFt5uhyO06nrwgXQ1RV975QEkPQLfP20j02dH89JUpLXmNQ/t1c0JzB5fS
+	 kNGgD3w/lghNyawgAVeOx1NCqiXOhYnKEJdGUeNJRScctq0pc8gM1z11ywmWFoEfqPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="f3s/fV+W";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=d9RvgfLi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406C2606A321;
-	Tue, 10 Nov 2026 19:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF615606A321;
+	Tue, 10 Nov 2026 19:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=f3s/fV+W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF1E1F0089F;
-	Tue, 10 Nov 2026 19:27:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=d9RvgfLi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C131F0089F;
+	Tue, 10 Nov 2026 19:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794338864;
+	s=k20260515; t=1794339479;
 	bh=g8oRdUIPNrM19I+aRr6Xrjnpls3CINQLfjEu+H+Ojoc=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=f3s/fV+WRKlAj5SFMK7jp5Iwb474odss6tdEMnEtGP+F94PUORxWyrsyZHO3RTFS/
-	 Ct2fmiXzm8rHQlwcHeZd849h/CoI1qamUTDBN5xxyiCWNmKxZa0aScQVSF2ay85CjC
-	 y4QCaDOJP5y3fixrJwabx/xNaMARegMfsn7kMNEUsIZ0DHWJeqvNQK8vYzpv9WMgU2
-	 VgPCxysq/GkqfGXa/5FXg+DMSSn5e70rhdMSNkcS5gqnCGkiFZtYu87qNpxbExWDcl
-	 LrZllyLGwPjfPnTW9CpLWKmk5j0IAkCmWy5ixm79WgAr6xLaMwdhCEiDrpA1q0mtKy
-	 39w3eL8tQ2Ufw==
-Date: Tue, 10 Nov 2026 09:27:44 -1000
-Message-ID: <601db1ca092888f567aa98806ad47de9@kernel.org>
+	b=d9RvgfLiwhMx2uoZTRk00iF9f2Tttz/2KNRZficsLgsK9BeK9joxkHvuIC08qPzh/
+	 i1cbQyRUVoxJH9VVP800QJXCaeHfMzZdoIwIf/pcad2NsAAeRqyHqZg+q5JbDW9wE0
+	 2pzP6p1fj0BYIkI0RmGsdjido0caXr7og3AyCZjfvomKN5obAxG7qeHss1H14Bi1gx
+	 gvzzC17qzHxUeOLgzCIrOxqEvhrIUe3OjYTARttXVwgaP6dOLvwu3I4g2TdFLV/HgU
+	 fJfWaixCRhxHMEW7BbMPu6rq0hF/NTPv48mYa1gq67KSZoSxpTMJ87XexFPY59l5lo
+	 oJVPpU2OeFiBA==
+Date: Tue, 10 Nov 2026 09:37:58 -1000
+Message-ID: <9a45ee48b0984bd959becb01d1d11f1c@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Zhang Qiao <zhangqiao22@huawei.com>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, Hui Tang <tanghui20@huawei.com>
-Subject: Re: [PATCH v2 sched_ext/for-7.4-fixes] sched_ext: Fix partial-SMT core counting in calc_shard_layout()
-In-Reply-To: <20261110091042.1805197-1-zhangqiao22@huawei.com>
-References: <20261110091042.1805197-1-zhangqiao22@huawei.com>
+To: Kang Chen <k.chen@smail.nju.edu.cn>
+Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+ bpf@vger.kernel.org, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH] sched_ext: make DSQ iterator stay drained after NULL
+In-Reply-To: <20261110125113.2935742-1-k.chen@smail.nju.edu.cn>
+References: <20261110125113.2935742-1-k.chen@smail.nju.edu.cn>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
