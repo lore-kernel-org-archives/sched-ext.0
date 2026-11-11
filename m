@@ -1,53 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794417972;
-	b=vo3AC772J5S/HyRsI1IIU9e5EdhvkeEQBcBdQpYRY8rBJPmNbgxrTltnaNJru878GJjM
-	 49BZlZMWkZqotDu46QMRXaVC6gTFUMq/FekfWh/6dI907UvxDm1kqtZDdfm65F4cUlwZz
-	 VUjWFyDE0MHQ637uZ1oXyrHc/NZW5F2eE9/XYxWKLC+mwv+1+MKKcwBmxatDp2x/nl17d
-	 qI4F+9EuvIE8MR8UdAwFV6xVR2D0/A3Hzba6O7bvNFfuAlZgYcNtbtrywMx41e2DDqhVQ
-	 My8QoR07NFjPT8msyYH26uRPKblZMlvoiZwbcPANQ2I29A7f9XMq7A74MXnZ78Udjyw==
+	t=1794431121;
+	b=HGTgD980q9pURAuxCSvs2lSsv75qbSWQNwyU0CmgZsjZkydQWg0UE774Rw7yt7R6HpFU
+	 F5sOj0VlPwpWcw+QkNcMNdPEIGs1iogcvcyvdqh2E0lOzxMLdwKfPUlO1PMfH7IwaIDW6
+	 YPfzhyS6cX1i2E6FLYzWfoHYVdqDyOfQjxdSptxOUn30MvS95WA6DM7cvFb6O0ljVA0FF
+	 weVadRNzPM3IX9r1456nY58bAyp8rBCAqWXV2R58TIVHY5J4ttCEPLTWCOyasEMXMKnbz
+	 P6kZTdjMACistztl44soY98pbWDYv5goa0VbPnkW21QrZOM+2Qp2yXIoboMEeKY8L2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794417972;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=OThUgdRyvc4lxoTP3kBa0mIxxlXkQI4LfzUWh7TiP9I=;
-	b=VUjQKpIK8/8+TWh41o9C+/yY+XDxpO2HlwIbLHYHnQHYgUSZuk9qsLHxWnyM+dm0N4id
-	 P4Bb0JM+GMbhnv+9/ibYSqKkgp0rsQqDL/TKI80fCHSPiyBzeNQrXGqvcyhbN4Ci4gH6T
-	 Z1+dhBoDlsn0xQZS2xlnN9k+yDCUBg5FxRx6ZOr/+sT7pMVrLrBhP06IMPEX76SIGey/H
-	 1gStDqjHaYCGBubfVJWOyko4SFNQWizfZPOLnVndfubyY245ZyYYFLkHv11JLTN5GTZ+3
-	 +OzxItFUcdMOl89547wKEY30WvCQ4NHZbz1WvxRjm2xUhiwCnEO/i0osrinpA+pBVaw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794431121;
+	h=Received:DKIM-Signature:Content-Type:MIME-Version:Message-Id:
+	 In-Reply-To:References:Subject:From:To:Cc:Date;
+	bh=tNQqBz5+70EcbhvGfYXqJhYoHMclm4qNDJckCYhqgXk=;
+	b=4+59Fhe9at/SIjQEifKDE3v2v/GqCoBe9Iqz6MBPNt4Sh1U91gFuTceRTtIARLLFBcUt
+	 ekBSL+nFgJbQ055VuCe0T7WmS5whPxHQG8xFmMk7sQUAcdx5tefoBjuQlQbhO+NOp8lCc
+	 WEa4JDRMRqg451eRGnAiJxRKramh0DdXVVY9GoPHPQ4ecccS/S6nJwl++j4kzeQJ0TJek
+	 ar7uxsic9Vmi8tvP/vH4l46980aFtVBWqRYviJNELEOCv3gcy88NE1KyxvWdeEAn6ver7
+	 0kZKeoVvK1Eg9Ix+iQyYp7Rzs1rgra6R4L/0pmfem0b0cWc5IZ7u/K0ngRz+bCUeDFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CuXp2vwa;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="c2XAXk1/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E07D606A32E;
-	Wed, 11 Nov 2026 17:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E47606A321;
+	Wed, 11 Nov 2026 21:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CuXp2vwa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8651F00A05;
-	Wed, 11 Nov 2026 17:26:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=c2XAXk1/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD6E1F00A05;
+	Wed, 11 Nov 2026 21:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794417972;
-	bh=OThUgdRyvc4lxoTP3kBa0mIxxlXkQI4LfzUWh7TiP9I=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=CuXp2vwaYFnHvfNywRg3wWKjb4pg7rf6DTlvmy2kChL21waa+Qs3rpbXeqk4SY93U
-	 aLqrLB5KVP7zHn6jdmd6d+oFs3J8d09o1XTOT+/uILCmOe6hQ8uCmjGAF9NgGhmzqg
-	 /TTGVjdDgrfknUdURdao5UDL5aBFCLRS9HEZ2kcaX71dO7/AvLtqCh3qToJphtwe46
-	 3Jz7GSEvSyWadbi9gH8oJdb4s/1T6qk5+9YALe2lf8P1euYWwTZQ5wsAlmxpH/Y7xl
-	 Uj96oQcMJRqkCUPswnYxqsn1GEYx+/BVxeyx5AZMA2B9t/J14hW8MxtzhDb+nfxBF8
-	 b4gMlH7n+Vl9A==
-Date: Wed, 11 Nov 2026 07:26:11 -1000
-Message-ID: <e795d4feb4a4e7ca4cf24f3cde9e301b@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Fernand Sieber <sieberf@amazon.com>
-Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, vincent.guittot@linaro.org, bsegall@google.com, dietmar.eggemann@arm.com, rostedt@goodmis.org, mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com, hannes@cmpxchg.org, mkoutny@suse.com, void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, skhan@linuxfoundation.org, corbet@lwn.net, rdunlap@infradead.org, cgroups@vger.kernel.org, sched-ext@lists.linux.dev, linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org, bpf@vger.kernel.org, linux-kernel@vger.kernel.org, nh-open-source@amazon.com, hborghor@amazon.de, fmubeen@amazon.de, dwmw@amazon.co.uk, karataev@amazon.com
-Subject: Re: [PATCH v2 0/4] sched/fair: cpu.max.runtime and idle refill for CPU credits
-In-Reply-To: <20261111122039.47687-1-sieberf@amazon.com>
-References: <cover.1794303670.git.sieberf@amazon.com> <3bdd435fd868ed7ca7ea9061e5966b7b@kernel.org> <20261111122039.47687-1-sieberf@amazon.com>
+	s=k20260515; t=1794431121;
+	bh=tNQqBz5+70EcbhvGfYXqJhYoHMclm4qNDJckCYhqgXk=;
+	h=In-Reply-To:References:Subject:From:To:Cc:Date;
+	b=c2XAXk1/1FlgcmzpXfA2mwLgpAVBySudM21S5Eky4Xj28kPHbLydAHh32loGW2D8a
+	 AiNWmQBSKEuI8d679u+FUaCA1M+Age94YqR3IK0TU1eOn1czVjbuc0pnSwvhFWbdjW
+	 DN5wjSdCyZx795hFTyZMx92BP8bR1SvYzbNpbAbd1GtNRW0dpeGA60O+c4f7JS7tkk
+	 KAhQZAt7Tf6saoTzFtACDSCw09t1F3Gs7meWuz4VzMYTYdU+ctzuAzZxLL44JU6cGK
+	 Bx5/LiEIijFTXKsvej4SY5GVJuEChrIY8DWX7ROFO4w3aiMI/8IIYVImtSQbcWtyHz
+	 6kq/eRUmej2Cw==
+Content-Type: multipart/mixed; boundary="===============2866188785818237921=="
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -57,31 +49,72 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-Id: <8be73886579dc58a6363e72f540c0f28a12e0fe089ebde311b28919a47714ef7@mail.kernel.org>
+In-Reply-To: <20261110125001.4167503-9-cui.tao@linux.dev>
+References: <20261110125001.4167503-9-cui.tao@linux.dev>
+Subject: Re: [PATCH 8/9] tools/sched_ext: scx_userland: Check dispatch buffer slots before inserting
+From: bot+bpf-ci@kernel.org
+To: cui.tao@linux.dev,tj@kernel.org
+Cc: void@manifault.com,arighi@nvidia.com,changwoo@igalia.com,liwanwu@kylinos.cn,devnexen@gmail.com,zhaomengmeng@kylinos.cn,emil@etsalapatis.com,yphbchou0911@gmail.com,mingo@redhat.com,sched-ext@lists.linux.dev,linux-kernel@vger.kernel.org,bpf@vger.kernel.org,cui.tao@linux.dev,cuitao@kylinos.cn,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
+Date: Wed, 11 Nov 2026 21:05:20 +0000 (UTC)
+
+--===============2866188785818237921==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 
-Hello, Fernand.
+> tools/sched_ext: scx_userland: Check dispatch buffer slots before inserting
 
-On Wed, Nov 11, 2026 at 02:20:39PM +0200, Fernand Sieber wrote:
-> The minimal viable bar for us is to never lose track of CPU credits.
-...
-> The one case it cannot cover is an unplanned exit, a BPF scheduler
-> erroring out or killed by the watchdog and falling back to fair, where
-> there is no window for userspace to hand the level back.
+TL;DR: Commit message only: the sentence explaining when the dispatch buffer
+overflows is garbled (two sentences run together, stray indent); the review
+asks for a rewrite. No code issues raised.
 
-Where you set your minimum viable bar isn't an argument for a design
-decision. Stating that this is the bar doesn't make it so. It has to be
-justifiable in a generic manner.
+> tools/sched_ext: scx_userland: Check dispatch buffer slots before inserting
+>
+> userland_dispatch() pops up to MAX_ENQUEUED_TASKS pids from the
+> dispatched map and inserts each task into the global DSQ without
+> consulting scx_bpf_dispatch_nr_slots(). The kernel's dispatch buffer
+> holds 32 slots against MAX_ENQUEUED_TASKS (4096), so a single
+>    full dispatch round overflows it long before that many tasks
+> pile up between dispatch rounds the insert past the buffer limit aborts
+> the whole scheduler. Every other tools scheduler that loops on
+> scx_bpf_dsq_insert() (scx_central, scx_qmap) checks the remaining slot
+> count; scx_userland is the odd one out.
+>
+> Break out when the buffer is exhausted and leave the remaining tasks
+> queued for the next dispatch round.
+>
+> Fixes: cc4448d0856d ("tools/sched_ext: add scx_userland scheduler")
+> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 
-This is a crashing scheduler. The kernel is going to be scanning all the
-CPUs and tasks to abort the in-flight scheduler while pushing all tasks to
-temporary dumb FIFO scheduling to make forward progress. Accounting wise,
-the credits may not be lost, but how meaningful is that across such a
-transition? If a machine is doing this regularly to the point where
-accurate accounting on that particular transition matters, credit
-accounting is the least of its problems.
+This isn't a bug, but the sentence explaining when the overflow happens
+looks garbled.  It reads as two sentences run together:
 
-Thanks.
+  "so a single
+     full dispatch round overflows it long before that many tasks
+  pile up between dispatch rounds the insert past the buffer limit aborts
+  the whole scheduler."
 
---
-tejun
+The second line also has a stray three-space indent.
+
+From the code, userland_dispatch() pops pids from the dispatched queue and
+calls scx_bpf_dsq_insert() for each one.  Each insert from ops.dispatch()
+goes through scx_dsq_insert_commit(), which calls
+scx_error(sch, "dispatch buffer overflow") once
+dspc->cursor >= sch->dsp_max_batch.  Since scx_userland does not set
+ops.dispatch_max_batch, dsp_max_batch is SCX_DSP_DFL_MAX_BATCH (32).
+
+So the scheduler aborts once more than 32 pids (31 if
+dispatch_user_scheduler() also inserted the usersched task in the same
+call) have built up in the dispatched queue between two ops.dispatch()
+calls.
+
+Could the sentence be rewritten to say that directly?
+
+
+---
+AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
+See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
+
+CI run summary: https://github.com/kernel-patches/bpf/actions/runs/43092548483
+--===============2866188785818237921==--
