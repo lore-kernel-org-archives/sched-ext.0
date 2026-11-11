@@ -1,67 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.163
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.50.34
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794414697;
-	b=dgLWNtvgEJEcn0yKOWrNBNvmksGBnoAqctnfoC4YCw4JKFW8ONzQW8jeChKBYWlWtEwu
-	 JSmqZ2jZR72uQJgTImi1nJxLfBOkYOu42bRf7dytVt0X/y0cgb9wvBekg4Mx9WKwbDIJG
-	 +PV3WY2u7cS3btixq5xT8+6TYuQQzJgr2iovMg/oihdB8JijOyDukx/UY75bR3ACXDnV8
-	 Zhk0YCfO8Wy0ZukZEeq9Nqp9DFvHfZ4cd3k66RgBHym2vSWaSdaPrnb3v8sj+NcixAGr5
-	 jzKx0EY2uNwIroi4HTqvgkUpfEw90L/cG+uPDEfHnL4WJ93Xg4WPwDeq2s9dH4mnGeQ==
+	t=1794416208;
+	b=D/xAQfX1cjJhk2OKJmQfLRh5ij8gCWU7ivSnd9xTH1kg2Zv768D9NoC0AJV5vKUJmJIU
+	 u6DyoA/ITkpn+3Wlx6j3QX47FfX1vRDeCL8mMibfDdxLOX7FSkizTbirBfUUmIPepqhfd
+	 TxW6eiN0fjfDOD4HRE412R3JDpYmR/AT59wcK1OIyCHONWmmlojmdAdOnlVsqaHGDqzzA
+	 46hF3PJL399Wz9IbQzz5csA1AMoM4nxhWgo6ITvmEs8Uc41AQhC7jamXa81pxlJs/FQnX
+	 FTotRzOn/dc2aMaLwyhXorJFb/P/Dv6Je2oa8mdl/gOuMCSWLVmP7rDBkFpmxBq8sZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794414697;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:CC:Subject:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=APZI7CiU6LomQhDhdPfDm5AIR0g7StSMHorYfLj9NFI=;
-	b=1aIoeHjP0kF2pYo3mjjKha0LfSjGyv9591BKad/UrLZyqIVNPqsHtXHP2wo3Zi46UGPk
-	 gLuDgDXFfolpz1hSwXVmfXbFFwq3nTSjF5o4Nq2SkLQKtido8OpagL9rHoW+Beq9IZfHs
-	 5THOyZDTAKYBoy85k1GgIsb8PfVCU5kH9mlUmrmZj9O34H5XOor1FqwOGW9NHaIXKVQBG
-	 4zA9jmp8M/f8YUFZQRWFYDNvcDxL+xUdCwdQiezyFCBSeo699GeMFIXnVoF0bpF2Hqe1T
-	 lLmqZ3bBhVGddLaJ9q6CZhPMhF3Rwez9GL53RIbQsT3DtVBPgggvrbWk/NmHQ1fVZLQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794416208;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=479XHjyry+esrWGEqWJa1TbMqWU4kn9HwykCDUTXvDw=;
+	b=htsbjh8Ukz63eG3ESryT3KVcAvru3RDcDf+5NjcIn6zIJmD+6NZkzuZ8eNFEu9XfijGd
+	 1QuQXP63TR4ucU7Tk1DWENSfFFH+Sdi1xMnG6PhOZ4vJ2UdvBJo4eSHmSHlfuCCOQYxHl
+	 2vqLv9pff3pQIq29zn6PrX+EJOhEcwg7WTdD1Tg0EyP0PCyweveptYaIGaK/RYES4odC7
+	 RIgr2DxZqZJexlLaBafUZjrcPlM9WwWltNTrII8GAcM49s5+/jylEcuhDY+mnGLJ3hRmu
+	 JOoj3MutUXrPedJhGgndi6vOYp8KY20NHQkKIa4tXgC8KgdhJ88unZQ4SlUymVQMm/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=MjJKuKR8;
-	arc=none smtp.remote-ip=95.215.58.163
-Received: from mta1.migadu.com (out-163.mta1.migadu.com [95.215.58.163])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=infradead.org;
+	spf=pass smtp.mailfrom=infradead.org;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=utPeEWqs;
+	arc=none smtp.remote-ip=90.155.50.34
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AED9606A321
-	for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 16:31:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4AED9606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE708606A89C;
+	Wed, 11 Nov 2026 16:56:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DE708606A89C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=MjJKuKR8
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=APZI7CiU6LomQhDhdPfDm5AIR0g7StSMHorYfLj9NFI=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794414694; v=1; x=1795019494;
- b=MjJKuKR8AA2qE80ni2BQOis510+8i8823B8WV9JsRvMixHdGn+FU+Nkn0s878izMiEfRkSaB
- K+JLhrE5VEgZ7VhzDEiOF9kYl/FWNi+XJe/R8hkHvJMMl3SUj+cPrLJjjXlPv73K4UwI7DJsdLy
- 6+loOYentyuGsWIocRNq6Ogs=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 4647fe6a3e7ecebd;
-	Wed, 11 Nov 2026 16:31:33 +0000
-X-Mizu-Trace-ID: 4647fe6a3e7ecebd
-X-Migadu-Flow: FLOW_OUT
-Date: Wed, 11 Nov 2026 16:31:31 +0000
-From: Bradley Morgan <bradley.morgan@linux.dev>
-To: radu.m.toader@gmail.com
-CC: anna-maria@linutronix.de, arighi@nvidia.com, bigeasy@linutronix.de,
- boqun@kernel.org, bpf@vger.kernel.org, brads@mainlining.org, brho@google.com,
- bsegall@google.com, changwoo@igalia.com, dietmar.eggemann@arm.com,
- enlin.mu@linux.dev, frederic@kernel.org, haoluo@google.com,
- joelagnelf@nvidia.com, joshdon@google.com, juri.lelli@redhat.com,
- kmehltretter@gmail.com, kprateek.nayak@amd.com, linux-kernel@vger.kernel.org,
- mgorman@suse.de, mingo@redhat.com, peterz@infradead.org, rostedt@goodmis.org,
- sched-ext@lists.linux.dev, tglx@kernel.org, tglx@linutronix.de,
- tj@kernel.org, vincent.guittot@linaro.org, void@manifault.com,
- vschneid@redhat.com
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3=5D_softirq=3A_Treat_an_interru?=
- =?US-ASCII?Q?pted_idle_task_as_idle_in_tick=5Firq=5Fexit=28=29?=
-Message-ID: <19FFF394-CD37-43DF-BCEE-594179867434@linux.dev>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=utPeEWqs
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=479XHjyry+esrWGEqWJa1TbMqWU4kn9HwykCDUTXvDw=; b=utPeEWqsu11ZRvRHShfJxKmH3b
+	tsE+6dt9AXJKTWJBZDrEyUT2DFK9S8j+8tdtBVEqneXY40w6dkQeHnQ6iLsfCfaodm1Uc7upFM8xb
+	JRzM10Wr/jXLi8cNqMDkhA0Cfp2jMm4H+dmAHXj8f1rDxtM0NXRK57f4fr6Umvq89sl0Wk1FaJNHE
+	7dwaSw9Qh7ZVmQ6v7niM/njBzEFo2DLpIKnNEX5GQy9qcKe24eflIxpFbj2uAWkKX31s3vZ4p+HAV
+	lQV7fXFXCNcBULuVbGMGt8faW2RsSMWbaHiHaiO+peQGlnHu+Ru+a0+laalqDLEPr/wAdLXs5oQv8
+	qmaDGJDw==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+	id 1xRBcn-0000000BhFe-2jRA;
+	Wed, 11 Nov 2026 16:56:41 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id A9661303154; Wed, 11 Nov 2026 17:56:40 +0100 (CET)
+Date: Wed, 11 Nov 2026 17:56:40 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Frederic Weisbecker <frederic@kernel.org>
+Cc: Radu Toader <radu.m.toader@gmail.com>, mingo@redhat.com,
+	tglx@kernel.org, tglx@linutronix.de, tj@kernel.org,
+	juri.lelli@redhat.com, vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com,
+	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+	anna-maria@linutronix.de, bigeasy@linutronix.de, joshdon@google.com,
+	haoluo@google.com, brho@google.com, boqun@kernel.org,
+	joelagnelf@nvidia.com, enlin.mu@linux.dev, brads@mainlining.org,
+	kmehltretter@gmail.com, sched-ext@lists.linux.dev,
+	bpf@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] softirq: Treat an interrupted idle task as idle in
+ tick_irq_exit()
+Message-ID: <20261111165640.GQ1779021@noisy.programming.kicks-ass.net>
+References: <20261111112944.3868822-1-radu.m.toader@gmail.com>
+ <avSTjihu0YXfFNUV@localhost.localdomain>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -71,14 +77,40 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <avSTjihu0YXfFNUV@localhost.localdomain>
 
-Wow, the changelog is huge! Could you please shorten things down?
+On Wed, Nov 11, 2026 at 05:10:54PM +0100, Frederic Weisbecker wrote:
 
-Other than that
+> > diff --git a/kernel/softirq.c b/kernel/softirq.c
+> > index 7fc2200392cd..e7d649c29c0c 100644
+> > --- a/kernel/softirq.c
+> > +++ b/kernel/softirq.c
+> > @@ -738,8 +738,16 @@ static inline void tick_irq_exit(void)
+> >  #ifdef CONFIG_NO_HZ_COMMON
+> >  	int cpu = smp_processor_id();
+> >  
+> > -	/* Make sure that timer wheel updates are propagated */
+> > -	if ((sched_core_idle_cpu(cpu) && !need_resched()) || tick_nohz_full_cpu(cpu)) {
+> > +	/*
+> > +	 * Make sure that timer wheel updates are propagated. An interrupted
+> > +	 * idle loop counts as idle even with runnable tasks queued on the
+> > +	 * CPU: forced idle under core scheduling, and the tasks sched_ext
+> > +	 * keeps on a CPU's run queue while its BPF scheduler holds them back.
+> > +	 * idle_cpu() would skip the idle bookkeeping of tick_nohz_irq_exit()
+> > +	 * for those, and with an unstable sched_clock the CPU's clock then
+> > +	 * isn't resynchronized when it leaves the idle loop.
+> > +	 */
+> > +	if ((is_idle_task(current) && !need_resched()) || tick_nohz_full_cpu(cpu)) {
+> >  		if (hardirq_count() == HARDIRQ_OFFSET)
+> >  			tick_nohz_irq_exit();
+> 
+> Works for me, but Peter might find something I haven't.
+> 
+> Acked-by: Frederic Weisbecker <frederic@kernel.org>
 
-Reviewed-by: Bradley Morgan <bradley.morgan@linux.dev>
-
---- Thanks!
+I looked at the previous version and didn't spot anything more than a
+case missed in the verbiage passed around as Changelog. I think I'll
+queue this thing, its simple enough, ableit the changelog is a chore to
+read.
