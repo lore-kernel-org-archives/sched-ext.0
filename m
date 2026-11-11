@@ -1,45 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794431121;
-	b=HGTgD980q9pURAuxCSvs2lSsv75qbSWQNwyU0CmgZsjZkydQWg0UE774Rw7yt7R6HpFU
-	 F5sOj0VlPwpWcw+QkNcMNdPEIGs1iogcvcyvdqh2E0lOzxMLdwKfPUlO1PMfH7IwaIDW6
-	 YPfzhyS6cX1i2E6FLYzWfoHYVdqDyOfQjxdSptxOUn30MvS95WA6DM7cvFb6O0ljVA0FF
-	 weVadRNzPM3IX9r1456nY58bAyp8rBCAqWXV2R58TIVHY5J4ttCEPLTWCOyasEMXMKnbz
-	 P6kZTdjMACistztl44soY98pbWDYv5goa0VbPnkW21QrZOM+2Qp2yXIoboMEeKY8L2w==
+	t=1794440664;
+	b=igCaLYjW+psIIU1wxDm5dw2A72uFjp9EAg83CmiKuwhVArfaXHOXCm+2ja4olK+Eu5Cg
+	 OE4BREz2PrbEfiJyRkhwQsBVK2pg887VoFlv8sUDaggjkr6bWeVPw6RfG5oOihfmkMwk5
+	 kT3K7dDna5njiLcUd8eFN+JoQ6DROW5ZkYDw2Lhp/0XK61OXtLR+5wzS2/1ebCIlXQFVK
+	 hB8x0KEVVexrbfdMTweARJesw9n1YuRDfcoENaYwubmcW23YIEcBBKQPM3KYXRudyvsCU
+	 CLIiC69048qItCgMgOyq4tPqMqD19tPx/ebjoW5gSNKdZADtnB3gBDBUAuAJBC0in1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794431121;
-	h=Received:DKIM-Signature:Content-Type:MIME-Version:Message-Id:
-	 In-Reply-To:References:Subject:From:To:Cc:Date;
-	bh=tNQqBz5+70EcbhvGfYXqJhYoHMclm4qNDJckCYhqgXk=;
-	b=4+59Fhe9at/SIjQEifKDE3v2v/GqCoBe9Iqz6MBPNt4Sh1U91gFuTceRTtIARLLFBcUt
-	 ekBSL+nFgJbQ055VuCe0T7WmS5whPxHQG8xFmMk7sQUAcdx5tefoBjuQlQbhO+NOp8lCc
-	 WEa4JDRMRqg451eRGnAiJxRKramh0DdXVVY9GoPHPQ4ecccS/S6nJwl++j4kzeQJ0TJek
-	 ar7uxsic9Vmi8tvP/vH4l46980aFtVBWqRYviJNELEOCv3gcy88NE1KyxvWdeEAn6ver7
-	 0kZKeoVvK1Eg9Ix+iQyYp7Rzs1rgra6R4L/0pmfem0b0cWc5IZ7u/K0ngRz+bCUeDFg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794440664;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Reply-To:
+	 In-Reply-To:References:Subject:Message-ID:Content-Transfer-Encoding:
+	 Date:MIME-Version:Content-Type;
+	bh=kYulsIIl/vEsdYwnLC+tntdaEcmBkARtiDvxkzUqyX4=;
+	b=JC8kdeWssD39g2zykR0wcTSzgSFbUhPF9WNlu5Iwlrw656vpJj9tfojkVp9r17uAMU/0
+	 cumj15rceGLwfxLV5IusmLND66FXrOK+bc2YV+Q7HfJx1HQEb2lF/LH4sQOzYTKvNPq8j
+	 3o8I0i11qz4F550OE0uQGvqfeKWiJuSfFaQNr3ep7ct4fPeSBQl/ypLGIBGEASd59qIhW
+	 /5msoIldLA0Cb1vi1Sk+thK2Dvdc8B9YOrXSr4Ia1byygyhuKGDLC2Ix2q0VD9HXITQM/
+	 KvnTXxHy1tZ8Ynha2zz5v5PV+sbu1tm9F+v7Xrs5S0Kj5eEGIVp8PGw7njBklU6gOwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="c2XAXk1/";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=realtoradnan.com;
+	spf=pass smtp.mailfrom=realtoradnan.com;
+	dkim=pass header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=M30E1ov8;
+	arc=none smtp.remote-ip=209.85.222.175
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E47606A321;
-	Wed, 11 Nov 2026 21:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEB9606A31C
+	for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 23:44:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7DEB9606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=realtoradnan.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtoradnan.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=c2XAXk1/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD6E1F00A05;
-	Wed, 11 Nov 2026 21:05:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794431121;
-	bh=tNQqBz5+70EcbhvGfYXqJhYoHMclm4qNDJckCYhqgXk=;
-	h=In-Reply-To:References:Subject:From:To:Cc:Date;
-	b=c2XAXk1/1FlgcmzpXfA2mwLgpAVBySudM21S5Eky4Xj28kPHbLydAHh32loGW2D8a
-	 AiNWmQBSKEuI8d679u+FUaCA1M+Age94YqR3IK0TU1eOn1czVjbuc0pnSwvhFWbdjW
-	 DN5wjSdCyZx795hFTyZMx92BP8bR1SvYzbNpbAbd1GtNRW0dpeGA60O+c4f7JS7tkk
-	 KAhQZAt7Tf6saoTzFtACDSCw09t1F3Gs7meWuz4VzMYTYdU+ctzuAzZxLL44JU6cGK
-	 Bx5/LiEIijFTXKsvej4SY5GVJuEChrIY8DWX7ROFO4w3aiMI/8IIYVImtSQbcWtyHz
-	 6kq/eRUmej2Cw==
-Content-Type: multipart/mixed; boundary="===============2866188785818237921=="
+	dkim=pass (2048-bit key, unprotected) header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=M30E1ov8
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-93f36c18b75so221057085a.1
+        for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 15:44:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=realtoradnan.com; s=google; t=1794440662; x=1795045462; darn=lists.linux.dev;
+        h=content-type:mime-version:date:content-transfer-encoding:message-id
+         :subject:references:in-reply-to:reply-to:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kYulsIIl/vEsdYwnLC+tntdaEcmBkARtiDvxkzUqyX4=;
+        b=M30E1ov8L5658eTRl8f968lnniq2gGNpTIYH7hWhRQoq1cpOb9wdqmKtRCT4ALEXi/
+         I61DllkpfXVU4lCby7xV2ciTu7VRzmZ7vb/pz2ryqz9ss+NvlNC2W/vnSH5flZdQRo2E
+         GzXcjKkiSWe92FJfAL4pOYqZMrDXDKulI7yr8kPrAuHn7ha/2eZ4d2RwjpSi2eYiiJj/
+         5gLxkIAgs7oZHUpl2ntJ+iyxosTuuPwvTlqTkwczDmYkxjiN3ODfhV2ZmJyW+kigLhz6
+         RRZ06aI89iV/RbhcthhwLLJkXTc9gy/2JeP/rmaiw58vNPbLdUHeBj1p7QQ3Wy3tgz5n
+         NfKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794440662; x=1795045462;
+        h=content-type:mime-version:date:content-transfer-encoding:message-id
+         :subject:references:in-reply-to:reply-to:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kYulsIIl/vEsdYwnLC+tntdaEcmBkARtiDvxkzUqyX4=;
+        b=OjClBr/wUpLH6TvUEFGheNqsu4Xof0rgmxvDU1joz+TuOwnVUaNN88cgYosF9HA3kL
+         Xbqwvhfkb+QkXJZFYNGnmxYgVi9exN8rtS4RKCxuzmk/C3WEtMD1MXKQunYG3DDKAm5E
+         gZespNY8t8bFYEvojdZGemYGB6/6FfDrS6mEJMfu+WqrUPXiFmkUY4YV3C1UQmLN4+Vk
+         7AlZhiaVFM8Ath7ov93klVbMIz0HmqfnloAJvT4HV41vzqa9iPgRLj7lWJ0QG5MkpdgC
+         b5texF6SIO41fxxsZ51EpYMf0hJlcR4+i0clAJ8RAh9F9ndqMCEp2HIFy1hgE09s5zU5
+         EUHw==
+X-Gm-Message-State: APuU4Z8TQzS688wkOUCpf9ckxzXrF+Mmcl+Bx0iE0sA/ZmHjR8ueJhFy
+	dT5JMzzLxzbA+VqNK4CaVwk1wjxkXMYp1YdrHjy0icAtnfzruiKcUR3u2qEkob9PmcFpqyWAUPH
+	HiBQahfwlHx8=
+X-Gm-Gg: AYBFou1Adtlw85sG8euLa/erquwuaMzdFylufc3s5cU9CocnnrTW5q87xZQlTv5aknO
+	MBKuEV2Y/5bAriuBb2yIk8W49u+64CvQn7VH4YChGu1780xentJhxy4znUoEmzWIf4mzAWvAiXz
+	DnkMSc5fxb7yfKpZ/KkH5q/Mgr3bQnoR92uDqBIhdtkJaZf8kk50Zo2H7qKCD1oIRE7FWPbhg1p
+	3jqnNt22bRjpmoTLD4o+/OpyQQdRPkvEO/8j06k2bG4VhirW++eD6wEGf+yb6LzZKLo1XrS0tie
+	/sa4/DJXxW+cNZ847TBqWfh+6kTzj7IFbF/I3Jq5bR9w5R+5ArbaJJ0HC6bVoptnGHNjXYg7mp3
+	8s2Yyz/kBwQB7gAmw7FSyGHkZ1MU2oVSrFjhnaxbFa/+qZ+8dYFBHobuB+TKxXe0FlBlsnCV36y
+	JpJYYz1E61WUfJ2DwVEGNA5G7YThWTuFqntP1LROW07yloZTI4vt7vZAVP9xKHowLfrmafRM1PT
+	i/6Y49a8Xtq+7JA9vZhLQENJ6UweDbaSWNonyVRVZWjmAghEEcBzMiuVHA7iyhW6+G0fpzdnhP1
+	JvfQimB1cJeEXzwTDBt71ryvjpnxEvM7O0peNg7drv9m5fAb2Iz0vUWevd0hcYKvyROItN7jccl
+	9cV4QD+wvXtQ=
+X-Received: by 2002:a05:620a:6ccd:b0:93e:c12c:fbcd with SMTP id af79cd13be357-947b003f9c3mr698935385a.73.1794440662322;
+        Wed, 11 Nov 2026 15:44:22 -0800 (PST)
+Received: from realtoradnan.com (vmi3719417.contaboserver.net. [13.140.32.210])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9479e7e9b4bsm591047385a.39.2026.11.11.15.44.21
+        for <sched-ext@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2026 15:44:21 -0800 (PST)
+From: Troy Cross <troy@realtoradnan.com>
+To: sched-ext@lists.linux.dev
+Reply-To: Troy Cross <troy@realtoradnan.com>
+In-Reply-To: <7104e599-9176-4598-9863-544afc9fcf1e@realtoradnan.com>
+References: <2f393418-7255-4743-b185-248dbce5c845@realtoradnan.com>
+ <65c5db2e-bdd8-4266-b975-f786b8a8415d@realtoradnan.com>
+ <c6355768-fbed-4c09-be9d-a64036551192@realtoradnan.com>
+ <7104e599-9176-4598-9863-544afc9fcf1e@realtoradnan.com>
+Subject: RE: schedkit
+Message-ID: <db0b751e-c9e5-4e4f-bc32-b6f9663c07e2@realtoradnan.com>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 11 Nov 2026 23:44:21 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -49,72 +102,46 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Message-Id: <8be73886579dc58a6363e72f540c0f28a12e0fe089ebde311b28919a47714ef7@mail.kernel.org>
-In-Reply-To: <20261110125001.4167503-9-cui.tao@linux.dev>
-References: <20261110125001.4167503-9-cui.tao@linux.dev>
-Subject: Re: [PATCH 8/9] tools/sched_ext: scx_userland: Check dispatch buffer slots before inserting
-From: bot+bpf-ci@kernel.org
-To: cui.tao@linux.dev,tj@kernel.org
-Cc: void@manifault.com,arighi@nvidia.com,changwoo@igalia.com,liwanwu@kylinos.cn,devnexen@gmail.com,zhaomengmeng@kylinos.cn,emil@etsalapatis.com,yphbchou0911@gmail.com,mingo@redhat.com,sched-ext@lists.linux.dev,linux-kernel@vger.kernel.org,bpf@vger.kernel.org,cui.tao@linux.dev,cuitao@kylinos.cn,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
-Date: Wed, 11 Nov 2026 21:05:20 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
 
---===============2866188785818237921==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-
-> tools/sched_ext: scx_userland: Check dispatch buffer slots before inserting
-
-TL;DR: Commit message only: the sentence explaining when the dispatch buffer
-overflows is garbled (two sentences run together, stray indent); the review
-asks for a rewrite. No code issues raised.
-
-> tools/sched_ext: scx_userland: Check dispatch buffer slots before inserting
->
-> userland_dispatch() pops up to MAX_ENQUEUED_TASKS pids from the
-> dispatched map and inserts each task into the global DSQ without
-> consulting scx_bpf_dispatch_nr_slots(). The kernel's dispatch buffer
-> holds 32 slots against MAX_ENQUEUED_TASKS (4096), so a single
->    full dispatch round overflows it long before that many tasks
-> pile up between dispatch rounds the insert past the buffer limit aborts
-> the whole scheduler. Every other tools scheduler that loops on
-> scx_bpf_dsq_insert() (scx_central, scx_qmap) checks the remaining slot
-> count; scx_userland is the odd one out.
->
-> Break out when the buffer is exhausted and leave the remaining tasks
-> queued for the next dispatch round.
->
-> Fixes: cc4448d0856d ("tools/sched_ext: add scx_userland scheduler")
-> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-
-This isn't a bug, but the sentence explaining when the overflow happens
-looks garbled.  It reads as two sentences run together:
-
-  "so a single
-     full dispatch round overflows it long before that many tasks
-  pile up between dispatch rounds the insert past the buffer limit aborts
-  the whole scheduler."
-
-The second line also has a stray three-space indent.
-
-From the code, userland_dispatch() pops pids from the dispatched queue and
-calls scx_bpf_dsq_insert() for each one.  Each insert from ops.dispatch()
-goes through scx_dsq_insert_commit(), which calls
-scx_error(sch, "dispatch buffer overflow") once
-dspc->cursor >= sch->dsp_max_batch.  Since scx_userland does not set
-ops.dispatch_max_batch, dsp_max_batch is SCX_DSP_DFL_MAX_BATCH (32).
-
-So the scheduler aborts once more than 32 pids (31 if
-dispatch_user_scheduler() also inserted the usersched task in the same
-call) have built up in the dispatched queue between two ops.dispatch()
-calls.
-
-Could the sentence be rewritten to say that directly?
+This is maybe our last follow up, but if you're =C2=A0just not interested, =
+just ignore it again.
 
 
----
-AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
-See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
+Sorry if this bothering, i wish you success, good =
+health, and happy life.
 
-CI run summary: https://github.com/kernel-patches/bpf/actions/runs/43092548483
---===============2866188785818237921==--
+On Sun, Nov 8, 2026 at 11:42 PM UTC Troy Cross =
+<troy@realtoradnan.com> wrote:
+
+> The best price is 299 usd.
+>=20
+> On Thu, Nov 5, 2026 at 11:35 PM UTC Troy Cross <troy@realtoradnan.com> =
+wrote:
+>=20
+> > The price is negotiable.
+> >=20
+> >=20
+> >=20
+> > On Wed, Nov 4, 2026 at 08:21 PM UTC Troy Cross <troy@realtoradnan.com> =
+wrote:
+> >=20
+> > > Sorry, just making sure you saw this.
+> > >=20
+> > >=20
+> > >=20
+> > > On Mon, Nov 2, 2026 at 06:16 PM UTC Troy Cross =
+<troy@realtoradnan.com> wrote:
+> > >=20
+> > > > Greetings,
+> > > >=20
+> > > >=20
+> > > > Do you have any interest in=C2=A0schedkit .com for 500 =
+usd? i noticed you own=C2=A0.io version, so maybe you will be interested in=
+ this one as well.
+> > > >=20
+> > > >=20
+> > > > Sincerely,
+> > > >=20
+> > > >=20
+> > > > Troy
