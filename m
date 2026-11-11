@@ -1,97 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.41
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794391483;
-	b=zsJClKqubYm88oOCO/tla9SRlEpTEF2IcAQK2VXtfici3A0trWaEU/yv/YRfVdyRvesv
-	 DGwwmdYPj3XZHRlBZWPtYAQSB9II1unE+fAK86mjuDQUPDgNCxbDMU7ojRIPs3gVmOpFG
-	 4xsM3qHVePATvBVXGXZpf1q7dzK+KaXD15y8Br8ITikMSp/VjG7h4VzmWiwNMEvzu6E/Z
-	 0u3VqEltlnbtYFTPCCK4sNLAMllhwTaAAkKK72kDBaHlP70P+EubmFVOJGJuDH71jGmF2
-	 9hSxWpMvwbWcYdDCnoTZEcNZM0Qad+yutaq36Bz8PC6RovXnUfsb3b1zRjcgRjuBqmg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794391483;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=oVhgG1D34iAaFPpyW2HKAfJcIy1AudwUf4aBHqGSZjY=;
-	b=r0ngZqeRxwHabfM2PRddOEzGVTGG69mTn3bbYC/AF9hVLMvjjAdjnXHxmAH3kRWo/hGR
-	 dJLTqbN7qUYnB2a9kRH8fmEdvyInTzPzoR/A0fjtzKsSpZJpkS8orYurro1BP7otVXjs4
-	 UbAVs9/MVM4kuZ3e7pG3KNuhLpMN2J+BypTeQdKx9HR8QvZqukG61NMdPV/NhS7K0q+N7
-	 uNtpKb5khKAKkyg1XaPdCHr5WxnpZ+s1AX410F4Q4/Fu0bFF7Jw3z/WAd0jHu9q/xS0BC
-	 IWLQmiB8iSBkgXDdAACyqbmlG4aZh+q21cwfpS6Pzu89JyNsm5GSFOr+o01b6wtiEmQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=UKu6c68L;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.41
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013041.outbound.protection.outlook.com [40.93.201.41])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.97.179.56
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794391813;
+	b=air/pOEcVEoYbUqPpia3Oc8iAILt0fKTcPmVjkCW5sZ545HAKxs2w+brJiFyCy34mNEo
+	 KaZLuD7OP8Q8MUmDSW57BAXJoXDBl9m7zhEUA523ccJ3a212Qk+OgVHC3Kh2I24qSgjT5
+	 uFmp2Wkm4kLlPSk527QOhOcsnn/KE1BCOB1iTSTJ8CKRH76MhSbNaUEqZDzsJihvsRzvo
+	 CLqrWKXM6mrP1/YtPLCf5VgAJODRRACwSQzoncLh4S/oGhlNXvTte+1WZ/gHtddVL1pDA
+	 gwn3098BAlfwWNmZrojtm6ybNY1CRUZijnnQ2Fs7mr9eKTrNImok5r0bH1eJpp9aQJg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794391813;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=TKdv7edjmPjExE3RyciVP5KfNQ2HgIujnfELAufwRbY=;
+	b=WG+ybpm5WllPDrKzle+BmlKQ33wYd1JyTB8fE9DNyrFDsGn10PS1Gt+UHeTGt9l7R6C0
+	 eBCehs9Z5bEo+ugGoOZSwQXUHgqtFUmWJ0Gn/z3Dwpgvr85mWbdGKvcRt4Mc7siUn35Fq
+	 TAXKzkAZEXPdbCRRcTemddOtqP93tRapiPCRkOpiV0xXftiComaDkivM7WDXrWhxwZLVT
+	 OhH4C4ke25B5UQBU/3Z/LUXb4NpCxBazwMHiZMtIC+Xn9mMTNQcbX/nxhoDT5AIjqtWI6
+	 vRg5s6kSZ1TGh3a9cDs8KF+6Tw3RMyLdk7817WVDqCC64gW333g6iCOtjJKmvGxbLBw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=igalia.com;
+	spf=pass smtp.mailfrom=igalia.com;
+	dkim=pass header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=lYMH0dCe;
+	arc=none smtp.remote-ip=213.97.179.56
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73918606A326
-	for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 10:04:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73918606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6826606A31C;
+	Wed, 11 Nov 2026 10:10:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6826606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=UKu6c68L
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RX08IaMGtklfnl9qZdTq+oo2PWWg7ib3ZS/R5cP4ph2oicplgiXZ3+bgqIfLElpdBawhJO8kDqDc/iYn7CEZe1cvcsS0sxwkBNcl4NJ3bwfKXFAEk7gc003KM/Q70kaX9ohLL5mDsGn3yEhSSlWkHvJYJESElu/Jn2GI3TxlgU2IAiF0BKxRR/0v+AyYZK1taTZYY2sP5NvdxCWIdjp3AVS/7mY29L2LwcfRAHFmsr1yP4WC6Ng8VXRJ5BY9BCKa5um9KBMqnEPEnbrp5dSPaZt7SEOiY055EuUiowMOwA5abbVpFXGJ8DWL2/i35ZQ0ZhAHpk8WMdJJ53sfZsF9mA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oVhgG1D34iAaFPpyW2HKAfJcIy1AudwUf4aBHqGSZjY=;
- b=olId59uIUT9jEN99u8eTbYomB/gZUqVr+wnkK99yA5Tt9hIS56sT0inmcSa1LkA+j7nEvXuaWxuqDDhKR0Qark4FGqUpUj+WfgTKvqrY/sqW7c5CBwcDa6CKptdlZOoOQ2uFpNKX1Jo+DC29lEpiq20YUKhZobnPAZdi9ZO8ftLl4zihol38rK+UYYhYvMbLod/pCGRV0jddOlOD7hkmYNZbuoDdE8Ye30FtvzpMCTjIsKZLErzZkN3Ryhmuxkye1Y7PYFZc/BM84i8Zbfw1fcK5AU1sFpXZhmfPHeDWvV+xihFepwe0wIPW+jbyFk6ATgXpwIZmmMxM8LweO+sUwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oVhgG1D34iAaFPpyW2HKAfJcIy1AudwUf4aBHqGSZjY=;
- b=UKu6c68LO1yzr+OaNC1Xz7WdPcOONVbXuq/XvAQBLjWBC+FfXlKqDjrlWdR/rakyRs4O2Dk9+vd+ngg6s9TnAZmUWQQH0RD1gzxWsPNIHqwF9fuAAvRMvTCkNq24Ks+DPMNyx1hh8UinnJFOCza/YyGSc3wH6PUYOs4IHZaQyes=
-Received: from PH7PR02CA0008.namprd02.prod.outlook.com (2603:10b6:510:33d::27)
- by IA3PR12MB692094.namprd12.prod.outlook.com (2603:10b6:208:712::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Wed, 11 Nov
- 2026 10:04:39 +0000
-Received: from BY1PEPF000264B2.namprd02.prod.outlook.com
- (2603:10b6:510:33d:cafe::9b) by PH7PR02CA0008.outlook.office365.com
- (2603:10b6:510:33d::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.9 via Frontend Transport; Wed, 11
- Nov 2026 10:04:39 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- BY1PEPF000264B2.mail.protection.outlook.com (10.167.242.118) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Wed, 11 Nov 2026 10:04:39 +0000
-Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Wed, 11 Nov
- 2026 04:04:38 -0600
-Received: from [10.85.41.63] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
- Transport; Wed, 11 Nov 2026 04:04:32 -0600
-Message-ID: <f0bdf36b-4453-4d2f-b82c-85d1d62c5f78@amd.com>
-Date: Wed, 11 Nov 2026 15:34:30 +0530
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=lYMH0dCe
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Reply-To; bh=TKdv7edjmPjExE3RyciVP5KfNQ2HgIujnfELAufwRbY=;
+	t=1794391812; x=2109751812; b=lYMH0dCei7pknFhzgRYYfLo8lA58O0s5uUTC30SWtr9j425
+	aivLUSdgS+C2hYgM5fN3LZ5gGxdI6VXf+Yw8tdqpzpCsz0XYo42rBduleTus3xYxpHwAvYqXkVdFV
+	3DWmDOiZLnb2/eFLQLEokrsgZNbUF9eUEIngefQqHs6rM66ZWz3XjEr178id6hcXJyVppgLf3CpUQ
+	wJZgu6fi5ILTC0/Uh72kc9tKU773Vgh4ITlUKLEtvN030MdLj8I9Nz8chX9i2o5o/3hXqIjES9U0S
+	mmcsclOLX7rWIDfkMvGuKLM8GGFUPTDM/IM0MVsk3uPKdMDy+ah2m6X+o7s6ClEQ==;
+Received: from [58.29.145.179] (helo=localhost)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1xR5HH-008kZF-CK; Wed, 11 Nov 2026 11:10:04 +0100
+From: Changwoo Min <changwoo@igalia.com>
+To: Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	david.dai@linux.dev,
+	Gavin Guo <gavinguo@igalia.com>,
+	bpf@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	changwoo@igalia.com,
+	kernel-dev@igalia.com
+Subject: [PATCH bpf-next v3 1/3] selftests/bpf: libarena: Order equal rbtree keys FIFO
+Date: Wed, 11 Nov 2026 19:09:49 +0900
+Message-ID: <20261111100951.230730-2-changwoo@igalia.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261111100951.230730-1-changwoo@igalia.com>
+References: <20261111100951.230730-1-changwoo@igalia.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -101,73 +81,119 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/20 v3] sched/eevdf: Reset lag at wakeup when prev CPU
- has been idle
-To: Vincent Guittot <vincent.guittot@linaro.org>, <mingo@redhat.com>,
-	<peterz@infradead.org>, <juri.lelli@redhat.com>, <dietmar.eggemann@arm.com>,
-	<rostedt@goodmis.org>, <bsegall@google.com>, <mgorman@suse.de>,
-	<vschneid@redhat.com>, <linux-kernel@vger.kernel.org>, <lukasz.luba@arm.com>,
-	<rafael@kernel.org>, <linux-pm@vger.kernel.org>, <tj@kernel.org>,
-	<void@manifault.com>, <arighi@nvidia.com>, <changwoo@igalia.com>,
-	<sched-ext@lists.linux.dev>
-CC: <qyousef@layalina.io>, <christian.loehle@arm.com>,
-	<pierre.gondois@arm.com>, <sshegde@linux.ibm.com>, <kayracizmeci@gmail.com>,
-	<tim.c.chen@linux.intel.com>
-References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-3-vincent.guittot@linaro.org>
-Content-Language: en-US
-From: K Prateek Nayak <kprateek.nayak@amd.com>
-In-Reply-To: <20261106151947.3991524-3-vincent.guittot@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY1PEPF000264B2:EE_|IA3PR12MB692094:EE_
-X-MS-Office365-Filtering-Correlation-Id: f6274983-a2a1-4606-96bd-08df3fdb32c7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|23010399003|82310400026|1800799024|376014|7416014|261028144727099003|261026140227099003|261022105027099003|261022075727099003|921020|11063799006|4143699003|56012099006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	vXvqy3euHbzuDjjvP4JTZ53YB05+P7CjkVqQIAOPDx5C+yS8asfBQFZ4DOL0DUAPfv1AOw41QCSGyHPGy0QJlJ5ytjY0c36B4NhlnB8ji7eXPDbXfV8FFIESpAiBqyPvmQJ4QuxknDtLdxrEdvpivT7AvtknKbST8yRsTdGA7IEKNixc0DPEiZGtbwdW6AKO3QceherRgVF+BRogE3PtM9w811ymykzUXHRgZeJCzRBoJ+ga2/x+4qOOG56+1iXt8Jy+72PYyxdQ7pc66sTi6OEyWKbyh7oaJ8wAVsFA8Wlvfg1z1per9kqLn3uVsLZx6EoBbM63ThFRvDsTmeEEmeWzDuQzrkurQiyPMDUFAkf0MlCY41S2g+r6M5hhYxvz+n82co0yUtVD1L9x2iRepx1DPl2M5nbsQgBKm67LDwjS/nq+Cs5rOa3QUVTZmG26z7hIubRirlEd8Gu5bOiqbQzp9m3Mk5QgiEZchG0UAqBMzZa4yS5Hqjj7C86rfc+dKQEJAhsm8PXgvqwivLIEqQghU8gzTQe0OYQK6FIs4GTrgsdrQgmixTBkh5Q2He2QlZypu4UlSvwj1Ah6iGUi7mEzS67F27ibm5e54zCIyjFLRKw1C9NcgM6xoFfI2DGqVgYqmvo35wYQAUmYKVFnUoJ7vKkhOMkGyMNgfuUAcSCM3NrVnfnn7a5Yi4egv8x8jRQdwwz5t3tUjXzxYMqZ7p5xrjFjm94pN3dYqZKG0eDLcTWxAsYmcIR7HhKmm3G0
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(82310400026)(1800799024)(376014)(7416014)(261028144727099003)(261026140227099003)(261022105027099003)(261022075727099003)(921020)(11063799006)(4143699003)(56012099006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	FV8SwxJT8IFAYGCu6fIVnByz1XYwKmhWVgOF/Xbev6IJxRvNJcNuWqgx2qC7PxZutq9gaCMHnks+AHA2zly1wbJc8+z3TAPSolGmDyKyWCtxf5i5Oa80dNeLqC2mRGGyVkQm6wIL4QHJfuRtANfQ14tPonHuMI7RJ/LfKoug3/SIooYnRu4RikBDkafnaLupiUttUlX72zyqh8sssHew3R+QtxyDK5oEFBHSScGa9ziaoaHn28CsbTR6Gpy0PK2628kXKcGJjy3xjaSj8uhTX2TAwwtWhTpCNdE9H7T7pT/TXuLlphMMs98k1V0WLG42j6yGt8EOe61fC0WSl2XusNHh2i3u+0X2I3yDcPARMbsyPlwDLWRWICDc5cVr8TPaWxS0ijyxNlm8wAqkPGkIBh8A+fxH8ubrLsLs8m+J+6dLcbPr+RiSEhVEHfCBToEg
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 10:04:39.1481
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f6274983-a2a1-4606-96bd-08df3fdb32c7
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BY1PEPF000264B2.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR12MB692094
+Content-Transfer-Encoding: 8bit
 
-Hello Vincent,
+An RB_DUPLICATE tree links a new key to the left of an equal one, so
+rb_least() and rb_pop() return the newest of several equal keys. A
+queue of tasks keyed by vtime should instead serve equal keys in
+arrival order, as sched_ext's vtime-ordered DSQs do.
 
-On 11/6/2026 8:49 PM, Vincent Guittot wrote:
-> @@ -8376,6 +8383,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
->  
->  	dequeue_hierarchy(p, flags);
->  
-> +	if (!(flags & DEQUEUE_SAVE) && !cfs_rq->h_nr_queued)
+Send equal keys right on insert, as the kernel's rb_add() does. A new
+node then lands after every node with an equal key. Rotations and
+removals preserve the in-order sequence, so equal keys stay in
+insertion order without a tie-break field.
 
-Should this also consider DEQUEUE_CLASS which will move the task out
-of fair class and leave the rq idle? setscheduler just adds it with
-DEQUEUE_SAVE when moving classes.
+Add a selftest that interleaves equal keys while the tree grows and
+checks the pop order.
 
-> +		cfs_rq->idle_seq++;
-> +
->  	if (sched_feat(PLACE_REL_DEADLINE) && !task_sleep) {
->  		se->deadline -= se->vruntime;
->  		se->rel_deadline = 1;
+Signed-off-by: Changwoo Min <changwoo@igalia.com>
+Reviewed-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+---
+ .../bpf/libarena/include/libarena/rbtree.h    |  6 +--
+ .../bpf/libarena/selftests/test_rbtree.bpf.c  | 37 +++++++++++++++++++
+ .../selftests/bpf/libarena/src/rbtree.bpf.c   |  6 +--
+ 3 files changed, 43 insertions(+), 6 deletions(-)
 
+diff --git a/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h b/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
+index 486428911d96..00e63b12d82e 100644
+--- a/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
++++ b/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
+@@ -45,9 +45,9 @@ enum rbtree_alloc {
+  * the existing node.
+  *
+  * RB_DUPLICATE: Allow nodes with identical keys in the rbtree.
+- * Finding/popping/removing a key acts on any of the nodes
+- * with the appropriate key - there is no ordering by time
+- * of insertion.
++ * Nodes with identical keys are kept in insertion order, so
++ * rb_least() and rb_pop() return the oldest of them. Finding
++ * or removing by key acts on any of them.
+  */
+ enum rbtree_insert_mode {
+ 	RB_DEFAULT,
+diff --git a/tools/testing/selftests/bpf/libarena/selftests/test_rbtree.bpf.c b/tools/testing/selftests/bpf/libarena/selftests/test_rbtree.bpf.c
+index 856c484a009a..1e2a0fac1e4f 100644
+--- a/tools/testing/selftests/bpf/libarena/selftests/test_rbtree.bpf.c
++++ b/tools/testing/selftests/bpf/libarena/selftests/test_rbtree.bpf.c
+@@ -248,6 +248,43 @@ __weak int test_rbtree_duplicate(void)
+ 	return rb_destroy(rbtree);
+ }
+ 
++#define FIFO_NR_NODES	64
++#define FIFO_NR_KEYS	4
++
++SEC("syscall")
++__weak int test_rbtree_duplicate_fifo(void)
++{
++	const u64 per_key = FIFO_NR_NODES / FIFO_NR_KEYS;
++	struct rbtree __arena *rbtree;
++	u64 key, value;
++	int ret, i;
++
++	rbtree = rb_create(RB_ALLOC, RB_DUPLICATE);
++	if (!rbtree)
++		return 1;
++
++	for (i = 0; i < FIFO_NR_NODES && can_loop; i++) {
++		ret = rb_insert(rbtree, i % FIFO_NR_KEYS, i);
++		if (ret)
++			return 2;
++	}
++
++	for (i = 0; i < FIFO_NR_NODES && can_loop; i++) {
++		ret = rb_pop(rbtree, &key, &value);
++		if (ret)
++			return 3;
++
++		/* All of key 0 in insertion order, then all of key 1, ... */
++		if (key != i / per_key)
++			return 4;
++
++		if (value != key + FIFO_NR_KEYS * (i % per_key))
++			return 5;
++	}
++
++	return rb_destroy(rbtree);
++}
++
+ static inline int
+ clean_up_noalloc_tree(struct rbtree __arena *rbtree)
+ {
+diff --git a/tools/testing/selftests/bpf/libarena/src/rbtree.bpf.c b/tools/testing/selftests/bpf/libarena/src/rbtree.bpf.c
+index 7f0f6dc3e17d..831a1ef1c2a1 100644
+--- a/tools/testing/selftests/bpf/libarena/src/rbtree.bpf.c
++++ b/tools/testing/selftests/bpf/libarena/src/rbtree.bpf.c
+@@ -171,7 +171,7 @@ struct rbnode __arena *rbnode_least_upper_bound(struct rbnode __arena *subtree,
+ 		return NULL;
+ 
+ 	while (can_loop) {
+-		dir = (key <= node->key) ? 0 : 1;
++		dir = (key < node->key) ? 0 : 1;
+ 
+ 		if (!node->child[dir])
+ 			break;
+@@ -278,8 +278,8 @@ int rb_node_insert(struct rbtree __arena *rbtree,
+ 	}
+ 
+ 	node->parent = parent;
+-	/* Also works if key == parent->key. */
+-	if (key <= parent->key)
++	/* An equal key goes right, after the existing ones. */
++	if (key < parent->key)
+ 		parent->left = node;
+ 	else
+ 		parent->right = node;
 -- 
-Thanks and Regards,
-Prateek
+2.56.0
 
