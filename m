@@ -1,72 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.92.199
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794390182;
-	b=GwHBA/WN+sVvUbpiVeJfGIW2drVU8AwnFiUw4w9Ub9ucSi+ZSAyTwXK9UAnkZoWD5NsQ
-	 dxOQe/XF+g4NUErcEvH1uBFKMbvv7RyK0e7QoOqkQLQnDfFgWBGGSXFRmOEbTYbcFCuEQ
-	 cTlKqEadGa7xaGcIKRK21iH4pXjfylFRsjWuA0JOLMBOjdE6hz6iQkEnzngpl7rQtYypW
-	 3wKp2fyiMjrgM80yLPkxB9Yof8BDACVZC9H+0jONZXzMQnSyykFR7vMDFQsFV4LkhOjKS
-	 uFNdW20B4LOFr/Tkbi43aNY00u6+ED4mdtX3JqDunpnWa+eQ+JcOdRi/fVReb1yrzeQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794390182;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=h6ax4dIlNvOyZOxsgskELRPbrZjl/raMdjGYwOqgRlw=;
-	b=E5lB9/wTEEpqoNd01zrEPhSaEhfy3yijBdVHIVsjs63G1jGuY6x5NOdqOJ0jmv3Wh9tu
-	 kyDIJ163t50dj2dihCqB+EPzpDklD346HjJ7++SNu9rvfq6B/dSvpHq+Ge+EH+sXO9xP2
-	 SSGf/GsruenkRonnVb1Ipz1od9Fz5qOEjl4poaVyoqiKNvDhoDKmAs7t5VjBibmrvvds3
-	 cQ0EovTzNo/gaW19fN7H2AvoOLn1a0K89w4G7jgdlaT/PVd++AZERy4GFoZJNRaYSCCET
-	 uPVDLZzf8FSNqb/7oCzEShDuLyFK6u/54XwmOR1J7v8DyYfWcUFMtdCfVKQXFcqHl9A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=i8cPZpHv;
-	arc=none smtp.remote-ip=90.155.92.199
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.41
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794391483;
+	b=zsJClKqubYm88oOCO/tla9SRlEpTEF2IcAQK2VXtfici3A0trWaEU/yv/YRfVdyRvesv
+	 DGwwmdYPj3XZHRlBZWPtYAQSB9II1unE+fAK86mjuDQUPDgNCxbDMU7ojRIPs3gVmOpFG
+	 4xsM3qHVePATvBVXGXZpf1q7dzK+KaXD15y8Br8ITikMSp/VjG7h4VzmWiwNMEvzu6E/Z
+	 0u3VqEltlnbtYFTPCCK4sNLAMllhwTaAAkKK72kDBaHlP70P+EubmFVOJGJuDH71jGmF2
+	 9hSxWpMvwbWcYdDCnoTZEcNZM0Qad+yutaq36Bz8PC6RovXnUfsb3b1zRjcgRjuBqmg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794391483;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-EOPAttributedMessage:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=oVhgG1D34iAaFPpyW2HKAfJcIy1AudwUf4aBHqGSZjY=;
+	b=r0ngZqeRxwHabfM2PRddOEzGVTGG69mTn3bbYC/AF9hVLMvjjAdjnXHxmAH3kRWo/hGR
+	 dJLTqbN7qUYnB2a9kRH8fmEdvyInTzPzoR/A0fjtzKsSpZJpkS8orYurro1BP7otVXjs4
+	 UbAVs9/MVM4kuZ3e7pG3KNuhLpMN2J+BypTeQdKx9HR8QvZqukG61NMdPV/NhS7K0q+N7
+	 uNtpKb5khKAKkyg1XaPdCHr5WxnpZ+s1AX410F4Q4/Fu0bFF7Jw3z/WAd0jHu9q/xS0BC
+	 IWLQmiB8iSBkgXDdAACyqbmlG4aZh+q21cwfpS6Pzu89JyNsm5GSFOr+o01b6wtiEmQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=UKu6c68L;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.41
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013041.outbound.protection.outlook.com [40.93.201.41])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D10606A326;
-	Wed, 11 Nov 2026 09:43:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21D10606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73918606A326
+	for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 10:04:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73918606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=i8cPZpHv
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=h6ax4dIlNvOyZOxsgskELRPbrZjl/raMdjGYwOqgRlw=; b=i8cPZpHvIkykFMbkn1LwDTMDtg
-	zTpbGvQ89Nzmww0M3FobcEXqVDFhSofBgKXIqdlp1RpqFTcCZuuzg5Ql8+k+Blgkx16Rlui/bVnIw
-	qqsX7UXKFaXcCeEfc8yW/R2UsAVH9zTKAVdQg3REwsZUnWA/8K7UhP/9qdGw41sSnJmdWB0OaFhIq
-	eoShPwUX83e7gay7o8P/rpoPQIRDzOMe920CM2mjHfu0XflJK0hdOkW4uyfWCiSuxjCk92fSicVJi
-	L8oohW2YF7Jomx+4QZ9dbw33C4crW1FPJ/aoD4T01SH5CQ301A0ScPkHtW18fWlzBakFdFkXNDOZq
-	OazZ2QWA==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xR4r3-00000008zJW-0xgu;
-	Wed, 11 Nov 2026 09:42:57 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 1BBFE30025D; Wed, 11 Nov 2026 10:42:56 +0100 (CET)
-Date: Wed, 11 Nov 2026 10:42:56 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Michal Blaszczyk <michalblk@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>, Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 RESEND] sched: Lift cgroup update locking to core to
- prevent CFS/SCX divergence
-Message-ID: <20261111094256.GY2668804@noisy.programming.kicks-ass.net>
-References: <20261110151857.1864222-1-michalblk@google.com>
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=UKu6c68L
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RX08IaMGtklfnl9qZdTq+oo2PWWg7ib3ZS/R5cP4ph2oicplgiXZ3+bgqIfLElpdBawhJO8kDqDc/iYn7CEZe1cvcsS0sxwkBNcl4NJ3bwfKXFAEk7gc003KM/Q70kaX9ohLL5mDsGn3yEhSSlWkHvJYJESElu/Jn2GI3TxlgU2IAiF0BKxRR/0v+AyYZK1taTZYY2sP5NvdxCWIdjp3AVS/7mY29L2LwcfRAHFmsr1yP4WC6Ng8VXRJ5BY9BCKa5um9KBMqnEPEnbrp5dSPaZt7SEOiY055EuUiowMOwA5abbVpFXGJ8DWL2/i35ZQ0ZhAHpk8WMdJJ53sfZsF9mA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oVhgG1D34iAaFPpyW2HKAfJcIy1AudwUf4aBHqGSZjY=;
+ b=olId59uIUT9jEN99u8eTbYomB/gZUqVr+wnkK99yA5Tt9hIS56sT0inmcSa1LkA+j7nEvXuaWxuqDDhKR0Qark4FGqUpUj+WfgTKvqrY/sqW7c5CBwcDa6CKptdlZOoOQ2uFpNKX1Jo+DC29lEpiq20YUKhZobnPAZdi9ZO8ftLl4zihol38rK+UYYhYvMbLod/pCGRV0jddOlOD7hkmYNZbuoDdE8Ye30FtvzpMCTjIsKZLErzZkN3Ryhmuxkye1Y7PYFZc/BM84i8Zbfw1fcK5AU1sFpXZhmfPHeDWvV+xihFepwe0wIPW+jbyFk6ATgXpwIZmmMxM8LweO+sUwA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oVhgG1D34iAaFPpyW2HKAfJcIy1AudwUf4aBHqGSZjY=;
+ b=UKu6c68LO1yzr+OaNC1Xz7WdPcOONVbXuq/XvAQBLjWBC+FfXlKqDjrlWdR/rakyRs4O2Dk9+vd+ngg6s9TnAZmUWQQH0RD1gzxWsPNIHqwF9fuAAvRMvTCkNq24Ks+DPMNyx1hh8UinnJFOCza/YyGSc3wH6PUYOs4IHZaQyes=
+Received: from PH7PR02CA0008.namprd02.prod.outlook.com (2603:10b6:510:33d::27)
+ by IA3PR12MB692094.namprd12.prod.outlook.com (2603:10b6:208:712::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.9; Wed, 11 Nov
+ 2026 10:04:39 +0000
+Received: from BY1PEPF000264B2.namprd02.prod.outlook.com
+ (2603:10b6:510:33d:cafe::9b) by PH7PR02CA0008.outlook.office365.com
+ (2603:10b6:510:33d::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.9 via Frontend Transport; Wed, 11
+ Nov 2026 10:04:39 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BY1PEPF000264B2.mail.protection.outlook.com (10.167.242.118) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.615.4 via Frontend Transport; Wed, 11 Nov 2026 10:04:39 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Wed, 11 Nov
+ 2026 04:04:38 -0600
+Received: from [10.85.41.63] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
+ Transport; Wed, 11 Nov 2026 04:04:32 -0600
+Message-ID: <f0bdf36b-4453-4d2f-b82c-85d1d62c5f78@amd.com>
+Date: Wed, 11 Nov 2026 15:34:30 +0530
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -76,37 +101,73 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261110151857.1864222-1-michalblk@google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/20 v3] sched/eevdf: Reset lag at wakeup when prev CPU
+ has been idle
+To: Vincent Guittot <vincent.guittot@linaro.org>, <mingo@redhat.com>,
+	<peterz@infradead.org>, <juri.lelli@redhat.com>, <dietmar.eggemann@arm.com>,
+	<rostedt@goodmis.org>, <bsegall@google.com>, <mgorman@suse.de>,
+	<vschneid@redhat.com>, <linux-kernel@vger.kernel.org>, <lukasz.luba@arm.com>,
+	<rafael@kernel.org>, <linux-pm@vger.kernel.org>, <tj@kernel.org>,
+	<void@manifault.com>, <arighi@nvidia.com>, <changwoo@igalia.com>,
+	<sched-ext@lists.linux.dev>
+CC: <qyousef@layalina.io>, <christian.loehle@arm.com>,
+	<pierre.gondois@arm.com>, <sshegde@linux.ibm.com>, <kayracizmeci@gmail.com>,
+	<tim.c.chen@linux.intel.com>
+References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+ <20261106151947.3991524-3-vincent.guittot@linaro.org>
+Content-Language: en-US
+From: K Prateek Nayak <kprateek.nayak@amd.com>
+In-Reply-To: <20261106151947.3991524-3-vincent.guittot@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264B2:EE_|IA3PR12MB692094:EE_
+X-MS-Office365-Filtering-Correlation-Id: f6274983-a2a1-4606-96bd-08df3fdb32c7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|23010399003|82310400026|1800799024|376014|7416014|261028144727099003|261026140227099003|261022105027099003|261022075727099003|921020|11063799006|4143699003|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	vXvqy3euHbzuDjjvP4JTZ53YB05+P7CjkVqQIAOPDx5C+yS8asfBQFZ4DOL0DUAPfv1AOw41QCSGyHPGy0QJlJ5ytjY0c36B4NhlnB8ji7eXPDbXfV8FFIESpAiBqyPvmQJ4QuxknDtLdxrEdvpivT7AvtknKbST8yRsTdGA7IEKNixc0DPEiZGtbwdW6AKO3QceherRgVF+BRogE3PtM9w811ymykzUXHRgZeJCzRBoJ+ga2/x+4qOOG56+1iXt8Jy+72PYyxdQ7pc66sTi6OEyWKbyh7oaJ8wAVsFA8Wlvfg1z1per9kqLn3uVsLZx6EoBbM63ThFRvDsTmeEEmeWzDuQzrkurQiyPMDUFAkf0MlCY41S2g+r6M5hhYxvz+n82co0yUtVD1L9x2iRepx1DPl2M5nbsQgBKm67LDwjS/nq+Cs5rOa3QUVTZmG26z7hIubRirlEd8Gu5bOiqbQzp9m3Mk5QgiEZchG0UAqBMzZa4yS5Hqjj7C86rfc+dKQEJAhsm8PXgvqwivLIEqQghU8gzTQe0OYQK6FIs4GTrgsdrQgmixTBkh5Q2He2QlZypu4UlSvwj1Ah6iGUi7mEzS67F27ibm5e54zCIyjFLRKw1C9NcgM6xoFfI2DGqVgYqmvo35wYQAUmYKVFnUoJ7vKkhOMkGyMNgfuUAcSCM3NrVnfnn7a5Yi4egv8x8jRQdwwz5t3tUjXzxYMqZ7p5xrjFjm94pN3dYqZKG0eDLcTWxAsYmcIR7HhKmm3G0
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(82310400026)(1800799024)(376014)(7416014)(261028144727099003)(261026140227099003)(261022105027099003)(261022075727099003)(921020)(11063799006)(4143699003)(56012099006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	FV8SwxJT8IFAYGCu6fIVnByz1XYwKmhWVgOF/Xbev6IJxRvNJcNuWqgx2qC7PxZutq9gaCMHnks+AHA2zly1wbJc8+z3TAPSolGmDyKyWCtxf5i5Oa80dNeLqC2mRGGyVkQm6wIL4QHJfuRtANfQ14tPonHuMI7RJ/LfKoug3/SIooYnRu4RikBDkafnaLupiUttUlX72zyqh8sssHew3R+QtxyDK5oEFBHSScGa9ziaoaHn28CsbTR6Gpy0PK2628kXKcGJjy3xjaSj8uhTX2TAwwtWhTpCNdE9H7T7pT/TXuLlphMMs98k1V0WLG42j6yGt8EOe61fC0WSl2XusNHh2i3u+0X2I3yDcPARMbsyPlwDLWRWICDc5cVr8TPaWxS0ijyxNlm8wAqkPGkIBh8A+fxH8ubrLsLs8m+J+6dLcbPr+RiSEhVEHfCBToEg
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 10:04:39.1481
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f6274983-a2a1-4606-96bd-08df3fdb32c7
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BY1PEPF000264B2.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR12MB692094
 
-On Tue, Nov 10, 2026 at 03:18:57PM +0000, Michal Blaszczyk wrote:
-> Concurrent writes to cgroup control files (such as cpu.shares or
-> cpu.weight) can lead to state divergence between CFS and SCX.
-> 
-> For instance, in cpu_shares_write_u64(), the CFS update is serialized
-> by shares_mutex (internal to fair.c), but this lock is dropped before
-> scx_group_set_weight() is called. The latter only acquires a read
-> semaphore (scx_cgroup_ops_rwsem), allowing multiple threads to evaluate
-> and act on the sched_ext update concurrently.
-> 
-> This serialization gap allows concurrent writes to interleave.
-> As a result, the recorded state in CFS, the SCX internal bookkeeping
-> (e.g., tg->scx.weight), and the BPF scheduler itself can end up operating
-> on completely distinct parameters (pairwise distinct values).
-> 
-> Similar races are present in tg_set_bandwidth(), cpu_idle_write_s64(),
-> cpu_weight_write_u64(), and cpu_weight_nice_write_s64().
-> 
-> Fix this by moving the CFS locking up into the core layer in
-> `kernel/sched/core.c`. By acquiring these locks directly in the core
-> write handlers, both the CFS and SCX callbacks are executed atomically
-> under the same lock.
-> 
-> Fixes: 819513666966 ("sched_ext: Add cgroup support")
-> Signed-off-by: Michal Blaszczyk <michalblk@google.com>
-> Reviewed-by: Andrea Righi <arighi@nvidia.com>
-> Acked-by: Tejun Heo <tj@kernel.org>
-> ---
+Hello Vincent,
 
-Thanks!
+On 11/6/2026 8:49 PM, Vincent Guittot wrote:
+> @@ -8376,6 +8383,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
+>  
+>  	dequeue_hierarchy(p, flags);
+>  
+> +	if (!(flags & DEQUEUE_SAVE) && !cfs_rq->h_nr_queued)
+
+Should this also consider DEQUEUE_CLASS which will move the task out
+of fair class and leave the rq idle? setscheduler just adds it with
+DEQUEUE_SAVE when moving classes.
+
+> +		cfs_rq->idle_seq++;
+> +
+>  	if (sched_feat(PLACE_REL_DEADLINE) && !task_sleep) {
+>  		se->deadline -= se->vruntime;
+>  		se->rel_deadline = 1;
+
+-- 
+Thanks and Regards,
+Prateek
+
