@@ -1,54 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.97.179.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794374288;
-	b=Sk8C2pLSR4rgGYlI4bCwx+vpG3JneMOGGJk8Ki47itMta2JQx29oXu7n/aah8fOAFJeN
-	 +tv4cuRnyC4EIL8lAcdzjmf8rsjrOn1ksErqI7nt2rJJXHDYyqG9lcUDp2YeB0dgg8f00
-	 BJ4LyW5iYjd9wd/4QblR4oYgzIoR5T5swmdUfmQxvWEiBhX7S8wID9HpTaC/7hpC9UdA1
-	 V0U37HK0b0GsIeIGpJi8RUV4/JATxCPuKSFpY3FNAERs1P4zqnXSbeRZYh6I99PI26kMS
-	 iEA/mEoJNxRp/DqvtpmWgNk7RkCtdj6NMK7RAvMfGC4pnJ1lavKzlEGE+Z9ibtnsgiQ==
+	t=1794382479;
+	b=N/Wp9DufJLMfSncl7DswJHjymujyEhUQ3YCyMQAF4SCAmpDxKVdDoDVQBEaH0zKlUGIr
+	 9jwUtAfTVlHNC8P5dKdjo161RRmzS1B2N5vSfFWbdv0GvxwdpKQ4g6DwfwMbrsZ87mpoX
+	 pCZpPeWNbXKsRQiavAYhN/stvcwujiP4iinw1U+D9yxpfDHrgk9YwjUQG9l5+qlsAkPwD
+	 nRhGRVDOl4Y4dGLbzWM+JNG8XNd+dDCsOKrgl/tUmwx3nPkUU22yMk+nmSG+2OK+ZI2Rs
+	 mLJgALIDBQoPcv6+6w78Br8F6uQxY0StrekZrVRmVl742TqW0drA6EujShdL2auIALw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794374288;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Cc:Subject:To:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=4E6KxAhNlFzENhgeIInuOXhEw9H++Tb+DYqZlBVUXzc=;
-	b=IcR2NpZUX5kAHOhbm2O5fOPlvGtjjWTqhvU6F0psz7xmxm7K3Pin0I5Fw1+ullEItxAy
-	 dyNWaF79bI3qQIkKLROw+M4jNtFGoSFarb2suyY1O3njy4hePvvx3WLPXp4bqK3KczApI
-	 WekNnBFrg8pgIXe/smWLPZNBlhPh1N9gNzp3cxcuTy015vGdywJCsUaqYYGDE0Eeo9k+H
-	 Y9O15o1ogH4IhgAVdl5IKRIb1K7xbteRZbA9HACqTKUnF9GQqlThVXJqrTpTNHvdBCLrg
-	 qNL5+5gbBGOtyuvoVNq7eJnIRZBqQnjhGJ/2MgJdF/xnHAHqpcYNviYcfrPyDRXO2Yw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794382479;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=1fq1mWqSsPumugesVbA9rrqce1A+c8HqOBMfP33zvE4=;
+	b=JrdsZ8acD30qWXrfMNqdqMg4+YfMPaySSolbA1AKpGiL6tZ98VtjBSCnsAsJSz8FQgso
+	 fE4qemoHtxu+l2ESeKepcyxGfD+OnhJXPT15UHVbP/SMMtl9Y6TEFAaP8Bj9Is9cD6otL
+	 sY66ehS6gUFdNO1FrmIO7/NirfS6P7SuGCxZ5REq1mhe3Lo/h0t0gUy2neAL7+MEGOP1G
+	 cy538Vw+BYRPqDq8C7kYz71Ef1qeL/pojlXycTBNMBhZDn5GOWIjt965VnBSwCaSf7bde
+	 rNhfyOQ6O2am6jXUhBrfy9/QNJiFbARRJhbZNnZycRYQqkiMm7wIC3qBNDEhmulBTdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=XZHfbLZI;
-	arc=none smtp.remote-ip=95.215.58.4
-Received: from mta1.migadu.com (out-4.mta1.migadu.com [95.215.58.4])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=igalia.com;
+	spf=pass smtp.mailfrom=igalia.com;
+	dkim=pass header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=JIQ5FCzJ;
+	arc=none smtp.remote-ip=213.97.179.56
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1154E606A31C
-	for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 05:18:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1154E606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB908606A324;
+	Wed, 11 Nov 2026 07:34:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB908606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=XZHfbLZI
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=YWujpAd2POSHBZxj/UGItw4ULXL9YbFbrRMqy5m6l6A=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794374282; v=1; x=1794979082;
- b=XZHfbLZI6xJ67cIrTmKahjhqrj9RX/I53nXXBC+DUHGpmm8/ix3WA02/xL2TsJAe3cDhnRmZ
- dCtUub/o5p6vPPlTI6QXEUnryTFfxKwh3blSvZiUa2tV+GewXSY0lXACzW9ra7S1sGPYvUZ7uVE
- WDeB564PSsvk5qEEOC0lrm+M=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 42174d712a9758ba;
-	Wed, 11 Nov 2026 05:18:02 +0000
-X-Mizu-Trace-ID: 42174d712a9758ba
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <d7846fef-ba62-4c3e-9498-d3d685536df1@linux.dev>
-Date: Wed, 11 Nov 2026 13:17:52 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=JIQ5FCzJ
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Reply-To; bh=1fq1mWqSsPumugesVbA9rrqce1A+c8HqOBMfP33zvE4=;
+	t=1794382477; x=2109742477; b=JIQ5FCzJGYDElZVqSjHeYCg7Ze2CwLeOvrIGoy63nDZJBAT
+	bKW5gExsl4LI1ZIP7UlP5PNcPJRD+zri8elQdKgrleQCi5bwGw42m0F7LtXw3DBnUw/XPtYYxyLYy
+	D/+wTJ/d5acb5fUcwILefprUuguSGP23fq7A7AbinZulT5xSpqJiqcYs7If+wyuLCht2QnkPtIZ+X
+	wuFdvBeXg9fAyGl/Byza8Li58UjOiOiNd5ZsB+/ZZG0e2q7Ed4jQ8ycstYs1NALJ6JKD0gmk9or2S
+	AZtBV9rN3xSRSFBU4wqHLVXBTQbYoPXGUVRYVbwXHED8AN23mcILUMH+9c02vi0w==;
+Received: from [58.29.145.179] (helo=localhost)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1xR2qf-008aYU-4g; Wed, 11 Nov 2026 08:34:26 +0100
+From: Changwoo Min <changwoo@igalia.com>
+To: Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	david.dai@linux.dev,
+	Gavin Guo <gavinguo@igalia.com>,
+	bpf@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	changwoo@igalia.com,
+	kernel-dev@igalia.com
+Subject: [PATCH bpf-next v2 0/3] selftests/bpf: libarena: Add ordered-walk and lockless-peek support to the rbtree
+Date: Wed, 11 Nov 2026 16:34:13 +0900
+Message-ID: <20261111073416.203153-1-changwoo@igalia.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -58,112 +78,57 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, tj@kernel.org, void@manifault.com, arighi@nvidia.com,
- changwoo@igalia.com, liwanwu@kylinos.cn, zhaomengmeng@kylinos.cn,
- emil@etsalapatis.com, yphbchou0911@gmail.com, mingo@redhat.com,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
- bpf@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH 0/9] tools/sched_ext: robustness fixes from cold review
-To: David CARLIER <devnexen@gmail.com>
-References: <20261110125001.4167503-1-cui.tao@linux.dev>
- <CA+XhMqzQXn4r57b+CP-mryhat3rtg3bD2BaRLqjjqwEj1eJ-EA@mail.gmail.com>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <CA+XhMqzQXn4r57b+CP-mryhat3rtg3bD2BaRLqjjqwEj1eJ-EA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hello, David,
+A sched_ext scheduler can build a task queue on libarena's rbtree, keyed
+by vtime, in place of a vtime-ordered DSQ. Such a queue needs three things
+the tree lacks. This series adds them:
 
-在 2026/11/10 21:03, David CARLIER 写道:
-> Hi Tao
-> 
-> On Tue, 10 Nov 2026 at 12:50, Tao Cui <cui.tao@linux.dev <mailto:cui.tao@linux.dev>> wrote:
-> 
->     From: Tao Cui <cuitao@kylinos.cn <mailto:cuitao@kylinos.cn>>
-> 
->     Hello,
-> 
->     This series fixes nine robustness issues in the example schedulers
->     scx_pair, scx_flatcg, scx_qmap and scx_userland.
-> 
->     scx_flatcg resets its stats baseline on restart (stale counters print
->     as u64 underflow garbage) and rejects a stats interval that puts
->     nanosleep in an error loop (a negative or non-finite -i busy-spins at
->     100% CPU). scx_pair stops aborting the scheduler when the dispatching
->     cgroup goes away mid-dispatch, gates attach on an interrupted
->     initialization instead of running with a half-built cgrp_q_arr, resets
->     pair_id on restart, and cleans up a dead busy-check whose fall-through
->     clears another cgroup's busy marker. scx_qmap documents the options it
->     actually accepts and resets its hier stats baseline on restart.
->     scx_userland bounds the batch against the dispatch buffer instead of
->     overflowing it 13ms in, and rejects batch size 0, which livelocks the
->     machine until the stall watchdog fires.
-> 
->     Verified in qemu on tj/sched_ext for-next (5b740a72b55c), same
->     kernel and config with and without each patch, comparing stock and
->     patched binaries: a scx_flatcg restart prints six
->     u64-underflow garbage counters on stock and zeros with patch 1; a
->     non-finite -i busy-spins ~17k EINVAL lines in 3s on stock and is
->     rejected at parse time with patch 2; SIGINT storms abort 20/30
->     interrupted inits on stock with the scheduler never loading and exit
->     30/30 clean with patch 4; a scx_pair restart aborts 7ms in with a
->     stale pair_id on stock and runs clean for its full window with patch
->     5; an oversized scx_userland batch aborts 13ms in with "dispatch
->     buffer overflow" on stock and survives 25s with patch 9; and batch
->     size 0, which livelocks the machine until the stall watchdog fires
->     (spinner progress collapses to ~1%), is rejected immediately with
->     patch 8. Beyond the A/B pairs: the scx_pair cgid-cache churn window
->     is too narrow to drive (40 rounds clean on both binaries; patch 3 is
->     graded by inspection), the qmap synopsis diff shows exactly the three
->     added options (patch 6), and the hier stats baseline was verified with
->     a clang-23.1.5-built scx_qmap run through restart cycles (patch 7,
->     hier stats clean throughout).
-> 
->     Based on sched_ext/for-next (5b740a72b55c).
-> 
->     Tao Cui (9):
->       tools/sched_ext: scx_flatcg: Reset the stats baseline on restart
->       tools/sched_ext: scx_flatcg: Validate the stats interval
->       tools/sched_ext: scx_pair: Don't abort when the dispatching cgroup
->         goes away
->       tools/sched_ext: scx_pair: Don't attach after an interrupted
->         initialization
->       tools/sched_ext: scx_pair: Reset pair_id on restart
->       tools/sched_ext: scx_qmap: Add the missing options to the usage
->         synopsis
->       tools/sched_ext: scx_qmap: Reset the hier stats baseline on restart
->       tools/sched_ext: scx_userland: Check dispatch buffer slots before
->         inserting
->       tools/sched_ext: scx_userland: Reject batch size 0
-> 
->      tools/sched_ext/scx_flatcg.c       |  7 ++++++-
->      tools/sched_ext/scx_pair.bpf.c     | 12 ++++++++++--
->      tools/sched_ext/scx_pair.c         | 14 ++++++++++++--
->      tools/sched_ext/scx_qmap.c         |  3 ++-
->      tools/sched_ext/scx_userland.bpf.c |  8 ++++++++
->      tools/sched_ext/scx_userland.c     |  5 +++++
->      6 files changed, 43 insertions(+), 6 deletions(-)
-> 
->     -- 
->     2.53.0
-> 
-> 
-> I might be missing something, but the cover letter mentions a scx_pair busy-check cleanup that isn't
-> in the series, and the verification paragraph swaps patches 8 and 9 it seems.
-> 
-> hope it helps. 
-You're right on both counts. Thanks for the careful read.
+- Serve equal keys in insertion order, as vtime-ordered DSQs do (1/3).
+- Add rb_next(), so that a consumer can walk past tasks it cannot run
+  in key order (2/3).
+- Cache the leftmost node and the node count, so that other CPUs can
+  peek at the head and the length without the writer's lock, like
+  scx_bpf_dsq_peek() and scx_bpf_dsq_nr_queued(). Add rb_init() and
+  rb_fini() for a tree embedded in another object (3/3).
 
-The busy-check sentence is a leftover. The series originally included
-that cleanup, but I dropped it before posting because it became clear
-the path it removed has no observable behavioral difference (the
-would-be hijacking update always fails with -EBUSY anyway). I neglected
-to update the cover letter accordingly.
+Each patch adds selftests, which run with:
 
-The patch 8/9 swap is also just an editing mistake from the same late
-rewrite of the verification paragraph.
+  $> ./test_progs -t 'libarena/test_rbtree*'
 
-Thanks,
-Tao
+Changes in v2:
+- Drop the comment on the insert helper and keep the name
+  rbnode_least_upper_bound() (Emil, 1/3).
+- Move rb_next() before the caching patch and into rbtree.bpf.c with the
+  other traversal functions (Alexei, Emil, 2/3).
+- Hand the head to its successor at the top of rb_node_remove(), before
+  an RB_ALLOC tree frees the node, so that a lockless reader never sees a
+  freed head. This drops the wrapper, was_first and the rename to
+  rbnode_remove() (Alexei, 3/3).
+- Drop the cache line alignment of the lockless fields, which showed no
+  measurable benefit (Alexei, 3/3).
+- Rename the lockless readers to rb_first_lockless(),
+  rb_first_key_lockless() and rb_nr_nodes_lockless(), and document that
+  a caller that dereferences the head must keep the node valid itself
+  (Emil, 3/3).
+- Drop __always_inline from static functions (Emil, 3/3).
+- Add Reviewed-by tags from Alexei and Emil.
+- Rebase on bpf-next.
+
+v1: https://lore.kernel.org/bpf/20261028060046.549097-1-changwoo@igalia.com/
+
+Changwoo Min (3):
+  selftests/bpf: libarena: Order equal rbtree keys FIFO
+  selftests/bpf: libarena: Add rb_next()
+  selftests/bpf: libarena: Cache the rbtree's leftmost node and count
+
+ .../bpf/libarena/include/libarena/rbtree.h    |  57 +++-
+ .../bpf/libarena/selftests/test_rbtree.bpf.c  | 303 ++++++++++++++++++
+ .../selftests/bpf/libarena/src/rbtree.bpf.c   | 120 +++++--
+ 3 files changed, 457 insertions(+), 23 deletions(-)
+
+
+base-commit: 0fb18ce8a2e9de830433923cf65838933d615359
+-- 
+2.56.0
 
