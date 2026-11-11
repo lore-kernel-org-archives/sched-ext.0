@@ -1,45 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794384331;
-	b=eMgjqIk0bjqkgQETERlHNPXgxY7ySAeg1dUkWDf5ClXT+ElTMp7CJwGqKG1V3GaohS+6
-	 ARFBHu39B6MOMYLC4fMbOoHbbovpdrDhAuqWixpcfGlbzUEcybd/UFnypyGuj5M90k9/r
-	 H4+KBrBm4cESGQis0j7UPLOdoBsL41z59MQQwsv6fjFySQw/NyFt3/RUWZj8DI1vgMPhQ
-	 kjBrXqrZ0Vo8yM4ipkspZaHDPnjoRaWhU2OA1//nHJrxQX7urgftSslZzmuwxrxfK5t9Q
-	 vOEVNj7ZBaLm8A4OU0PYFHfwwAjDOmmMrnY25SBNXWLjX3WiVOoBCs2ba4PoZqKr/sg==
+	t=1794384432;
+	b=mnLGhDDmBpCOADXCeb3pmb7UYmDpdiIK+NJwB+ZnlIsU/mONHTeljG7X4HjTyts+Iy+5
+	 YcBy3PXk6JsSO+VMOpVf4TEXnCFJuArJBwN/0yR537J9xgauEFR6dA3euro81F+6TRUfl
+	 UmfN618HKGv1LmSlAcR8X3EHkWPCUHZ1X6kS6r8igJ1DFoNHenUV6bWtaiRQr5gU3DblC
+	 uWY4AQnYVa26G/EKZIaa5eyE1pAP+HAC1MnrwsBalU/lJlJv5yq3IFtlNYUXq0J7wegVc
+	 cwMhUvmzUHh0ds3G0xapvefHHYHzohYRktz5uEUiKFkGtFNGMupdWBC6ZB6hvmJlA1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794384331;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794384432;
 	h=Received:DKIM-Signature:Content-Type:MIME-Version:Message-Id:
 	 In-Reply-To:References:Subject:From:To:Cc:Date;
-	bh=dMZUIMOLvYUrODTdzt6SoBp5bxkivOxSH3iVoMyLwAA=;
-	b=P+ikEsV+liZkqNcUhR8Opgl1rNTKeSfrY15B31NQZiCCmPtFwdEp8IW11HLvZsn5iLJM
-	 mboFfphhgiwIuildxU0ll69ccjCLKagICUTrluuOr3rlBFjHp3tE3p5tL6HvoJmWMFcRZ
-	 +Zm0zfpobl5HXFedf9xc/hY7PDj2DZH7W03rv53QF4j1qr/w8/GGjYNfKqBznCSaiWhwE
-	 gKX+S+Velw9rwgbyeaPXGWTONHq+DiGK8CPIWGZgSwEi+GIdfq/YvEBGw+mwOpXdeYbIy
-	 rTJNMuFkeU+XT2kdvBrmviB0MmE9AMIrZgfzQPDrbJ62sbhMvYH+S3d+x89Dwz093Kw==
+	bh=xLs8ayfHBLqGNIeqNvKdUFFV2ceLPPx5aCzC8uzmT9g=;
+	b=uFXRr14ghh3Xym9ZGk/pNvbvq6pFHyhGMzsJyV0+z/xbwSjdhZVgHVKfo1RBao3vKOvM
+	 v9YqKKflithisuVaiOd+MElpXCYU1UpfnHv14dBsuJQjjeA4QvbxPMMOEzGYKY7anzx58
+	 TorCe3B8AsQejgAWp9j+MzKw9IheaIL3uj9/jjfdfqPAMsiSS0KGa5Kmw8eM7T2oeztxM
+	 wlzi5y6mocJ8I7iu/4U4yiLsvLcnlVqB5b9VsQKepBKr+IKq9ToJC7ZR8AUbIhzXjolsx
+	 5MQ4pVILgah4TRsqb0vAk0L3PmhMiOeXFbREolaOaCdTgK1PZhZpvGpypIt3rZwDwoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nxX6BnuP;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eQzzNTqu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024F7606A321;
-	Wed, 11 Nov 2026 08:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3920D606A324;
+	Wed, 11 Nov 2026 08:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nxX6BnuP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453FE1F00A05;
-	Wed, 11 Nov 2026 08:05:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eQzzNTqu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DB31F00A05;
+	Wed, 11 Nov 2026 08:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794384330;
-	bh=dMZUIMOLvYUrODTdzt6SoBp5bxkivOxSH3iVoMyLwAA=;
+	s=k20260515; t=1794384431;
+	bh=xLs8ayfHBLqGNIeqNvKdUFFV2ceLPPx5aCzC8uzmT9g=;
 	h=In-Reply-To:References:Subject:From:To:Cc:Date;
-	b=nxX6BnuPV1ze2wMAtUBnKYgZFhVZtOy7yx8hp/H3FXk2GPXh1OyTyfjjiTn1hYpfv
-	 Q11Vw9+cd/L3eD/gpbkDtoOgHM4I7KKEvutAVvO985QFToanpr2/FjZvJkGKkXWWB5
-	 7j2hA0qJWtwSaGwo6d7QNdoXCLR2bC1jQLpbHo/abcDQfbsLnRJ7N0hnJHYh3eWLM3
-	 9VkvBkqVEvXWHErgwpqYGV5FNrcNQzX0vCGvaqGk02PS2FvOpoKMFuBCowm2WedOBQ
-	 XIJb8MQK+przP7V+hH3+nD05xSOoMkoO7NfHXUU25C/LHQMT0wOALn9IJgyvzMfMXQ
-	 Gal2dFG/Tr1AA==
-Content-Type: multipart/mixed; boundary="===============3405028542108698645=="
+	b=eQzzNTquYrxYVEFbtJN+AW7DVsuwrXK4utXRDDXQu68G2UP6hmobRWFk/oxYrok78
+	 n/ZLSAzBZwT152UZsyQF1isaMyNL3rCI60+PlIyY4rNlqSRxkIhiHnuLcXHfBrFfRc
+	 MxoP1K4kxhNWxK35nB+Ymko9PjTd2a3fslYG0lbeKBcfZg0vS2fqlIpvfobZlpOzoT
+	 Yb6Tj8whl+dh/8wG2qqwMajZDyHcomUqFQB1oWK7DgXlF8jfJ0FvvH9OAf1imKyVFJ
+	 JckjI2/n+NLBV+Np0KMs9xTVu70cxur5LFtgtR0MBtUPLcfJdplG0VtkYZzx4iQfAT
+	 PpnLUMcI7NJ7Q==
+Content-Type: multipart/mixed; boundary="===============5514991749610700103=="
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -49,129 +49,81 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Message-Id: <d429e252a205d044f8f034ed8341c4cb1e1eeb61711b4dea4d437d40b7cb7223@mail.kernel.org>
-In-Reply-To: <20261109135758.395119-1-radu.m.toader@gmail.com>
-References: <20261109135758.395119-1-radu.m.toader@gmail.com>
-Subject: Re: [PATCH v2] softirq: Treat an interrupted idle task as idle in tick_irq_exit()
+Message-Id: <1c785d97eaac586357e585c4b711076a0df87052bdb135d346c0327d6972fdfb@mail.kernel.org>
+In-Reply-To: <20261111073416.203153-4-changwoo@igalia.com>
+References: <20261111073416.203153-4-changwoo@igalia.com>
+Subject: Re: [PATCH bpf-next v2 3/3] selftests/bpf: libarena: Cache the rbtree's leftmost node and count
 From: bot+bpf-ci@kernel.org
-To: radu.m.toader@gmail.com,peterz@infradead.org,mingo@redhat.com,tj@kernel.org,tglx@kernel.org
-Cc: juri.lelli@redhat.com,vincent.guittot@linaro.org,dietmar.eggemann@arm.com,rostedt@goodmis.org,bsegall@google.com,mgorman@suse.de,vschneid@redhat.com,kprateek.nayak@amd.com,void@manifault.com,arighi@nvidia.com,changwoo@igalia.com,frederic@kernel.org,anna-maria@linutronix.de,bigeasy@linutronix.de,joshdon@google.com,haoluo@google.com,brho@google.com,linux-kernel@vger.kernel.org,sched-ext@lists.linux.dev,bpf@vger.kernel.org,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
-Date: Wed, 11 Nov 2026 08:05:29 +0000 (UTC)
+To: changwoo@igalia.com,ast@kernel.org,daniel@iogearbox.net,andrii@kernel.org,eddyz87@gmail.com,memxor@gmail.com,shuah@kernel.org,emil@etsalapatis.com
+Cc: martin.lau@linux.dev,song@kernel.org,yonghong.song@linux.dev,jolsa@kernel.org,ihor.solodrai@linux.dev,david.dai@linux.dev,gavinguo@igalia.com,bpf@vger.kernel.org,sched-ext@lists.linux.dev,linux-kselftest@vger.kernel.org,linux-kernel@vger.kernel.org,changwoo@igalia.com,kernel-dev@igalia.com,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
+Date: Wed, 11 Nov 2026 08:07:10 +0000 (UTC)
 
---===============3405028542108698645==
+--===============5514991749610700103==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 
-> softirq: Treat an interrupted idle task as idle in tick_irq_exit()
+> selftests/bpf: libarena: Cache the rbtree's leftmost node and count
 
-TL;DR: Commit message only, no code issues: the changelog carries posting
-notes (v1 history, dropped reproducer, compile-test matrix) that could move
-below the '---' line.
+TL;DR: The three new rbtree lockless helpers in rbtree.h are plain static, not
+static inline. They may trigger -Wunused-function under -Werror and break the
+whole selftests build. Should they be inline?
 
-> softirq: Treat an interrupted idle task as idle in tick_irq_exit()
->
-> tick_irq_exit() only runs tick_nohz_irq_exit() if sched_core_idle_cpu(),
-> which is idle_cpu() unless core scheduling is built in. idle_cpu() is
-> false when the run queue has tasks while the idle task runs.
->
-> That is the normal state of a CPU under sched_ext whose BPF scheduler
-> holds back a runnable task of that CPU in one of its queues, e.g. a task
-> of a cgroup at its CPU limit: the task stays queued on the CPU's run
-> queue and counts in rq->nr_running, while the CPU sits in the idle loop.
->
-> tick_nohz_irq_exit() is what marks an idle CPU as idle again for the
-> scheduler clock after an interrupt in the idle loop
-> (TS_FLAG_IDLE_ACTIVE, sched_clock_idle_sleep_event()). Without it, the
-> next exit from the idle loop doesn't resynchronize the CPU's sched_clock
-> with sched_clock_idle_wakeup_event(). With an unstable sched_clock, e.g.
-> under kvm-clock without a stable TSC, the clock of a CPU in tick-stopped
-> idle is clamped to its last stamp plus a tick, so a task picked after a
-> reschedule IPI (which doesn't go through irq_enter()) starts with a
-> stale exec_start, and the next tick charges the whole idle stretch to
-> it.
->
-> Measured with one thread spinning 10 ms in every 100 ms in a cgroup,
-> kept off its CPU for a further 7 to 53 ms per period by a sched_ext
-> scheduler: the cgroup's cpu.stat usage_usec over the thread's own
-> CLOCK_MONOTONIC measurement of its busy time reached 2.00, twice the
-> CPU time the thread could possibly have used, and is 0.96 with this
-> patch. The same ratio with no BPF scheduler loaded is 1.005.
->
-> Commit 548796e2e70b ("sched/core: introduce sched_core_idle_cpu()")
-> fixed this same gate for the other case of "the idle task runs while
-> nr_running > 0", forced idle under core scheduling, where the symptom
-> was too little idle time in /proc/stat. sched_ext made that state
-> reachable without CONFIG_SCHED_CORE, and there the symptom is idle time
-> charged to a task as runtime.
->
-> Ask whether the idle task is running, which covers both cases. CPUs
-> whose run queue is really empty are unaffected; a CPU interrupted
-> between leaving the idle loop and switching to a task has need_resched()
-> set or has already left the idle accounting, see tick_nohz_irq_exit().
-> sched_core_idle_cpu() has no users left and goes.
->
-> The two gates test different predicates rather than one containing the
-> other, and the difference is deliberate. idle_cpu() is idle_rq():
-> rq->curr == rq->idle && !rq->nr_running && !rq->ttwu_pending.
-> is_idle_task() tests PF_IDLE on current. Newly covered:
->
->  - the two "the idle task runs while nr_running > 0" cases above;
->
->  - a CPU idling with a wakeup queued by TTWU_QUEUE whose IPI has not
->    run yet;
->
->  - injected idle. play_idle_precise() sets PF_IDLE on a SCHED_FIFO
->    kthread which then loops on do_idle(), so rq->curr is not rq->idle
->    there and the old gate was false off nohz_full CPUs. Interrupts
->    taken during injected idle now run tick_nohz_irq_exit() with
->    TS_FLAG_INIDLE set. That CPU is running an idle state and needs the
->    same latch for the same reason, so this is wanted rather than merely
->    harmless, but note it reaches the idle injection users in
->    drivers/powercap/idle_inject.c, intel_powerclamp and
->    cpuidle_cooling, and is not confined to sched_ext.
->
-> One state is no longer covered: PF_IDLE is set by cpu_startup_entry()
-> and not by init_idle(), so a CPU on its idle task before that point
-> satisfied idle_cpu() but does not satisfy is_idle_task(current). Nothing
-> is lost, because TS_FLAG_INIDLE is only set inside do_idle(), so
-> tick_nohz_irq_exit() had nothing to do there, and nohz_full CPUs are
-> covered by tick_nohz_full_cpu(cpu) either way.
->
-> What keeps the new gate from giving a CPU idle accounting it should not
-> have is that tick_nohz_irq_exit() tests TS_FLAG_INIDLE itself and only
-> does the idle bookkeeping inside the idle loop.
->
-> Compile-tested in four x86_64 defconfig variants - SCHED_CORE=y with
-> NO_HZ_FULL=y, SCHED_CORE=n, NO_HZ_COMMON=n, and SCHED_CLASS_EXT=y with
-> SCHED_CORE=y and NO_HZ_FULL=y - with no new warnings at W=1.
->
-> The reproducer is a sched_ext scheduler that parks a tagged task on an
-> otherwise idle CPU for a set time. It was patch 1 of v1 and is dropped
-> from this posting at the maintainer's request; it remains in the list
-> archive, see Link.
->
-> [ ... ]
->
-> Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-> Link: https://lore.kernel.org/lkml/20261106094343.174905-2-radu.m.toader@gmail.com/
-> Signed-off-by: Radu Toader <radu.m.toader@gmail.com>
+> diff --git a/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h b/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
+> index 788e25fcd7fd..e34d5a51ae3d 100644
+> --- a/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
+> +++ b/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
 
-This isn't a bug, but the changelog carries notes about the posting itself:
+[ ... ]
 
-> The reproducer is a sched_ext scheduler that parks a tagged task on an
-> otherwise idle CPU for a set time. It was patch 1 of v1 and is dropped
-> from this posting at the maintainer's request; it remains in the list
-> archive, see Link.
+> @@ -81,4 +98,37 @@ void rb_node_free(struct rbnode __arena *rbnode);
+>
+>  int rb_integrity_check(struct rbtree __arena *rbtree);
+>
+> +/*
+> + * Lockless reads of the head and the node count. [ ... ]
+> + */
+> +static struct rbnode __arena *rb_first_lockless(struct rbtree __arena *rbtree)
+> +{
+> +	return READ_ONCE(rbtree->first);
+> +}
+> +
+> +/* -ENOENT if the tree is empty, 0 with the leftmost key in @key otherwise. */
+> +static int rb_first_key_lockless(struct rbtree __arena *rbtree, u64 *key)
+> +{
+[ ... ]
+> +static u64 rb_nr_nodes_lockless(struct rbtree __arena *rbtree)
+> +{
+> +	return READ_ONCE(rbtree->nr);
+> +}
+> +
+>  #endif /* __BPF__ */
 
-Could the notes about v1 and this posting (and perhaps the compile-test
-matrix) move below the '---' line, leaving the Link: tag to point at the
-reproducer?
+Can these three plain static functions break the libarena build?
+
+src/rbtree.bpf.c includes <libarena/rbtree.h> but calls none of them.
+Clang only exempts unused file-scope functions from -Wunused-function when
+they are declared inline, since static inline functions are assumed to be
+header helpers.  A plain static function defined in a header still gets the
+warning.
+
+The libarena objects are built with the selftests' BPF_CFLAGS, which include
+-Wall -Werror, so this would be expected to fail with something like:
+
+  rbtree.h: error: unused function 'rb_first_lockless' [-Werror,-Wunused-function]
+
+and, because the libarena skeletons are prerequisites of the test_progs
+build, it would break the whole selftests build rather than only the rbtree
+tests.
+
+The other helpers defined in libarena headers use static inline or
+static __always_inline.  Should these three be declared static inline (or
+static __always_inline, as in the earlier revision) as well?
 
 
 ---
 AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
 See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
 
-CI run summary: https://github.com/kernel-patches/bpf/actions/runs/42982351680
---===============3405028542108698645==--
+CI run summary: https://github.com/kernel-patches/bpf/actions/runs/42982574960
+--===============5514991749610700103==--
