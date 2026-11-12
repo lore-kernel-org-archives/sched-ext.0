@@ -1,77 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.198
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794485984;
-	b=kiXzo0HCSXur4w/4T3T3RT9CgVVCNj4Tn+9ESk4vEnoHMbH2CCRql8Qyis/5OMhWbn79
-	 DuMXxlkns32+vYgNMq9hd0amAKFG6dW/qMt+7wpP0WRhnP3UJpKcF74TPfJ0Seoy1P9Jo
-	 ml1DAraAtYpAsV9XxB6oEhwOZPg0yOPSj1d79QLc8CwMLet+OMnBM5iIT/hNxxJEGF1+k
-	 ctyW+m6qWAtm09Hate963FK3Mcn1NOxquxdAI9bU0BDm+LHzqRmnFLlHjWP8b9Uuzg4QZ
-	 v+2O1to6RI5I3Lh/ZQtAMUlHCqJwkn8Pt3UNF8uzQg/8nQP2mnfgO+BR0quyXEtqV4g==
+	t=1794489006;
+	b=5t98Uso89qhSmPk5FPw8Le+VTaKorBvxkr/Trsf47l50+B3J/QSwDH7K5COsI70TWcWY
+	 AnXRvd68tJCy0tirkVL+QiRipc5bOeZBKNJHI+NkavsC0wK7vujxSSM5C9M6VC+QNq5A8
+	 rMY9kXsjwp0x9FppHpYB144P92mKwMkeULvjxyPLj66qcVQ/cmia8FDMmcYhads6N8sCC
+	 pzoEgIh2qjQgxGAyrgZbcMHgalQeupGoAFxqq1GVsarhDAzCPfKnUr2brspMDCqjkoU2o
+	 vp4XG3W2LJdgo15Eaade7f6bfs1qbCoabHyDEg6K0ae4C4UKaWqrDT4GZD6/lnRUdmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794485984;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=6lBfSop40ANpomb/oJdRrK/QOYFNcTX2jfeonW12esM=;
-	b=3044Ux06vW/Sn6COWAXt9jvqlcW8ktzMQjwTj+Bxq7ad2lXuCufzaL4GkESDaaiu4an7
-	 XgNKiFSQMeVoDlwOcQtTCPzSPdFoIxXQvvU0wTTm6XXmQe4FvAYeBT/ijI03AOXEn5bEp
-	 TXuA7pGSK5WPNi+YrJkpLoBmax3FA4mQrt6A5Fw3hLuJzRfib47SuLW7kZ5DBkqV+CGZa
-	 fg2Ed+kfolMlNt3Oa7L8l4vovR8mMI8CaZO/xyz0revokLds5gSmSn/T0Wau4eLvkEvRm
-	 FR+t/hhOMua/2ilUEwBv+UiUeYz6AwWIxTD9i7M5sJID+f0MFf7DQVQYX433XVF3FIQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794489006;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=PkhB7N72lsb6VkiCQm485DylgVp4F6QNfvuw6ggAbJI=;
+	b=2LmJmDc/XMNGpcjB5t5ahkzkqKaqmau32OW2+yTlPomkmf1X9NAc/oBKfshyZ21PAswb
+	 2yUvAORhTPg3azqTAuPDHAQSffXIgrfRoOvv8ibTVn9dclTxnRNK8oQGsx2f5AfOidASi
+	 hoFLxqVliFb36nI49HA2P0keAgErfCC/vrDh4uFQHzG2y82hu/I8XPAUOxBOTooiNyM8n
+	 6RVtG5H/0WWQ7kwwmncliGwswQVr0ko9aBWKv70k0w76ZfQXSTkJFXiLem74jSwL6GOxp
+	 d3SIyaB3uUCxVUXbDpKz1l0GjmRam3NclN19X5Tl8rp01qcl36AQ5+klmLIuWNJ2aYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=R80vod0w;
-	arc=none smtp.remote-ip=90.155.92.199
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=wDqbg94j;
+	arc=none smtp.remote-ip=91.218.175.198
+Received: from mta0.migadu.com (out-198.mta0.migadu.com [91.218.175.198])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB916606A31C;
-	Thu, 12 Nov 2026 12:19:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB916606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7DF606A88C
+	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 13:10:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB7DF606A88C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=R80vod0w
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=6lBfSop40ANpomb/oJdRrK/QOYFNcTX2jfeonW12esM=; b=R80vod0w55bkVZUag495J9bzuS
-	SPEiBMIv+2WoAIFNxquYkU5bx2O/LYfO0wXypaBYnA9nm9plSzDhGDayaCyLxL1I50n1r2GBUKfV0
-	OceCfGRPOE1Bu3rVkf0iBr7eqd5egCd2Nrbta7j5qD1O0kw14/TipfzA3X23C0nVXNm95sG/fO1D2
-	H2+77rsuQGDFdbWvRqDnU6UFZuTdWBkHOAUQDZw1uqhDy2eos2++cbrzZVYIIQDuj6XBuyr3gwH+e
-	r5nIIuV5REeA/o9VOW/PWSR8kyPNUT6b5RaqMVnjZE0V5AxhW4AL4SgzRLU/aehMoTZaVH71lgrge
-	whwwRCsQ==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xRTmB-0000000AJ4o-0yz4;
-	Thu, 12 Nov 2026 12:19:35 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 6CF5C300882; Thu, 12 Nov 2026 13:19:33 +0100 (CET)
-Date: Thu, 12 Nov 2026 13:19:33 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: mingo@redhat.com, juri.lelli@redhat.com, dietmar.eggemann@arm.com,
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-	vschneid@redhat.com, kprateek.nayak@amd.com,
-	linux-kernel@vger.kernel.org, lukasz.luba@arm.com,
-	rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org,
-	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
-	sched-ext@lists.linux.dev, qyousef@layalina.io,
-	christian.loehle@arm.com, pierre.gondois@arm.com,
-	sshegde@linux.ibm.com, kayracizmeci@gmail.com,
-	tim.c.chen@linux.intel.com
-Subject: Re: [PATCH 08/20 v3] sched/fair: Add push task mechanism for fair
-Message-ID: <20261112121933.GW1813469@noisy.programming.kicks-ass.net>
-References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-9-vincent.guittot@linaro.org>
- <20261109155418.GL1779021@noisy.programming.kicks-ass.net>
- <CAKfTPtA-nrgGQGcBPqNoPk4atOHakyZK9Fk-4AsrHBrnvPXTLQ@mail.gmail.com>
- <20261111090155.GF2668564@noisy.programming.kicks-ass.net>
- <CAKfTPtBfQd5nD9jNdayGbEW_P2bDMvOm=GZ3Q-gu+O6KkQmKbA@mail.gmail.com>
- <20261112094910.GK2668804@noisy.programming.kicks-ass.net>
- <CAKfTPtBNx9Dpe4zBAzJU1iabp6riGAN8v-GP9bc5fh8NZq57hQ@mail.gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=wDqbg94j
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=tTg4Ftlr3+mzKsKjq40xt8Ey6Nx9uO7sfn51pYZJ8iw=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794489002; v=1; x=1795093802;
+ b=wDqbg94jhgqETmCRc1QoSIaJ9wCYSVCl5yWt6QW6t8Bf3+T88i0V+d2pIJWRx/U+Tg6qdqqE
+ f4in3yBSZtpOATTvKTG+SRVTFG5O9SccSz8J+9Op/QrkwYtYdH8hqeoxoTmvnGP40q8wyinCrkf
+ f75Pzq3BMeZ6SDnUMCr/82lc=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 1e6d0a9f2e3ed8e4;
+	Thu, 12 Nov 2026 13:10:01 +0000
+X-Mizu-Trace-ID: 1e6d0a9f2e3ed8e4
+X-Migadu-Flow: FLOW_OUT
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	liwanwu@kylinos.cn,
+	usama.arif@linux.dev,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH 0/6] sched_ext: fix kfunc, sub-sched, flatcg and idle-mask issues
+Date: Thu, 12 Nov 2026 21:09:28 +0800
+Message-ID: <20261112130934.563321-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -81,54 +71,60 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKfTPtBNx9Dpe4zBAzJU1iabp6riGAN8v-GP9bc5fh8NZq57hQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Nov 12, 2026 at 12:29:14PM +0100, Vincent Guittot wrote:
-> On Thu, 12 Nov 2026 at 10:49, Peter Zijlstra <peterz@infradead.org> wrote:
-> >
-> > On Thu, Nov 12, 2026 at 08:01:17AM +0100, Vincent Guittot wrote:
-> >
-> > > I don't want to take any random task from the rq but only one that is
-> > > meaningful. Why do you think having a dedicated pushable list like rt
-> > > and deadline isn't worthwhile?
-> >
-> > Well, effectively cfs_tasks *is* the pushable list. The below patch
-> > makes no effective difference, and can be argued to be an optimization.
-> > Currently every consumer of cfs_tasks goes through can_migrate_task()
-> > and every task that has nr_cpus_allowed == 1, will fail that function.
-> >
-> > The thing seems to be that you want additional constraints on your list;
-> > like dropping tasks after one push attempt. The other classes don't do
-> > that, they do the same thing cfs_tasks does and keep all runnable tasks
-> > that can migrate on the list.
-> >
-> > I'm not against adding another list per-se, I'm just struggling to
-> > understand your extra semantics, because its not _just_ another pushable
-> > list, it has some extra flavour.
-> 
-> The main case is to periodically look for another CPU when a task is
-> put back in the runnable list. I also have other cases like patch 20
-> where several short tasks end up selecting the same CPU or when the
-> short task finally can run 1st and should look for another CPU.
-> Because anything can happen between wakeup preempt and pick_task_fair
-> I don't know if the 1st item is the one that might to be pushed or how
-> much requested it
+From: Tao Cui <cuitao@kylinos.cn>
 
-I've yet to go read 20; but can we cure all this by making cfs_tasks a
-RB-tree and imposing some convenient order on it?
+Hello,
 
-Perhaps sort on {se->slice,se->exec_start}, that way the shortest slice
-that hasn't ran for the longest is first. So when all slices are equal
-length, it is similar to what we have now, but when there are multiple
-slice lengths, the shorter ones are preferred.
+This series fixes six issues in the sched_ext core, the scx_flatcg
+example scheduler and the CID helpers. The core.c fixes travel as a
+separate series.
 
-That is; instead of trimming the length of the 'list', make sure the
-right task ends up at the right place.
+The DSQ iterator kfuncs bpf_iter_scx_dsq_next() and
+bpf_iter_scx_dsq_destroy() take the user DSQ's raw spinlock but stay
+callable from tracing programs, so a tracing program running while
+that lock is already held deadlocks the machine. scx_bpf_cid_node()
+is documented to return NUMA_NO_NODE for an invalid cid but aborts
+the scheduler instead. A sub-scheduler can declare
+ops.cid_online()/cid_offline() and read its own caps from
+ops.init_cids(), but hotplug callbacks are only delivered to the root
+scheduler and the caps storage isn't up during a self-read, so the
+callbacks never run and the self-read kills the scheduler.
+scx_flatcg strands a cgroup off the rbtree on the ENQ_RACE path until
+the watchdog kills the scheduler, and the built-in idle masks aren't
+cleared on hotplug, leaving an offline CPU advertised as idle.
 
-Another option is to so an augmented list, normally sorted on
-se->exec_start, but augmented on se->slice, such that normally you pick
-in longest-not-ran order, but can also pick in shortest slice order.
+0001 rejects the two iterator kfuncs for tracing programs. 0002 makes
+scx_bpf_cid_node() a benign lookup that returns the documented
+NUMA_NO_NODE. 0003 returns -EBUSY from a pre-init self-read instead
+of killing the scheduler. 0004 rejects the hotplug callback
+declaration on sub-schedulers at load time. 0005 waits for the picker
+to resolve on ENQ_RACE instead of stranding the cgroup. 0006 clears
+the built-in idle masks in handle_hotplug() and gates the claim path
+on cpu_online().
 
+All six are verified in qemu with A/B runs against a stock kernel.
 
+Based on sched_ext/for-next (5b740a72b55c).
+
+Tao Cui (6):
+  sched_ext: Reject DSQ iterator kfuncs in tracing programs
+  sched_ext: Make scx_bpf_cid_node() a benign lookup for invalid cids
+  sched_ext: Return -EBUSY from a pre-init scx_bpf_sub_caps() read
+  sched_ext: Reject cid_online/cid_offline on sub-schedulers
+  tools/sched_ext: scx_flatcg: Don't strand a cgroup on the ENQ_RACE
+    path
+  sched_ext: Clear the built-in idle masks on CPU hotplug transitions
+
+ kernel/sched/ext/cid.c           | 10 ++++++++++
+ kernel/sched/ext/ext.c           | 24 ++++++++++++++++++++++--
+ kernel/sched/ext/idle.c          | 21 +++++++++++++++++++++
+ kernel/sched/ext/idle.h          |  1 +
+ kernel/sched/ext/internal.h      |  3 +++
+ kernel/sched/ext/sub.c           | 19 ++++++++++---------
+ tools/sched_ext/scx_flatcg.bpf.c | 17 +++++++++++++++--
+ 7 files changed, 82 insertions(+), 13 deletions(-)
+
+-- 
+2.53.0
