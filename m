@@ -1,85 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.171
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794467112;
-	b=bnvlVe5ZSdKnx1VC7xwjJDAq6Oc3zaf+Q+IMcUtTZ/HVM0aUqWWmCMsN5xD6clZaLIhg
-	 yhViS9wZ8P0Yo7GZdQIypfcVC0k3VlsHvHb5B03QuMr77b1iKNGjAhzTnWReRN83D2LZo
-	 iFunJo3lBAJcjTQzkrKunojO5ns9h9/OAtdF8+39Qth72LkDnqLKQ4+Rxjvl1fTMoDstb
-	 tkNKvs29e0FTDirLg1L+ut/gVsRtU9Cnkw5+hd2KQEJyL7cKHwfdR27qYdhARPEuisECA
-	 IvYRiPwBnX6BCZv5YFx+MkfBVkGQi1Gum+1MOJpd/aEb/9+YqdxhonLTMBpDlAbJU/Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794467112;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794468801;
+	b=B9RHusvQ7IqVMq2sJJ6/YCb36S2lCFItK3XH3x95RtF8jFni+6AjQwVpdJnU2+ESF5+C
+	 Pba7TTwLbyJWSWjAWjsRNB5U+NAu/hO45MMYbb0vBCzVCv76t05AKdJYHMVgp9emzyDv7
+	 nfpc5A1AiHNq24k4KT/v8GU3g956764I8N05NhXeKnOacjuOW9QgSt1KjiRHc7h7Pe4ZA
+	 xlAX6lVds2Ugp9ZupsFAVdv2HCB/qWT4BSw/4VNH2Dfj22lC3nMc5or8dwKR/hnIjMSoY
+	 wOiNKU+12/KImPGH0bHHri8KqZDTYYoaF0jABEEAkuuR0jIG6i8/aT29NvtZcZsvAjA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794468801;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
-	 Cc:Subject:From:To:X-Mailer:References:In-Reply-To;
-	bh=BhXIIma0KyYX4XFmWxtnNZ2v8I5eSZ8V5FzW7KusbPo=;
-	b=UPPsPVkFGa4fz81Or0vMyEjpQhbzOvdLgCLTUaLJ18RqSFSQAeNZbIEt1sye359zrJ7E
-	 GROjGrqq4UIr8GOYV/P4FNHEEmxzwM9A71/k+/Dkn80yBaTqZpVS6cR4yQw7ClhKDAnHx
-	 MsaH1kZdX5KRQcPpOTdtNYiTqlMeYWqVrquQaColS3MHDdCOP0CUi4/gukBhk9pLzrq+k
-	 pT5m49S4WXF4ygJDXFdVACizYFwDi3r8Bf9FegoBWCmohBqeUTSwEJp0OdjsJOkaBv/MG
-	 qJusUY//NNZqzfH1FUKbU1/Ougz/XlnexHQKsOy/RHjRFYQgdAi7CbfeycOE5cAJuNQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=etsalapatis.com;
-	spf=pass smtp.mailfrom=etsalapatis.com;
-	dkim=pass header.d=etsalapatis.com header.i=@etsalapatis.com header.a=rsa-sha256 header.s=google header.b=hGEIOCie;
-	arc=none smtp.remote-ip=209.85.215.171
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=1O8ABzkG8YTENTJXF3DXPni2PNJOE/E2+2rzStU6Ez8=;
+	b=fgVn3ZuWQjS0TOcbyhLT9mmmlhMV7JQNgyibsHjJ3zipTpKbeI5e4bEf8csPsD1xjMyI
+	 tgSODgjZljU4TdXhBcKlCjfnGcnXCC8cXy5UB7ydCUQ5tgTfxvRvko1I9PYIL4mRC+rKd
+	 e+YssdkDu9iEOqRAafV5WdiLgvicPs54n4DJhR4bBRgng0ESxPR3q3Hh7axu/uPyccHe0
+	 PWvC0ESCIASCs0kTrFA3hEN/ryjVKAAfsjicYs4PQoDNeLRTVP+1xsj7WtY4IDK7c1rV2
+	 NWKXBU3hkdY+u1VxSYPfoSbtn9SSplkXUerHCyCLx3pgDTzovZVF8Ld4YCTldUYnQvQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b="waAr/R5/";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655CA606A327
-	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 07:05:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 655CA606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A303B606A321
+	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 07:33:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A303B606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis.com header.i=@etsalapatis.com header.a=rsa-sha256 header.s=google header.b=hGEIOCie
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-cd6acc50b8dso1893788a12.3
-        for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 23:05:11 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=waAr/R5/
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6b750e40ce2so628933a12.0
+        for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 23:33:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794468799; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ElIS/bP1EkBoAvKPDwjaERNVG8ziJ5OTG0TEHoi+m+SlHUIdMP2ajiSyFfdulpWzxx
+         GpoYwd6P+VMbO5B49clCXNL1vaD7gjfs2MIbKlUy/fRROP7T12XDZQG0UvQgoCBZC2jc
+         Vb1BrAb/K4HAkLF8h8mH03FPHx1k10ipAkdkTBdT3Mkae98/kOOnURRyRabFOCnanBzK
+         wWzvNqpDbabD8ey8DtqIPC2TIVZMcPknhESL8qGfcWkeUKz3COFTP8ETK1nSiVal+U6W
+         Cr53nfh1mvtmrRNAgONeOaIZD5k/TSFlv/W1zIIORmnFMa0Nd/hourFSu5UVRaXkKQH7
+         XGXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=1O8ABzkG8YTENTJXF3DXPni2PNJOE/E2+2rzStU6Ez8=;
+        fh=Oh9NQcuizxG4FaFjgQdwCnB6mRxfx2x7oiyKb9xijg4=;
+        b=MlkJ2KKcrrlU1NmoPBCllfcHOfglQOOKBafeSIY904TocubXBI9Kl8XrB0tg0GyzkC
+         N32Ogm/MK8gEwDmor2H7g/PWBNasc8PHpesq3ZlkY+ycsSyQ2ex6ARiJ3w7IEmgfoKM3
+         RfshJnFuBJTni4QNjMK4krDTtKJ9OkzXzytRxQ03yin2PHC55oM8S8Rnugm3E72iRnDj
+         SzQb++CxNWkZbMrwbtneLPl7qFo3yelUBDYSW+Fbay94D/iIGyK9wJ7tPhySyVRxYh1n
+         TqRAHDuI0ghowLfzfSYe33ddbM8tlfUSjFxzolp6JLlXt0bB8X10l+teEnaV3SPzg+8m
+         6UqQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis.com; s=google; t=1794467110; x=1795071910; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=BhXIIma0KyYX4XFmWxtnNZ2v8I5eSZ8V5FzW7KusbPo=;
-        b=hGEIOCieoDZQcUjDep1hoAFZy8TwJHLsH6HgukLOJzItC4AhIdTsAdG4HZGf5jAFcv
-         lHksUhtHi4z1s3qT+rDLdXCr9NsFWvLjOYVe4RnXSglQSBbl1u21kINgv919xCDPYS8o
-         82S+O12OOKfM4Srwbd5CBtjOaccIUVQLadGI9oCphD9VC1dDghEMiivtj+F0JfykaY4b
-         L/KU92Wj9CHVXxHcEkaM312ZjzUKvs9lE6/fSzxsNrAqzvZRC8BvZa/eUltYc+kSEle1
-         nsNFgidMdzID9YUNrU3LIHCZNx3b6MTnWczSBzgIBQp+HCpgQFoAOHK/dGB+CMpuIRWy
-         3r0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794467110; x=1795071910;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=linaro.org; s=google; t=1794468799; x=1795073599; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=BhXIIma0KyYX4XFmWxtnNZ2v8I5eSZ8V5FzW7KusbPo=;
-        b=wfeAgahNoGwV/vFMQ2cTAlEGa6roWTc27R9SHwAlfii9tlFmCKBDqGcVX+KhLPCVUn
-         905TR4bI3UD7kwTw7O60NF8iXTkNHc4fvibq1aodlOdQYMfvs0yxiUhVFEIw5OMUVID3
-         p5hSA+Amf5ESIaaRVJGZNX9BgGtalCAjirsFdRjXUSumCFs/c10mWqgBLC3LqLrbHBF2
-         cBa2L8npDjbHlOwS06DSksVyN4slgjABE7RqePBuFTGSBcRz13xwUlsVnmMlnyNHAt+j
-         CQoqMTACUZlRpniEnFd1q1swRkplOJJMcMpBFQsoA47psaPNN/v2r8HkYx9IIbm0X4Qp
-         rMPg==
-X-Forwarded-Encrypted: i=1; AL+hErHMo7tTteyB6NMGhei7jbG+1hCDtwVsmfIo8yl2+/Kb3LNVrFxMHy3lYAogx6OpbPJ/uZMr36W/fg0=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9zhiI/i8DIoLjBxnIkFD6oygKlks5mrHuTrDbeGBTABr/ibmq+
-	03HzAoGpLWvJr4tRPOiOLzItEi9E+Mw/u5KBhqhjwGuUyWMuLhiNsT5tEMlDWZ+Jm48=
-X-Gm-Gg: AYBFou2ub1Q1dEZE+EHsc8Qj7hqMwb2Qg4jeyiqvKd35auOotyI2dvgLq5JS3CCa0pl
-	321vIoj9JJxBBXvgNsQH/sbNkiCaBAAxFsqQuCY4z0dkwzzNPxtulQmthlnf5A1udCqLMB8tbdD
-	twRxRypkNnCawl0dTMfD3z4bvFnioPQOP6wvqGUF1kevt+zpbMscvfMj3Nym7BL/KxG/mXQ2vie
-	UWZE/RQ5nmgkCO54FCVHrF6+mQ/FDzNN9BFYcQ8Ey0ChRxkZKpkLfyzuq+1167yBTHQ1Pl8sr1h
-	DXV5ermLRvI1ZTXTpeFneA4Oo+RWlMyrn7EUr0S9NzRVEHKIdJwhwjX5aPIZ2eNdofDoRRmEvb3
-	fqTyP7aNCEyN3hqZtHOn8JYieIMtn+rCQkMC9YRU143CwoVn5okYKn/xnOU1mKSycjKzYPTk23V
-	L3QcDua9RRCrtgxfCg0dvxfCwQDlkUpVKGSdjt25zGttkJSKy6MltQPXwL2SdM48L22h7aF4Lre
-	SrRvWgGnSL7Hyy0733SF3AbFcLOb4sVSQLmHt71D4wWm6fK5NakBggOZxzYmf4N5hgFqTXFLeZu
-	7uznWi7cz+ATASStjr7ko95FVM8JxcajtF/aXQ9oyjWqvdwtWDgrafJpbF34n5txWpjg216O7Qx
-	BCM/f5Py/Yvzr7Lcckw==
-X-Received: by 2002:a17:90b:4a12:b0:3b0:9fbf:8951 with SMTP id 98e67ed59e1d1-3b182e0346bmr4836706a91.5.1794467110421;
-        Wed, 11 Nov 2026 23:05:10 -0800 (PST)
-Received: from localhost (107-190-31-93.cpe.teksavvy.com. [107.190.31.93])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2edb6e06833sm29122375ad.68.2026.11.11.23.05.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Nov 2026 23:05:10 -0800 (PST)
+        bh=1O8ABzkG8YTENTJXF3DXPni2PNJOE/E2+2rzStU6Ez8=;
+        b=waAr/R5/KLstGYIjbEyNGeCrnrzKXLBwBt656qyP6RnGiQiej4IRfcTjFHluUeKmEy
+         4QBynXCRL9A8Py+93xEa2LTVbxutGEi0wLS9zzdgu+3C3jRg6R/947iVreKZt2S8vnIv
+         QS35dftFjXmSiMLRQCgu47ob2ogjl72MNxKppP/wLtWV8VSKdUVeH1rJ0cgbdow9MCEc
+         Jt1yTuaIWe0VldP0AuuVKffwz+0hBnentIBfyWms0Pcfi6tCPSihZTSrAVaEXPGZi2bm
+         26RBoC/KMc9N5XUnVp58za8QVsyBFcOAnTkPyyBzNg9vyZtR6V8xE7jzm+VYFMq0dxUO
+         iKNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794468799; x=1795073599;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=1O8ABzkG8YTENTJXF3DXPni2PNJOE/E2+2rzStU6Ez8=;
+        b=zgKzkyJsygDfDbe8jlFrLvlViHzvbVri8uiECYykSEMN2IA0y6PwU2xYNSqVVM7+ql
+         P61MJUH16H0PWMVEvlQIplCQ0EmxrUa60MAhAQQsdBifUqA1JuWyNbMErevlD4TPp5tp
+         IS4BMMS9YGLRIraLUVvMqcDxbObjbLRJaUnCyp7JtzaZul7cYu/mRKrJIzVl3kQBBlg2
+         j+eASQXsnU7gmr6b8NNdP3CKsRKwHhVAu53NRod+Awdl0k0Mo75TJvjm0ikCAk+UFCD1
+         VzCygLr7YRw8dGa87m49Ss12YHKtB8hoQQ72fJI7lknz+XxwVWVFvTnkDB1B4UGJeWs3
+         Vd4g==
+X-Forwarded-Encrypted: i=1; AL+hErHgCm0P/NJ8VAj/COKd/dV3gYUfyrJSJzEG7aCAI6KlGjD8SsK+WqTrZG+fa++2fg2EVzL2nyPbcTk=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/tXCrzEiix009Hk6kYgTvV36KECBOICIZat+pEQ2otGnaHOZ/i
+	ZN8Nn7evi7yDJwsGKB3CcNwQmwot3d5Bx7qmabCSiw/Cfo66S2d1TolP+SJDrf+lEVOzDdEEADf
+	HoVVLwcXi6lePIV7+lt8jbHfl1C5CAc2yRkM2P0NzxZD9sQ71fvK4cbE=
+X-Gm-Gg: AYBFou3+iSN9aWoMnVADNNLyXB8tw4DJHBLYNew2iVZ1lYVgIK5ajP5//Qw/FXTX1Mn
+	tHQ4g5QX20sk92puq8GJYze1LOv4nWY7FQrzp75+Kn6w2/FtHd5/DxHq+DZrBwvDEjSKvCgY4nd
+	kE2BN7JfJnSisnsj9wuY+Z1Pbo2wuKxApYIYdgcm8vPar2YXYPyY9tvh19QsjEK+Omwz5N2jr8i
+	NDARwqDnWlYVjsiRbmwjEsJPy74ZyVhbXJSkAkjE8e3X/nQtsKApNuMWR6MjyLD5g2zBek3X7Nq
+	iosaJs/XgxADf9mg9QhWKh4A/ydkzSIVWGKAc9m4vI47LiA0HskYzgYVR4wpmO7Rg5qUN1NBR1b
+	Y+8VP6I0Eyzfptxtx58Btr8uaTXtmfqU2Bt5gXRHv1tkdpK/zYlkt7woAkgz77sUvKV0P3dFjo6
+	EKflpZE7q3LhtPxIw=
+X-Received: by 2002:a05:6402:1514:b0:6b5:e088:eb92 with SMTP id
+ 4fb4d7f45d1cf-6b7777064a4mr2609898a12.34.1794468798919; Wed, 11 Nov 2026
+ 23:33:18 -0800 (PST)
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -88,96 +103,53 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 12 Nov 2026 07:05:07 +0000
-Message-Id: <DMT1I0RRNARI.1LTPB6JPWY4E9@etsalapatis.com>
-Cc: "Martin KaFai Lau" <martin.lau@linux.dev>, "Song Liu" <song@kernel.org>,
- "Yonghong Song" <yonghong.song@linux.dev>, "Jiri Olsa" <jolsa@kernel.org>,
- "Ihor Solodrai" <ihor.solodrai@linux.dev>, <david.dai@linux.dev>, "Gavin
- Guo" <gavinguo@igalia.com>, <bpf@vger.kernel.org>,
- <sched-ext@lists.linux.dev>, <linux-kselftest@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <kernel-dev@igalia.com>
-Subject: Re: [PATCH bpf-next v3 0/3] selftests/bpf: libarena: Add
- ordered-walk and lockless-peek support to the rbtree
-From: "Emil Tsalapatis" <emil@etsalapatis.com>
-To: "Changwoo Min" <changwoo@igalia.com>, "Alexei Starovoitov"
- <ast@kernel.org>, "Daniel Borkmann" <daniel@iogearbox.net>, "Andrii
- Nakryiko" <andrii@kernel.org>, "Eduard Zingerman" <eddyz87@gmail.com>,
- "Kumar Kartikeya Dwivedi" <memxor@gmail.com>, "Shuah Khan"
- <shuah@kernel.org>, "Emil Tsalapatis" <emil@etsalapatis.com>
-X-Mailer: aerc 0.21.0
-References: <20261111100951.230730-1-changwoo@igalia.com>
-In-Reply-To: <20261111100951.230730-1-changwoo@igalia.com>
+MIME-Version: 1.0
+References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+ <20261106151947.3991524-3-vincent.guittot@linaro.org> <f0bdf36b-4453-4d2f-b82c-85d1d62c5f78@amd.com>
+In-Reply-To: <f0bdf36b-4453-4d2f-b82c-85d1d62c5f78@amd.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
+Date: Thu, 12 Nov 2026 08:33:05 +0100
+X-Gm-Features: AclHuK92tODV1WML6aevk1idgLovQjoH53-Z16DSkLaGxCj8dkYMqR5c5OIoS3U
+Message-ID: <CAKfTPtBT1anicEwxsFRNbO4FAmfmpAWT0q-EyHqW2EHgJeORUA@mail.gmail.com>
+Subject: Re: [PATCH 02/20 v3] sched/eevdf: Reset lag at wakeup when prev CPU
+ has been idle
+To: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, 
+	mgorman@suse.de, vschneid@redhat.com, linux-kernel@vger.kernel.org, 
+	lukasz.luba@arm.com, rafael@kernel.org, linux-pm@vger.kernel.org, 
+	tj@kernel.org, void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
+	sched-ext@lists.linux.dev, qyousef@layalina.io, christian.loehle@arm.com, 
+	pierre.gondois@arm.com, sshegde@linux.ibm.com, kayracizmeci@gmail.com, 
+	tim.c.chen@linux.intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed Nov 11, 2026 at 10:09 AM UTC, Changwoo Min wrote:
-> A sched_ext scheduler can build a task queue on libarena's rbtree, keyed
-> by vtime, in place of a vtime-ordered DSQ. Such a queue needs three thing=
-s
-> the tree lacks. This series adds them:
+On Wed, 11 Nov 2026 at 11:04, K Prateek Nayak <kprateek.nayak@amd.com> wrote:
 >
-> - Serve equal keys in insertion order, as vtime-ordered DSQs do (1/3).
-> - Add rb_next(), so that a consumer can walk past tasks it cannot run
->   in key order (2/3).
-> - Cache the leftmost node and the node count, so that other CPUs can
->   peek at the head and the length without the writer's lock, like
->   scx_bpf_dsq_peek() and scx_bpf_dsq_nr_queued(). Add rb_init() and
->   rb_fini() for a tree embedded in another object (3/3).
+> Hello Vincent,
 >
-> Each patch adds selftests, which run with:
+> On 11/6/2026 8:49 PM, Vincent Guittot wrote:
+> > @@ -8376,6 +8383,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
+> >
+> >       dequeue_hierarchy(p, flags);
+> >
+> > +     if (!(flags & DEQUEUE_SAVE) && !cfs_rq->h_nr_queued)
 >
->   $> ./test_progs -t 'libarena/test_rbtree*'
+> Should this also consider DEQUEUE_CLASS which will move the task out
+> of fair class and leave the rq idle? setscheduler just adds it with
+> DEQUEUE_SAVE when moving classes.
 
-Hi Changwoo,
-
-feel free to keep my:
-
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-
-(though I didn't add them myself to v1's patches 2 and 3,
-I assume transcription error?)
+Yes you're right, we have to update idle_seq when
+DEQUEUE_SLEEP or DEQUEUE_CLASS
 
 >
-> Changes in v3:
-> - Make the lockless readers static inline. A plain static function in
->   a header fails -Wunused-function under -Werror in a file that does
->   not call it (bot+bpf-ci, 3/3).
+> > +             cfs_rq->idle_seq++;
+> > +
+> >       if (sched_feat(PLACE_REL_DEADLINE) && !task_sleep) {
+> >               se->deadline -= se->vruntime;
+> >               se->rel_deadline = 1;
 >
-> Changes in v2:
-> - Drop the comment on the insert helper and keep the name
->   rbnode_least_upper_bound() (Emil, 1/3).
-> - Move rb_next() before the caching patch and into rbtree.bpf.c with the
->   other traversal functions (Alexei, Emil, 2/3).
-> - Hand the head to its successor at the top of rb_node_remove(), before
->   an RB_ALLOC tree frees the node, so that a lockless reader never sees a
->   freed head. This drops the wrapper, was_first and the rename to
->   rbnode_remove() (Alexei, 3/3).
-> - Drop the cache line alignment of the lockless fields, which showed no
->   measurable benefit (Alexei, 3/3).
-> - Rename the lockless readers to rb_first_lockless(),
->   rb_first_key_lockless() and rb_nr_nodes_lockless(), and document that
->   a caller that dereferences the head must keep the node valid itself
->   (Emil, 3/3).
-> - Drop __always_inline from static functions (Emil, 3/3).
-> - Add Reviewed-by tags from Alexei and Emil.
-> - Rebase on bpf-next.
+> --
+> Thanks and Regards,
+> Prateek
 >
-> v2: https://lore.kernel.org/bpf/20261111073416.203153-1-changwoo@igalia.c=
-om/
-> v1: https://lore.kernel.org/bpf/20261028060046.549097-1-changwoo@igalia.c=
-om/
->
-> Changwoo Min (3):
->   selftests/bpf: libarena: Order equal rbtree keys FIFO
->   selftests/bpf: libarena: Add rb_next()
->   selftests/bpf: libarena: Cache the rbtree's leftmost node and count
->
->  .../bpf/libarena/include/libarena/rbtree.h    |  57 +++-
->  .../bpf/libarena/selftests/test_rbtree.bpf.c  | 303 ++++++++++++++++++
->  .../selftests/bpf/libarena/src/rbtree.bpf.c   | 120 +++++--
->  3 files changed, 457 insertions(+), 23 deletions(-)
->
->
-> base-commit: 0fb18ce8a2e9de830433923cf65838933d615359
-
