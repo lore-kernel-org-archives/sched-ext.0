@@ -1,100 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.49
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794468801;
-	b=B9RHusvQ7IqVMq2sJJ6/YCb36S2lCFItK3XH3x95RtF8jFni+6AjQwVpdJnU2+ESF5+C
-	 Pba7TTwLbyJWSWjAWjsRNB5U+NAu/hO45MMYbb0vBCzVCv76t05AKdJYHMVgp9emzyDv7
-	 nfpc5A1AiHNq24k4KT/v8GU3g956764I8N05NhXeKnOacjuOW9QgSt1KjiRHc7h7Pe4ZA
-	 xlAX6lVds2Ugp9ZupsFAVdv2HCB/qWT4BSw/4VNH2Dfj22lC3nMc5or8dwKR/hnIjMSoY
-	 wOiNKU+12/KImPGH0bHHri8KqZDTYYoaF0jABEEAkuuR0jIG6i8/aT29NvtZcZsvAjA==
+	t=1794468979;
+	b=ZOOcMZEFJm5wAk4mjZfJC0LC/WLz0lqXARa2eUG6x7mOtBA/nDcfviyJDZFcIwrLNeAO
+	 C2yihontOP8UmvcJzUPZx+vCIGvCFvLW9RDy9t1EITxiTVez7V3y/euabBpY5Ez8C2UrI
+	 1BgU6t6feY3HLryFay/XAuImrsOpHK4DyLQ9QbvDwom7ttzDP/LRWglPlYZgOlhkeJj0m
+	 7f8a29S+k7AVOIjoyHg9lMIKEc0NWHUBheDQPfaEV/ZOiUH94DDs3pZasBfd6Ki0IyY/S
+	 4d/xAk8V6xXTfFU1XdWQ08v/cFOFth64lkvdYNsrTEVG5LKFf+DvlzejzdL94YT6qiw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794468801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794468979;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=1O8ABzkG8YTENTJXF3DXPni2PNJOE/E2+2rzStU6Ez8=;
-	b=fgVn3ZuWQjS0TOcbyhLT9mmmlhMV7JQNgyibsHjJ3zipTpKbeI5e4bEf8csPsD1xjMyI
-	 tgSODgjZljU4TdXhBcKlCjfnGcnXCC8cXy5UB7ydCUQ5tgTfxvRvko1I9PYIL4mRC+rKd
-	 e+YssdkDu9iEOqRAafV5WdiLgvicPs54n4DJhR4bBRgng0ESxPR3q3Hh7axu/uPyccHe0
-	 PWvC0ESCIASCs0kTrFA3hEN/ryjVKAAfsjicYs4PQoDNeLRTVP+1xsj7WtY4IDK7c1rV2
-	 NWKXBU3hkdY+u1VxSYPfoSbtn9SSplkXUerHCyCLx3pgDTzovZVF8Ld4YCTldUYnQvQ==
+	bh=63wXmcQtAwyCVNpBcdPY82MrHRAWOWViDW8V2M+GO/8=;
+	b=y5QfX0Ve+448bhn7TlqZccJR3TpZjkXEyb9svX37krqZuBdyyS6vz74DjqClrRP268H8
+	 5+URrHMtqbm16SOsRB1hOZWSqxoWh5+v7gW/Q64Fh+THTaAprG3OGfQHUdTCx3reo/ojz
+	 zX8DEviqJcOu4d6pDUaFLxaxaLdUyM7Uhk4twDj5AKR9gelAgQ53M6+P+LjPUy4sqY9pJ
+	 yvY783MFvYEJi3Pzf5lv12j8c9iAzA599Yo/9btoqiVf7O321m9A8lJM7gJL6DOKDaCRA
+	 eKD02zyz7zigpTuUmzE0+J5yazlveBAfkAHTkXGDs2pYiX9KiSt5TvQgal8/FxgvSWQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linaro.org;
 	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b="waAr/R5/";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=S6bxz2Y0;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.49
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A303B606A321
-	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 07:33:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A303B606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5235606A31C
+	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 07:36:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E5235606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=waAr/R5/
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6b750e40ce2so628933a12.0
-        for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 23:33:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794468799; cv=none;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=S6bxz2Y0
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c50715c2757so19683566b.3
+        for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 23:36:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794468977; cv=none;
         d=google.com; s=arc-20260327;
-        b=ElIS/bP1EkBoAvKPDwjaERNVG8ziJ5OTG0TEHoi+m+SlHUIdMP2ajiSyFfdulpWzxx
-         GpoYwd6P+VMbO5B49clCXNL1vaD7gjfs2MIbKlUy/fRROP7T12XDZQG0UvQgoCBZC2jc
-         Vb1BrAb/K4HAkLF8h8mH03FPHx1k10ipAkdkTBdT3Mkae98/kOOnURRyRabFOCnanBzK
-         wWzvNqpDbabD8ey8DtqIPC2TIVZMcPknhESL8qGfcWkeUKz3COFTP8ETK1nSiVal+U6W
-         Cr53nfh1mvtmrRNAgONeOaIZD5k/TSFlv/W1zIIORmnFMa0Nd/hourFSu5UVRaXkKQH7
-         XGXQ==
+        b=rbWu7Zm0Fbx2f+xlchOienHi9LNiua55h1HuFiN/x8KuSVGvPZsXJxI3aujLkPkWrn
+         +YiDzB5/ml2zdtggZAvQ0lPZRJ5A5dGO+zb/s6ElNBLs5eoC6usAWmMeBONvuSKJ+YZg
+         5I2EP8t9G1R62p3WU3FaVXPpTAN1FSkKd+Gl/2MzkvVCqPpx+OPUSwgAfdI+2qpa4kly
+         mHSDYJck3+qa8bBnwK3nTOQ3AMKrU+C1OOKOeul+ADEz3Vz0Aa67olhT0GKaUelVoIYT
+         eLpdEvX8ZhJ4GlxXGw7Q/ULa3VQT1eId41s6wgY/J9TvKtBW4lbCeOsyXP/ADTLTGdAv
+         l7RA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=1O8ABzkG8YTENTJXF3DXPni2PNJOE/E2+2rzStU6Ez8=;
-        fh=Oh9NQcuizxG4FaFjgQdwCnB6mRxfx2x7oiyKb9xijg4=;
-        b=MlkJ2KKcrrlU1NmoPBCllfcHOfglQOOKBafeSIY904TocubXBI9Kl8XrB0tg0GyzkC
-         N32Ogm/MK8gEwDmor2H7g/PWBNasc8PHpesq3ZlkY+ycsSyQ2ex6ARiJ3w7IEmgfoKM3
-         RfshJnFuBJTni4QNjMK4krDTtKJ9OkzXzytRxQ03yin2PHC55oM8S8Rnugm3E72iRnDj
-         SzQb++CxNWkZbMrwbtneLPl7qFo3yelUBDYSW+Fbay94D/iIGyK9wJ7tPhySyVRxYh1n
-         TqRAHDuI0ghowLfzfSYe33ddbM8tlfUSjFxzolp6JLlXt0bB8X10l+teEnaV3SPzg+8m
-         6UqQ==;
+        bh=63wXmcQtAwyCVNpBcdPY82MrHRAWOWViDW8V2M+GO/8=;
+        fh=du3/rHBdPGHLw661EHjga17KoF+IrSB/Nfp7VulGF4k=;
+        b=Tb/2+Nfu6onNOe3TTpwuvoBI/q9O8rNJOeCQ5oZq1PkNTRe+klDZFi6EJLvFdt1Fyp
+         7+yBCjy/+Q5mO1HQRmdHhkVoGpkoUC1igv58A3tjJduUrt4kQp6RfflVZq/J0nXCer2A
+         s2ZQaFmFC0/TD6e1DuIGdfTD4s+PLsFwy8cdrPiLBf1SCzC3+gpasdWtQ0V5bqaAhdVW
+         khubu2wrIBLWZwEWQNyBJI/J4EiHAgHlLJONvO+Ivgz/Bh6lk1nu/Hz2dGK2KBY/kd4j
+         EvRo9hM5mJWi1Qi3eLhz/YlhnlgSjpUclGmjoe0txLE3MgHYhtc2fcI8u6E6lrsoDUIZ
+         nu6w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794468799; x=1795073599; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1794468977; x=1795073777; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=1O8ABzkG8YTENTJXF3DXPni2PNJOE/E2+2rzStU6Ez8=;
-        b=waAr/R5/KLstGYIjbEyNGeCrnrzKXLBwBt656qyP6RnGiQiej4IRfcTjFHluUeKmEy
-         4QBynXCRL9A8Py+93xEa2LTVbxutGEi0wLS9zzdgu+3C3jRg6R/947iVreKZt2S8vnIv
-         QS35dftFjXmSiMLRQCgu47ob2ogjl72MNxKppP/wLtWV8VSKdUVeH1rJ0cgbdow9MCEc
-         Jt1yTuaIWe0VldP0AuuVKffwz+0hBnentIBfyWms0Pcfi6tCPSihZTSrAVaEXPGZi2bm
-         26RBoC/KMc9N5XUnVp58za8QVsyBFcOAnTkPyyBzNg9vyZtR6V8xE7jzm+VYFMq0dxUO
-         iKNA==
+        bh=63wXmcQtAwyCVNpBcdPY82MrHRAWOWViDW8V2M+GO/8=;
+        b=S6bxz2Y0S+nouLOKdM7yllao9bckgvSlxz8yi4naLbtplqTac6vLDs96VKW4IcuObz
+         yE1d3bjl+Zl5zkGzEx86enthcPeohHjn6FA5rKj/9958J9k8ZqrE9032B8Y/okppAaGo
+         IFrajKjJsChCGwM5GnCsB3dvXbghct5/vNcD6d2cwZlSBPR6V2M9MEg+wLmBSbafrAv8
+         hGedrVZsT4V5pDlz5GbIlZ8Zxg8LCo670/RwTGuwGF+RZ1YbmZ3XPnDnxmF1dF1RcTiP
+         bTDFwZ0fnISZhn3eCCMVVzbnIIfqAGwlQ4GcvQPQY6VMENvlF1IexsAIuchGYgBfGxPS
+         rKZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794468799; x=1795073599;
+        d=1e100.net; s=20260707; t=1794468977; x=1795073777;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=1O8ABzkG8YTENTJXF3DXPni2PNJOE/E2+2rzStU6Ez8=;
-        b=zgKzkyJsygDfDbe8jlFrLvlViHzvbVri8uiECYykSEMN2IA0y6PwU2xYNSqVVM7+ql
-         P61MJUH16H0PWMVEvlQIplCQ0EmxrUa60MAhAQQsdBifUqA1JuWyNbMErevlD4TPp5tp
-         IS4BMMS9YGLRIraLUVvMqcDxbObjbLRJaUnCyp7JtzaZul7cYu/mRKrJIzVl3kQBBlg2
-         j+eASQXsnU7gmr6b8NNdP3CKsRKwHhVAu53NRod+Awdl0k0Mo75TJvjm0ikCAk+UFCD1
-         VzCygLr7YRw8dGa87m49Ss12YHKtB8hoQQ72fJI7lknz+XxwVWVFvTnkDB1B4UGJeWs3
-         Vd4g==
-X-Forwarded-Encrypted: i=1; AL+hErHgCm0P/NJ8VAj/COKd/dV3gYUfyrJSJzEG7aCAI6KlGjD8SsK+WqTrZG+fa++2fg2EVzL2nyPbcTk=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/tXCrzEiix009Hk6kYgTvV36KECBOICIZat+pEQ2otGnaHOZ/i
-	ZN8Nn7evi7yDJwsGKB3CcNwQmwot3d5Bx7qmabCSiw/Cfo66S2d1TolP+SJDrf+lEVOzDdEEADf
-	HoVVLwcXi6lePIV7+lt8jbHfl1C5CAc2yRkM2P0NzxZD9sQ71fvK4cbE=
-X-Gm-Gg: AYBFou3+iSN9aWoMnVADNNLyXB8tw4DJHBLYNew2iVZ1lYVgIK5ajP5//Qw/FXTX1Mn
-	tHQ4g5QX20sk92puq8GJYze1LOv4nWY7FQrzp75+Kn6w2/FtHd5/DxHq+DZrBwvDEjSKvCgY4nd
-	kE2BN7JfJnSisnsj9wuY+Z1Pbo2wuKxApYIYdgcm8vPar2YXYPyY9tvh19QsjEK+Omwz5N2jr8i
-	NDARwqDnWlYVjsiRbmwjEsJPy74ZyVhbXJSkAkjE8e3X/nQtsKApNuMWR6MjyLD5g2zBek3X7Nq
-	iosaJs/XgxADf9mg9QhWKh4A/ydkzSIVWGKAc9m4vI47LiA0HskYzgYVR4wpmO7Rg5qUN1NBR1b
-	Y+8VP6I0Eyzfptxtx58Btr8uaTXtmfqU2Bt5gXRHv1tkdpK/zYlkt7woAkgz77sUvKV0P3dFjo6
-	EKflpZE7q3LhtPxIw=
-X-Received: by 2002:a05:6402:1514:b0:6b5:e088:eb92 with SMTP id
- 4fb4d7f45d1cf-6b7777064a4mr2609898a12.34.1794468798919; Wed, 11 Nov 2026
- 23:33:18 -0800 (PST)
+        bh=63wXmcQtAwyCVNpBcdPY82MrHRAWOWViDW8V2M+GO/8=;
+        b=AEQCIDk8MRRnApveTMGpcj8rpQVFI088AL48WdE9KIgD4k/IcTc7qnSiRDYZJQhx1O
+         5J4reYb4FWkd4EIWeLQPGuYwiq7UFHv7UeNeZJZ0GwYLLiMyHRcjU52u3qV50C5jPVSc
+         a3qMOTC1sXgbIOEfNS90L+iSQgDcqYpRkFTd/WKSIrb4+/5R6iG/z2pOoMjzW/HDR9It
+         eSvrTJHitPMSTHnRrSEvlV3nw/qqvBLeH6QVZlxa+1WV5xviFofNXthcr0o1khC+WQwk
+         +LTRPz4dumiZpDUnf3V1yDiujRNwKSdC1qat3TGcAXKXh0KrbE6RvRJPS7g0R8TlJsrF
+         Elnw==
+X-Forwarded-Encrypted: i=1; AL+hErEMbaimMrSNBG3XFqqWgJE8jJBO+RdrkuLDNeu0p2YIIl0Z7t3FV63kPnbheAYVz6Yb6LeJGD6SUmc=@lists.linux.dev
+X-Gm-Message-State: APuU4Z97t4BxL9KFzQ1M9cDSwOmOgRJlSLELFVcYN/Ak3YSfUgNVHVgU
+	Xoxm68QCcJnLGx0NsKXv336ixixlE7UUFRnD/BXOuwOodEQbXXwwbclCTZSF3NWqK/d4rjVccmj
+	67R/X5I4UBKN15MzPlVyiMmNSD5AQQhQC9lR/WxQSWQ==
+X-Gm-Gg: AYBFou2pI+pS4zTWEo5lnYDtgPQ3ZmL1c2+JyeYPrP/V8sYBs7a5Z0VKPbC4jKxNjF6
+	ri90tVG844QyeR/v0XyYTqVszbElwJ5LgRRYGs2K9wg5nc1/zCqbjSLvRuLUbNzcgTyuxvLxzx3
+	8wgNmCbQFc5ci+4xxjZ7kQ8aKXw3UMFB1d9+oETHASUdU9VVy8gTW7IDw1oFcuqxtq9QzuvPiH3
+	3eyNLolpyTXJE/EWB9k+FkChN/YJB8m8DsHPZ2TJniD05spJaHgOH1hzJqAeqA13QpPKKvdujbD
+	n6x7MD2XVNTa8CG78QDSabqv17V8v6B+wXU7maRL3P3cTIbTIa1cSfyoOP3BwEza+3HFxePzfkP
+	sikJakpUW/qfYtbe0KOlTYFdx+N7xv6eJL4hma0nEqBBdFDsELObGhLvmXK2mT98Pa8pfiA==
+X-Received: by 2002:a17:906:c14f:b0:c2d:bd87:7fa7 with SMTP id
+ a640c23a62f3a-c5066aeaa78mr354986666b.24.1794468977239; Wed, 11 Nov 2026
+ 23:36:17 -0800 (PST)
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -105,51 +104,73 @@ List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-3-vincent.guittot@linaro.org> <f0bdf36b-4453-4d2f-b82c-85d1d62c5f78@amd.com>
-In-Reply-To: <f0bdf36b-4453-4d2f-b82c-85d1d62c5f78@amd.com>
+ <20261106151947.3991524-9-vincent.guittot@linaro.org> <20261109155418.GL1779021@noisy.programming.kicks-ass.net>
+ <CAKfTPtA-nrgGQGcBPqNoPk4atOHakyZK9Fk-4AsrHBrnvPXTLQ@mail.gmail.com>
+ <20261111090155.GF2668564@noisy.programming.kicks-ass.net> <CAKfTPtBfQd5nD9jNdayGbEW_P2bDMvOm=GZ3Q-gu+O6KkQmKbA@mail.gmail.com>
+In-Reply-To: <CAKfTPtBfQd5nD9jNdayGbEW_P2bDMvOm=GZ3Q-gu+O6KkQmKbA@mail.gmail.com>
 From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Thu, 12 Nov 2026 08:33:05 +0100
-X-Gm-Features: AclHuK92tODV1WML6aevk1idgLovQjoH53-Z16DSkLaGxCj8dkYMqR5c5OIoS3U
-Message-ID: <CAKfTPtBT1anicEwxsFRNbO4FAmfmpAWT0q-EyHqW2EHgJeORUA@mail.gmail.com>
-Subject: Re: [PATCH 02/20 v3] sched/eevdf: Reset lag at wakeup when prev CPU
- has been idle
-To: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, 
-	mgorman@suse.de, vschneid@redhat.com, linux-kernel@vger.kernel.org, 
-	lukasz.luba@arm.com, rafael@kernel.org, linux-pm@vger.kernel.org, 
-	tj@kernel.org, void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
+Date: Thu, 12 Nov 2026 08:36:05 +0100
+X-Gm-Features: AclHuK9R2Yb38ySYLoMWNSvC_iqj6wysaQZeAeLf45aT6e-W3q4IhehrciXpto0
+Message-ID: <CAKfTPtDfxesgZJ=ttSs3fqKwaWY8yt0CNnB31g2oS5j5zm5dKw@mail.gmail.com>
+Subject: Re: [PATCH 08/20 v3] sched/fair: Add push task mechanism for fair
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: mingo@redhat.com, juri.lelli@redhat.com, dietmar.eggemann@arm.com, 
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, vschneid@redhat.com, 
+	kprateek.nayak@amd.com, linux-kernel@vger.kernel.org, lukasz.luba@arm.com, 
+	rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org, 
+	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
 	sched-ext@lists.linux.dev, qyousef@layalina.io, christian.loehle@arm.com, 
 	pierre.gondois@arm.com, sshegde@linux.ibm.com, kayracizmeci@gmail.com, 
 	tim.c.chen@linux.intel.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 11 Nov 2026 at 11:04, K Prateek Nayak <kprateek.nayak@amd.com> wrote:
+On Thu, 12 Nov 2026 at 08:01, Vincent Guittot
+<vincent.guittot@linaro.org> wrote:
 >
-> Hello Vincent,
->
-> On 11/6/2026 8:49 PM, Vincent Guittot wrote:
-> > @@ -8376,6 +8383,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
+> On Wed, 11 Nov 2026 at 10:02, Peter Zijlstra <peterz@infradead.org> wrote:
 > >
-> >       dequeue_hierarchy(p, flags);
+> > On Mon, Nov 09, 2026 at 05:14:39PM +0100, Vincent Guittot wrote:
+> > > On Mon, 9 Nov 2026 at 16:54, Peter Zijlstra <peterz@infradead.org> wrote:
 > >
-> > +     if (!(flags & DEQUEUE_SAVE) && !cfs_rq->h_nr_queued)
+> > > > Can't we add the 'p->nr_cpus_allowed > 1' condition to rq->cfs_tasks and
+> > > > use that, rather than adding yet another list? I mean, its used for
+> > > > migration, so excluding all pinned tasks actually makes sense.
+> > >
+> > > rq->cfs_tasks can be quite large (we even take a breath during LB)
+> > > whereas this list should be 1 task most of the time (except during
+> > > wakeup)
+> >
+> > Like in the other email; detach_one_task() is also just one task :-)
 >
-> Should this also consider DEQUEUE_CLASS which will move the task out
-> of fair class and leave the rq idle? setscheduler just adds it with
-> DEQUEUE_SAVE when moving classes.
+> but in some case I want to do more than one like the case described in patch 20
+>
+> >
+> > > > Also, I'm still not sure why we need a plist. The rq->cfs_tasks list is
+> > > > MRU per set_next_task_fair() moving the current task to the front.
+> > >
+> > > The plist was only to reuse struct plist_node pushable_tasks; in
+> > > struct task that is already there for RT
+> >
+> > So while plist makes sense for RT, it doesn't make sense for fair or DL.
+> > Notably for DL we keep pushable tasks in a RB tree.
 
-Yes you're right, we have to update idle_seq when
-DEQUEUE_SLEEP or DEQUEUE_CLASS
+I wanted to add tasks srted by slice in a future step but i can add it
+to the next version
 
 >
-> > +             cfs_rq->idle_seq++;
-> > +
-> >       if (sched_feat(PLACE_REL_DEADLINE) && !task_sleep) {
-> >               se->deadline -= se->vruntime;
-> >               se->rel_deadline = 1;
+> I can use a rb tree as well my gaol was only to reuse the
+> pushable_tasks as those pushable list are exclusive
 >
-> --
-> Thanks and Regards,
-> Prateek
+> >
+> > > > So reserve iterating rq->cfs_tasks, skipping blocked and current and
+> > > > such, should get you much the same over-all.
+> > >
+> > > Yes but I was afraid by the overhead of iterating this list which can
+> > > be very long; We have already seen email about bug with thousands of
+> > > tasks queued on the rq
+> >
+> > Right, so just take one of the tail and stop there.
 >
+> I don't want to take any random task from the rq but only one that is
+> meaningful. Why do you think having a dedicated pushable list like rt
+> and deadline isn't worthwhile?
