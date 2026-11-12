@@ -1,51 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.3
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.9
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794489014;
-	b=Ke9JwhUZOMcDW5jU7CPGa0Lhla2CmxPW5UEl+hQfbyHRSIa8nLw/W+deC/vHy0GPckBA
-	 1SSwkO21NiEs0dyhBDkjr69d6xKGMfp3+5D4gUIB+qMDrjO4c5pM5oxVZ8oTGgOTOce8s
-	 AnlGQB0Qz7DTVho46++yQR8WMVxAswxzi8ww+TY7dmfycR6fAZp30v2CZ0AlFtaC1zJ4J
-	 X5YvnEZR5rUI97sBl8MZQ+Bwgn6n2Am+dlgvdZPiTtSkjDY/MdAmV0BU6WSX39Do5dGnH
-	 XJQJjCiUjBM+8ScyPoIZ0Mx21UBfpX6JSekS+WSAGzRNRIQ4EoPYE49yVk27HW19dhA==
+	t=1794489023;
+	b=lW64g6MtniYpY286ZVKsaAqVNJslY9/khywpr8AwL14fb32Mv1o8rS+fiFZlRIXPfNof
+	 eq11yfK39Luyk32SFQs88IPzQ5OFGnlP8vED1oUp6TDm5gTRfhpBxW9NFEp83pOYI6Toz
+	 X4ldus2Sy/HhVv7ZJIRedG18Wpt1FLddF4Xro+q7kxk87fSgn3PtZbie/AooyeXbtejcr
+	 vjonkV51vnDg6n5HXJMUrozJm+Okg0jjs0OdFBOx+zbxuqJwb4Ez0Ip3jurrJK33CYLfc
+	 JZQiVV8nvhl/rG3xiyJ4fFBlR8u85h+WXbhKdeeursVY6Pkt698oFMUI67DjAk/iZAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794489014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794489023;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=VZ5eT6B75LMWy1ddL3HEmfKOZCeeu08WJvkuJTYb4oI=;
-	b=2bB4sjXYFtbrsB0gbsTdW6FotqiB5OMqeJ5c6K+IS/0A5K5LO8+TL0bYV6Ei9Xg2Rng5
-	 q2tw7YvmiK1b2Cm02dhkLjvdZzWR+OjU1d8ZSQJ5ctf99P52FEOtrYDezZXOierzbJ9yI
-	 8bdweIrOKsBTRmgmc7W0JdtRbcNjfw0n10Bh8P4WnZ9wW1eiJq860ZhnubtsmdXEREY0m
-	 n1fnxnV74+HaG8JRJJ7eBccEAmpfzI0aMLD5j0vbsJDF6DUdJXFXViXEgju2TY1NtaHUj
-	 MwrwkJEZ6NnR+9LKI7je2UyeuilbCv4hF4VBAgiOfjQ6olF0aovinWjmQX0kZAzPReg==
+	bh=/ScJysAfHU/3UcDNAAYnWlZ68uEE/9WuK+T2tCuHaVA=;
+	b=bN2KXCuE4yRWjVSbVPz9ym/ab9kgp13JUWKKkR6v8S/FRoVAZ0fuJYoTHbuv2mPGicFc
+	 ySaaBGOtQ+n4DzKaJb0ykMA4J1c5azmTZihKEht7xZV9J/8hH2k1K0EkV9sdmjjIUxQHK
+	 NdKkxhaktNSa64RDikMDmBy8jTcGCvNW9W4QFIupKaciO7lR/eGiGnLfjSUbpNVOM+uPU
+	 dO6sMxtXGks7rAWW3PvdpE1L0QZwI9X90bajeKyPB5w5a4BaNk+GZUOaplFLowyUtVflP
+	 GWFLPigI+bmoI7a+v5vss5/lukvXulxGGDr0uhUcZRSKipjLx3DAwB2fz41QddPBIHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=GFy0xwG+;
-	arc=none smtp.remote-ip=95.215.58.3
-Received: from mta1.migadu.com (out-3.mta1.migadu.com [95.215.58.3])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=sSC54di3;
+	arc=none smtp.remote-ip=95.215.58.9
+Received: from mta1.migadu.com (out-9.mta1.migadu.com [95.215.58.9])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67468606A334
-	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 13:10:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 67468606A334
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F5D606A327
+	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 13:10:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81F5D606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=GFy0xwG+
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=sSC54di3
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Ngqf9+sqR9FZGAPuRCkZiauWpsW12zu/jja2vEiaVxU=;
+DKIM-Signature: a=rsa-sha256; bh=Khvjz3OMMUyRYmhS0+smYP9TQ+oix+8/Op5iUO6ggxk=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794489011; v=1; x=1795093811;
- b=GFy0xwG+FtzOpEQ2/54N26lfYTcrOGxomcHIe4iFujyrLrJm+jm7GUG8ER7wYon0bz7SE2va
- cqEtLaJhAIRQh6lPJF+Do7kHihtgrhj344JHjwvSwCFN6OP81SsvXzPcA0/V0s/xiC89YACEL0o
- FR8f8ikz2HMWgO23vePzNbI8=
+ t=1794489020; v=1; x=1795093820;
+ b=sSC54di3GgxMKWcYF2sSz/O0xlW8ZapetPfB185w55XaPUrxYTxmnsq1q7z2OKmPXlczUrBp
+ N+e7mA+F8zvvZSV6U7M+EjV5GgZqBIypCf7FmRr77XgHWYqopk6nFS7hiW3QBfDWDximHNd2ovj
+ 4QNEu8eHP1y3frIV8evzTZmI=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 944e6862ae57fa88;
-	Thu, 12 Nov 2026 13:10:10 +0000
-X-Mizu-Trace-ID: 944e6862ae57fa88
+Received: by smtp.migadu.com with ESMTPS id 6a1e810a2867f43e;
+	Thu, 12 Nov 2026 13:10:19 +0000
+X-Mizu-Trace-ID: 6a1e810a2867f43e
 X-Migadu-Flow: FLOW_OUT
 From: Tao Cui <cui.tao@linux.dev>
 To: tj@kernel.org
@@ -59,9 +59,9 @@ Cc: void@manifault.com,
 	bpf@vger.kernel.org,
 	cui.tao@linux.dev,
 	Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH 1/6] sched_ext: Reject DSQ iterator kfuncs in tracing programs
-Date: Thu, 12 Nov 2026 21:09:29 +0800
-Message-ID: <20261112130934.563321-2-cui.tao@linux.dev>
+Subject: [PATCH 2/6] sched_ext: Make scx_bpf_cid_node() a benign lookup for invalid cids
+Date: Thu, 12 Nov 2026 21:09:30 +0800
+Message-ID: <20261112130934.563321-3-cui.tao@linux.dev>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261112130934.563321-1-cui.tao@linux.dev>
 References: <20261112130934.563321-1-cui.tao@linux.dev>
@@ -78,79 +78,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-bpf_iter_scx_dsq_next() and bpf_iter_scx_dsq_destroy() take the target
-user DSQ's raw spinlock, but they are in scx_kfunc_ids_any, which is
-also registered for BPF_PROG_TYPE_TRACING.
+scx_bpf_cid_node() is documented to return NUMA_NO_NODE when @cid is
+invalid or there is no scheduler. Its implementation goes through
+scx_cid_to_cpu(), whose cid_valid() calls scx_error() on an invalid
+value, so an invalid @cid does end at NUMA_NO_NODE, but only after
+flagging the whole scheduler for exit.
 
-For an active root scheduler without ops.sub_attach, the compatibility
-path in scx_prog_sched() lets an unassociated tracing program resolve to
-that scheduler. The tracing program can then call the iterator kfuncs
-while the target DSQ lock is already held.
+Bounds-check @cid in the kfunc instead, keeping the documented benign
+return and leaving the aborting validation to the paths whose contracts
+call for it.
 
-For example, a scheduler which mixes FIFO and priority-queue insertions
-into a user DSQ triggers scx_error() from scx_dispatch_enqueue() while
-holding that DSQ's lock. scx_claim_exit() emits sched_ext_exit before
-the lock is released:
-
-  scx_dispatch_enqueue()
-    raw_spin_lock(&dsq->lock)
-    scx_error()
-      scx_claim_exit()
-        trace_sched_ext_exit()
-          tracing BPF program
-            bpf_iter_scx_dsq_new(dsq_id)
-            bpf_for_each(scx_dsq, p, dsq_id, 0)
-              bpf_iter_scx_dsq_next(it)
-                raw_spin_lock_irqsave(&dsq->lock)
-
-The tracing program recursively acquires the same raw spinlock and locks
-up the CPU. Because the tracepoint runs before scx_finish_exit(),
-disable_irq_work is not queued and the scheduler cannot enter its normal
-disable path.
-
-Reject the two iterator kfuncs from tracing programs at verification
-time. The kfuncs remain available to SCX struct_ops and syscall
-programs. bpf_iter_scx_dsq_destroy() has no independent live
-reproduction: its cursor only links into the DSQ after at least one
-successful next(), which deadlocks in the same window first. It is
-included for symmetry.
-
-This extends the coverage of commit b07a7450f6ef ("sched_ext: Reject
-rq-lock-taking kfuncs in tracing programs") and commit 4c2e0751d5e6
-("sched_ext: Reject scx_bpf_destroy_dsq() in tracing programs").
-
-Fixes: 650ba21b131e ("sched_ext: Implement DSQ iterator")
+Fixes: 5cadf7545cc6 ("sched_ext: Add a CID NUMA node lookup kfunc")
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 ---
- kernel/sched/ext/ext.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/sched/ext/cid.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 536648378ea3..063b2964099a 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -12166,8 +12166,10 @@ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
-  * when scx_locked_rq() returns NULL. Taking it while the context already holds
-  * an rq lock, the same one or another cpu's, can deadlock.
-  *
-- * scx_bpf_destroy_dsq() takes a user DSQ lock. A tracing program can run while
-- * that lock is already held and recursively acquire it.
-+ * scx_bpf_destroy_dsq() takes a user DSQ lock. So do
-+ * bpf_iter_scx_dsq_next() and bpf_iter_scx_dsq_destroy(), the latter only
-+ * after a successful next() has linked the cursor. A tracing program can
-+ * run while that lock is already held and recursively acquire it.
-  *
-  * Before returning, scx_bpf_sub_grant() and scx_bpf_sub_revoke() invoke
-  * ops.sub_caps_updated() of the sub-schedulers whose caps changed, so those ops
-@@ -12184,6 +12186,8 @@ BTF_ID_FLAGS(func, scx_bpf_cidperf_set, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_sub_grant, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_sub_revoke, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_destroy_dsq, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, bpf_iter_scx_dsq_next, KF_ITER_NEXT | KF_RET_NULL)
-+BTF_ID_FLAGS(func, bpf_iter_scx_dsq_destroy, KF_ITER_DESTROY)
- BTF_KFUNCS_END(scx_kfunc_ids_no_tracing)
- 
- /*
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index 8e04a8494e11..b09b2c73ccec 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -690,6 +690,16 @@ __bpf_kfunc s32 scx_bpf_cid_node(s32 cid, const struct bpf_prog_aux *aux)
+ 	sch = scx_prog_sched(aux);
+ 	if (unlikely(!sch))
+ 		return NUMA_NO_NODE;
++
++	/*
++	 * Bounds-check @cid here rather than letting scx_cid_to_cpu() do it:
++	 * its cid_valid() aborts the scheduler on an invalid value, while
++	 * this kfunc is documented as a benign lookup that returns
++	 * NUMA_NO_NODE.
++	 */
++	if (cid < 0 || cid >= num_possible_cpus())
++		return NUMA_NO_NODE;
++
+ 	cpu = scx_cid_to_cpu(sch, cid);
+ 	return cpu < 0 ? NUMA_NO_NODE : cpu_to_node(cpu);
+ }
 -- 
 2.53.0
 
