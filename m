@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794504873;
-	b=v4GVNrHUL83Gf07RwijBfOEKwwEkvrgD1T0hBoXxSMixweGuiZ/ry/MAtdr3syEWLNLD
-	 fjKTPALeN0da6D/D+vCCMvspp3CZOMO78O2FlKplEEQ2Cbiu7+EwgLGRpctT9RkSuTWaE
-	 gQ6gdKfIGfaB6UKJtnMkignRPt8WZgUMBb5CX0aTTvz/q9OQazGVcMYXxIufESJ72EL8E
-	 7UxDlSEgJSvEl+9TBboAyz1iRT32OvQmoMbQH0twCIAFqkYVrax+pcvwMA5lj0KrM/7RF
-	 HvKpbaRp3DcKMYPlrJGe+iKPrj7Mnu87/cNnR1e5/5C7S8wtmZgahdVNCyqF7+rsuUw==
+	t=1794504874;
+	b=V6d4+7vbDSM+OtMzpSDUuYWt9EwluZpITVKeQYv7aagpnBqF/c1XjJI0yL8mjiEDyI0m
+	 NZgrXsdLvpJRyLF1xGMzBfO55jUJII/93UwmIhlO81VevmAaHh1ZblooTrg7XfnXhBer+
+	 WmzBL4YKj6j25gV9oaZJTNhaPG7x7sw8d1l91b9ogYkJu5NyMmssD5HIbsrEqmRu5qZw5
+	 Pz8MfE/oWHkVW0O6vZkBZuCFqbVmY1Ho0Ip4F7ExrUI6/HI7mAnO97xcvyeHdVv1fF+zP
+	 VJK7K8Fi2EubsT1ZjtGgDiCa0EQdsfU2OhMVfjhLU3IlE4N1xFv37ChYrRYZEQiV4hQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794504873;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794504874;
 	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=K8BGRbxyU75zQ+k1MnxIjx8fccgD4YM1pBJW8tiaEpI=;
-	b=5HnJ7Kj4jsKCHgDrCf8Na0AjCCwai1U4fm1Kx/7kU22/ZovC3dEAI6uexeA9piHKeWpw
-	 ozyjRR2zto25V/u89rWtwsHSuhNKkT57g2Cl69+kqigpSdJmcFNizL7diEEA7xQ/r1cn1
-	 yyRbNO5DOKwU1yMJAUpXlcVdgMRZ6mOnXzvBs618wYDtEgDc0OoVgFWm6VGPaVVSVcNin
-	 mmqmg9vKcbCrLaZCJ7sb/rAtTtywJYTNkJtepXHd+PgyiLdBpso3WDCBZqRaSpnihM8Lf
-	 MDa0CxLWwwMMXdz1nipDens8HUHRj2oRtnjksUns02iVXvkulb4FrgXKLaEplf2SvtA==
+	bh=g8oRdUIPNrM19I+aRr6Xrjnpls3CINQLfjEu+H+Ojoc=;
+	b=XoGC5/L0lgPCVlOqLGlmvZuzI8d75ItVZ1aA8OWwrfm2Pzt9mWhkT5XsVIVaWBUPwEG4
+	 lfPTkVeeV8fUvSfXnQ3Q+ttfT71zelYSFlTCOb9hsBvqehdLCgLwQf8Zkf4wsV8Ax8uLq
+	 hMOmKrdB3Bd3aLf+6SYys2Y2E+AweMn/fgFwXdStFkeWy3V0//SwOQNXbnLDqaPu13j1d
+	 guK/9SydXTvo0kzZ5ZQBTCxF6csPhI7xqj80eWzwisbd0ZCbFn0dYVUEa6oRPufYuK7n1
+	 zhQSzWnUOER/CLqnARa4+2dByWcvDt2/oz2Wxxiygnn57SGspHNWYk2PL0B2aaoqeww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xv65GFMb;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XVpxT8zq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721BA60A3826;
-	Thu, 12 Nov 2026 17:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40885606DF08;
+	Thu, 12 Nov 2026 17:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xv65GFMb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB72E1F000C4;
-	Thu, 12 Nov 2026 17:34:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XVpxT8zq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1891F000C4;
+	Thu, 12 Nov 2026 17:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794504873;
-	bh=K8BGRbxyU75zQ+k1MnxIjx8fccgD4YM1pBJW8tiaEpI=;
+	s=k20260515; t=1794504874;
+	bh=g8oRdUIPNrM19I+aRr6Xrjnpls3CINQLfjEu+H+Ojoc=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Xv65GFMb8GLsNjt8BVsimrh4QJheLcctSAXDWAQ6Ydm3/3ecW6u/+vGEyG1J5aX/z
-	 yiTLxlgZupN7PhjXHeo0sd2qpgxnh6XGIf1EYkipdWFsi4GZlWc9woWBB9LpOYTHqb
-	 hRlYTNFNduJAQLkcnW8CSYFrAaeTWOZhe/pdUd+LpsBr51HLVlJDyHuGiBdbgMgh79
-	 T0Vv3lNlUO+e2bvez2J9jOyaFkN5nJycHOzhS/9fRIZTzfqZdZB6ExVLVm1LBbTEkV
-	 x6BEprrSZWlkn06IjwWxw66vTj5g4OgboL+Bl7SjfZlxcITOoKE50SPFu9IbQ0uMLM
-	 7ovElad9ecJRA==
-Date: Thu, 12 Nov 2026 07:34:32 -1000
-Message-ID: <eb63bdf20dd6e2f09b0e7c81bc905878@kernel.org>
+	b=XVpxT8zqQAfDLo88wcXRU5mVsAhHSReoJkj5sXzMivddWbuRcYrcSV43P4fVdf6dm
+	 aseI8TItU7vtwyErRUglP8iNEnxEFgGgciwIdyEGl7izYlnKy9LT9dHcxNkUt267VP
+	 C9kvEYeI/7wIPEduKJnhC1mwPoesYE49fZU1V+bG1tOSRRCYeTJzk5UjlJ2rW5zNZd
+	 sj4KjH/FXWCJ5LrVeo8g+Y1TJSRY+Nn0HOp+RlU3lRPJO4e6b7xrZzLKVoKzXxZPcQ
+	 bMgbJnvZ8elhSvEBNbzBnXXnS00fdOcw0/VEZYf2eHmdPB6/LpoudTfM8yLyGuJIwP
+	 CER3KBVs03sQQ==
+Date: Thu, 12 Nov 2026 07:34:33 -1000
+Message-ID: <32f1ba66f4cc42e77e88130565f1fac8@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: Tao Cui <cui.tao@linux.dev>
 Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, liwanwu@kylinos.cn, usama.arif@linux.dev, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, bpf@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH 0/6] sched_ext: fix kfunc, sub-sched, flatcg and idle-mask issues
-In-Reply-To: <20261112130934.563321-1-cui.tao@linux.dev>
-References: <20261112130934.563321-1-cui.tao@linux.dev>
+Subject: Re: [PATCH 1/6] sched_ext: Reject DSQ iterator kfuncs in tracing programs
+In-Reply-To: <20261112130934.563321-2-cui.tao@linux.dev>
+References: <20261112130934.563321-1-cui.tao@linux.dev> <20261112130934.563321-2-cui.tao@linux.dev>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -60,19 +60,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 
-Hello, Tao.
-
-On Thu, Nov 12, 2026 at 09:09:28PM +0800, Tao Cui wrote:
-> This series fixes six issues in the sched_ext core, the scx_flatcg
-> example scheduler and the CID helpers. The core.c fixes travel as a
-> separate series.
-
-There's one actual fix here (1/6) and the rest are rather vacuous. Can you
-please think more through each change and whether it makes sense in the
-context of actual usage? If these are coming from LLM scans, please don't
-just follow the details that they surface. It'd help to actually use the
-thing that you're producing patches for and think through the implications
-of the changes that you're suggesting.
+Applied to sched_ext/for-7.4-fixes.
 
 Thanks.
 
