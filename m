@@ -1,57 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.99
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794490363;
-	b=NscifPR/hORFY/Ba2KzMCwVzE/h9QqkFb8E5E5k9f+YX1IxQIe+LL8aSBXKERVdQ9Wx4
-	 H/DsldcFKd6VgGCZBtrzYYXWEw2Qx3Ij6NYpCxLkY7wfatIxbF0ZPiahYMovF7IkVHtyf
-	 zNmf07RMiBJmV5VZAMQvTPrW9m6UUFEIm8V784MJUbFKXwSpgWvyrXMWFtxxhwDkOq4qv
-	 7OHxd5ApJHiYMHtEoF4Or5a6wKKywek36fa1TPKwAt8NXBZwZxbYzScs8uE/g2szno/BP
-	 D/39AroJG6hQ8zJBHcUkkw7LJfdG2g7z21qCTD6qSAfsBZgM9yY3jeh32tvtf66DLNw==
+	t=1794494995;
+	b=i9OrCYaxxwiW+7LumHX5SI+UcjTIW4kyedGqyMKQEAdKlK9Hgnyjhq2I0ENSRzZ25ewf
+	 3louArxdBd4fBvHXuODoHLiJLx1G6RPEJXilPWvdIagn7k8KDcGlWzTDWZvFuUdoM4BPC
+	 Xa+kgQNH6su9AUa1A9kDPZsUGlFKhQbLPIp1DoXgsBZE8ezvd7qz29mSAilnaoNZs2D4i
+	 1HhKF3Ub05gFD/QhGH4hiqqqn3ekJhavf6O7VK5PAQQqokmxqmsD+RF+c7+IF+4bjWnAF
+	 L5YBIuOO7eNVIPoPe28rwqYjxWsqbogSpQG4DLhVz84I/cXeSD2edVCsJacUgCWD2xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794490363;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=eKMKE7XskBDbmVsMIKAhMC56PR/QzBT4TjX0HXJpmzU=;
-	b=hb8a52P1tp43IohbFt5OecBgbAFBE/Yw6N7IJgDI83U/SwhuYXV9fLUwY4Tj7gszkkcu
-	 bExs1EkbB8uj1mHJR2njzvfnod3PPUqmhMowV9DYuguSJhLV6shB12f48IMVs3/Q8uy/E
-	 JnHsJSRvtLONES6oYTaVHnI9h2iGbxe36q4yiNypMEtbSQMvFXTup4Jd10kEHtYZhsR3w
-	 3ZoH9dcEHNf72hs0WfYzJWBBaqR9f1SJ36KBilYTSpMuvHnnqqs4OvvhczSPhgZmMc0KT
-	 tx5eoLWRRyAyqFTZ4YHfpWqyKeFKdR1BTtuXyygvIEl5pJmJqhb9by5BGJwmaN+bfgQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794494995;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=jAT9uzZN4CHxink0sOWnNuooJmxzLwbXbcUHNUyhvls=;
+	b=jD44tsOH0qxD+iJ6C69n5fCOgeTwi2zl/jB3N4v6+JwTHsDA/1XoAbW9piI/fo+Hhz2p
+	 8Mc+acOvsHDOaORN3fx5Qk+OI4/9W692Fz2LqxCQD4ZZemjNqIuJbm1S0OG0KJ5XOgQqa
+	 D/9Y1kb6da2h8Or3Gp519eCJ6Kalqo4O1R4YnjkOEfgxT7y1sXXtOs0xdAgBCm+UEjVXV
+	 5sAW//u/B+k+TI5Kn9xttQcF6RR2IXtAi7rxb1QLKj0B/JeCaxqBAgz+Jeo5SDxQ3hpic
+	 cZToEHNlTafDf0PGVa7gQmrrf8k7PEtfAfIYCtKi9CO2GhpeITi3VTNcb1Nv4ncYMPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UtNNoa30;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="dOFZ/OV/";
+	arc=none smtp.remote-ip=95.215.58.99
+Received: from mta1.migadu.com (out-99.mta1.migadu.com [95.215.58.99])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9589606A323;
-	Thu, 12 Nov 2026 13:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF68606A327
+	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 14:49:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6DF68606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UtNNoa30
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB7C1F00A05;
-	Thu, 12 Nov 2026 13:32:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794490362;
-	bh=eKMKE7XskBDbmVsMIKAhMC56PR/QzBT4TjX0HXJpmzU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=UtNNoa30tV3jQrmx0bdCklDmMHae2uEtbiZES+EEzdGTX7Ss2Bc+qzx+vYdIui3z8
-	 ZDNmO7XAlPFNlS8I6lTlHR2g2gByzawtbiyz3xnS79D6Zje/PwQW64P4ez3pPHmN5c
-	 O95R2t4k9YlydsvSqWy7F5Y4Fcxl1KPvbsVA1doDvaDvrMt4ry3b5WDguSeCFiLGzm
-	 0VfhQorwdbHrhRVVSe4xwejIV+55ynXyka/+CbrcRQ/9fopwdh7t1mNYsIjBzEtHyv
-	 6LHiv4DaNqVl//RlmS+fvBf2TKWUt6hfyHQwukJLp1LlU20WT2MnWhi5zZRDV8N85+
-	 hh2aMoofFfbEA==
-Message-ID: <sashiko-outbox-211192@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6/6] sched_ext: Clear the built-in idle masks on CPU
- hotplug transitions
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tao Cui" <cui.tao@linux.dev>
-Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
-In-Reply-To: <20261112130934.563321-7-cui.tao@linux.dev>
-References: <20261112130934.563321-1-cui.tao@linux.dev>
- <20261112130934.563321-7-cui.tao@linux.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 12 Nov 2026 13:32:41 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=dOFZ/OV/
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=QylnOTCLVuW+y4dsWIYbQEgIFWSTXK6eCnnqIoOQp5c=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794494992; v=1; x=1795099792;
+ b=dOFZ/OV/ttunqUnkH5nm/NDIRwl74rRY4i1fMgxhyqMAaIw50mcAG4yxE7OddMc5o7INuJKe
+ RXClRuvuNoLF8EixYvlqWXu4g+SKsvHoRNY78EsbzHWiYOmqd1WNg+HXdGUm8+cy3rU251TjMM2
+ IfBle4rqxhPn2DhUnXwdXS3Q=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 40af8fb229db3720;
+	Thu, 12 Nov 2026 14:49:52 +0000
+X-Mizu-Trace-ID: 40af8fb229db3720
+X-Migadu-Flow: FLOW_OUT
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH 0/2] sched_ext: Fix entry-path contract breaks in core.c
+Date: Thu, 12 Nov 2026 22:49:33 +0800
+Message-ID: <20261112144935.583937-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -60,127 +70,48 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential
-issues to consider:
-- [Medium] sched_ext: offline CPU re-sets idle mask bit after
-  scx_idle_clear_cpu()
-- [Medium] sched_ext: scx_idle_test_and_clear_cpu() claims inactive CPUs
-  during hotplug
-It also noticed 1 related pre-existing issue this patch does not
-introduce:
-- [Medium] sched_ext: data race on shared idle_smts mask in
-  scx_idle_test_and_clear_cpu() [1]
---
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit 0e2a7b76afc726a460e91d0e19897631e59a961f
-Author: Tao Cui <cuitao@kylinos.cn>
+Hello,
 
-sched_ext: Clear the built-in idle masks on CPU hotplug transitions
+wake_up_new_task() consults select_task_rq() but activates the new task
+without ENQUEUE_RQ_SELECTED, so on the fork path ops.enqueue() never
+sees SCX_ENQ_CPU_SELECTED and SCX_EV_SELECT_CPU_FALLBACK never counts a
+fork-path fallback; pass the flag on the initial enqueue to match the
+wakeup path. rt_mutex_setprio() is the only entry path into sched_ext
+that does not call sched_proxy_block_task(): an ext task PI-boosted by
+an rt waiter and blocked on a second kernel mutex is routed back to ext
+on deboost carrying the queued+blocked state that
+scx_prepare_setscheduler() promises never happens; block a retained
+donor before the deboost routes it back.
 
-This commit clears a hotplugged CPU from the built-in idle masks in
-handle_hotplug() and rejects offline CPUs in scx_idle_test_and_clear_cpu().
+0001 passes the flag on the initial enqueue to match the wakeup path,
+and 0002 blocks a retained donor before the deboost routes it back to
+ext.
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 7d7e2a2fc5ae8..984d9224ab59c 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -4358,6 +4358,13 @@ static void handle_hotplug(struct rq *rq, bool onl=
-ine)
->  	if (scx_enabled())
->  		scx_idle_update_selcpu_topology(&sch->ops);
-> =20
-> +	/*
-> +	 * Keep the built-in idle masks in sync with the hotplug state: an
-> +	 * offline CPU must stop being advertised as idle and a CPU coming
-> +	 * back must not inherit a stale idle bit.
-> +	 */
-> +	scx_idle_clear_cpu(cpu);
+Verified in qemu on tj/sched_ext for-next (5b740a72b55c), same kernel
+and config with and without each patch, comparing stock and patched
+binaries; the touched core.c regions are byte-identical on this base,
+so the runs carry over: with a probe forcing select_cpu() fallbacks,
+40k forks produce 0 fallback events on the baseline kernel while the
+wakeup side counts normally, and fork and wakeup paths both count 1:1
+with patch 1; and a driver-model trigger hands the scheduler ~39966
+queued+blocked donors across 40000 PI cycles on the baseline kernel
+with 0 with patch 2, PI chain traffic unchanged.
 
-[Severity: Medium]
-Does the dying CPU re-set its bit in idle_cpus right after
-scx_idle_clear_cpu() clears it?
+Based on sched_ext/for-next (5b740a72b55c).
 
-During CPU teardown, handle_hotplug() runs at CPUHP_AP_ACTIVE, before
-take_cpu_down() runs at CPUHP_TEARDOWN_CPU and parks migration/N.  When
-migration/N parks and switches the dying CPU back to rq->idle so do_idle()
-can halt it, set_next_task_idle() -> __scx_update_idle() calls
-update_builtin_idle(cpu, true), which does not check whether the CPU or
-runqueue is online and sets the bit in idle_cpus again.
+Tao Cui (2):
+  sched/core: Pass ENQUEUE_RQ_SELECTED on initial enqueue
+  sched_ext: Block a retained donor before PI deboost routes it back to
+    sched_ext
 
-Because normal tasks have their affinity restricted to online CPUs and BPF
-schedulers typically pass task affinities to scx_bpf_pick_idle_cpu(), the
-claim path in scx_idle_test_and_clear_cpu() is not reached for the offline
-CPU.  Read-only consumers such as scx_bpf_get_idle_cpumask() and the
-!cpumask_empty(idle_cpumask(waker_node)->cpu) check in scx_select_cpu_dfl()
-therefore still see the offline CPU marked idle for the entire offline
-window.  Gating idle=3Dtrue updates in __scx_update_idle() or
-update_builtin_idle() on the CPU/rq online state would prevent the dying
-CPU from re-setting the bit.
+ kernel/sched/core.c    | 17 ++++++++++++++++-
+ kernel/sched/ext/ext.h |  2 ++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-> diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
-> index 922fbc3065ccf..ff0c5402886e6 100644
-> --- a/kernel/sched/ext/idle.c
-> +++ b/kernel/sched/ext/idle.c
-> @@ -107,6 +107,18 @@ static bool scx_idle_test_and_clear_cpu(int cpu)
->  			__cpumask_clear_cpu(cpu, idle_smts);
->  	}
-
-[Severity: Medium]
-This problem wasn't introduced by this patch, but nothing serializes
-[1] concurrent updates to the shared idle_smts mask in
-scx_idle_test_and_clear_cpu().  Both cpumask_andnot() and
-__cpumask_clear_cpu() perform non-atomic read-modify-write operations on
-the bitmap words:
-
-CPU0                                CPU1
-scx_idle_test_and_clear_cpu()       scx_idle_test_and_clear_cpu()
-  cpumask_andnot()                    cpumask_andnot()
-    val =3D *word;                        val =3D *word;
-    val &=3D ~smt0;                       val &=3D ~smt1;
-    *word =3D val;                        *word =3D val;  <-- CPU0 clear lo=
-st
-
-A lost clear leaves a core that is no longer wholly idle marked in
-idle_smts, causing SMT-aware idle selection to place tasks on busy sibling
-threads instead of idle cores.
-
-> +
-> +	/*
-> +	 * An offline CPU is never an idle candidate, but its bit can
-> +	 * linger past @cpu going offline: the dying CPU keeps re-picking
-> +	 * its idle task until it halts, which can happen after the
-> +	 * hotplug paths have already run. Drop the stale bit and refuse
-> +	 * the claim.
-> +	 */
-> +	if (unlikely(!cpu_online(cpu))) {
-> +		cpumask_clear_cpu(cpu, idle_cpus);
-> +		return false;
-> +	}
-> +
->  	return cpumask_test_and_clear_cpu(cpu, idle_cpus);
->  }
-
-[Severity: Medium]
-Can scx_idle_test_and_clear_cpu() still claim a CPU while it is inactive
-during hotplug transitions?
-
-On teardown, sched_cpu_deactivate() clears cpu_active(cpu) and
-handle_hotplug() clears SCX_RQ_ONLINE at CPUHP_AP_ACTIVE, while
-cpu_online(cpu) stays true until __cpu_disable() runs at
-CPUHP_TEARDOWN_CPU.  Likewise on bringup, cpu_online(cpu) is set before the
-CPU reaches CPUHP_AP_ACTIVE and sets cpu_active(cpu) and SCX_RQ_ONLINE.  If
-cpuhp/N blocks during either window (for example in synchronize_rcu() or a
-sleepable ops.cpu_offline() / ops.cpu_online() callback), switching to
-rq->idle marks the CPU in idle_cpus, and scx_idle_test_and_clear_cpu() will
-allow claiming it because cpu_online(cpu) is true.  select_task_rq() then
-rejects the pick via !is_cpu_allowed() (which requires cpu_active(cpu) for
-non-kthreads) and falls back with SCX_EV_SELECT_CPU_FALLBACK.  Checking
-cpu_active(cpu) (or scx_rq_online(cpu_rq(cpu))) here would avoid claiming
-CPUs that cannot accept tasks yet.
-
-[1] https://sashiko.dev/#/bug/linux-ca6a3761-220e-4ce4-924a-d7356268acdd
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261112130934.5633=
-21-1-cui.tao@linux.dev?part=3D6
+-- 
+2.53.0
