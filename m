@@ -1,51 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.20
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.27
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794489045;
-	b=p93m9q7KeedxNJlcsIaE5bCGnLAwD8FLAE/TmbizjlwOsxLzDCtzJUA03f89SNwuCZhm
-	 9zFypQ2Zo78CuEGll0ETU3XLRKOj7qNcUtb3A3WdpPN3BDRCDrzqde2PzJPShrH0LMLKI
-	 6VykAbibH5gh+exjxcjOq0ukKMAOGFf0lZbleOeDmYUDPZuIIHaeRQ6ZHKaISWoeWVwgb
-	 ZEsOSVavVlqY/pyK7Bl0x2Hb5LVK6aVoJQ16wjGSwDLg4Xaitka9NqIoBv9G/QIHRDkQu
-	 WKNDfeCBICMJVtG6PFWW2lukow87c8t/Xea0vCkfYc9re9AFueLvAQ2PLK0dlg/rzkw==
+	t=1794489053;
+	b=IHKpL/46Kf0Tu50gQ76V9GHgiJT/dUMeEHuOoNFxuVuoNLZPJf9NKpQbLWDp+0lN+lIB
+	 0DNYn5C3iVCjFm/h2mDRb+NshuS6b/m14He9vEjp48D+4K+MszwR2iyUSeCyvOlqLRSWH
+	 JZREQwZqZlKlh4ppHMH6/d+AVt1XokiD30nt5i9AEWTmIc2cu1gcPmKnShmfjIbHGLnt+
+	 yAO6/zHSHqNi/7SxUIhGxIIff5UfgyS0TEu6JAB1iVIzitoNBdk+2vJvIb2nYuwrpME76
+	 UBlBBSSIvdIEmffunbxZQkPYwqyyll98hilubchnC/ZtLkICYb2pNxU7cY6RpPZsTGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794489045;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794489053;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=OlKbhQLab5g4Xms2RrXIIJjBKqXkYeiQOogD0n/L2TE=;
-	b=DloKOlSURAwfnwIfxMb4c60twh856YojeSMEtk3B71h5R4EkfYCdNEaW2r93hp33HQ54
-	 rF/DOoDqrU/MhOGk9qGXGFY2r3OiJ9UkagxLPGyshvyJpjeivRZINqpmzSQqa3bZP4P9G
-	 ukF7LOQ9YDvPlf++jGFjSi/fXTzbIo4leKqGz0L30sGa+2bGdnTOo/8+NKHB7/nor81oT
-	 rVt6UhZJslZXnB3cD9jf0jxOFFtnirWRVmLg0p3F2cYycjsVTGBxi8cc8hM4Y7AhMXoka
-	 AEH0HpkI7IS9dCyWJom6QTNB6O5xNu7+LlSBuMfKZS6odMe/68xt9rEHfKtixLeLHMg==
+	bh=5WLV9GwJEw5snsivwVTcevybITAUjlFSXt5ZHXYJVNM=;
+	b=pE32vQVojM8hRrYgMGqI7szHObCsAWGzQBub1p/CaQW+Xslk02p20nLxgPe+R1XUCF2M
+	 0X4zMg1X5wv2SD88bWc8ZiqEaixcgihLSN7Pu0cOYyK48C/mWC7wPJ0w+6wvuuMbHZBac
+	 URqCxrvhtvpIR/1oHbAclQIKxSqeLFr5f6excRcjTPeHLS5Xp7zvA9fiGbJvOMJ9f2PDy
+	 ybWEV64dP10oSRVBuf1vz9Zlt3e8yHryekd2t4qU5mim2qY0CMGWhFeqfSIik5fE6Rr0A
+	 wSZqTZoAMSBhzkbmsFSjRcNK2v96lOaRVtamnLgjo3hUyisrhFdqAfT0JKP/Pv6kROg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Rd3w0HwW;
-	arc=none smtp.remote-ip=95.215.58.20
-Received: from mta1.migadu.com (out-20.mta1.migadu.com [95.215.58.20])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="sibHd4/I";
+	arc=none smtp.remote-ip=95.215.58.27
+Received: from mta1.migadu.com (out-27.mta1.migadu.com [95.215.58.27])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68268606A8A5
-	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 13:10:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 68268606A8A5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6E660A3810
+	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 13:10:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D6E660A3810
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Rd3w0HwW
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=sibHd4/I
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Hq87wQzb8e4RRe8KYeLW2df0CMQqxzTx40VCXAv0cGQ=;
+DKIM-Signature: a=rsa-sha256; bh=1ASfApR/tWCoxARtdYT6Dnyb/jCq3rXoAd9CiF8q4Us=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794489042; v=1; x=1795093842;
- b=Rd3w0HwWE2M0tztNtshgfPlN3nXDZgbmcDkxCH1cyszoFQ0muKo59mnekgTvIoPF/bqyPJBb
- OIB4tQJtmg7cVk8t/kKT2O2Bse4Z3DCLCF6cUAfqTt7OVbeoy75ylC9vnvSG5obM9aqpMyNnzP7
- tgoSvbNpO8p2US7WSuqT5Mo4=
+ t=1794489051; v=1; x=1795093851;
+ b=sibHd4/IY2DocB0iDzYKQYfmRweYlr2RxY4mGvZ3KRUatGk+6djqlV1tichgJEz7Mi+Spm5b
+ F3gb6nhs7zO7Pq8RrcyatNx+zCmY5itpWL2FNM0tNYyYetLt2h07u75vVFzzHdWF/NiRQk7NYuB
+ nk+pwIogBCV23n7WB2Mge40E=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id c01043e0da7dcff8;
-	Thu, 12 Nov 2026 13:10:42 +0000
-X-Mizu-Trace-ID: c01043e0da7dcff8
+Received: by smtp.migadu.com with ESMTPS id 960a86b2038b9ab9;
+	Thu, 12 Nov 2026 13:10:51 +0000
+X-Mizu-Trace-ID: 960a86b2038b9ab9
 X-Migadu-Flow: FLOW_OUT
 From: Tao Cui <cui.tao@linux.dev>
 To: tj@kernel.org
@@ -59,9 +59,9 @@ Cc: void@manifault.com,
 	bpf@vger.kernel.org,
 	cui.tao@linux.dev,
 	Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH 4/6] sched_ext: Reject cid_online/cid_offline on sub-schedulers
-Date: Thu, 12 Nov 2026 21:09:32 +0800
-Message-ID: <20261112130934.563321-5-cui.tao@linux.dev>
+Subject: [PATCH 5/6] tools/sched_ext: scx_flatcg: Don't strand a cgroup on the ENQ_RACE path
+Date: Thu, 12 Nov 2026 21:09:33 +0800
+Message-ID: <20261112130934.563321-6-cui.tao@linux.dev>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261112130934.563321-1-cui.tao@linux.dev>
 References: <20261112130934.563321-1-cui.tao@linux.dev>
@@ -78,60 +78,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-A sub-sched's enable path sets the has_op bits for every callback it
-declares, and validate_ops doesn't stop it from declaring
-ops.cid_online()/cid_offline(), but handle_hotplug() delivers hotplug
-callbacks to the root scheduler only, so those callbacks would never
-run while the per-cid online masks are maintained for the sub-sched
-regardless.
+cgrp_enqueued() bails out on the ENQ_RACE path when bpf_kptr_xchg()
+returns NULL: the node is either back on the rbtree or in the hands
+of try_pick_next_cgroup(), which found this cgroup empty and is
+deciding whether to stash it back or re-add it to the rbtree.
 
-Reject the declaration at load time like the cpu-form sub_attach/
-sub_detach rejection next to it, and note the root-only delivery in the
-ops kerneldoc. The ecaps notifier, in contrast, is delivered per
-sub-sched; if per-sub hotplug delivery is wanted later, this rejection
-is the piece to relax.
+The bailout relies on the assumption that a task being enqueued is
+already visible to try_pick_next_cgroup()'s emptiness test. That
+doesn't hold: inserts from ops.enqueue() are deferred till after
+ops.enqueue() returns, so try_pick_next_cgroup() can see an empty DSQ,
+clear ->queued and stash the node while ->queued stays at 1 from this
+enqueue, leaving the cgroup off the rbtree with every subsequent
+enqueue skipped; the whole group strands until it is destroyed or the
+scheduler is reloaded, and the kernel watchdog eventually kills the
+scheduler with SCX_EXIT_ERROR_STALL.
 
-Fixes: 337ec00b1d9c ("sched_ext: Implement cgroup sub-sched enabling and disabling")
+Instead of bailing out, wait for the picker to resolve and retry:
+grabbing the node when it's stashed back, or bailing out when the
+picker has re-added the cgroup to the rbtree. Exhausted retries mean
+the cgroup is in the common cases either going away with its node
+dropped or already back on the rbtree; a narrow window with the picker
+still holding the node in flight can strand the cgroup the same way
+the unpatched code does, at a rate orders of magnitude below stock.
+
+Verified in qemu: driving ops.enqueue() races under CPU saturation strands
+cgroups into scheduler-killing stalls 6/10 rounds on stock, 0/10 with the
+change.
+
+Fixes: a4103eacc2ab ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 ---
- kernel/sched/ext/ext.c      | 9 +++++++++
- kernel/sched/ext/internal.h | 3 +++
- 2 files changed, 12 insertions(+)
+ tools/sched_ext/scx_flatcg.bpf.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 063b2964099a..792cf0c1d582 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -8630,6 +8630,15 @@ int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
- 		}
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index 1d168d492203..5f2b9d0b867a 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -285,11 +285,24 @@ static void cgrp_enqueued(struct cgroup *cgrp, struct fcg_cgrp_ctx *cgc)
+ 		return;
  	}
  
-+	/*
-+	 * Hotplug callbacks are delivered to the root scheduler only, so a
-+	 * sub-sched's ops.cid_online()/cid_offline() would never run.
-+	 */
-+	if (scx_parent(sch) && (ops->cpu_online || ops->cpu_offline)) {
-+		scx_error(sch, "cpu_online/cpu_offline are root-scheduler callbacks");
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
+-	/* NULL if the node is already on the rbtree */
++	/* NULL if the node is on the rbtree or in the picker's hands */
+ 	cgv_node = bpf_kptr_xchg(&stash->node, NULL);
+ 	if (!cgv_node) {
++		/*
++		 * The node is either back on the rbtree or in the
++		 * picker's hands; bailing out strands the cgroup. Wait
++		 * for the picker to resolve and retry.
++		 */
+ 		stat_inc(FCG_STAT_ENQ_RACE);
+-		return;
++		bpf_repeat(CGROUP_MAX_RETRIES) {
++			cgv_node = bpf_kptr_xchg(&stash->node, NULL);
++			if (cgv_node)
++				break;
++			if (scx_bpf_dsq_nr_queued(cgid) > 0)
++				break;
++		}
++		if (!cgv_node)
++			return;
+ 	}
  
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index d79a48afbff0..64d87d03e112 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1000,6 +1000,9 @@ struct sched_ext_ops {
- 	 * @cpu just came online. @cpu will not call ops.enqueue() or
- 	 * ops.dispatch(), nor run tasks associated with other CPUs beforehand.
- 	 * ops.sub_child_ecaps_updated() runs for @cpu only after this op.
-+	 *
-+	 * Root schedulers only: hotplug callbacks are delivered to the root
-+	 * scheduler and are never invoked on sub-scheds.
- 	 */
- 	void (*cpu_online)(s32 cpu);
- 
+ 	bpf_spin_lock(&cgv_tree_lock);
 -- 
 2.53.0
 
