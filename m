@@ -1,98 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.175
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794440664;
-	b=igCaLYjW+psIIU1wxDm5dw2A72uFjp9EAg83CmiKuwhVArfaXHOXCm+2ja4olK+Eu5Cg
-	 OE4BREz2PrbEfiJyRkhwQsBVK2pg887VoFlv8sUDaggjkr6bWeVPw6RfG5oOihfmkMwk5
-	 kT3K7dDna5njiLcUd8eFN+JoQ6DROW5ZkYDw2Lhp/0XK61OXtLR+5wzS2/1ebCIlXQFVK
-	 hB8x0KEVVexrbfdMTweARJesw9n1YuRDfcoENaYwubmcW23YIEcBBKQPM3KYXRudyvsCU
-	 CLIiC69048qItCgMgOyq4tPqMqD19tPx/ebjoW5gSNKdZADtnB3gBDBUAuAJBC0in1g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794440664;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.41
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794466891;
+	b=ECuz3mZPWsmy/Hcxv7IQSREVuane+MFwUhTUYk2p28VCEKExYNnqVHXQ6Oc7NIxe0qKg
+	 wQwjLUt6010Hjqiw8CuqF4NtS78GOezUMry36K2pfKesBqoMdfkxtdOLg0QP4jqJBtYFo
+	 pa0FtIbx4ksOBWvnA1u/g9gorfKu36VRBp5JIHqtIgqfnQMdQ63HykoO573Qj3D0jLLHJ
+	 xAAsd78PuiKNtZnJrUwfb21sud5luYIY1fTVnxXlBLt99Sd+Io3wvKjl0r8Eo5+Gf4rYA
+	 mvkXD9+jujUtjlhCpvv8s+ZJpnqiqe73auAFOQ7NvK/5wAjCl5YvG54Fsjl5xgHN+BA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794466891;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Reply-To:
-	 In-Reply-To:References:Subject:Message-ID:Content-Transfer-Encoding:
-	 Date:MIME-Version:Content-Type;
-	bh=kYulsIIl/vEsdYwnLC+tntdaEcmBkARtiDvxkzUqyX4=;
-	b=JC8kdeWssD39g2zykR0wcTSzgSFbUhPF9WNlu5Iwlrw656vpJj9tfojkVp9r17uAMU/0
-	 cumj15rceGLwfxLV5IusmLND66FXrOK+bc2YV+Q7HfJx1HQEb2lF/LH4sQOzYTKvNPq8j
-	 3o8I0i11qz4F550OE0uQGvqfeKWiJuSfFaQNr3ep7ct4fPeSBQl/ypLGIBGEASd59qIhW
-	 /5msoIldLA0Cb1vi1Sk+thK2Dvdc8B9YOrXSr4Ia1byygyhuKGDLC2Ix2q0VD9HXITQM/
-	 KvnTXxHy1tZ8Ynha2zz5v5PV+sbu1tm9F+v7Xrs5S0Kj5eEGIVp8PGw7njBklU6gOwg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=realtoradnan.com;
-	spf=pass smtp.mailfrom=realtoradnan.com;
-	dkim=pass header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=M30E1ov8;
-	arc=none smtp.remote-ip=209.85.222.175
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=MSgj+o0QjwP2h00l2eEN+Ttef4mTAsT4O3zROWvRIfE=;
+	b=r8t7j3Igj91UQXKM7yqxU4g5krP8H74qiYnWkg5tz1ne8ic6idFuF8+eYYp9LKwj6xnJ
+	 QfTtbrOJoX92eHBwYsS1hc9GRbuXlmxN6y6AYnKef9BU6Wwhle38N44eF8Usa6fTn0U3N
+	 bpnUJ7Jio/lHv/OcVh74TMEw9WnOizFzV5QYnk1NtpV2Q4osg/NAZJ7I6u1pBLZ0qlXBJ
+	 BD/pLo2nIHcG3f92skVw1lG90osCeQB0tWsDWsKEffs0SsyNk6Sk8mp+H+nAaluGMY+h4
+	 89sJ8HKvp+qB/L4uTvreP+iC4QQszfHOAi7Gyt1+yWRyZjTgdtrkEQNTd3SoCPY/JWg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=YhYu+19P;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.41
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEB9606A31C
-	for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 23:44:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7DEB9606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=realtoradnan.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtoradnan.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51992606A32D
+	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 07:01:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51992606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=M30E1ov8
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-93f36c18b75so221057085a.1
-        for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 15:44:23 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=YhYu+19P
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6b167ffd132so830654a12.1
+        for <sched-ext@lists.linux.dev>; Wed, 11 Nov 2026 23:01:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794466889; cv=none;
+        d=google.com; s=arc-20260327;
+        b=HlITyEslCHa/rY9svx3Qfxrki3TT3jJ2PnVJXPrSrH4VX1i2jCUeRaAOkZhSjMCqAi
+         8tLpwSL+fIyCF0CaOOZjaXPplEGBQ2D9JjIaDu6O+KUEAwva9wteVCekIWSo5Za5Mmle
+         xSQP9EhqPKAbz4l1Qag5CMQrm9Tjkp2pSkfstRf43t+5mkN/mO0/WbUT/5LUZn+lMAGB
+         RZ+2mcUa1UKtDU6HpiZiS04FgVESaT4uow6EslvsXugpMl5YXkaokbirfHfZvAhmIrts
+         DET13fLAUHnsTSgvJyE9zQUyPLGU/5WlVHPjM/0x/2Z1HYBf3DsbsEoKLUhgCTGu3kLA
+         StIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=MSgj+o0QjwP2h00l2eEN+Ttef4mTAsT4O3zROWvRIfE=;
+        fh=30fEqjfD9Pextk27g9w1LM4akuY/Aza/ddyGRz138nI=;
+        b=QMXu3lCcYzm8H9scSZKfoE7n+ErSQPrpS9wjqRIjviLoCBSae/+T/ADspWpltL9Elf
+         DADAws7piVVbmFkS9oj5U5Kl17qukfP5xARv83m1oy3CmPgl1YByJFg1wU4Lb2HIv0dj
+         CqAd2FQvuSa8MN9ZEvEGpbimFj1oHRsQlKWBLAK1tX3nHKF/zBU9jUIDk1uqeSP5unV/
+         rYahR7v3Kc5H3oc35R6bf4B4ceT3OaSw/AE75HHLBAe+qBgvAyfxmGnqnesFKkGTdr8C
+         wdj/19obecxEs2iNsdOngH9jLLnXunzNHqb/N5sEuigJzCKjotCfOxIzTW6l8/tAlpIz
+         BDfg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=realtoradnan.com; s=google; t=1794440662; x=1795045462; darn=lists.linux.dev;
-        h=content-type:mime-version:date:content-transfer-encoding:message-id
-         :subject:references:in-reply-to:reply-to:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=kYulsIIl/vEsdYwnLC+tntdaEcmBkARtiDvxkzUqyX4=;
-        b=M30E1ov8L5658eTRl8f968lnniq2gGNpTIYH7hWhRQoq1cpOb9wdqmKtRCT4ALEXi/
-         I61DllkpfXVU4lCby7xV2ciTu7VRzmZ7vb/pz2ryqz9ss+NvlNC2W/vnSH5flZdQRo2E
-         GzXcjKkiSWe92FJfAL4pOYqZMrDXDKulI7yr8kPrAuHn7ha/2eZ4d2RwjpSi2eYiiJj/
-         5gLxkIAgs7oZHUpl2ntJ+iyxosTuuPwvTlqTkwczDmYkxjiN3ODfhV2ZmJyW+kigLhz6
-         RRZ06aI89iV/RbhcthhwLLJkXTc9gy/2JeP/rmaiw58vNPbLdUHeBj1p7QQ3Wy3tgz5n
-         NfKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794440662; x=1795045462;
-        h=content-type:mime-version:date:content-transfer-encoding:message-id
-         :subject:references:in-reply-to:reply-to:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=linaro.org; s=google; t=1794466889; x=1795071689; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=kYulsIIl/vEsdYwnLC+tntdaEcmBkARtiDvxkzUqyX4=;
-        b=OjClBr/wUpLH6TvUEFGheNqsu4Xof0rgmxvDU1joz+TuOwnVUaNN88cgYosF9HA3kL
-         Xbqwvhfkb+QkXJZFYNGnmxYgVi9exN8rtS4RKCxuzmk/C3WEtMD1MXKQunYG3DDKAm5E
-         gZespNY8t8bFYEvojdZGemYGB6/6FfDrS6mEJMfu+WqrUPXiFmkUY4YV3C1UQmLN4+Vk
-         7AlZhiaVFM8Ath7ov93klVbMIz0HmqfnloAJvT4HV41vzqa9iPgRLj7lWJ0QG5MkpdgC
-         b5texF6SIO41fxxsZ51EpYMf0hJlcR4+i0clAJ8RAh9F9ndqMCEp2HIFy1hgE09s5zU5
-         EUHw==
-X-Gm-Message-State: APuU4Z8TQzS688wkOUCpf9ckxzXrF+Mmcl+Bx0iE0sA/ZmHjR8ueJhFy
-	dT5JMzzLxzbA+VqNK4CaVwk1wjxkXMYp1YdrHjy0icAtnfzruiKcUR3u2qEkob9PmcFpqyWAUPH
-	HiBQahfwlHx8=
-X-Gm-Gg: AYBFou1Adtlw85sG8euLa/erquwuaMzdFylufc3s5cU9CocnnrTW5q87xZQlTv5aknO
-	MBKuEV2Y/5bAriuBb2yIk8W49u+64CvQn7VH4YChGu1780xentJhxy4znUoEmzWIf4mzAWvAiXz
-	DnkMSc5fxb7yfKpZ/KkH5q/Mgr3bQnoR92uDqBIhdtkJaZf8kk50Zo2H7qKCD1oIRE7FWPbhg1p
-	3jqnNt22bRjpmoTLD4o+/OpyQQdRPkvEO/8j06k2bG4VhirW++eD6wEGf+yb6LzZKLo1XrS0tie
-	/sa4/DJXxW+cNZ847TBqWfh+6kTzj7IFbF/I3Jq5bR9w5R+5ArbaJJ0HC6bVoptnGHNjXYg7mp3
-	8s2Yyz/kBwQB7gAmw7FSyGHkZ1MU2oVSrFjhnaxbFa/+qZ+8dYFBHobuB+TKxXe0FlBlsnCV36y
-	JpJYYz1E61WUfJ2DwVEGNA5G7YThWTuFqntP1LROW07yloZTI4vt7vZAVP9xKHowLfrmafRM1PT
-	i/6Y49a8Xtq+7JA9vZhLQENJ6UweDbaSWNonyVRVZWjmAghEEcBzMiuVHA7iyhW6+G0fpzdnhP1
-	JvfQimB1cJeEXzwTDBt71ryvjpnxEvM7O0peNg7drv9m5fAb2Iz0vUWevd0hcYKvyROItN7jccl
-	9cV4QD+wvXtQ=
-X-Received: by 2002:a05:620a:6ccd:b0:93e:c12c:fbcd with SMTP id af79cd13be357-947b003f9c3mr698935385a.73.1794440662322;
-        Wed, 11 Nov 2026 15:44:22 -0800 (PST)
-Received: from realtoradnan.com (vmi3719417.contaboserver.net. [13.140.32.210])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9479e7e9b4bsm591047385a.39.2026.11.11.15.44.21
-        for <sched-ext@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 15:44:21 -0800 (PST)
-From: Troy Cross <troy@realtoradnan.com>
-To: sched-ext@lists.linux.dev
-Reply-To: Troy Cross <troy@realtoradnan.com>
-In-Reply-To: <7104e599-9176-4598-9863-544afc9fcf1e@realtoradnan.com>
-References: <2f393418-7255-4743-b185-248dbce5c845@realtoradnan.com>
- <65c5db2e-bdd8-4266-b975-f786b8a8415d@realtoradnan.com>
- <c6355768-fbed-4c09-be9d-a64036551192@realtoradnan.com>
- <7104e599-9176-4598-9863-544afc9fcf1e@realtoradnan.com>
-Subject: RE: schedkit
-Message-ID: <db0b751e-c9e5-4e4f-bc32-b6f9663c07e2@realtoradnan.com>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 11 Nov 2026 23:44:21 +0000
+        bh=MSgj+o0QjwP2h00l2eEN+Ttef4mTAsT4O3zROWvRIfE=;
+        b=YhYu+19P6rrjQkPsX+GF2zeTZVQY6fqZZ+W1DGZOSLs2nCyAQMauc2CTTt3chcvIDJ
+         7iULOATPB/DPmLArUMw476MJVCWfbHhsWWxh+g/YW+1D+6RBZRGnyv8MNa6gAxy16M7U
+         UUfBPwPltKIFvdiGVvdbqDbGPXK4z+gBHUAQ6XAjkCtu5DO8f2nIn1COw7UwLb3XR56A
+         xjiIbkPioNeZQew7aAUsmyNw3jQAXEvY8XBpVywRjEYYYZkawxb6B19jHF6EQIFVM7W3
+         AOLwq3XxstDOT/jQhIjYGH3WPW29cwZd9/+QTyagCj8giiS5DfUfoystpDjCqWA/Xaoj
+         c3zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794466889; x=1795071689;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=MSgj+o0QjwP2h00l2eEN+Ttef4mTAsT4O3zROWvRIfE=;
+        b=yGSgbeeJ931/f7IOq040LuL2bv94FBloMVnI6ZGMzfZ34/dHYDSMgLI42X2SnmS+Ya
+         1UGPXueYfaJ5xrocQ5R6xWUQLLzOi84BOh/fBoksXGbGJqmyhBvL8ZQQOyZ3Pe31k4AL
+         RKQeMVxPOF2lKzO/LYfh6mymtYJ8ky07eo4LnaIRAedE5nh4CCsXRbOg47nD01KYZetg
+         N7+MeRedOK7UlyKdwKV2ggl6EJgFkLw8DdLf+M5EHfmrQzPQQ86sV/EYfTFso/czjCjP
+         cbH7Cec4me0minpwVbaoJ/0VNU6z0SfG4Q2FYjX0Laa+JeU3fwW3in/DWyfNOHB4unAZ
+         uhzw==
+X-Forwarded-Encrypted: i=1; AL+hErELDg2ipLkl7w+JiMkieR1j0bCvIZSZCoUgJem4E4FOm6ldADFIXZKjnf6UDZm3JBB5mbZfXCeIWxg=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/TIz4JtXsMlpcu0ELbRBm1AIm1C2l24uabU5HsDkAjq/Sxyu5m
+	9eghTZdkhlAj7dhvMyOccIwAvExAISFVviLk2Ch03KV4+54TL2snCP17Kd9eHuVUnI3gWLWUWcw
+	ukozXnVPEJ+EDHP/42g+EMK0v3VpWUizrsjq8UWKVtg==
+X-Gm-Gg: AYBFou0t8CooEubQhUwcqT7CcLskg1B2huur2w179zyaHZKV/j0S/RSLqQrO766f11m
+	9ZmCNyckpMB3DSXbJ0sX1uIMWlV/l3TuBKtdVVWnfdx+b8SKgsAaf3x0vx3wUOAbJWBtsc0v1Xm
+	THNq/DhepE7ElB/i7s1b2XTdEDNV6H6Q/fey2f5vCxgyLRiqdoh+mixKiA1rd0zuQAxaUdA6uvy
+	WNCEjuhtOGNTzGTR8LrCsTJmC6JEeZREdcw4Nd2vh0a8sCg2isX0pTopnn8EF4Fiq8QQVDD+NgE
+	61NviR6VMGgVNJIfmu3JT/22r94Ru0GVMH7dUj9nHQeD8tUZUFOObsN48dOxDsd2/vk1esZ4jEg
+	V74ATQ9ury5K5tBHqn8i/88eKBRu1IoehzYpwgJ+QyjxrRbNHQQfsfKCK3R2E/42o09Ct8fCja3
+	0KxGg9/dwihgISUMs=
+X-Received: by 2002:aa7:c606:0:b0:6b5:94d9:10f8 with SMTP id
+ 4fb4d7f45d1cf-6b7773f5a18mr2509828a12.21.1794466889315; Wed, 11 Nov 2026
+ 23:01:29 -0800 (PST)
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -102,46 +104,66 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+ <20261106151947.3991524-9-vincent.guittot@linaro.org> <20261109155418.GL1779021@noisy.programming.kicks-ass.net>
+ <CAKfTPtA-nrgGQGcBPqNoPk4atOHakyZK9Fk-4AsrHBrnvPXTLQ@mail.gmail.com> <20261111090155.GF2668564@noisy.programming.kicks-ass.net>
+In-Reply-To: <20261111090155.GF2668564@noisy.programming.kicks-ass.net>
+From: Vincent Guittot <vincent.guittot@linaro.org>
+Date: Thu, 12 Nov 2026 08:01:17 +0100
+X-Gm-Features: AclHuK8UVt3x6vMPLZS8pSfeYTsVIPRoQvrz41V51tB_Ja3VDFaTVes1TsX82JE
+Message-ID: <CAKfTPtBfQd5nD9jNdayGbEW_P2bDMvOm=GZ3Q-gu+O6KkQmKbA@mail.gmail.com>
+Subject: Re: [PATCH 08/20 v3] sched/fair: Add push task mechanism for fair
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: mingo@redhat.com, juri.lelli@redhat.com, dietmar.eggemann@arm.com, 
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, vschneid@redhat.com, 
+	kprateek.nayak@amd.com, linux-kernel@vger.kernel.org, lukasz.luba@arm.com, 
+	rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org, 
+	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
+	sched-ext@lists.linux.dev, qyousef@layalina.io, christian.loehle@arm.com, 
+	pierre.gondois@arm.com, sshegde@linux.ibm.com, kayracizmeci@gmail.com, 
+	tim.c.chen@linux.intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-This is maybe our last follow up, but if you're =C2=A0just not interested, =
-just ignore it again.
+On Wed, 11 Nov 2026 at 10:02, Peter Zijlstra <peterz@infradead.org> wrote:
+>
+> On Mon, Nov 09, 2026 at 05:14:39PM +0100, Vincent Guittot wrote:
+> > On Mon, 9 Nov 2026 at 16:54, Peter Zijlstra <peterz@infradead.org> wrote:
+>
+> > > Can't we add the 'p->nr_cpus_allowed > 1' condition to rq->cfs_tasks and
+> > > use that, rather than adding yet another list? I mean, its used for
+> > > migration, so excluding all pinned tasks actually makes sense.
+> >
+> > rq->cfs_tasks can be quite large (we even take a breath during LB)
+> > whereas this list should be 1 task most of the time (except during
+> > wakeup)
+>
+> Like in the other email; detach_one_task() is also just one task :-)
 
+but in some case I want to do more than one like the case described in patch 20
 
-Sorry if this bothering, i wish you success, good =
-health, and happy life.
+>
+> > > Also, I'm still not sure why we need a plist. The rq->cfs_tasks list is
+> > > MRU per set_next_task_fair() moving the current task to the front.
+> >
+> > The plist was only to reuse struct plist_node pushable_tasks; in
+> > struct task that is already there for RT
+>
+> So while plist makes sense for RT, it doesn't make sense for fair or DL.
+> Notably for DL we keep pushable tasks in a RB tree.
 
-On Sun, Nov 8, 2026 at 11:42 PM UTC Troy Cross =
-<troy@realtoradnan.com> wrote:
+I can use a rb tree as well my gaol was only to reuse the
+pushable_tasks as those pushable list are exclusive
 
-> The best price is 299 usd.
->=20
-> On Thu, Nov 5, 2026 at 11:35 PM UTC Troy Cross <troy@realtoradnan.com> =
-wrote:
->=20
-> > The price is negotiable.
-> >=20
-> >=20
-> >=20
-> > On Wed, Nov 4, 2026 at 08:21 PM UTC Troy Cross <troy@realtoradnan.com> =
-wrote:
-> >=20
-> > > Sorry, just making sure you saw this.
-> > >=20
-> > >=20
-> > >=20
-> > > On Mon, Nov 2, 2026 at 06:16 PM UTC Troy Cross =
-<troy@realtoradnan.com> wrote:
-> > >=20
-> > > > Greetings,
-> > > >=20
-> > > >=20
-> > > > Do you have any interest in=C2=A0schedkit .com for 500 =
-usd? i noticed you own=C2=A0.io version, so maybe you will be interested in=
- this one as well.
-> > > >=20
-> > > >=20
-> > > > Sincerely,
-> > > >=20
-> > > >=20
-> > > > Troy
+>
+> > > So reserve iterating rq->cfs_tasks, skipping blocked and current and
+> > > such, should get you much the same over-all.
+> >
+> > Yes but I was afraid by the overhead of iterating this list which can
+> > be very long; We have already seen email about bug with thousands of
+> > tasks queued on the rq
+>
+> Right, so just take one of the tail and stop there.
+
+I don't want to take any random task from the rq but only one that is
+meaningful. Why do you think having a dedicated pushable list like rt
+and deadline isn't worthwhile?
