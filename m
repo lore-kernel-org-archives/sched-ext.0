@@ -1,91 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=50.112.246.219
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.92.199
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794471117;
-	b=KvRP4HK5nlRLb7+av90OPzcGZzjBZRR5F0sROH92fI1+Z5W3eXMJW+uMJ7ziiHeC1LDU
-	 UNF3C9t9lga1wVPJpAZsPRbnrfJ0Z20WPmKCLoObIJpkEWbhC7O/Qlez/o+p92sk+Xtuu
-	 t7iBSp6gnL79bFhzJh6ew/7O/VOCvJ/3NlV9Ml8618iyzY+TjWMrg257bch7ZzIcQvHct
-	 wTXlMyM4JLBHhnnBVC0mWuW5dOylZRupM/riLX+gjQSJA7B6j9K7Hw4vddk8GRj4T1nSJ
-	 p6FoNu4MMLngqHAUhd12HHgJlqY3fggINKlIG6XyyKKdasqTISyGTph02u5rG/7Sg9A==
+	t=1794476962;
+	b=xHXsXyTfz5RnUWe0y9zC1HyetAYcNrfVdsv4FICIfoP4i76tSGA0HbzZRc0XtJOJBegk
+	 CoHMBoAywk4puqeKSEhVNeuK3j7nx/i5MQpHW+/KEhfNONlZpnFTjogOCcgHM3JTtypu6
+	 S5VGVFNvH6RRtMc17iM/aWSZL3gyQjdWkQB93joIquaefTHu8KFMEx0Edt6smRmDKp7Di
+	 Uu05iYaFzpgUO0gb2chHUWoFA6qGLlsO3gIJGqZFsg3uUQqxJ8OvYfMWEJVbPxGDgxy5I
+	 rIp9Nxo1vEbgO3YAkTrdrQ+VwHSG8HM3BxAaOOdPspom7D/lQJFY/N3JjGbplHRO4TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794471117;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:Received:Received:X-Farcaster-Flow-ID:Received:Received:
-	 From:To:CC:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Type:X-Originating-IP:X-ClientProxiedBy:
-	 Content-Transfer-Encoding;
-	bh=yRwejwn52j/pckFIXfpb6iPXXl8i/31yG967frHncGQ=;
-	b=uyLvnRRfDNedCItfUXLMLSJK/XLocraxr97iv2+XPEubvFbm8f/FrABi0eSU+K0e+IgF
-	 dkdQiYj+gyqqCVrC//ZvqIwYyBqcpDIcBm/GpXiSTB/EhTxgpZaIB28S8InzcVoonfIBy
-	 fdJAiKlJlEBExnDjWvd3nFlrsrEik64JqppxGJ+MHoqaELyz4QS2mzIM3FjyYeADYwTtE
-	 m4NO2SPgQSSy0Iwl4axSYwiehLXw2jkVrwsUuE0auO8/o77fIyFpJF/DjxjlQp9rW/BJJ
-	 pLI6Ft/JcayOwPvFC9+4VZOm3MqQQk4kFuYzSe2o5b+5IOpU9G9uvjpe8MYx4RqOPpw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794476962;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=zD0jJHrRRvAkjkRc1n4QCTiR4ZH0I6f9OpoiYG7kF2I=;
+	b=gGSlR8C4YUjCEakJh2Wi6doyaWWQ7w8pDI6dKuOQSbfQgXeuFhpm9ShmcoxoUEVadyHf
+	 OFqaYqfZKu0Im7hQ8PLcLPyb3aASRLgciPuaVgfa0VwhGHYBXEaktK+0OmDnGloD5XD8F
+	 88/hZfE0mUiPUTFG+V/5VxGzGRaGkM2QGhUvIdNF50LTlwcH8P7Atd5JQh8IGWgc1XHBB
+	 ocMG4twUk4Kq3f70QdeHk8OlYotNffEpNp+UG+vBc9Y1BrSkW1mB+HRqLu9mXtSXlpnvz
+	 8d/PUQF/ViSmVm9R5SM0SXifBbyb8BNhRmsl+yIoMQYsH8H1t28VlxIJr9kgBL9c1xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amazon.com;
-	spf=pass smtp.mailfrom=amazon.com;
-	dkim=pass header.d=amazon.com header.i=@amazon.com header.a=rsa-sha256 header.s=amazoncorp2 header.b=Eop3zxX0;
-	arc=none smtp.remote-ip=50.112.246.219
-Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com [50.112.246.219])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=infradead.org;
+	spf=pass smtp.mailfrom=infradead.org;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=OiO0xzly;
+	arc=none smtp.remote-ip=90.155.92.199
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B92F606A321
-	for <sched-ext@lists.linux.dev>; Thu, 12 Nov 2026 08:11:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B92F606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BCA606A31C;
+	Thu, 12 Nov 2026 09:49:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 18BCA606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=amazon.com header.i=@amazon.com header.a=rsa-sha256 header.s=amazoncorp2 header.b=Eop3zxX0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
-  t=1794471117; x=1826007117;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=yRwejwn52j/pckFIXfpb6iPXXl8i/31yG967frHncGQ=;
-  b=Eop3zxX03l9RnQYMeBxTQelYygV5Tsez/u/Rer934FkD8eqkr65+A539
-   KlAIohQfZFEGz8vZMTWPDnQNUNXaBr5KXE7I/zQF/Zr074EnJfbGySRnC
-   j3UM4iK9qabTNowb8Bj9j2NP1v/KVNS+YwDSuYCD2Udg60jo8U+BVsz6d
-   YcM+7xk8q8gF8qFvHWPDdt3qR9ljF7mX+SxVG2ZgyNRc3mFqFmSkIU+gg
-   ynvrGnNjF9qWVdga6e9KgDKZDdRcgUdXPae4GYPWJ6lmq7M2epQDceinE
-   HhE3zJpGyVSjdMFVs2rOeR8BXdIdtZm5HY0mha/wFDcbqLQH1F/3L8S/7
-   A==;
-X-CSE-ConnectionGUID: 88UP8YXmSku6Ng9uIsV3zw==
-X-CSE-MsgGUID: BDVhN59CST2+sSodA55VWA==
-X-IronPort-AV: E=Sophos;i="6.27,209,1787011200"; 
-   d="scan'208";a="33570827"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
-  by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2026 08:11:54 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:28378]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.55.227:2525] with esmtp (Farcaster)
- id 57c27c56-a479-41ea-ac2a-2ef1fd33fc35; Thu, 12 Nov 2026 08:11:53 +0000 (UTC)
-X-Farcaster-Flow-ID: 57c27c56-a479-41ea-ac2a-2ef1fd33fc35
-Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.56;
- Thu, 12 Nov 2026 08:11:53 +0000
-Received: from dev-dsk-sieberf-metal-1a-7543e84d.eu-west-1.amazon.com
- (172.19.116.227) by EX19D001UWA001.ant.amazon.com (10.13.138.214) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.56; Thu, 12 Nov 2026
- 08:11:49 +0000
-From: Fernand Sieber <sieberf@amazon.com>
-To: <tj@kernel.org>
-CC: <mingo@redhat.com>, <peterz@infradead.org>, <juri.lelli@redhat.com>,
-	<vincent.guittot@linaro.org>, <bsegall@google.com>,
-	<dietmar.eggemann@arm.com>, <rostedt@goodmis.org>, <mgorman@suse.de>,
-	<vschneid@redhat.com>, <kprateek.nayak@amd.com>, <hannes@cmpxchg.org>,
-	<mkoutny@suse.com>, <void@manifault.com>, <arighi@nvidia.com>,
-	<changwoo@igalia.com>, <skhan@linuxfoundation.org>, <corbet@lwn.net>,
-	<rdunlap@infradead.org>, <cgroups@vger.kernel.org>,
-	<sched-ext@lists.linux.dev>, <linux-doc@vger.kernel.org>,
-	<linux-kselftest@vger.kernel.org>, <bpf@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <nh-open-source@amazon.com>,
-	<hborghor@amazon.de>, <fmubeen@amazon.de>, <dwmw@amazon.co.uk>,
-	<karataev@amazon.com>, <sieberf@amazon.com>
-Subject: Re: [PATCH v2 0/4] sched/fair: cpu.max.runtime and idle refill for CPU credits
-Date: Thu, 12 Nov 2026 10:11:44 +0200
-Message-ID: <20261112081144.38224-1-sieberf@amazon.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <e795d4feb4a4e7ca4cf24f3cde9e301b@kernel.org>
-References: <e795d4feb4a4e7ca4cf24f3cde9e301b@kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=OiO0xzly
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=zD0jJHrRRvAkjkRc1n4QCTiR4ZH0I6f9OpoiYG7kF2I=; b=OiO0xzlygaCWZXBcbOoGbnjGS4
+	I3ogB51oqj35kLDCI4g9Tm8lX175JhQspX3OZVzfhHfwM+f01tpu7GWZm6lhsdlNsWaA3DhBb6Jks
+	wGqWAxBcxkHoFCGtpTulgZibXc7pY32E++XnxkYqdTPLfmEY32WH8LIvyhSCNoEyrcEGMf45bDyx+
+	rfc/xVbkVIVUKNjcYaApiC0pvsUgsV5PQvX3R+DEIwbXT4x/lO7Y5YUV4Y+B0jzvJyU0eglAFG5xf
+	KrNdQdqzqzsrRpARn8cusO1zCsh/10h65g9J3uv/Eu3UeqhNTIQNlnnp+0JSKP2ujIEoBBdXm6rxS
+	o6HSPr2w==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+	id 1xRRQe-0000000A9Wg-1yOf;
+	Thu, 12 Nov 2026 09:49:12 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id EF3A2300400; Thu, 12 Nov 2026 10:49:10 +0100 (CET)
+Date: Thu, 12 Nov 2026 10:49:10 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: mingo@redhat.com, juri.lelli@redhat.com, dietmar.eggemann@arm.com,
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+	vschneid@redhat.com, kprateek.nayak@amd.com,
+	linux-kernel@vger.kernel.org, lukasz.luba@arm.com,
+	rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org,
+	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+	sched-ext@lists.linux.dev, qyousef@layalina.io,
+	christian.loehle@arm.com, pierre.gondois@arm.com,
+	sshegde@linux.ibm.com, kayracizmeci@gmail.com,
+	tim.c.chen@linux.intel.com
+Subject: Re: [PATCH 08/20 v3] sched/fair: Add push task mechanism for fair
+Message-ID: <20261112094910.GK2668804@noisy.programming.kicks-ass.net>
+References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+ <20261106151947.3991524-9-vincent.guittot@linaro.org>
+ <20261109155418.GL1779021@noisy.programming.kicks-ass.net>
+ <CAKfTPtA-nrgGQGcBPqNoPk4atOHakyZK9Fk-4AsrHBrnvPXTLQ@mail.gmail.com>
+ <20261111090155.GF2668564@noisy.programming.kicks-ass.net>
+ <CAKfTPtBfQd5nD9jNdayGbEW_P2bDMvOm=GZ3Q-gu+O6KkQmKbA@mail.gmail.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -95,26 +79,62 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-X-ClientProxiedBy: EX19D031UWC004.ant.amazon.com (10.13.139.246) To
- EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKfTPtBfQd5nD9jNdayGbEW_P2bDMvOm=GZ3Q-gu+O6KkQmKbA@mail.gmail.com>
 
-Hi Tejun,
+On Thu, Nov 12, 2026 at 08:01:17AM +0100, Vincent Guittot wrote:
 
-Fair point. I am happy to focus on the fair patches for now.
+> I don't want to take any random task from the rq but only one that is
+> meaningful. Why do you think having a dedicated pushable list like rt
+> and deadline isn't worthwhile?
 
-v3, the two fair patches on their own with the bot findings fixed, is
-on the list:
+Well, effectively cfs_tasks *is* the pushable list. The below patch
+makes no effective difference, and can be argued to be an optimization.
+Currently every consumer of cfs_tasks goes through can_migrate_task()
+and every task that has nr_cpus_allowed == 1, will fail that function.
 
-  https://lore.kernel.org/all/cover.1794398404.git.sieberf@amazon.com/
+The thing seems to be that you want additional constraints on your list;
+like dropping tasks after one push attempt. The other classes don't do
+that, they do the same thing cfs_tasks does and keep all runnable tasks
+that can migrate on the list.
 
-Thanks,
-Fernand
+I'm not against adding another list per-se, I'm just struggling to
+understand your extra semantics, because its not _just_ another pushable
+list, it has some extra flavour.
 
-
-
-Amazon Development Centre (South Africa) (Proprietary) Limited
-29 Gogosoa Street, Observatory, Cape Town, Western Cape, 7925, South Africa
-Registration Number: 2004 / 034463 / 07
+---
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 0552eaf64e95..8c81d236b24d 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4693,7 +4693,8 @@ account_entity_enqueue(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ 
+ 		account_numa_enqueue(rq, p);
+ 		account_llc_enqueue(rq, p);
+-		list_add(&se->group_node, &rq->cfs_tasks);
++		if (p->nr_cpus_allowed > 1)
++			list_add(&se->group_node, &rq->cfs_tasks);
+ 	}
+ 	cfs_rq->nr_queued++;
+ }
+@@ -4709,7 +4710,8 @@ account_entity_dequeue(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ 
+ 		account_numa_dequeue(rq, p);
+ 		account_llc_dequeue(rq, p);
+-		list_del_init(&se->group_node);
++		if (p->nr_cpus_allowed > 1)
++			list_del_init(&se->group_node);
+ 	}
+ 	cfs_rq->nr_queued--;
+ }
+@@ -15620,7 +15622,7 @@ static void set_next_task_fair(struct rq *rq, struct task_struct *p, enum snt_e
+ 			set_protect_slice(cfs_rq, se);
+ 	}
+ 
+-	if (task_on_rq_queued(p)) {
++	if (task_on_rq_queued(p) && p->nr_cpus_allowed > 1) {
+ 		/*
+ 		 * Move the next running task to the front of the list, so our
+ 		 * cfs_tasks list becomes MRU one.
 
