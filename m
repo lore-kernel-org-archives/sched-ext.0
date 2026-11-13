@@ -1,54 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.119
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794542859;
-	b=Kdv9tKWUid09Zteu7on1+ipBbB+S/4SGUySgd+jA6htzor6O+Rn0cgA8TzxUBbUFZCQx
-	 cvd+ojxU9fCKjriHsQ2UEDQ4qfhjMMF+AZqKoCSNzD7d62p6dA1YF7RDSyMlX7lMGvZ3P
-	 jB4z5o1FJcnSRCHTiZggFTlPzZ3IXi3X26ZXvyXx6URbeIAf0VvxGCMjL9D7EDFMo3Ggp
-	 eufTY67Uo8wgz3SS22cXR69h1oPjoUygJYujeeShSUSPW18Iz/znZgXpWiZ/k5pQMNdKk
-	 sdFI04e50XMSNGQONskOwmI10rmAyLkVSJdBN7j3sLoByyqsBHoeaTtNQe9tn5BwUvw==
+	t=1794547919;
+	b=zXd3D/noBNPD5JtuUpeNJYJ4MNvDhX6CDlz/hZWu1VHSBXUTvhfRzeQ42zxjoMMyWqOU
+	 fvvMF0Re/nJLErV7kYJMKv8Tjblz6uSR9c3xNP6g+Aj2Egp+8eAN0Yy05jmh/mmRs5sp+
+	 H1T9OgtLfKA6xdHG19fh9oR3GyhiU/OxZV1TnS20Bp6qC+m7KzcwOa65KEGYF1xT3/yjD
+	 ZJ4jlaU+6pCfFGJkyV4z5CR39kqrwJgnDtAJtIODbqsyRn+Bg8nh+Q72zn7L8P3i0vjMK
+	 wKtTIeKnJzb6VAI7lJSA4daJjN4s7TDwzBTNZh0awqsjm5UmdCr13VprOu7C7ar9SEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794542859;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Cc:Subject:To:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=URjcWFFmaQz9JzFhkAeN4Frd2qPoCJDSemfggDPbALI=;
-	b=dD1OPeqlYXd9OWDa3YyP1OQBVqPHgfgptV0uuu8NuBYi7Mf9b73VXINT6feXRwcFJ6iW
-	 VE5LHzEZwUI0hP7ebH8wDTe0GIe96dWmLNHWppqm89DAHr+txoSvI2AI4TNoURQCwUL1c
-	 Xqfc3G0m0bDVrwBdZY7OG8WTeZxCxsMIkDu5svXZcOtC1nfamqRvA065tYY4hH58mvXku
-	 KnvzkjCFwnAiW3yS1T0E/mJpLfwjGopX7qhwE+p9KRLF67ZMHLoxJTbPoWYv3iGgG1l+O
-	 k2bT94FF0i5FyupcKgiyvLBYN6laSaN4jlETwVA9mHs+puDUXLkjijaAyPzzDfr0KCQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794547919;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Date:From:To:
+	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=Ba6WMI+eH0A0XYWzYjkOrHuY+1qhzJ7ZLbDOBJrgo58=;
+	b=q31obQPi2Y9qHmltnDgIYEpQ0jIdh3bAXmYF/I3B+6z/FZ8Kz7pUX2KaK+0imDPBaGSc
+	 Tz8bDW0wutb78/HbNaOUGJGBst3ICbcHcAjhb/pmPbYZjDiZKQDHoOM04rszmRp7hmJ3P
+	 sVhX4JOpAjGhjuftiENAzJ+D9d3W7BF5JRUT2BfdStUAB55VcLCXwkZ7u+uJjXZWYPiXQ
+	 hTx6ZWc0qLBVk+Ee74xDPvpkyIo9q4iS9309MtarNh0674Xq7GGuekTS/PfQEfqUX/HPe
+	 Z6sCtSHGlNZLxLbekTKm6z3FBsEMyLSLR4WcstbQ8Em6klOaASQ12zxky1ITb2LkWCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=lh+5Wx9z;
-	arc=none smtp.remote-ip=95.215.58.119
-Received: from mta1.migadu.com (out-119.mta1.migadu.com [95.215.58.119])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="FE6P8j/0";
+	arc=none smtp.remote-ip=198.175.65.16
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2C7606A323
-	for <sched-ext@lists.linux.dev>; Fri, 13 Nov 2026 04:07:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9B2C7606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105E1606A31C;
+	Fri, 13 Nov 2026 05:31:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 105E1606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=lh+5Wx9z
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=WOR7k447wuym28T+VI83MiZCHdDAluAll1lu5BCwOYk=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794542855; v=1; x=1795147655;
- b=lh+5Wx9zqLFj+ASf4/F0EYXl7iurm2KL7BxNxHir87qOojq9SoWRR8J38Ikg9jRnuL6fHvLo
- 90LdRDEpg3CUcSn7OcJSU6lpdZSUJ8N14ZvKpiKgsdKPpvn+dbQQ+N+wSqA3FTq9uzm+/3ZFgCH
- haFgQQZGW1zlhO8Sw0gK/oVY=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 65693a2ca75d0c4c;
-	Fri, 13 Nov 2026 04:07:35 +0000
-X-Mizu-Trace-ID: 65693a2ca75d0c4c
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <2df669c7-d321-4cf3-8e04-250ad527a28c@linux.dev>
-Date: Fri, 13 Nov 2026 12:07:19 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FE6P8j/0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794547917; x=1826083917;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=wU1MQ3okr3j4hH5DB7t1ThuMNxBMz1z5jxvll2cwO8E=;
+  b=FE6P8j/0c+Np920CAIEf+t4AB5Mv/fr/koSl6q2XDdU6SA8gVXOHrskK
+   7SPKP2fiADk5QNqqeidk9cKY/pr35Zls3Fx/rVYIYMLXbsr8V4YpyI6JX
+   H38IVJ/pcbRI17ucjZfRP3/kXq2VqTQqanR98fEPkn5bSNNVfmDSZkd/e
+   M3zzNf7ddGhwgdRCiVw9VJSQiNz4w1ydoAiJXy6/8ycUxFKTUw3OlzhkV
+   jlcF3aNZF3oMUDRxTIcJ8uYgV/HegQPPrk3Gmpn2K1/jSP1OCMJb/N3fo
+   4nxGZa02HMoapubK3Fh+k765UnGRQ6eSqWNflC42+ZyxtTtG9DNiWF+QA
+   g==;
+X-CSE-ConnectionGUID: B9k9MuzhQQCHucogspBzYg==
+X-CSE-MsgGUID: Ijs8+SU8QUm+YezgRfX5Rg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11964"; a="3333636"
+X-IronPort-AV: E=Sophos;i="6.27,211,1787036400"; 
+   d="scan'208";a="3333636"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2026 21:31:57 -0800
+X-CSE-ConnectionGUID: PJtJPZlQTpK0EHcF36dOgQ==
+X-CSE-MsgGUID: 6NTBylRbQt+nZaN19ITuWg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,211,1787036400"; 
+   d="scan'208";a="9179999"
+Received: from lkp-server01.sh.intel.com (HELO 0caa9d2d175c) ([10.239.97.150])
+  by fmviesa009.fm.intel.com with ESMTP; 12 Nov 2026 21:31:52 -0800
+Received: from kbuild by 0caa9d2d175c with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1xRjt6-000000012QV-1CP8;
+	Fri, 13 Nov 2026 05:31:48 +0000
+Date: Fri, 13 Nov 2026 13:31:22 +0800
+From: kernel test robot <lkp@intel.com>
+To: Vincent Guittot <vincent.guittot@linaro.org>, mingo@redhat.com,
+	peterz@infradead.org, juri.lelli@redhat.com,
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com,
+	linux-kernel@vger.kernel.org, lukasz.luba@arm.com,
+	rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org,
+	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+	sched-ext@lists.linux.dev
+Cc: oe-kbuild-all@lists.linux.dev, qyousef@layalina.io,
+	christian.loehle@arm.com, pierre.gondois@arm.com,
+	sshegde@linux.ibm.com, kayracizmeci@gmail.com,
+	tim.c.chen@linux.intel.com,
+	Vincent Guittot <vincent.guittot@linaro.org>
+Subject: Re: [PATCH 12/20 v3] sched/fair: Support not wakeup case in
+ select_idle_sibling
+Message-ID: <202611131321.iXTrhEmV-lkp@intel.com>
+References: <20261106151947.3991524-13-vincent.guittot@linaro.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -58,53 +93,40 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, void@manifault.com, arighi@nvidia.com,
- changwoo@igalia.com, liwanwu@kylinos.cn, usama.arif@linux.dev,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
- bpf@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH 0/6] sched_ext: fix kfunc, sub-sched, flatcg and idle-mask
- issues
-To: Tejun Heo <tj@kernel.org>
-References: <20261112130934.563321-1-cui.tao@linux.dev>
- <eb63bdf20dd6e2f09b0e7c81bc905878@kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <eb63bdf20dd6e2f09b0e7c81bc905878@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261106151947.3991524-13-vincent.guittot@linaro.org>
 
-Hello Tejun,
+Hi Vincent,
 
-在 2026/11/13 01:34, Tejun Heo 写道:
-> Hello, Tao.
-> 
-> On Thu, Nov 12, 2026 at 09:09:28PM +0800, Tao Cui wrote:
->> This series fixes six issues in the sched_ext core, the scx_flatcg
->> example scheduler and the CID helpers. The core.c fixes travel as a
->> separate series.
-> 
-> There's one actual fix here (1/6) and the rest are rather vacuous. Can you
-> please think more through each change and whether it makes sense in the
-> context of actual usage? If these are coming from LLM scans, please don't
-> just follow the details that they surface. It'd help to actually use the
-> thing that you're producing patches for and think through the implications
-> of the changes that you're suggesting.
-> 
+kernel test robot noticed the following build warnings:
 
-Thanks for the feedback.
+[auto build test WARNING on tip/sched/core]
+[cannot apply to peterz-queue/sched/core amd-pstate/linux-next amd-pstate/bleeding-edge linus/master v7.4-rc2 next-20261111]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-I did use LLM as a development aid. Some of the patches started with
-issues it identified.
+url:    https://github.com/intel-lab-lkp/linux/commits/Vincent-Guittot/sched-eevdf-Reset-lag-at-wakeup-when-prev-CPU-has-been-idle/20261106-161929
+base:   tip/sched/core
+patch link:    https://lore.kernel.org/r/20261106151947.3991524-13-vincent.guittot%40linaro.org
+patch subject: [PATCH 12/20 v3] sched/fair: Support not wakeup case in select_idle_sibling
+config: nios2-allnoconfig (https://download.01.org/0day-ci/archive/20261113/202611131321.iXTrhEmV-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 11.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20261113/202611131321.iXTrhEmV-lkp@intel.com/reproduce)
 
-I see your point. I focused too much on the issues and not enough on
-whether the fixes made sense in the context of actual sched_ext
-usage. I'll keep that in mind for future submissions.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202611131321.iXTrhEmV-lkp@intel.com/
 
-Thanks,
-Tao
+All warnings (new ones prefixed by >>):
 
-> Thanks.
-> 
-> --
-> tejun
+>> Warning: kernel/sched/fair.c:12994 function parameter 'rq' not described in 'idle_rq_without'
+>> Warning: kernel/sched/fair.c:12994 Excess function parameter 'cpu' description in 'idle_rq_without'
+>> Warning: kernel/sched/fair.c:12994 function parameter 'rq' not described in 'idle_rq_without'
+>> Warning: kernel/sched/fair.c:12994 Excess function parameter 'cpu' description in 'idle_rq_without'
 
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
