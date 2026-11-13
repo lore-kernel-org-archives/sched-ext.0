@@ -1,53 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.92
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794504879;
-	b=gCcnXnXy1PnXR7iNMLtlXsIY2K5pW5RRliysvgzg7grQQYEYpBLGn1OBnR+PyzU1N3aX
-	 0NHvjzF5a6jAiYJib05yaFE3EmmExG0t/K+fS7hDRoyBx9BTZtEmSvgkNDRy82SuasHOl
-	 vZzqayTjwOKijjF6pSBBPQRezCJt8eInFc02lFA6i94mZGjqQ0hztZiDuvTpsNPgC93c7
-	 cWTz0ZoHZ2aIiZHYDqcRZc73uUZnwgRRKHiAMYKfGgCvfMubEPh6ce9jJEtORP7CfM+LP
-	 7RUn8VnyKkRUTZm57Uhlr3Y0Dfa8hgPIx+MycIS9KfCO9w4ZxH91ouwgCOe3DV2/HXA==
+	t=1794537928;
+	b=KOeqefIlQy/9VM4e0GVSj30AP6WHbVHxElcUbYeb5O/NXu+c2WW02CuTzU33nwxkWY4F
+	 BeH489Ujxeu2PrIzjGWntW3TedsOPuAFlX/2UBeIzCLLlLWAbDg+bJk3keeE2AOz74gzX
+	 ua7FWkLJmrjIe14+jAWannHaRZxOpiwjYhs1MEY8ZJV60yrlTPUazTOG1PfReCOVlbUUI
+	 y4WuD4aNhqZ6xPyRJ6JHDaUxirjjwHAYWDbn3Lp5P5Bp7Emmnofzlicm7dV1KLoHRtWJJ
+	 EgWUtjOIBn+mtlLMUfA1zEKjiU6mOkHwQkwYpdhDQelKLLJMI4XB+ltV9Urwzr2WOpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794504879;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=wzwyNnKIjrnozPoGZW9Td2OwtKGX1s/ksO11oNcMF2o=;
-	b=WqPn9c5Lvex0HfVJKF/4eYXtziiVC8lmGOhxhdLnJAm/GkuoCoMyyNn+KTWRfA40QUFc
-	 mNeUwAQyIgUJZ0BvOyKVkLd5Cz+sO0nJbCqUuB7MlTtdHdBeK39rZtl2BJRFlUiPSqCuF
-	 RD2CrvojORFSFBeGzT/ZiYBIw/SL8uYT54HaNtEt6/j6p2MByYfdfr0TukdJomVew0chP
-	 rEIFNce6fRgvqQuAf+XYio59KZsq+nZ+blhUgEt+z2cki7CgqKkypbUbC+GKqIRMUuogQ
-	 DX3YrQWByWy+GakoKuCBY0tSl8XbOSR5RJgYvHhUnI+pd+hEbbqJKEB1fksM25ekJzg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794537928;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:From:To:Cc:Subject:Date:Message-Id:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:
+	 X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=g/SGycCInIofj90xk9/WpIqfNJA4ZAAGanQ1HDKZcOQ=;
+	b=bvFQPduamzxYMdcjUwG+kcyRa3e8YO7cIwiSgqJvI9Mboih87D5zorRHnJzjkXHO4cRc
+	 T0pYPFFmauuhS21Bo/7xIDoauxrpSuziBRDVqTdcoTCfGAYNUodFt0gYiNZg2yaBSi82o
+	 EQUZgIBmI3MZeJ2PuaCwiLePW98QpOXA0R0+yt4fXlvcoHf/QG+x9baZrX9QHz73uXdly
+	 2siUqh0GFMQd4GGDQ3vbampM8Q6c8SdviGPkeqIHK8qBdOBmSGUDGUQHemgbKKqxYTOan
+	 CFI7hWLqdR4eaf0nqrOrbngdGNqu5lv+z+9tVXq+u50Lejt0jcaFkkQqOuGYJCiReKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=e9WIuLfC;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=smail.nju.edu.cn;
+	spf=pass smtp.mailfrom=smail.nju.edu.cn;
+	dkim=pass header.d=smail.nju.edu.cn header.i=@smail.nju.edu.cn header.a=rsa-sha256 header.s=iohv2404 header.b="YODF/bdh";
+	arc=none smtp.remote-ip=54.254.200.92
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A1D606F28E;
-	Thu, 12 Nov 2026 17:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9EA606A32E
+	for <sched-ext@lists.linux.dev>; Fri, 13 Nov 2026 02:45:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CF9EA606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=e9WIuLfC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40D01F000C4;
-	Thu, 12 Nov 2026 17:34:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794504879;
-	bh=wzwyNnKIjrnozPoGZW9Td2OwtKGX1s/ksO11oNcMF2o=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=e9WIuLfCLY6UYzQC0AA42ciW2KFC9WkpP+EIqHqlwQiFsRytgycgP/EvVDAFeGrC1
-	 AQIFXlLOvVVkeLTx/+ccnK3WHMGDieHWouWOHaqvuMKG787t3dDcO+gN3/5oBcNtas
-	 8R8UCZ+i+zfitn1xKmbdHKylkhNpjPFrxOSh+j2vS1Plw6cGJgltFKp6OW5GBZibkV
-	 niATL4pWrlnqYvDVwog9pZ9RkKxUqClOQM8CsG5AEOLcDumqpivEKpVTukrexY6MYe
-	 EhtmDbG8El02VnXXlUSjq3ePoFmm3k5BwxANyWCdWYiBKxhJVNCk3iQPAhGj/9GPpd
-	 YiyX5tu1guogw==
-Date: Thu, 12 Nov 2026 07:34:38 -1000
-Message-ID: <7a17d1d32232abe85b559d61b5d2c536@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Tao Cui <cui.tao@linux.dev>
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, liwanwu@kylinos.cn, usama.arif@linux.dev, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, bpf@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH 6/6] sched_ext: Clear the built-in idle masks on CPU hotplug transitions
-In-Reply-To: <20261112130934.563321-7-cui.tao@linux.dev>
-References: <20261112130934.563321-1-cui.tao@linux.dev> <20261112130934.563321-7-cui.tao@linux.dev>
+	dkim=pass (1024-bit key) header.d=smail.nju.edu.cn header.i=@smail.nju.edu.cn header.a=rsa-sha256 header.s=iohv2404 header.b=YODF/bdh
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smail.nju.edu.cn;
+	s=iohv2404; t=1794537911;
+	bh=g/SGycCInIofj90xk9/WpIqfNJA4ZAAGanQ1HDKZcOQ=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version;
+	b=YODF/bdhKkdBa4kz7xD4J0DxBvL3Z1bUe/rLzhY0cl8rMtdlYVSecRuo2MhVERDmH
+	 V5s+ZnSuXaVr24TkkBMokWraI7RDSZQLA4MlqVnbfZGmlBZfuX3jCkIsEaSzlMDqkt
+	 xL2lNVWpJYwfbl83XS9xSl/1wVTOsR1Y+o/U1ofo=
+X-QQ-mid: zesmtpip3t1794537906te7f6ee02
+X-QQ-Originating-IP: eswpORA6cmZ/EnNGyFUFs3wACJvhwc26BCwIC9deF+g=
+Received: from workstation-Precision-7920-Towe ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 13 Nov 2026 10:45:05 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6365193483630494665
+From: Kang Chen <k.chen@smail.nju.edu.cn>
+To: Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH sched_ext v2 1/2] sched_ext: make DSQ iterator stay drained after NULL
+Date: Fri, 13 Nov 2026 10:45:04 +0800
+Message-Id: <20261113024505.922854-1-k.chen@smail.nju.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261110125113.2935742-1-k.chen@smail.nju.edu.cn>
+References: <20261110125113.2935742-1-k.chen@smail.nju.edu.cn>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -57,25 +72,94 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:smail.nju.edu.cn:qybglogicsvrgz:qybglogicsvrgz5b-1
+X-QQ-XMAILINFO: MB5+LsFw85NoCzqSXiMdVCXKgzYec4/K/LNNH3dA4ljA621uR9cJhcTe
+	nf+RA/BM9MoHNIaJ6V8Tq/aOy16uGBTn8VCaIGs3RowNnh8CAokfE4dP9i+TEOZmbQ6trVj
+	nIQL6D/aB/mf1hIR5CWecfGG74oIA8kW0F2eOCrZXxbL/0Iac5C6yMsFdGwXx3utjXl7Iye
+	Ke/R9uRQfquhMBDbQaZudHgQ1wg9q15smH4e9RoXIlKrbc+Bk3jx0V4xuDl/H3ok9gpvLMC
+	B0jc5hJ8hNkhECX9SacyLVebMm6ciVkTfmZGTy2O/DBf75qOYnCAzXMgXE1nTa49yloT606
+	hqj17Ky9Wd5w5S8CAwIoofUcFTAnQNhIRp4YhsI6hgXIAFB1pJ9/Rzso6ECwk0Oj6YdKOJS
+	jfwHFEz5sMdtMFyQzuboMLp4mP3eLOUaKGqDgFFMpiwiab5RiSupFeGD03Xa0Jf885XaTfq
+	zA0bxYnTgqSaOYRkjMUvYTEWhT3c+hSr5W2pt+T38LXsRcGO4uLQtrIbMnuGgSULps4FFy0
+	vSJDOzCtmCpUM72Xkhm83MbCAK1z5dXoKGRcpVhdT8Erh+Lu5310wtllVvgqmsaOokuNH3C
+	AZAsWggjJVA4jdVj5l6fJXV60oK6BOrEiuUjllySXLamC7sEXYOdCKIUK7dDgUpftsHzP5p
+	COKHvvgG2netX3ECV/g8QAvIlkLMwIKsO7v87hTeLU+wYIytAnIMlGsKohyScW15acwoX+x
+	/Ki5PTapM7bM49Lp2TluQV1vmSFI1LF2a4cIe1dsv3uxRxJi9Rv2FOmeuXLe2164LTlFJHb
+	IDFKpjfzHWgLjYX16S9X43DFgko1OGkR5n+p+cEzOMMvYDGu5jRYOWDckZdbB6xsA3Z7U/4
+	UmwFrdlD8DwC2vOfLmgc/KU9V2Ffi9TIdSZmS9Oh7HDg86m0Py4OgfGghxPISU1jnPQgGgZ
+	7E5yVV17jRL/rs3AqHKWa3Tgx7q1yiIX5MP2gCrD0xavY06HNisdBPa5Stqtubu180hEyyd
+	rRK1jBsa3mLzBORpJlFB/w6PaXQ1OTlq0PgwLMhArQm5OoKkZrNr37rJYzqIVK6V9AhvCUv
+	g==
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-Hello, Tao.
+nldsq_cursor_next_task() unlinks the cursor and returns NULL when the
+DSQ walk is finished.  A later bpf_iter_scx_dsq_next() call sees an empty
+cursor and nldsq_next_task(dsq, NULL, rev) starts again from the DSQ
+head; the old tasks are still queued, so the iterator returns them
+again.
 
-On Thu, Nov 12, 2026 at 09:09:34PM +0800, Tao Cui wrote:
-> offline CPU as an idle candidate, and the built-in select_cpu path may
-> claim it once before the guard layers bounce the wakeup, costing a
-> failed pick and a bumped SCX_EV_SELECT_CPU_FALLBACK each time. This is
-> not the documented racy and self-correcting regime of the idle SMT
-> handling: the stale bit is a deterministic leftover, and read-only
-> kfunc consumers never trigger the claim-time self-correction.
+The verifier relies on the iterator contract that once next() returns
+NULL it keeps returning NULL: process_iter_next_call() marks the
+iterator DRAINED and treats later next() results as the constant zero.
+A restarted DSQ iteration therefore hands the BPF program a kernel
+pointer while the verifier believes R0 == 0.
 
-The failure mode is benign, and the patch doesn't address even what it
-describes. With a scheduler which implements the hotplug ops and only reads
-the idle mask, the offline CPU stays set in the mask for the whole offline
-window with the patch applied, the same as without it.
+Remember the drained state in the cursor flags and return NULL on every
+later next() call.  The cursor has spare flag bits and the BPF-visible
+iterator layout is unchanged.
 
-Thanks.
+Fixes: 650ba21b131e ("sched_ext: Implement DSQ iterator")
+Signed-off-by: Kang Chen <k.chen@smail.nju.edu.cn>
+---
+v2:
+- Shorten the code comment.
 
---
-tejun
+ kernel/sched/ext/ext.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index f74ffb3b1aca..8a7a33e203c2 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -580,12 +580,14 @@ enum scx_dsq_iter_flags {
+ 	/* iterate in the reverse dispatch order */
+ 	SCX_DSQ_ITER_REV		= 1U << 16,
+ 
++	__SCX_DSQ_ITER_DRAINED		= 1U << 28,
+ 	__SCX_DSQ_ITER_HAS_REENQ	= 1U << 29,
+ 	__SCX_DSQ_ITER_HAS_SLICE	= 1U << 30,
+ 	__SCX_DSQ_ITER_HAS_VTIME	= 1U << 31,
+ 
+ 	__SCX_DSQ_ITER_USER_FLAGS	= SCX_DSQ_ITER_REV,
+ 	__SCX_DSQ_ITER_ALL_FLAGS	= __SCX_DSQ_ITER_USER_FLAGS |
++					  __SCX_DSQ_ITER_DRAINED |
+ 					  __SCX_DSQ_ITER_HAS_REENQ |
+ 					  __SCX_DSQ_ITER_HAS_SLICE |
+ 					  __SCX_DSQ_ITER_HAS_VTIME,
+@@ -11028,13 +11030,18 @@ __bpf_kfunc int bpf_iter_scx_dsq_new(struct bpf_iter_scx_dsq *it, u64 dsq_id,
+ __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *it)
+ {
+ 	struct bpf_iter_scx_dsq_kern *kit = (void *)it;
++	struct task_struct *p;
+ 
+-	if (!kit->dsq)
++	if (!kit->dsq || (kit->cursor.flags & __SCX_DSQ_ITER_DRAINED))
+ 		return NULL;
+ 
+ 	guard(raw_spinlock_irqsave)(&kit->dsq->lock);
+ 
+-	return nldsq_cursor_next_task(&kit->cursor, kit->dsq);
++	p = nldsq_cursor_next_task(&kit->cursor, kit->dsq);
++	if (!p)
++		kit->cursor.flags |= __SCX_DSQ_ITER_DRAINED;
++
++	return p;
+ }
+ 
+ /**
+-- 
+2.34.1
+
