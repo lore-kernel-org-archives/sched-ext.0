@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.85.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794648821;
-	b=V8++swjxCtMJMy+l0yB4f/A4m5Wr12J0/3Z24Pz76hJIGt5Jn6Aj8s1+FPKifE0n14vy
-	 7ctuyxFvHCJtdCYWrPdSFOu4HKcfrWqO+yZJQ9MTogqM5K8mRGTGemxeaHar6sqrfRmku
-	 37ZToftxkk+Y1prTH7GyzmfAhBqVDjMeRmBh87iVOaz7dUavG08NSMy8Ub23m2G98hUSO
-	 cRnuBh9Xnx7CjeH6Gs5ihUMW2XQrySO2ubKIVK5sec1+vP0lYHcJAAGFn3pAjfLWIkp93
-	 0CqpcY6q+oUMhzfyxL+MAiditgXB3riU0tEtHyrnnDGrbQmmTTpKscCBPUr8ayt0/Ng==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794648821;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=F1LhvNH1OGbP1fETUk2FltJbgLwx1EM2kRcECiWyQII=;
-	b=tKi3cRHZDOrJ22Bhcr3DoB3BBZn4M7pkzTHbZJsRWq/GQCR/63cSQA/bvQS7plavd+Uq
-	 cef6r+sSXL7FTpXacuzWwvT21LYs6iu8EnyQBcsGWfTFMm7C+tdWct7Zwu3ZjHDqOwLwA
-	 h41df5gNcBWrSCA/7K3JqaM+JP6BtwceYzYZ6Raufn44kPyEHtl533PdlsThyeLGfooUw
-	 p/RgxUYjL2GWpNAdmzYeabG+vXVt2ssriivW5JBmP1ZHOIrzgElZsxV4/Y+u5os+aoF9b
-	 UgR14zUeShu/3SDOZqGlOvX+Y92YdNzKNEulFZnHsBq6SbtPFi40uKzqNyYttfSsppQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=uSUWRY8F;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.85.51
-Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010051.outbound.protection.outlook.com [52.101.85.51])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.170
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794700220;
+	b=N+5CGlD/WNJRnhv/u0JARF3owjduUguNJCq5Y+i9b3x2rlZ5HZYiorx+Ocf9nqDRRKx3
+	 b0MyNzqhN638EQWBWyGKS77ZiG8oXUzpmcWYJ4A44/bSPX3yAJseBwEV+hGTrFcWYI7dC
+	 IEsPhZOcY1lkeTObtDqZRgVDq4+FFan6s6bAjC4Y0advJ9Dne12K3lUhbgRJ3mQzsa0eV
+	 wtnxsZNo2PueO3YmY0zseLGBAOzBhGobSZ5uxj73QvNVwxBbpRCGONctNt5MaMKWpqvPr
+	 veH5Cqo/Dtu0aFPZU2wD4+emdibN5eOBInuYjWYpk9b9bOT7zCwJPcB6g6vXgQgHIhg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794700220;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Reply-To:
+	 In-Reply-To:References:Subject:Message-ID:Content-Transfer-Encoding:
+	 Date:MIME-Version:Content-Type;
+	bh=9WjvtiY51sWSw14iNKHhCucnp3JFTZbHjNFqFb6CVMs=;
+	b=jgtsurNaGsLtg4rjM8yGbYL+OwL8c4v2roMDEJfy5+cM7Od21/NK/7DLmIi1S/tE8oKP
+	 u1h/dNBx6/N3yevcRiy3EZXxNKdrkcvJu/mrpsmet0G1u4zhWu+CHuxC/uOW91By4Cnew
+	 TFN4WZzyq/EJZ4LUyKNBMR4Yb56pRLFeBNrSuIB9iz54PFFtz1XIXocLJXarocJSq7Ft8
+	 jiUMpKjv+Z6fC8NfisSOKMuBeT08xzS4E59tVvQFZq7LJ+gHlMT7KcZBrX3M1Mk1GeEjG
+	 m9O9xImNYLGY6roPthNIVb32MBfkXkVTlARyScchWGi4+pltjygtSCJGqbHgJlOQJZg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=realtoradnan.com;
+	spf=pass smtp.mailfrom=realtoradnan.com;
+	dkim=pass header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=T73aB2SN;
+	arc=none smtp.remote-ip=209.85.160.170
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA55A606A329
-	for <sched-ext@lists.linux.dev>; Sat, 14 Nov 2026 09:33:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DA55A606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC9D606A33A
+	for <sched-ext@lists.linux.dev>; Sat, 14 Nov 2026 23:50:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BDC9D606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=realtoradnan.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtoradnan.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=uSUWRY8F
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=L73qb/PHvLuT8A58YkN1MDlSsaypvk7H26m2zCI/WsEzxJMXVR5P87GJeQfR3qPmdiiTK0Ehm6ADj+QholEnyynz0bVTAO3eJfSkRvhku3yh+IawC3lXZ628NUfWxhgCwJHJUNdF22an6p3ba4ARM5inSM7tFk9tvWT4BbU/Abg/Zdt53ZS4ooLDFHPV4plP2C59XTAXJALD2ZTuvVimww9YbR4ubimqeVZ9leKUQ69Veh91YgA/joLW/446WIKcQA126DkWOrckRNjNsNSi1mCq6jBAuUIQ9MCW4gocBw3BQGOQ055+QWsLV4V5mfTh2pSin1k/AZVpqgoRKdX4tA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=F1LhvNH1OGbP1fETUk2FltJbgLwx1EM2kRcECiWyQII=;
- b=xN2rQEzVW1fZnINhc5rhbIuzxcSMgqcYE1EtDyemEwXfyrQ+KBxkCedI+gYUN33K271hgDFnnMYLdkchljaBhVqCp6Ik9mFRmgx+pXCminqctUlcUqZ8SfGfAEFFjwPVAk817gyerEnjGD7B5g9tzISG68ArQGq7kGyl+pv7i3ja4zB4T08om4AzW++dw9mHkpgxRkGsGkA581G4y5zBdkTtD8FVdTTID2NxslXpyfDZfwQfpx4yWzL4f3Yqf+NQcbdUPeoQFs03bbhnnmfrJ/PBdeCvGApZsUQM0CPmFzIkTL3gbsT6YiANdTTb9QFQAK/Mm/rJEQwYMMdHtl50+w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=F1LhvNH1OGbP1fETUk2FltJbgLwx1EM2kRcECiWyQII=;
- b=uSUWRY8FoB06oVJaYGrfzaZm2hLL1QwQy7A0zMeAUCoH6UTsLqmt3IfLUDW9tj9DFay6FBI+iUQ94Y1ASWmLofU+RaB0oAnVVzREOBV7qWPGxQxi63CqAtWUz2I0YiH3Ymlu768DmU5Ecd8LAZRKrIJ5lntfalwMJXu6XeNWnFAhCdxnLpOz3SaikhLmSzcZAh7nhsZvGUTARbm+YT9H4CJGgiVSheoWjMSaGNVKQacczH93UV3eTJ+kztjJLgUocH1EEkY8xb4TRLwTw5Ns93X67EFfw1tAgDHS/YOCKCJjtGlERicI6eFAkXCkyT+KFyem14GHFWfLM5mBMdyw9g==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BN9PR12MB5179.namprd12.prod.outlook.com (2603:10b6:408:11c::18)
- by MN0PR12MB5713.namprd12.prod.outlook.com (2603:10b6:208:370::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Sat, 14 Nov
- 2026 09:33:35 +0000
-Received: from BN9PR12MB5179.namprd12.prod.outlook.com
- ([fe80::cf08:f59b:d016:c95f]) by BN9PR12MB5179.namprd12.prod.outlook.com
- ([fe80::cf08:f59b:d016:c95f%4]) with mapi id 15.21.0615.010; Sat, 14 Nov 2026
- 09:33:34 +0000
-Date: Sat, 14 Nov 2026 10:33:26 +0100
-From: Andrea Righi <arighi@nvidia.com>
-To: thamrinjonathan@gmail.com
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	sched-ext@lists.linux.dev, linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: Re: [PATCH sched_ext for-7.4-fixes] selftests/sched_ext: Measure
- rt_stall runtime over sleep window only
-Message-ID: <avgq5uoA1hXkZg5P@gpd4>
-References: <20261114-scx-rt-stall-v1-1-4188a9378067@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261114-scx-rt-stall-v1-1-4188a9378067@gmail.com>
-X-ClientProxiedBy: MI2P293CA0009.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:45::6) To BL1PR12MB5174.namprd12.prod.outlook.com
- (2603:10b6:208:31c::19)
+	dkim=pass (2048-bit key, unprotected) header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=T73aB2SN
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-55c5b6584ceso6724911cf.2
+        for <sched-ext@lists.linux.dev>; Sat, 14 Nov 2026 15:50:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=realtoradnan.com; s=google; t=1794700219; x=1795305019; darn=lists.linux.dev;
+        h=content-type:mime-version:date:content-transfer-encoding:message-id
+         :subject:references:in-reply-to:reply-to:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9WjvtiY51sWSw14iNKHhCucnp3JFTZbHjNFqFb6CVMs=;
+        b=T73aB2SNc/BuGXMBSYPqeDdsBwadiw7jMfSrEq9xdq2PNS5PYUzeQtW73rsNRXyZPL
+         SyCX8NqqKan+0cy8d4+36RsBNQt9X0lLed56cyByX9yrrg4pyJFE/FTOBdpfsweASOuF
+         8WXmrhFUDaTCF3gIMAu1/+78XlJQTUQZTfNEcsWRQmYvo/CWALXrxSpcXvDwE2DMApDY
+         OAd5YyULFzL7yCyK5N/jS7XSmDqUcfUnnZCIApqmtXHtwjfbqZdZZNXsBKkLhsBwKMCN
+         DbFPkVbxeWZ8iqabNAF4OrjM9XYvk3yQtvy/z4Kt/CGpm1TqS/VBK7ItCHAYKMC7ulZ8
+         xwhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794700219; x=1795305019;
+        h=content-type:mime-version:date:content-transfer-encoding:message-id
+         :subject:references:in-reply-to:reply-to:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9WjvtiY51sWSw14iNKHhCucnp3JFTZbHjNFqFb6CVMs=;
+        b=hWEMCUJhNTlN1GGc2NxgeYktnvhpY185CMfYh6LI1LtdJ//YzabgrE6gvoepkN6cUk
+         igw+Cu/23wOFkLPVgjbgZ9ULK5sQpPmEgvHIhzUyS6sUCw1ZHz5uXRJJRDL7quEc9nB/
+         X5LLmxdmjVXc/GPsL2DMnJHL5KVsF1ILfntiB71B15BAYUy4cvIOiiXb3XkYjk9k3rHh
+         73qc7FKVXwEPvJBGloU8Vx65I1fKjysQAwt6A3wtw+lKThb1crmz89YyZJJ59MZAYHP3
+         L9sQzzVOmn9RkiltjMGI7r6K+QEbnqehuzQwSmywYXcDwn3Wf3HYzt9vW7x9q02xjW9o
+         GuAQ==
+X-Gm-Message-State: APuU4Z9JRFEYDtNaALrSd08c4QopeUX09U1Ll5T/vF9br+PfSweCIaPE
+	0WuBzSZK7JpqY8ebzeg0NK6cqrpaMAtejQHZUwt1zQ83dSuppGd9yomhg0vqc4OR+Cull//kFPt
+	7FCjqSeH6vlg=
+X-Gm-Gg: AYBFou37Edbm4OYbJgrwEVoxKz3fSH1EqQC7I9LGmPWqeHV2p44HGLsJFqtWOcndKOJ
+	dASaCI1lb/RSBTaT/AbdPJYQn6lst9BqTHKlLY4eHsAbQvm8O8NTrfkFz7M7z7Luih8YxiYxko+
+	JMuV8RUONkRfpU7W7HDV9stjFAXeNNROLe8syIIbUFZiLt7oyRu6KyE/KCCx6Gjpa6H8ynvP268
+	/r7G7VjTkCj/op+Jf2JQNSHHQBSXEwLVx7KvPavmxzBZdAdZUZ28QA5vwupxB7BJP7qel9QX9hv
+	JP3NpuaA+gDuWLYjZG21k44WpeD8kLJX6tAW/Yly9Qwd8KszPDCgDRR5NxWH4MxdIiAYH80jgi+
+	EipAlKc1U/NaHBA/ivEtSIjELkX/S3XH2XCJVk3gWJa+PBsVgvaJTFQg59h5niZ6gLOiewP2KId
+	xSu6kuk/QFAsREuaz1ILxuxAiGB1RETofWG0g1WRPdubll2b9Mb4LHygelkdCVIM7iqLj952wc2
+	J2Ybbj1jVZ6QYy2vN+3hGBVEiX7pt0Z/aLRzQd9z9qm4ZRjwj4Rkhp486M8YnnW8pdW3eRSnezP
+	iRoGH6V08DL+d2uswj3aDYHs2IWPPlk2icupa7a8dkI867CfEHUW31NlGJNTtsb4+iXAT4y1ZG1
+	yiO3Kac8Ndh64gOAv9E0=
+X-Received: by 2002:a05:622a:341:b0:54a:755d:6fcc with SMTP id d75a77b69052e-55ac428859amr117710551cf.4.1794700217567;
+        Sat, 14 Nov 2026 15:50:17 -0800 (PST)
+Received: from realtoradnan.com (vmi3719417.contaboserver.net. [13.140.32.210])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55ad0533d7dsm49941001cf.8.2026.11.14.15.50.16
+        for <sched-ext@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2026 15:50:16 -0800 (PST)
+From: Troy Cross <troy@realtoradnan.com>
+To: sched-ext@lists.linux.dev
+Reply-To: Troy Cross <troy@realtoradnan.com>
+In-Reply-To: <db0b751e-c9e5-4e4f-bc32-b6f9663c07e2@realtoradnan.com>
+References: <2f393418-7255-4743-b185-248dbce5c845@realtoradnan.com>
+ <65c5db2e-bdd8-4266-b975-f786b8a8415d@realtoradnan.com>
+ <c6355768-fbed-4c09-be9d-a64036551192@realtoradnan.com>
+ <7104e599-9176-4598-9863-544afc9fcf1e@realtoradnan.com>
+ <db0b751e-c9e5-4e4f-bc32-b6f9663c07e2@realtoradnan.com>
+Subject: RE: schedkit
+Message-ID: <e559b36b-7eb8-40f7-93f0-426c1fe19d2c@realtoradnan.com>
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 14 Nov 2026 23:50:15 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -103,179 +103,52 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN9PR12MB5179:EE_|MN0PR12MB5713:EE_
-X-MS-Office365-Filtering-Correlation-Id: e729afac-5d3a-4f4e-d90b-08df42325a52
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|7416014|22082099003|18002099003|6133799003|261009223027099003|56012099006|11063799006|261022075727099003|261022105027099003|5023799004|10067099003|261026121527099003|261028144727099003|261021123027099003|261021121427099003|261026140227099003|261102123227099003;
-X-Microsoft-Antispam-Message-Info:
-	f8KcKgdDDZKtSpc22B5OeJdDM/Gmi3yN4Fj5wZCdjxdqRlpaXLarFd1EtF7r0LyRkN0g4fz7aRecHWi32kiYzXWfyjTD78JFoU/qFBjB5PAJ/jE7CTyvKPqLNu1M4E+ODWjo+LFJ7P+vLQ7x69FLFYh52GvSXa2WLnuIVRQ5Io/9oK8/+onwSLooGBRWWL6CQpoSFDJo2xOfc7hy5xqHX4mJgiemQ/VDt2esd+ug0jYtVDzmu/aLejIYfARfwk4hqgptWauGQeShqlc6tvVicfkKpgAj2rEdYYtKQ+oNX/fwiyA4BxQsDN+zbe3lAy2CIPl4SDfjNhxZwVBPwp1LwUD+7V/afUpLrBTOStqZLDed6k5vK8tH7qnQfzjuPxPVH7Z3QgY8LhHQEU9Nv4Kw/dKvOzqRzmqjGNxjheuBYrVrdyRTs66nPivPq6XFx8R5B9OIkuhLByIZrmJ26T+P0sW+7N6S3W238+OD+MKrpkka/dFkErxNV56A2ezvYjaO9rZzCCpWx+q1CzP8fKQqprJwAyjRsL02jJEn+aEC4p3NAseE/kY4t7NdiF8NxYDREtz01YQKHAttCL2lGmjXhXGhrUSZB72E34hYppsIjCqC2YBWhZ1kjGn0OGfplUm+vPJtyeIUzBv69SST65DJLzJ8WZnWnylshzwno/+Sy0g=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR12MB5179.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(7416014)(22082099003)(18002099003)(6133799003)(261009223027099003)(56012099006)(11063799006)(261022075727099003)(261022105027099003)(5023799004)(10067099003)(261026121527099003)(261028144727099003)(261021123027099003)(261021121427099003)(261026140227099003)(261102123227099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?QMURXuty2TOyQJsdtDxmK2Qr0Vh1EGIftHq4YIE8157sgolIZGufqeW/KoxS?=
- =?us-ascii?Q?vCjuRKqE1aUvXpW2LLskzKECPiWo+tlqUL8VbB3oNqQsMVoJpRVqMkq19NpH?=
- =?us-ascii?Q?ABh6mKkAIFq2nAdVwl1hosLkZNDcebvZA+UH0ka6QBHxTZ0MnDydPao+aGBH?=
- =?us-ascii?Q?8pTwXHYch8/QQVoE/nLKr6rTS8t8YPHQOOF5WG5ZQp/VIRVxYmdZHSeDuAC5?=
- =?us-ascii?Q?PAgZUg7ffqe0TgsoYepPvTxHtAKcGoxHkSq9kxP8YrS2kWg/GPvx9zSvzbng?=
- =?us-ascii?Q?LcjAGerxMCL42/O4Ow9oZQfvMTFR2cWWfUppuz/SgJlE5FGP2YsSaCEgJRRp?=
- =?us-ascii?Q?+iDzxbvY0+smTehSTKEggwBOgVFGK0s+c3YoAT98sOw4nhg0BSy40zMqmurY?=
- =?us-ascii?Q?ou6TmfirAfXjfFzR8SUE3HuwG+OxHWmPzdbkiqRhC7wXEna+6E8QD+u6tChq?=
- =?us-ascii?Q?KhfSsHbZHWTKowlVg1KuPgUYAk4YOWhEsl1czthnZEermPd8S95xlBkX4pk3?=
- =?us-ascii?Q?RwFMXEInD2KV1yU//F+KsWkgg4WX8mfqcg7T6pYIMMvQmZiMIQ2vIhhJSLS5?=
- =?us-ascii?Q?GTDIc9TMxxfxFgiYrIEl4mBy4U+2kM6F8r64X/muPKwQXqLhr9N77ogS/L24?=
- =?us-ascii?Q?pq9eC4oUpEMnGPHHkoV0l/345FNBadIy2alj+ZEXQfl7RCx//EOr3lScjNE4?=
- =?us-ascii?Q?d+vjgOLuoSId07m+OlLP9r3nu5bgTlgTUZ8qXgzYLt6WTn+0f+MeKR4m+4Di?=
- =?us-ascii?Q?Fmht5DkWuVJ7skVMXzLX9p2Ct3ba/JtJgK2+rpOp0wp1QxYxUyIGS2fuaDqj?=
- =?us-ascii?Q?mCnGq9ozx+eThffldlM5nOJfQ6BGJiaaZCcPJmScnhxfSrahAa5xbyW3T4qR?=
- =?us-ascii?Q?Do60wpADiXLHcPplKoPm/Ip6gEHp/MFEsWLQ7mIgWlLWRDOgUr1vxiIEJcAf?=
- =?us-ascii?Q?he0m/2EdKGiuWEJNRzYbLdK80WjYCL3fhB4QOLaeG5KxiabVPbgya8OUsE5J?=
- =?us-ascii?Q?AVVs/qIMp7XdUjdtMxy9fgHX2w1sGcirl9rBNxBTPsKxvwziff+e7grXbL6S?=
- =?us-ascii?Q?UhX9wBnR/JvW/BQxaLlUASPQl2pJFiriwk7ijDwLOaC4CuarSUQpDGNpSTES?=
- =?us-ascii?Q?IPvFWMb3iE0DgJHRjXRosQrJqPhzfPv3jtuDgRK+L3QZPqB0qzBHArJ7RUNC?=
- =?us-ascii?Q?QIQeSlVyfOYQmWY+MZZNjysodC5O2CucCovBVbC5NBFpCyQ2YICUXQB30Bk7?=
- =?us-ascii?Q?wVa1UPQJV6Z4Eav7OrOV2lWa+RI9ovdXCiqcArrLcZJ/SkkunmP8A9UHq9ce?=
- =?us-ascii?Q?hBjtTNQaL8y+arO4ZNC7QJjueyoGNv7EuObuST59z8KlIB28rVKeg4cmO8Bv?=
- =?us-ascii?Q?nrLmhZYDGxGp4ZF5t8rAepPUOlQ239oGZwgOOaSuwBz0EbJB4hWJJs3mmF/J?=
- =?us-ascii?Q?iCH20lGCXfGDabRax7A5akUD2ecP7WZq1c0IaAQ28WbLtlP72BF2vCjB0VZH?=
- =?us-ascii?Q?fBt7saekLTbOHkGFTBZCh/89bW4tfPUCCPEcLzLaPYJnWBr+YqaSAeQWVpsP?=
- =?us-ascii?Q?wUfVynycRB53RGXU95Kmibmf+2eKrlNOro/+ZtoeAmhAwP0HpsvWE4XWWSlx?=
- =?us-ascii?Q?wxMRSbC/V6qGpH4JC0wqE+xu+MZ+jZge16waPhAYuLd07ASqTBldmfMjKVrr?=
- =?us-ascii?Q?f6r4+aRdRhLix7a5MOWn+sFMDZ2mpqxkJON1wgmPWKbizR7g?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e729afac-5d3a-4f4e-d90b-08df42325a52
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2026 09:33:34.3827
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8HzHyWoZ3OkJN415fKnpfPQin3nhIM3wAu2OM2dkAufqRUGdgsvjlsR3DEn9SjkgQQGX4VXrdOPUo/T8NSiTyw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5713
+Content-Type: text/plain; charset=utf-8
 
-Hi Jonathan,
+Before i leave, 100 usd is the final price, if you're not interested still,=
+ you're welcome to ignore it and this is will be the last message also.
 
-On Sat, Nov 14, 2026 at 02:34:26PM +0700, Jonathan Bastari Thamrin via B4 Relay wrote:
-> From: Jonathan Bastari Thamrin <thamrinjonathan@gmail.com>
-> 
-> In sched_stress_test(), the parent can be slow to start as it has
-> to wait for the DL server before reaching sleep() while the RT task
-> still runs. The runtime of each task is read as a total since fork
-> instead of during sleep(). This adds extra time to RT and makes the
-> ratio inaccurate which causes flaky failures on CI.
-> 
-> With the parent pinned to CORE_ID, the RT task had already run for
-> ~0.95s before sleep(), so it was measured at 5.69s in a 5s window and
-> the EXT share dropped to ~4.2% against the 4% threshold. CI has seen
-> 3.0-3.9%.
+On Wed, Nov 11, 2026 at 11:44 PM UTC Troy Cross <troy@realtoradnan.com> =
+wrote:
 
-I don't think this fixes the flakiness completely, in two of the three
-CI failures from the linked issue RT ran less than 5s (4.74s), so
-there's nothing to subtract there. And in all of them the EXT/FAIR task
-got only ~0.18s instead of ~0.25s.
-
-My guess is that the test is flaky because the test task isn't the only
-one consuming the dl_server budget: the 50ms/1s reservation is per CPU
-and shared by all the EXT (or FAIR) tasks runnable there, including
-per-CPU kworkers, ksoftirqd, etc. On a noisy CI VM they can easily take
-a good chunk of the 250ms available in a 5s window, especially right
-after the scheduler is detached/attached, which would also explain why
-the failures mostly happen in iterations 2 and 3. On top of that,
-utime+stime are in USER_HZ units (10ms), which isn't negligible with
-~0.25s of runtime and a 1% margin.
-
-How about something like this:
-
-1) Read the CPU time of the children with clock_getcpuclockid() +
-   clock_gettime() and use deltas around the measurement window. This
-   keeps the part of your patch that is correct, but without the USER_HZ
-   rounding.
-
-2) Pin the parent to a CPU other than CORE_ID, if there's one. The
-   parent is also an EXT (or FAIR), so if it runs on CORE_ID it consumes
-   part of the same server budget, adding noise to the runtime measured
-   for the child.
-
-3) if 1) and 2) aren't enough, slightly lower the threshold (e.g., from
-   4% to 3%), to account for the server budget being shared with other
-   tasks on CORE_ID, while still being strict enough to catch a
-   misbehaving server.
-
-Thanks,
--Andrea
-
-> 
-> Measure CPU time right before calling sleep() and use deltas to get
-> an accurate measurement window. With the parent pinned to CORE_ID, RT
-> measures 4.75s and EXT share stays between 4.81% and 5.57% over 20
-> runs.
-> 
-> Fixes: be621a76341c ("selftests/sched_ext: Add test for sched_ext dl_server")
-> Link: https://github.com/kernel-patches/vmtest/issues/458
-> Cc: Ihor Solodrai <ihor.solodrai@linux.dev>
-> Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>
-> Signed-off-by: Jonathan Bastari Thamrin <thamrinjonathan@gmail.com>
-> ---
->  tools/testing/selftests/sched_ext/rt_stall.c | 21 ++++++++++++++++++++-
->  1 file changed, 20 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tools/testing/selftests/sched_ext/rt_stall.c b/tools/testing/selftests/sched_ext/rt_stall.c
-> index a1552b38a6e8..0c6403d25298 100644
-> --- a/tools/testing/selftests/sched_ext/rt_stall.c
-> +++ b/tools/testing/selftests/sched_ext/rt_stall.c
-> @@ -149,7 +149,7 @@ static bool sched_stress_test(bool is_ext)
->  	const float expected_min_ratio = 0.04; /* 4% */
->  	const char *class_str = is_ext ? "EXT" : "FAIR";
->  
-> -	float ext_runtime, rt_runtime, actual_ratio;
-> +	float ext_runtime_start, rt_runtime_start, ext_runtime, rt_runtime, actual_ratio;
->  	int ext_pid, rt_pid;
->  	int ext_ready[2], rt_ready[2];
->  	bool ret = false;
-> @@ -201,6 +201,23 @@ static bool sched_stress_test(bool is_ext)
->  	if (!wait_ready(ext_ready[0]) || !wait_ready(rt_ready[0]))
->  		goto out_kill;
->  
-> +	/*
-> +	 * The parent can be delayed before reaching sleep(). Record each task's
-> +	 * CPU time right before calling sleep() so only time used during the
-> +	 * measurement window is counted.
-> +	 */
-> +	ext_runtime_start = get_process_runtime(ext_pid);
-> +	if (ext_runtime_start == -1) {
-> +		fprintf(stderr, "Failed to read %s task runtime\n", class_str);
-> +		goto out_kill;
-> +	}
-> +
-> +	rt_runtime_start = get_process_runtime(rt_pid);
-> +	if (rt_runtime_start == -1) {
-> +		fprintf(stderr, "Failed to read RT task runtime\n");
-> +		goto out_kill;
-> +	}
-> +
->  	/* Let the processes run for the specified time */
->  	sleep(RUN_TIME);
->  
-> @@ -218,6 +235,8 @@ static bool sched_stress_test(bool is_ext)
->  		goto out_kill;
->  	}
->  
-> +	ext_runtime = ext_runtime - ext_runtime_start;
-> +	rt_runtime = rt_runtime - rt_runtime_start;
->  	/* Verify that the scx task got enough runtime */
->  	actual_ratio = ext_runtime / (ext_runtime + rt_runtime);
->  	fprintf(stderr, "%s task ran %.3fs, RT task ran %.3fs (%.2f%% of runtime)\n",
-> 
-> ---
-> base-commit: 0021f17128de5dc0b19f1a523f448df2440d8088
-> change-id: 20261114-scx-rt-stall-ca1767a8ab4f
-> 
-> Best regards,
-> -- 
-> Jonathan Bastari Thamrin <thamrinjonathan@gmail.com>
-> 
-> 
+> This is maybe our last follow up, but if you're =C2=A0just not =
+interested, just ignore it again.
+>=20
+>=20
+> Sorry if this bothering, i =
+wish you success, good health, and happy life.
+>=20
+> On Sun, Nov 8, 2026 at 11:42 PM UTC Troy Cross <troy@realtoradnan.com> =
+wrote:
+>=20
+> > The best price is 299 usd.
+> >=20
+> > On Thu, Nov 5, 2026 =
+at 11:35 PM UTC Troy Cross <troy@realtoradnan.com> wrote:
+> >=20
+> > > The price is negotiable.
+> > >=20
+> > >=20
+> > >=20
+> > > On Wed, Nov 4, 2026 at 08:21 PM UTC Troy Cross <troy@realtoradnan.=
+com> wrote:
+> > >=20
+> > > > Sorry, just making sure you saw this.
+> > > >=20
+> > > >=20
+> > > >=20
+> > > > On Mon, Nov 2, 2026 at 06:16 PM =
+UTC Troy Cross <troy@realtoradnan.com> wrote:
+> > > >=20
+> > > > > Greetings,
+> > > > >=20
+> > > > >=20
+> > > > > Do you have any =
+interest in=C2=A0schedkit .com for 500 usd? i noticed you own=C2=A0.io =
+version, so maybe you will be interested in this one as well.
+> > > > >=20
+> > > > >=20
+> > > > > Sincerely,
+> > > > >=20
+> > > > >=20
+> > > > > Troy
