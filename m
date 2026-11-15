@@ -1,52 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794775857;
-	b=q8J0Bw/Yl0PrOOC4TkUlPjbZB0yJO6o2MWsG3AJ/vnvunRci47Xqx/tUdmSUVy8tzncl
-	 JnMbFyBt+N3aSJ7vFO3KEKK5gvKnZp+P57iRVQau+NWaStlzn17vc40WezAq1NkK6oBuO
-	 OAVPCUzWqCpE3Z3x8QL+sFV4aze77ryVr5sGvZ+uvhNQtD2xjBEyWdsXMmZh7xLZQg7WH
-	 mQvxn0/4JGsZMxBLZq+FVaqG6U1M10Oa9wII5tDCH6h5N1J3ddo06K595WAzZBWUTHDIu
-	 848bW2dvQWv07YKyvvT2Pgyu1d76Mk3iVVxMDhfPrn6EZaMqCrKglf+kHfV8t1fzhkg==
+	t=1794781776;
+	b=meUi2LGpvjkQh6AHA0hTeWw0vNuOMQZrNcasT0SRdD8Nbf23AcE+azCg8vsseyD6+G19
+	 ccuEAo0CNqPbNvVTjfnulfcurYPTZByLFshs6ZwiYZ4ItATS2XP5uLmIDGDVOEOyiSelz
+	 evKPvgsKyOk0jwHsivrrdCSqHqJNkQMx8Y2Nv9u/fS3dgReyQKJQi54DaDTS+4yUjKMy2
+	 NaYBkgf/U3hvpVwucDUkR7qw6NJFiSY+0WizF7bQxYKTei9PK5gDSRcv5mKg3xcJb+uMN
+	 cTtRzJCZwaKz/KF9Qw0P23/VBOeleF8l6/wwaclxuXmj2GgiYAO65wUCzlBTxfpC/4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794775857;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject;
-	bh=fG29Zz44ZpJyCL0u2MxsfTicTkhiXGVFDmgDZC/UFuw=;
-	b=QhYrj2CuXbquicTL/t57TThFYMCJx+EmeOi/hPfP4D3X8u8bh29BLcp4D+nHIfr2KduU
-	 UXAzhcdMcw/ApeciiGQ8/Ck6zfkYSA16IrzxO7pxi/2n3V6HlVMSXnhoUryZ1BqycWrYr
-	 W3UXClCBR7YKWMjInmxDMDEB3GIWHZyoJOiY9Pp/Z/IDJLIJeL3zrWhP/HEwkIbz+fv5b
-	 8KFfs1G3cp8EheMUFgis+NbqNfKnnzdvvY1CO9VcFAK0wDE4oF2JBpfXhH+5dIDz9Yc1L
-	 gLbREpQIsaWIvDgnOpFPEbUuoRzd56OjCaSzX5HMynVDmi+JTuBBaJysEj7/gjzy7rQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794781776;
+	h=Received:DKIM-Signature:Received:Subject:From:In-Reply-To:References:
+	 X-PR-Tracked-List-Id:X-PR-Tracked-Message-Id:X-PR-Tracked-Remote:
+	 X-PR-Tracked-Commit-Id:X-PR-Merge-Tree:X-PR-Merge-Refname:
+	 X-PR-Merge-Commit-Id:Message-Id:Date:To:Cc;
+	bh=4STuKhboQjKCcypecXg8HTKSkBi01+7jPO7avP0YGiA=;
+	b=S8UrG5CG51aWT13PVChPFSS63hHgHQhoyD9aWTf5IkjzFAO0MtEmX4yjX6t1xQbn74Rq
+	 0J0zHUpnbckdN6FedeYmAF+OvwHBnHAS3I4zXGqsQcwbHvExtU/Ly6drY8RlgLqfG5oXD
+	 3Ird9vh1r+0e3toPUD14NWxI+VaehUK71Tiw7Ec6+D3hfvMPGrpc3KT+MBk5I06HpCAfa
+	 fbox8n+115FhlT1bRaQJCiU1BuCEZ6LIMeUXHU3jtw/yz84bYOsImi8fSed066mKPD5CL
+	 OqmIGicB61dDr1BPmMuCU7BiXQ6hdp/n1cd69kcIqcq8/MwNC39X5H7JO9NrUF+DiYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WEAqoXsx;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ghCWo0Y7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFDB606A31F;
-	Sun, 15 Nov 2026 20:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA98606A329;
+	Sun, 15 Nov 2026 22:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WEAqoXsx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46841F000C4;
-	Sun, 15 Nov 2026 20:50:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ghCWo0Y7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D391F000C5;
+	Sun, 15 Nov 2026 22:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794775857;
-	bh=fG29Zz44ZpJyCL0u2MxsfTicTkhiXGVFDmgDZC/UFuw=;
-	h=Date:From:To:Cc:Subject;
-	b=WEAqoXsxFGvBKjxZWVdg6VBVJmt1MT3TzAy0w9yb5EJ12yNJdt6Ei/9kxZKL8zrF0
-	 OCiIr1mULBbP8EFkbbKu41gzU6RKMCF2LjAZLx8kIzcMFXQrAkOLZ6a0doUBcdD7tI
-	 9QFFkjHZNHCzpgrEV4T874vfsvctAYhftuDVL+jGeT8MoAnODQj2bhcCOyNKXQQ1eG
-	 Yk0GrAILKD0GeDdI0Ua0oGLc6gUBftsNKHtDd0HxElW5Mr3gF3w8QgJ7W/6ZtJJkuB
-	 xbxPozae9aFEGfDaDZy4qW6vGmoyNegif2BxDsrBIHE9+xF1afuNShhkg2ocuTTstE
-	 ReyqozVDqHkRg==
-Date: Sun, 15 Nov 2026 10:50:56 -1000
-Message-ID: <ac8a34b2fcba5a00d2f779a0bcf71592@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
- David Dai <david.dai@linux.dev>, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: [GIT PULL] sched_ext: Fixes for v7.4-rc2
+	s=k20260515; t=1794781776;
+	bh=4STuKhboQjKCcypecXg8HTKSkBi01+7jPO7avP0YGiA=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc;
+	b=ghCWo0Y7FCqM6Q6IdKltzxTcqdWL3yENwyY+BnUVN11a6s/A1mh5bPLdHLhP5KSqS
+	 OYC6LQps+lFxEE/gF8V+qLRB34CYxZ+3dMpb2RfRVfdNUJWG6yypnV5B+HFy4zRDko
+	 orKwzvs1RzPxLGE6pneZcaOLbpoQsg5rcIPLDo7OH5709wvWn9xVXPcsmYsgqPTeZe
+	 GM37zvLnON8I7W2pJ0GKialOqz14jTJ7iKIfcz1zXsXHCyVJEmAVYY/YTVAjGoH4Rp
+	 at7xLuQ/LR5iXNosBz3wutU2kOBgu8U91+W5bg6NVITLtSZYk27+80rp1OX44CmN20
+	 HjVq70BmW7v+w==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 3A276380823F;
+	Sun, 15 Nov 2026 22:29:36 +0000 (UTC)
+Subject: Re: [GIT PULL] sched_ext: Fixes for v7.4-rc2
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <ac8a34b2fcba5a00d2f779a0bcf71592@kernel.org>
+References: <ac8a34b2fcba5a00d2f779a0bcf71592@kernel.org>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <ac8a34b2fcba5a00d2f779a0bcf71592@kernel.org>
+X-PR-Tracked-Remote: https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.4-rc2-fixes
+X-PR-Tracked-Commit-Id: 700a332c3fe33014bbd5ae852d71ba679fc29e0a
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: a9daf327f3ff90625204876981f88cfe2b6f6fff
+Message-Id: <179478177479.2784423.4617383340755581980.pr-tracker-bot@kernel.org>
+Date: Sun, 15 Nov 2026 22:29:34 +0000
+To: Tejun Heo <tj@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, David Dai <david.dai@linux.dev>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -56,84 +68,15 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 
-Hello,
+The pull request you sent on Sun, 15 Nov 2026 10:50:56 -1000:
 
-The following changes since commit 4dd16e31135ea8437a720222df34e8745f385d6d:
+> https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.4-rc2-fixes
 
-  Merge tag 'net-7.4-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net (2026-10-29 08:17:05 -1000)
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/a9daf327f3ff90625204876981f88cfe2b6f6fff
 
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.4-rc2-fixes
-
-for you to fetch changes up to 700a332c3fe33014bbd5ae852d71ba679fc29e0a:
-
-  sched_ext: Reject DSQ iterator kfuncs in tracing programs (2026-11-12 07:30:07 -1000)
-
-----------------------------------------------------------------
-sched_ext: Fixes for v7.4-rc2
-
-- With proxy execution or core scheduling, a CPU could run a task that had
-  been requeued on another CPU while dispatch had the rq lock dropped.
-
-- Unregistering a scheduler could return while its teardown was still
-  running, letting the teardown call into BPF code that was already freed.
-
-- A CPU coming online could call into the BPF scheduler before the scheduler
-  was told that the CPU is online.
-
-- A parent scheduler could be asked to attach a sub-scheduler to a cgroup
-  that was already removed.
-
-- Hardening: more kfuncs that take a queue lock are rejected in tracing
-  programs, where they could deadlock the CPU, and a queue iterator no
-  longer restarts after reaching the end, which the BPF verifier assumes
-  can't happen.
-
-- Smaller fixes: tasks needlessly sent back to the BPF scheduler on idle
-  CPUs, stale scheduling state carried into a task's next scheduler, and
-  uneven CPU shards with partially populated SMT cores.
-
-The branch merged mainline once, for a BPF dependency of a tools/sched_ext
-header sync that is yet to be applied.
-
-----------------------------------------------------------------
-Andrea Righi (1):
-      sched_ext: Avoid unnecessary IMMED reenqueues on idle CPUs
-
-Kang Chen (1):
-      sched_ext: make DSQ iterator stay drained after NULL
-
-Kuba Piecuch (1):
-      sched_ext: Read exit_kind before flushing in scx_flush_disable_work()
-
-Rahad Bhuiya (1):
-      sched_ext: Reset task fields on exit of an SCX_TASK_READY task
-
-Shubhang Kaushik (Ampere) (1):
-      sched_ext: Reject scx_bpf_destroy_dsq() in tracing programs
-
-Tao Cui (1):
-      sched_ext: Reject DSQ iterator kfuncs in tracing programs
-
-Tejun Heo (6):
-      sched_ext: Merge branch 'master' into for-7.4-fixes
-      sched_ext: Fix scx_bpf_dsq_reenq() kerneldoc claiming NMI calls are allowed
-      sched_ext: Call ops.sub_attach() only while the cgroup is online
-      sched_ext: Fix stale pick when the donor changes during dispatch
-      sched_ext: Factor out drain_offline_rq()
-      sched_ext: Fix ops.enqueue/dispatch() calls before ops.cpu_online()
-
-Zhang Qiao (1):
-      sched_ext: Fix partial-SMT core counting in calc_shard_layout()
-
- kernel/sched/ext/cid.c      |   8 ++-
- kernel/sched/ext/ext.c      | 160 ++++++++++++++++++++++++++++++--------------
- kernel/sched/ext/inlines.h  |  39 +++++++++--
- kernel/sched/ext/internal.h |   4 ++
- kernel/sched/ext/sub.c      |  22 ++++--
- kernel/sched/sched.h        |  17 ++---
- 6 files changed, 183 insertions(+), 67 deletions(-)
+Thank you!
 
 -- 
-tejun
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
