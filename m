@@ -1,101 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794999535;
-	b=Du4lmC/RKticjd1zvuc899BLhEDa3/0U4YcsVrjYqJCVehDJsJlBdxGRH9gg4V3t57Yq
-	 tqpz9IoJTN37fwDOIfygLucJokb7LDRVfNyT57Vw0k4lp26MCkts3op82XdMLoVAniG6B
-	 fk77hh7PpmFPvrSTEhuRbqWPQnKNsJiqbuUHRoPUV+hCsNZzE5q7LMz8E7oAAKqTCL1iY
-	 0/je5yHPst+UOSZahvUnpIgLggSPRfLFU8TC1qIfOetUkFdQ1SChTQRo5sIeJ0W9TFcKU
-	 A0GSWH7zloRuVIR/qNZ/YI5auwuEF/i2mRVGp0H3aydGf9u6lCbY04qUC0fwfPdh15w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794999535;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.173
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795000887;
+	b=E1wwxw/tFyHE4csuLibqcjBqntzjYcRqrj5wsKKLqUSOxXHOaH7rx/x4bjmC4V7reaTT
+	 aPmqyyWzuaQDZzd3zBKM8GyaPy0DeN4g1j2dsdlZ/HJBcbfTErQA3fkB6ngu1KCa8npUI
+	 rMivvwqdtCLWc3SB9M93e5d2AAegJq36MZY+fZHNJ+7p8G9+fG+pZpMgHePb7MuEYgeL6
+	 zbgBYVldt1gQeEVbDnD0EEZEP0bsQQzV0hEN+SIjES1GCs9/OeTXgSOjE9QMU3y98YmwA
+	 lrvK/d0H0Mq8TRwVSZCISLMjyebJ7VVSC/YxwjADQ2+cOtvmwIMcrlIDAB5rTIwM/pQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795000887;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=gOokTz1G9UcB/naYSeBX2ofw41eva17L+gF1HVq9r8Q=;
-	b=IHt5qDSoxtIdbJTDMe+zX4OK/0GshpQACsLlfyowQhkiurZgpVnqLGOOfNQ3HXkTMHta
-	 2llhj0r2QiCScYrI04kByKV5sIm4duG34FKH9V3Sa3Ig7XWaem17kKIprAYPimEC+fgVu
-	 TMgXbm/QRcyeS/nk6iylwDXMnYcZ/t18EKn6wzgGbasOVTNXs7HbvyecLBZc+qYkCjkyn
-	 JCnCjjKiNSgPC31rdRk0wiWPtfG6U6e7Uqp9cBq9zjRSgy9nRvZwolXZyitIWZRlpTkDD
-	 zm+Y66AkF4MY5rB2lc+UvRp4QxCi3DmzN6rpTyFGy+0YzmpJ3s8k3CK14yK2hC6n1+w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="FmxhOH/d";
-	arc=none smtp.remote-ip=209.85.221.51
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=ftWeT9v9vnvRt2kmLZwEf0dDqTmHNYp8z9nzUAEucvg=;
+	b=IcsDFZnTB0fEfNgezdPo0emUorERZwHfn5SylemyTA0FAywKKTRdDLxdWsI74XGHFK0u
+	 I0FyJnYVG1kayK/jiD+mAZyaL5d3lCcz7xf6IhPN4drhCJv/Ptn5XgG4dKx0Rw+Q8/i7k
+	 Dwj+TxRfFoHG5jX3ZRAQk98ZESIaey4CsIZcbb5vAxwHNLtwgiJbsL4HwMUhNhuhbHlqZ
+	 nJZ2LWD8bpAPI85CBRIhD0m+WaLvGcHgEygm7NX9TidTf/jN1VFY+FXCl+w9Fi9eUEtiH
+	 CaNsCrsiNHADpMA36WtAAR7/iQffLS0dhlhEDXun7y33SLawq257MmJIZFauFBlx2hg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=nfzgg1pn;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.173
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9261606A320
-	for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 10:58:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B9261606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C118606A325
+	for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 11:21:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4C118606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FmxhOH/d
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-4a440c9e13aso18808f8f.3
-        for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 02:58:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=nfzgg1pn
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-33fb4680717so2096239eec.1
+        for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 03:21:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795000885; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ivofr7j8hR7hoFGBdfMuzNcH9z6a/PUWQBIxqXvUiFI9Hepbs8lb26FmW6PWAmJx2W
+         I4dUvofEBdRcVth8UT9SDRs0i8hm++LcHxc8cfVX086UgIGOF3xcgZbjUs8eWVevdlgT
+         Kj8CvAj91Phn6nUya/WahbnTefurCPpjVfa/tj2Jqh6g5AEayhOZM83piL6780DPTOFO
+         53KUdTkDMhlH5VHD/rcjMStRSRG945YFOrEww+ee+T/JAXXf5PvA+yKbZto6qP61Txei
+         CIOyXGT5dbu+sCfj7qo9OJ9U2ZI86O9Kmd0+pGxqWCgucESoVmgFuD8N99Pop5lz6jvC
+         hL+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ftWeT9v9vnvRt2kmLZwEf0dDqTmHNYp8z9nzUAEucvg=;
+        fh=u7jNAc1ZHUOnEO38HOuYH6TZqp79PipwTFxySWSzxPo=;
+        b=gtt+H7j6Bf1Qso3j2aob040sByM30Q852xp7TDOtHogl9D3LXaw5OIW3TqcEHWWIzV
+         Nlmew1SZJJK2PTjCFFOTVVKJTXVgOcmvHZHbRrXxuc1AVYyrPePHXBbvfri6d5Ig9jHs
+         RNzMdrvHGa8DWAVOHSwgiUHO4Yrjxc+wGq8aKY/JmUJfnJaOYSK+OARRu1Lh4kvGWF3i
+         Z1YEn2y4eZCxXaBBIIlx+OYcBlzcesYzlAnFYZW9FMojt20YS7SsQKq5+uHaakjO5R7b
+         ouAtCYBgRe+Y4Objl2ibTypts3udAQ5X1a0a3j2Q5tu7w5W84iDVaczFLzEYjvBc6gLP
+         lSXA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794999533; x=1795604333; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gOokTz1G9UcB/naYSeBX2ofw41eva17L+gF1HVq9r8Q=;
-        b=FmxhOH/dSO7qZkcegpE+SN+DlvLRLcSvCfhNO477NT6FpwxClMj60x4nOwk1dYqbBG
-         8xXYz4SyYOnvnEdwbpYLVr3FT7AbBVKKdSEUZLzvV+n3vP5WzZuSXOipPLr0PoKa/Cpi
-         Q73GlE38LZmQ1oYKOZGCf9Dx/iAurULW4E1db5Cni+SgiQX+U39S2lOuocl14C1iol2n
-         uW6Y8VGYNTrIAXkvYFbNR0Tb+xbOllgjEA8nnT2EjzFy1YkaY0BKVZUHvUYTkaOMoUQ/
-         /hDwgBZbNmZyGHFYjbbMlGlqyO/CkkNsOvDoaxxCeeo/+TMb9GBCYZjOsCK05d38sDpK
-         LpDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794999533; x=1795604333;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=linaro.org; s=google; t=1795000885; x=1795605685; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gOokTz1G9UcB/naYSeBX2ofw41eva17L+gF1HVq9r8Q=;
-        b=LdGZN55SgCF8OzmGWC2ohbY7sAzZRAqF+3IUxZG2StQMkR9ianszXIEUMPCRWjnSVd
-         oQlQ2cvwYYVGYVpi8V5Nmome+r8nO8FFyAdiGGDQgUaGDRzx8yCaRLwsOejwGU/mtb9d
-         Q5bQVgJPAYj/kgt40k4UNJkTOcS9uwgA9BcoWoOo2UjDKu2Ql7+bT0nDXFu2E87uyGeo
-         F78e0NNo6J09hLIf5FipqXlwwpG0Rnvmh/RW/NxlYh5l16Zsp5flbcpTRARic5Cf1D4Y
-         Bx6aRy6YLsJS0TgN/YXDEyM//MoNuKh319rfmemmWwW+XUsrc1NHI0BwTz6NrbPqbZcg
-         8e9A==
-X-Forwarded-Encrypted: i=1; AL+hErHNrYRG25sclT9gOmVCUXVbKzxtkf1kwNiM0t0GTtKYTIBzZw68+fGW7j/uSUjxha93mClhWGFLTjQ=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+ULa0tBdBoHsvHKFI0q7D5dzgaIeo0RSOYOdsxahLgnY7HylE0
-	3uZZTUH/lpunSZpt8Jou+NSsizFlCJGHVz32mQRgGKw15bGcLwKVQ81/
-X-Gm-Gg: AZFdTZeC59SqGfZAP0mapck2IJgQWD9TKtIMhMh4k98J7OX3sm7ZeDNilmn449d/Tqy
-	0TF4BLaUaQUH55eP7JzlW9ZRGILFek9b1iE/FN9Kh0zmn3S9ykx2A141flSB4DDgB746/PFHOSz
-	G2HCgdVmMK6MIPdIYz5cO8qkBRVWcVyVScCq6DrS1zO5ADo4AR+qzAl+XA9N+i1HCOFW6BOguQu
-	C7M2W4Z95lsVS1xIePygoTMIBzyI6I74yjR4avWU+Ad/aX7UQ4zvFZd8rmJdtZ+Nc4N6OBN1PuG
-	s9Rgo8IsDOA4z1L63PGYrk0niTBEGVOh82ZypAvuJF0rZ3jvj3gsY5BP1/1a7MKTPFp44jojLOk
-	i2a4+Ys7T1+cZyS0vnAAlc0DPpzaAVvDSDK2PDdf/JO1roG8YeTXhUNYqy357JOZwvwFuiZKRLs
-	QxlRIU4Jm+0rqe01udoRSiQKJf+VHsv9g28GGJcogLQ+AKpxwNE/3hkoQGlOvFzteazwQN+gqSd
-	DTYhph7Xl/ZqNe0gsf8s6EfAie+kYfnhhc5aPpfIYjnqgMg7GUr/emAzGNd01WstsxGy3zit5Rv
-	NAQ0Me4orivCSf7XOwsg5LQEz/K6KLtPhlw7DW6xpTj9ArP4fN0wWHk=
-X-Received: by 2002:a05:6000:18a5:b0:4a6:bc53:2472 with SMTP id ffacd0b85a97d-4a6bc626a3dmr3453644f8f.5.1794999532857;
-        Wed, 18 Nov 2026 02:58:52 -0800 (PST)
-Received: from scheduler.schedules ([85.100.69.90])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4a65560ab59sm3871525f8f.29.2026.11.18.02.58.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 02:58:52 -0800 (PST)
-Date: Wed, 18 Nov 2026 13:58:48 +0300
-From: Kayra Cizmeci <kayracizmeci@gmail.com>
-To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, 
-	vschneid@redhat.com, kprateek.nayak@amd.com, linux-kernel@vger.kernel.org, 
-	lukasz.luba@arm.com, rafael@kernel.org, linux-pm@vger.kernel.org, tj@kernel.org, 
-	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
-	sched-ext@lists.linux.dev, qyousef@layalina.io, christian.loehle@arm.com, 
-	pierre.gondois@arm.com, sshegde@linux.ibm.com, tim.c.chen@linux.intel.com
-Subject: Re: [PATCH 01/20 v3] sched/eevdf: Decay positive lag of sleeping
- entities
-Message-ID: <av1uqTFI46wRb0ok@scheduler.schedules>
-References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-2-vincent.guittot@linaro.org>
- <avr4MsRsjGfGHKKk@scheduler.schedules>
- <CAKfTPtBZ=Dc_X48EQ0yXMym0JrS=pWvbviyVyFri0tv5VdR3Eg@mail.gmail.com>
+        bh=ftWeT9v9vnvRt2kmLZwEf0dDqTmHNYp8z9nzUAEucvg=;
+        b=nfzgg1pnazAkmV9ogLbWCh07X75BQJE+pi69X2QW4Bw3jSDgIjsSJ45fdiRTD750mY
+         p0jYAF/KeYjd8JfrfJFh108lWnproJFjP9hI+zJaeDHUbMaq1pgDmPZ7Sgz/mGIiB0oI
+         n+9u6/ZxvqYqTgc0hq0MHXS/M46oTzyfAtvQZOXWTyWkTaHnNhuOWfWumJ2ENJBH1qJA
+         B1caG6QdwQ5hy59Z4tnlbOQApXFWeXrCY5xJJOsemwqJ8t5gsNBCeYlqUIZMjsv4+O8g
+         0RZ9VzeXeDCGVW23NbDVvBFE3g4vyAffpiQOi/e219JtsymZDAQ2kKncrYcpctwSKYjs
+         j2KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795000885; x=1795605685;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ftWeT9v9vnvRt2kmLZwEf0dDqTmHNYp8z9nzUAEucvg=;
+        b=Z/W5XObmmYWv0g+zjFwuzBQcTw+dXlt86Tm66CUANNNDJWGbe4kILDZEDutVKXHSJj
+         zEXXyD6sZ50QOeMJy77z5zTnQpcA4JAxLKUFEg1QdkhmazElnFLc7GRMVMPU/GACD6zw
+         XD5sYryxRPvDO5F9kL+Er3HNjuBMcatUZa0bykkN4EVGd8rt/+Ll5beWCFL+t38asVpL
+         WxZEY/yL6HybD1ElNIG3/hEWYaB5b7briugVQWzMojstxSDub0oBkSCqk7DPJkzErKmO
+         6lFYPEd5NowoZZzVy4PRyb7/atUH1FcX9jvLphBygSrel6ZXm73D2vXP9aLXiSKdqmxV
+         TSTA==
+X-Forwarded-Encrypted: i=1; AL+hErHdALarOYto0q9Mm3CQjPEgSLSY5X74CpoT8bhV1RZtuB0/NxsnlkqJAV1iVo2NlRXw3VvXHkZxH94=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+tauRdtVc/8mcPhUHFPiO9akNVcd53vE/WoOlU+Inr/0LgrbvD
+	/IWUwKsjtDfdCR5B0yR1nHu0X9DW/NdKecLf4xk8WnLnaRNmjWtLtfGjawvy/iDinunH9AzTOUd
+	4xThhSb0WA+cGy216HKQjXZE67xXfgiSkqNwsqT0WKA==
+X-Gm-Gg: AYBFou08bHQcz4cUmXC2zePlywhkTw7TEZUqSfS804i6oIAKre87HqE0QyfMdgOlOHr
+	k2iMv2KAl/cBClWbHbYyrpxglcnu8CWOEBA2IkBnKCYL+zRFOtuTygdPVes7DIeRkNxaj21bp1j
+	PbZfkMfdkXX0nNFow4lJL7jX3nWwnkhESc7iRQUfhFtraGV2K39aPM8qbV2ZNGcG88egsFF0Xsd
+	5SBuscF9rp8uJVfSQJds8CYwQkw4HTowrh6Fo/juG8txhtYdc+GN19UJwmqCh9Y/0BAILQUSlZf
+	8XvuQ4U6EPWtNYZkIVeAIG5/cgVSIbbEBaw5Kv4da7uFOe2ZDU2/kWGZoxy6hN31kDPmcgADBsx
+	uChkr4TqGVAPem8mfZbWmyDqZiKncZpYNogOYG4qdDCn8Pq7pEG46mgqN3od4tItRZ8c+
+X-Received: by 2002:a05:701b:4588:20b0:1b2:610b:878 with SMTP id
+ a92af1059eb24-1b543c3693bmr2080228c88.6.1795000885174; Wed, 18 Nov 2026
+ 03:21:25 -0800 (PST)
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -105,229 +103,263 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAKfTPtBZ=Dc_X48EQ0yXMym0JrS=pWvbviyVyFri0tv5VdR3Eg@mail.gmail.com>
+References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+ <20261106151947.3991524-2-vincent.guittot@linaro.org> <avr4MsRsjGfGHKKk@scheduler.schedules>
+ <CAKfTPtBZ=Dc_X48EQ0yXMym0JrS=pWvbviyVyFri0tv5VdR3Eg@mail.gmail.com> <av1uqTFI46wRb0ok@scheduler.schedules>
+In-Reply-To: <av1uqTFI46wRb0ok@scheduler.schedules>
+From: Vincent Guittot <vincent.guittot@linaro.org>
+Date: Wed, 18 Nov 2026 12:21:10 +0100
+X-Gm-Features: AclHuK9YhWIoWx_QC_rN-ICEQIlD18KQ9aWWGzZ60ZJoewobyLYX02l8R4wpJP0
+Message-ID: <CAKfTPtC7AmoSE4iev5qf0MMYDBHPpLMduYhz5XMDsMGiMNpy0A@mail.gmail.com>
+Subject: Re: [PATCH 01/20 v3] sched/eevdf: Decay positive lag of sleeping entities
+To: Kayra Cizmeci <kayracizmeci@gmail.com>
+Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, 
+	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com, 
+	linux-kernel@vger.kernel.org, lukasz.luba@arm.com, rafael@kernel.org, 
+	linux-pm@vger.kernel.org, tj@kernel.org, void@manifault.com, 
+	arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev, 
+	qyousef@layalina.io, christian.loehle@arm.com, pierre.gondois@arm.com, 
+	sshegde@linux.ibm.com, tim.c.chen@linux.intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 18, 2026 at 10:20:14AM +0100, Vincent Guittot wrote:
-> On Mon, 16 Nov 2026 at 14:57, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
-> >
-> >
-> > Hi Vincent!
-> >
-> > On Fri, Nov 06, 2026 at 04:19:28PM +0100, Vincent Guittot wrote:
-> > > Similarly to delayed dequeue, which enables an entity to decay its negative
-> > > lag while sleeping, a task should not keep a positive lag forever.
+On Wed, 18 Nov 2026 at 11:58, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
+>
+> On Wed, Nov 18, 2026 at 10:20:14AM +0100, Vincent Guittot wrote:
+> > On Mon, 16 Nov 2026 at 14:57, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
 > > >
-> > > The sleep duration and the weight are used to decay the positive lag at
-> > > wakeup.
 > > >
-> > > Apply the decay when enqueueing on prev rq for which we hold the lock to
-> > > get rq_clock_task().
+> > > Hi Vincent!
 > > >
-> > > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-> > > ---
-> > >  kernel/sched/fair.c | 124 ++++++++++++++++++++++++++++++++------------
-> > >  1 file changed, 90 insertions(+), 34 deletions(-)
+> > > On Fri, Nov 06, 2026 at 04:19:28PM +0100, Vincent Guittot wrote:
+> > > > Similarly to delayed dequeue, which enables an entity to decay its negative
+> > > > lag while sleeping, a task should not keep a positive lag forever.
+> > > >
+> > > > The sleep duration and the weight are used to decay the positive lag at
+> > > > wakeup.
+> > > >
+> > > > Apply the decay when enqueueing on prev rq for which we hold the lock to
+> > > > get rq_clock_task().
+> > > >
+> > > > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> > > > ---
+> > > >  kernel/sched/fair.c | 124 ++++++++++++++++++++++++++++++++------------
+> > > >  1 file changed, 90 insertions(+), 34 deletions(-)
+> > > >
+> > > > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> > > > index 0feec172fd37..5cd171f830d8 100644
+> > > > --- a/kernel/sched/fair.c
+> > > > +++ b/kernel/sched/fair.c
+> > > > @@ -897,6 +897,91 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
+> > > >       return avruntime - vlag != se->vruntime;
+> > > >  }
+> > > >
+> > > > +/*
+> > > > + * Signed add and clamp on underflow.
+> > > > + *
+> > > > + * Explicitly do a load-store to ensure the intermediate value never hits
+> > > > + * memory. This allows lockless observations without ever seeing the negative
+> > > > + * values.
+> > > > + */
+> > > > +#define add_positive(_ptr, _val) do {                           \
+> > > > +     typeof(_ptr) ptr = (_ptr);                              \
+> > > > +     __signed_scalar_typeof(*ptr) val = (_val);              \
+> > > > +     typeof(*ptr) res, var = READ_ONCE(*ptr);                \
+> > > > +                                                             \
+> > > > +     res = var + val;                                        \
+> > > > +                                                             \
+> > > > +     if (val < 0 && res > var)                               \
+> > > > +             res = 0;                                        \
+> > > > +                                                             \
+> > > > +     WRITE_ONCE(*ptr, res);                                  \
+> > > > +} while (0)
+> > > > +
+> > > > +/*
+> > > > + * Remove and clamp on negative, from a local variable.
+> > > > + *
+> > > > + * A variant of sub_positive(), which does not use explicit load-store
+> > > > + * and is thus optimized for local variable updates.
+> > > > + */
+> > > > +#define lsub_positive(_ptr, _val) do {                               \
+> > > > +     typeof(_ptr) ptr = (_ptr);                              \
+> > > > +     *ptr -= min_t(typeof(*ptr), *ptr, _val);                \
+> > > > +} while (0)
+> > > > +
+> > > > +static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq);
+> > > > +static unsigned long task_h_load(struct task_struct *p);
+> > > > +
+> > > > +static __always_inline
+> > > > +void decay_entity_lag(struct cfs_rq *cfs_rq, struct task_struct *p, int flags)
+> > > > +{
+> > > > +     struct sched_entity *se = &p->se;
+> > > > +     s64 delta_exec, vlag = se->vlag;
+> > > > +     unsigned long cfs_load;
+> > > > +     struct rq *rq;
+> > > > +
+> > > > +     WARN_ON_ONCE(se->on_rq);
+> > > > +
+> > > > +     /* Negative lag is managed by delayed dequeue path */
+> > > > +     if (vlag <= 0)
+> > > > +             return;
+> > > > +
+> > > > +     rq = rq_of(cfs_rq);
+> > > > +
+> > > > +     /* No fast access to prev rq task clock */
+> > > > +     if (flags & ENQUEUE_MIGRATED)
+> > > > +             return;
+> > > > +
+> > > > +     /* Compute sleep time */
+> > > > +     delta_exec = rq_clock_task(rq) - se->exec_start;
+> > > > +     if (unlikely(delta_exec <= 0))
+> > > > +             return;
+> > > > +
+> > > > +     /* For anything above ~4 seconds, save computation and clear the lag */
+> > > > +     if (unlikely(delta_exec >> 32)) {
+> > > > +             se->vlag = 0;
+> > > > +             return;
+> > > > +     }
+> > > > +
+> > > > +     /*
+> > > > +      * Use cfs' load and p's weight to estimate what would have been the
+> > > > +      * share for p. task's load contribution to cfs' load is replaced by
+> > > > +      * its weight.
+> > > > +      */
+> > > > +     cfs_load = cfs_rq_load_avg(cfs_rq);
+> > > > +     lsub_positive(&cfs_load, task_h_load(p));
+> > > > +     if (cfs_load) {
+> > > > +             unsigned long weight = scale_load_down(se->h_load.weight);
+> > > > +
+> > > > +             delta_exec *= weight;
+> > > > +             delta_exec = div64_long(delta_exec, cfs_load + weight);
+> > > > +     }
+> > > > +
+> > > > +     vlag -= calc_delta_fair(delta_exec, se);
+> > > > +
+> > > > +     /* vlag can't become neg while sleeping */
+> > > > +     se->vlag = max(0, vlag);
+> > > > +}
 > > >
-> > > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> > > index 0feec172fd37..5cd171f830d8 100644
-> > > --- a/kernel/sched/fair.c
-> > > +++ b/kernel/sched/fair.c
-> > > @@ -897,6 +897,91 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
-> > >       return avruntime - vlag != se->vruntime;
-> > >  }
+> > > Look:
 > > >
-> > > +/*
-> > > + * Signed add and clamp on underflow.
-> > > + *
-> > > + * Explicitly do a load-store to ensure the intermediate value never hits
-> > > + * memory. This allows lockless observations without ever seeing the negative
-> > > + * values.
-> > > + */
-> > > +#define add_positive(_ptr, _val) do {                           \
-> > > +     typeof(_ptr) ptr = (_ptr);                              \
-> > > +     __signed_scalar_typeof(*ptr) val = (_val);              \
-> > > +     typeof(*ptr) res, var = READ_ONCE(*ptr);                \
-> > > +                                                             \
-> > > +     res = var + val;                                        \
-> > > +                                                             \
-> > > +     if (val < 0 && res > var)                               \
-> > > +             res = 0;                                        \
-> > > +                                                             \
-> > > +     WRITE_ONCE(*ptr, res);                                  \
-> > > +} while (0)
-> > > +
-> > > +/*
-> > > + * Remove and clamp on negative, from a local variable.
-> > > + *
-> > > + * A variant of sub_positive(), which does not use explicit load-store
-> > > + * and is thus optimized for local variable updates.
-> > > + */
-> > > +#define lsub_positive(_ptr, _val) do {                               \
-> > > +     typeof(_ptr) ptr = (_ptr);                              \
-> > > +     *ptr -= min_t(typeof(*ptr), *ptr, _val);                \
-> > > +} while (0)
-> > > +
-> > > +static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq);
-> > > +static unsigned long task_h_load(struct task_struct *p);
-> > > +
-> > > +static __always_inline
-> > > +void decay_entity_lag(struct cfs_rq *cfs_rq, struct task_struct *p, int flags)
-> > > +{
-> > > +     struct sched_entity *se = &p->se;
-> > > +     s64 delta_exec, vlag = se->vlag;
-> > > +     unsigned long cfs_load;
-> > > +     struct rq *rq;
-> > > +
-> > > +     WARN_ON_ONCE(se->on_rq);
-> > > +
-> > > +     /* Negative lag is managed by delayed dequeue path */
-> > > +     if (vlag <= 0)
-> > > +             return;
-> > > +
-> > > +     rq = rq_of(cfs_rq);
-> > > +
-> > > +     /* No fast access to prev rq task clock */
-> > > +     if (flags & ENQUEUE_MIGRATED)
-> > > +             return;
-> > > +
-> > > +     /* Compute sleep time */
-> > > +     delta_exec = rq_clock_task(rq) - se->exec_start;
-> > > +     if (unlikely(delta_exec <= 0))
-> > > +             return;
-> > > +
-> > > +     /* For anything above ~4 seconds, save computation and clear the lag */
-> > > +     if (unlikely(delta_exec >> 32)) {
-> > > +             se->vlag = 0;
-> > > +             return;
-> > > +     }
-> > > +
-> > > +     /*
-> > > +      * Use cfs' load and p's weight to estimate what would have been the
-> > > +      * share for p. task's load contribution to cfs' load is replaced by
-> > > +      * its weight.
-> > > +      */
-> > > +     cfs_load = cfs_rq_load_avg(cfs_rq);
-> > > +     lsub_positive(&cfs_load, task_h_load(p));
-> > > +     if (cfs_load) {
-> > > +             unsigned long weight = scale_load_down(se->h_load.weight);
-> > > +
-> > > +             delta_exec *= weight;
-> > > +             delta_exec = div64_long(delta_exec, cfs_load + weight);
-> > > +     }
-> > > +
-> > > +     vlag -= calc_delta_fair(delta_exec, se);
-> > > +
-> > > +     /* vlag can't become neg while sleeping */
-> > > +     se->vlag = max(0, vlag);
-> > > +}
+> > > Let's say we have 3 tasks named TA, TB and TC. They all have the same
+> > > weight and the same slices. So TA gets picked, works for a while and then
+> > > sleeps for less than the rest of its slice.
+> > >
+> > > So the part that I hate and love, math. For your diff, we do:
+> > >
+> > > (sleep_time * weight) / (3 * weight)
+> > >
+> > > 3 * weight here is TA + TB + TC, it equals to 3 * weight since they all
+> > > have the same weight.
+> > >
+> > > So if sleep_time equals 2, weight equals 1, and slice equals 3 this equals
+> > > 2/3. If the lag is 2, we do 2 - 2/3 resulting with 4/3.
 > >
-> > Look:
-> >
-> > Let's say we have 3 tasks named TA, TB and TC. They all have the same
-> > weight and the same slices. So TA gets picked, works for a while and then
-> > sleeps for less than the rest of its slice.
-> >
-> > So the part that I hate and love, math. For your diff, we do:
-> >
-> > (sleep_time * weight) / (3 * weight)
-> >
-> > 3 * weight here is TA + TB + TC, it equals to 3 * weight since they all
-> > have the same weight.
-> >
-> > So if sleep_time equals 2, weight equals 1, and slice equals 3 this equals
-> > 2/3. If the lag is 2, we do 2 - 2/3 resulting with 4/3.
-> 
-> yes, we assume that TA would have run 1/3 of its sleep time
+> > yes, we assume that TA would have run 1/3 of its sleep time
+>
+> But if sleep_time + working_time < slice for TA is true, there is no
+> guarantee that it will run 1/3 of its sleep_time.
 
-But if sleep_time + working_time < slice for TA is true, there is no
-guarantee that it will run 1/3 of its sleep_time.
+Even if sleep_time + working_time > slice.
 
-> 
+>
 > >
+> > >
+> > >
+> > > Later, place_entity() uses this formula to do V - ((Sum(weight) + weight) * lag) / Sum(weight)
+> > > So ((2 + 1) * 4/3) / 2 equals to 2. But this is wrong, no?
 > >
-> > Later, place_entity() uses this formula to do V - ((Sum(weight) + weight) * lag) / Sum(weight)
-> > So ((2 + 1) * 4/3) / 2 equals to 2. But this is wrong, no?
-> 
-> why is this wrong ?
-> 
-> Assuming TB and TC have the same vruntime before placing TA, the
-> average vruntime is avg == V(TB) == V(TC).
-> place_entity will do V(TA) = avg - 2
-> After placing TA, avg' = (V(TA) + V(TB) + V(TC)) / 3
-> avg' = (3*avg - 2) / 3 = avg - 2/3
-> TA's lag is : (avg - 2/3)  - (avg - 2) = 4/3 which is what we assumed above
-> TB's lag equals TC's lag : (avg - 2/3)  - avg = -2/3
-> 
+> > why is this wrong ?
 > >
-> > If we didn't decayed lag: ((2 + 1) * 2) / 2 equals 3.
-> > So we would do V - 3.
-> 
-> Which would end up once placed to
-> avg' = (3*avg - 3) / 3 = avg - 1
-> TA's lag is : (avg - 1)  - (avg - 3) = 2
-> TB's lag equals TC's lag : (avg - 1)  - avg = -1
-> 
+> > Assuming TB and TC have the same vruntime before placing TA, the
+> > average vruntime is avg == V(TB) == V(TC).
+> > place_entity will do V(TA) = avg - 2
+> > After placing TA, avg' = (V(TA) + V(TB) + V(TC)) / 3
+> > avg' = (3*avg - 2) / 3 = avg - 2/3
+> > TA's lag is : (avg - 2/3)  - (avg - 2) = 4/3 which is what we assumed above
+> > TB's lag equals TC's lag : (avg - 2/3)  - avg = -2/3
 > >
-> > Now our objective is to add the sleep_time of the task to -3.
-> > Because if the task didn't slept, in that time it would be working
-> > instead of sleeping.
+> > >
+> > > If we didn't decayed lag: ((2 + 1) * 2) / 2 equals 3.
+> > > So we would do V - 3.
 > >
-> > So, we should do V - 1. But we do V - 2.
-> 
-> Why ?
-> You assume that the whole sleeping time would have been spent by TA
-> running on the CPU but we don't really know. We can assume that a task
-> with positive lag should run first, but this also depends on other
-> tasks enqueued.
+> > Which would end up once placed to
+> > avg' = (3*avg - 3) / 3 = avg - 1
+> > TA's lag is : (avg - 1)  - (avg - 3) = 2
+> > TB's lag equals TC's lag : (avg - 1)  - avg = -1
+> >
+> > >
+> > > Now our objective is to add the sleep_time of the task to -3.
+> > > Because if the task didn't slept, in that time it would be working
+> > > instead of sleeping.
+> > >
+> > > So, we should do V - 1. But we do V - 2.
+> >
+> > Why ?
+> > You assume that the whole sleeping time would have been spent by TA
+> > running on the CPU but we don't really know. We can assume that a task
+> > with positive lag should run first, but this also depends on other
+> > tasks enqueued.
+>
+> If TA didn't got preempted, and its sleeping_time + working_time is
+> smaller than its slice, the whole sleeping time would have been spent by
 
-If TA didn't got preempted, and its sleeping_time + working_time is
-smaller than its slice, the whole sleeping time would have been spent by
-TA. Even if it did get preempted, there is no guarantee that it would
-work 1/3 of its sleeping time.
+You can't assume this to be always true, and we don't know how long it
+was running. A positive lag of 2 as in your example doesn't mean that
+TA runs 1 ms in its slice and would have run 2 ms more if not sleeping
 
-> My first version assumed the whole sleep time would have been used to
-> run which is optimistic. Peter suggested using the ratio of weight and
-> cfs loads instead which accounts more fairly for the running time.
-> 
+> TA. Even if it did get preempted, there is no guarantee that it would
+> work 1/3 of its sleeping time.
+>
+> > My first version assumed the whole sleep time would have been used to
+> > run which is optimistic. Peter suggested using the ratio of weight and
+> > cfs loads instead which accounts more fairly for the running time.
+> >
+>
+> IMO, for a task like TA assuming it will work in its sleeping time
+> is better than assuming it will work as 1/3 of its sleeping time.
+> Or atleast less-bad, no? :-).
 
-IMO, for a task like TA assuming it will work in its sleeping time
-is better than assuming it will work as 1/3 of its sleeping time. 
-Or atleast less-bad, no? :-).
+That depends on the PoV you take. The reality is that TA could have
+run from 0 up to its full sleeping time (even if the sleeping time is
+longer than a slice). Assuming it will run for the entire sleeping
+time is one extreme, while assuming it won't run at all is the other
+extreme. The reality is probably in between. The longer the sleeping
+time, the closer the expected run time would be close to 1/3.
 
+>
+> > >
+> > >
+> > > AFAICT, we can't already know for sure how much will a task run even
+> > > when the sleep_time is smaller than the slice. Because of preemption
+> > > :-(.
+> > >
+> > > The cleanest, the simplest and maybe the worst or the best solution I can think of
+> > > is just setting lag to 0 on every wakeup with positive lag TBH.
 > >
+> > Keeping eternal positive lag for a long sleeping task is unfair but on
+> > the other end, clearing all positive lag for a micro sleeping or
+> > because of waiting on a shared lock is also unfair
 > >
-> > AFAICT, we can't already know for sure how much will a task run even
-> > when the sleep_time is smaller than the slice. Because of preemption
-> > :-(.
+> > >
+> > > Or maybe, try to calculate when sleep_time is smaller than the slice,
+> > > but just set the lag to 0 when sleep_time is bigger or equal to slice.
 > >
-> > The cleanest, the simplest and maybe the worst or the best solution I can think of
-> > is just setting lag to 0 on every wakeup with positive lag TBH.
-> 
-> Keeping eternal positive lag for a long sleeping task is unfair but on
-> the other end, clearing all positive lag for a micro sleeping or
-> because of waiting on a shared lock is also unfair
-> 
+> > There is a difference between sleep time and lag. Even with a sleep
+> > time longer than the slice, the task can still have positive lag after
+> > sleeping (this is also true for runtime). All this depends on how many
+> > other tasks are running simultaneously and their weight
 > >
-> > Or maybe, try to calculate when sleep_time is smaller than the slice,
-> > but just set the lag to 0 when sleep_time is bigger or equal to slice.
-> 
-> There is a difference between sleep time and lag. Even with a sleep
-> time longer than the slice, the task can still have positive lag after
-> sleeping (this is also true for runtime). All this depends on how many
-> other tasks are running simultaneously and their weight
-> 
-
-> >
-> > What you think?
-> >
-> > Sreehc,
-> >
-> > Kayra
-
-Ah, you didn't understand my joke, sad. :-(.
-
-Sknaht,
-
-Kayra
+>
+> > >
+> > > What you think?
+> > >
+> > > Sreehc,
+> > >
+> > > Kayra
+>
+> Ah, you didn't understand my joke, sad. :-(.
+>
+> Sknaht,
+>
+> Kayra
