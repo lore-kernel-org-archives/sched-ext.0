@@ -1,87 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041874;
-	b=xWy/Em+CIlOeQzvludZCmcL0DB55Ep50Uj6aOzIvgabml8CDjC6qroC3ObiAvCpII+dJ
-	 kcRra2Dw71xI+kK/vUo9DnK9BRyJgF7b29gHKkp9PYcJaoGjpFriPSUHf0QHjuxsyHYef
-	 EPf69YP+mYjH3AJHupWPe2L5dDQBnA9I747QE/+9FtLf6YtWUdvzlvGSC12wqA8Tr3uLP
-	 KAttj3MdRId2uqtADuphxRhweF9IAwyLonS72wBOhH5CbA4IDDUl/AChKMPzU9y0nuRkk
-	 KLw+AgUh8+2AO/AQiYuWslRG/hqiYUvHZvh4ztHxdjjTUEEgqP18Wj/K9oOkkYWuThw==
+	t=1795042799;
+	b=bIsz39cSF7ZD5lSDOFbcTVlzThjDcpI3Lkp0wdKpYPrvjd2jpowY4R4dH3hfgscVB4d3
+	 SK22ioBgGR8+i+Fkt98WLMahfJ/CBdlviXDKq10Q0TXZ+kmwjk7HeFvvT3i4nLBMgYi4v
+	 jh7lmImMO0wAOmGqdvywAVCDpsYHLOlTkS16LkCTmMCZkAgX4q0sYv+XVk9mTgjVorkA5
+	 y/G77+UTeZvRm6AXcfBqGY1ytksBfD5DepE/5prIqbUID6tCYwpSPjKyfPHlKuQvV/7Nm
+	 kcJ3sOhjGN9Y1SyJ1qLpmOGRJgHMYg40j0s1VaEr4cODBfZCgI7Df9Jk6D8NozwuEJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042799;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
 	 Content-Type:Content-Transfer-Encoding:User-Agent:MIME-Version;
-	bh=xb8vaYkXb3WyePVM4A0uNn/vxbvhHtvysyg0tVAcvjw=;
-	b=Cn/0m0J3rNFwGmIfLgVd9S8IDEfE4pNaliw8soT+D+69rYyBDqVW9Pv+j1ew37oLUIVG
-	 5VukT3KtR2seWsawWgbA0k7zmXzqYvvZVM4UdunJWOrvjpg2MUX69SKBof9/2vuGJ/iVr
-	 7Ra/fzFB9qjTlnlqCTvFe08UsQfXP/DNvvhSLvuPt0mCNfun2LQe5FQLQrA6VzNFXkMw/
-	 MLk+5fn9y3IpXQrf6I4L5RBYzE/gvXEUuQXQxBt7n9I1KJFtzhcLETrDmPRaHRiscVhWb
-	 cjwTf9Y7c3R9BOLSBKgB0ZDje1AEd+srD/aIu0SE8xCkhRbp2YAEG/9DQAm/W0mZq8Q==
+	bh=LBiQjXroGIgbRFbCXNC43q/C52U0JtTLkOoI/rutDOc=;
+	b=1HSDUoukciZgBj9P5Xg0ieu2Ib+OETxe/NmR+hIKxs/WJQUKUET5+s9Y+4lgK9PROtir
+	 s7hv3ZTgJBv03OgSo7k9p6rqFUx6JkBAJF7il78F6eco8EhTTe1yh+qvJ3YV2FJPhIeke
+	 Ch3Vsr+ZTSZalCymJmzinGaZdaPNgH7YOoDadb1T1/8ezsNgLXCVtjs5CwyteS7323K3V
+	 fuacOAnBEhKJPP1MfE76Iof6g8tl8XyCSCKxNCTqcIYouk8qs9PFhw20v/tlF87SJwtTT
+	 xskAuSjoXMhKDpwfQOUGttnvAe4Sjvj4+pf1gfA+/T3LUECduUNL3POYuIde78jIoww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kOa2lLoH;
-	arc=none smtp.remote-ip=209.85.216.54
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xJUTj3Pz;
+	arc=none smtp.remote-ip=209.85.216.43
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED56B606A320
-	for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 22:44:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ED56B606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CCC606A334
+	for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 22:59:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65CCC606A334
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kOa2lLoH
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3b0d0b80fb9so980487a91.1
-        for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 14:44:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xJUTj3Pz
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3b3fb193c03so97777a91.2
+        for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 14:59:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795041873; x=1795646673; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1795042799; x=1795647599; darn=lists.linux.dev;
         h=mime-version:user-agent:content-transfer-encoding:content-type
          :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
          :cc:subject:date:message-id:reply-to:content-type;
-        bh=xb8vaYkXb3WyePVM4A0uNn/vxbvhHtvysyg0tVAcvjw=;
-        b=kOa2lLoH1Eehr4W1Kc24zP1uWRkgKKqtwpnlcUMvkMwsEjpMtzXKrMfRtF0gVCvgBL
-         GjfP4iJE+RujAi7KkLhPurtVCp3Z0m36QhqHn5j9cSNTCX2yhjKZTBdd4TYoAdj3maIl
-         Tl61Tb1x9hyY+xoR3iOC/5aOcpnk1SrVhPSunJ2t/ML/J4sDoHdyWueToAWNwS9S8hgY
-         hW8WN6eXpm3phF3N8aHg1VQn32RYBcd52UIj8BS5sV6k4lmkToW56sANjh02kFLXd+cY
-         MI7rZf8HjwbB5hiYigJGyZzlr5juqo4PaM44ly53xT5v49Qxscl9R5hFMNzakeGdeoqJ
-         vixg==
+        bh=LBiQjXroGIgbRFbCXNC43q/C52U0JtTLkOoI/rutDOc=;
+        b=xJUTj3PzDBCDQqFpJCOv70L+1BHrOqKw30xl7cUvezXRFS/v4Al5pzDnXZKRme2wUk
+         xWzH2ibEY8IL0F6m+hd9dOh2mv3yz0ozKemAHicbRybkAbOluy6IfhvAg3HRi4nhMyo/
+         9HDEBfZJl2xiHNt9n/6v7As+M66WO9hArhX9O2+sscmgnLcaSUCqbQDsPJx/qMpAeJk7
+         rYeCQYIN8eXoA1Xb/Gdjhc1IbOfGXyjEomroepmaZWk+QdAVAhzFz54WgFtMzsJjDdSJ
+         ercSDBogNRKLVxDuLlH/dyG3Z1wpwIGTQeqfh+mtaV82skGc7mCuPmt6P9WSBsVhC5WV
+         wLNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795041873; x=1795646673;
+        d=1e100.net; s=20260707; t=1795042799; x=1795647599;
         h=mime-version:user-agent:content-transfer-encoding:content-type
          :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xb8vaYkXb3WyePVM4A0uNn/vxbvhHtvysyg0tVAcvjw=;
-        b=EBZulhpN/vK9yb0LQdq3RtZZAHnftAEsXjeqOWYlEyrO40YFxjg9qqnJruXHChNZ/T
-         P634f+RBMpIWDB/Txg9ywtz1wDVlTNDtV+jluT57H63OVO6i637x2YOimGgVN+Up5yFP
-         ylzgFkJRJR55/ivREBQevLC9X5fKJUAmEHbp5zVuy4B5+5EfR4RgfUBIYIWtzyIhO+//
-         5DF1Eg4VSfyKUx/St3d46Kn6i7a0ux27YdeQrXYuSADB/D4I4v/AxCCYi/6lj6XiMdfx
-         SlSDNjolScIgkqR/NigLOCRnpQM1rQaKyeD77mpMKiu9rpIquvsQmx6T4MSfkSg4hs0O
-         kI1A==
-X-Forwarded-Encrypted: i=1; AL+hErGsPpjtEfCoRcsWtdpoQrIyPcOObWq4IIl2JP2dc+DTXpewr44Yr4oAS8VC9UFCoaqQ1/ebnbtfTds=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/q2rabD6eaMFNdKfaEEVMsddEsFx/tMC+8VlcGhQdVJnTHGdgH
-	6p32aYD2ZlrEMiM7tT8BYvBxDmt9f/MIqeEG8VzTC/B25ogr1y8lrIkb
-X-Gm-Gg: AZFdTZeRiLRAEWK1S2t8UvmWVLW8uHHmoRn35bFKA5iIWdhlOvlIitRoX5CkziaXGrE
-	jAuBw3KmxtgOwuwWZanj57wkKZ7fBU8g/yMKi6LOsgABV+PTI4GuIuEegDsXtZK4ABrgaA32GKw
-	XTdJvBxzv2mYlXK9/8G4FMSSTGqst1dnbgndJBlt7+nA1leCfUhjjyPckq8imM2ogyBNswg0v1z
-	ZL80cg3QgVM+pGo/mvRCTa3gRJ3qIKqT71gXQaU/UudXWhQO0q+l76Z2p6i3PeN/XXAwYsqKKzX
-	3huykA2SvyoJu84NZBL7+jGl4lTa5j8690mIoh6ReS69jfE9/KcCByiNvA2Tpn1p7HcbIUKIiSM
-	aL/aQN9iECHnUEgzwe6uKXciLDFfGOn+3W0NdfwYjwWPK5knQ7RD5FrLpjEGpImh/Uim4PqzRax
-	bXyp8dynvQ/1R76Ub+cIqY/NkRbCNiEhGrWiMHOLOeFwBe0corvPvpTP+GUO1EQNWZWvwDNrmsF
-	phjDSiaMS21h31enBCEkYHAs1yAi9l+aXqGgKif6722d8Y8UUi/8LpuGQZfJFdP3q5x/OWfc7ME
-	0WGfVRPoOTB42SN6c9kuP5jit/3hdHLHmnx+w96Y8f+wV61b2P9p3uBW1Q==
-X-Received: by 2002:a17:90b:2b4b:b0:3ac:8af9:4a73 with SMTP id 98e67ed59e1d1-3b3d07b90eamr3666378a91.28.1795041873232;
-        Wed, 18 Nov 2026 14:44:33 -0800 (PST)
+        bh=LBiQjXroGIgbRFbCXNC43q/C52U0JtTLkOoI/rutDOc=;
+        b=fB1jpRvm+DM8cuEiwSxCwWyyNMXbuJ77lsTB9Kjrt6DFAEHx6tHnGvv5xUvFNdghGh
+         LhtNUJ13rze1HDKx3Zm5deQurJIOzP1QNrO7z+r/8Q1O8jNPAcWaTpQY2BB1qOAINMho
+         ajsiqzBx7w1u/d51XAr56669guxbWp3g/OtPfIUjkMJZSOFDwezJjc/iS3xjNsBQ9O2v
+         8fnnHia7TmRPZCCzXMEe+M2LMXpg7aBZwaOaIwhhdtPqiyin304Ajnf8S8Af7w7LldFp
+         h8HEsgs0j4ablc87VdhY8Qw1XGWbN5wpkzPQ1Q9cA8u7StcpkkLVdajuz9M5ZLS7IDSX
+         UR+Q==
+X-Forwarded-Encrypted: i=1; AL+hErFFE247Ao5dK7NzAGw6DFbvA2k8ltXWk6pKdydRK0RWUuAr8SFxvewkPUDsfaqgxQspw+3C3/D0OKw=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8MN/bqw1yjmD78Mez0wWlQUHaCH1LUJtTKbdhL+BaGl5C/5f1+
+	BfYV+9NUSNafBUIRa3+xPizzLzOFqr/jEW5UiolzsoK/mXqObEGKqRdc
+X-Gm-Gg: AZFdTZedPl897Fl5uPGr7fQ130vXN6tNVU0Jgyb6tE2w8jtBQZZ0I15WxsfIRWOt3vg
+	SLfdPXXdz4MTqE54G2AxiaQu5+8KPVuRiAWHPQ14UP36JhDoZZMRXRzMFz0swh7ZlBxG0fs05Ae
+	e81By+tIuzvn+XgEtXPJWTnx6H/id0Ni3RBVAZXGsyp++ESDbn3lnLI/x7cr55k73wgOBlmQlSw
+	JnsBmG27QPvsv7a7d05N85v49WxfhnpmpetxxGg7W7iw4Fd7gUgK7CVj5zrTISktV0eJqvPeoiS
+	HsCkzBL2E0AixEIVEeXgQvd6ImwRbrQeBql+ExyMQqFFwd8IViDrgDXVVRw2jgElZhV+qG3B4c/
+	1FOKkx9eDmmGSOpPaTU3YEJfSRX3InOKhQGzGS8UMMnVLhbMQGh2v31DX0H6MPBJYIJbqf8iz3o
+	YU3W77poeamOa8eZqy6uapTzNzOaWk2OwuqY6tKoXV32ugxk3HYTwlaws5AwedT/SlM/asbNX2Z
+	lF2Tcu0oT5AyDviIsTZjY0lFCSVE+qc6HWBYf/4y0ljpaDKL5bZKzHCj86VBSzGbzKJdVBIfnm6
+	u3WPfhoUbfQms+74bZffp5YtWLGo3hO41UVaezfnXtYP9Dp0nzQNV4k6
+X-Received: by 2002:a17:90a:e7cf:b0:3ac:8dfe:8ec9 with SMTP id 98e67ed59e1d1-3b3d07d45ffmr3520075a91.47.1795042798682;
+        Wed, 18 Nov 2026 14:59:58 -0800 (PST)
 Received: from [192.168.0.13] ([38.34.87.7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b3fe09b6a2sm207669a91.7.2026.11.18.14.44.32
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde534de506sm595959a12.27.2026.11.18.14.59.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 14:44:32 -0800 (PST)
-Message-ID: <9e6ac7882314fdb1215dcebff1c35db72380ad0c.camel@gmail.com>
-Subject: Re: [PATCH bpf-next v1 1/4] libbpf: Fall back to kernel ___ flavors
- when resolving kfuncs
+        Wed, 18 Nov 2026 14:59:57 -0800 (PST)
+Message-ID: <a838d40d84ccf3115faac3d3b7b4d91b923b03ff.camel@gmail.com>
+Subject: Re: [PATCH bpf-next v1 3/4] resolve_btfids: Reject kfunc families
+ that libbpf can't disambiguate
 From: Eduard Zingerman <eddyz87@gmail.com>
 To: Ihor Solodrai <ihor.solodrai@linux.dev>, Alexei Starovoitov
  <ast@kernel.org>,  Andrii Nakryiko <andrii@kernel.org>, Daniel Borkmann
@@ -91,10 +91,10 @@ Cc: Alan Maguire <alan.maguire@oracle.com>, Emil Tsalapatis
  <song@kernel.org>,  Tejun Heo <tj@kernel.org>, Yonghong Song
  <yonghong.song@linux.dev>, bpf@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-Date: Wed, 18 Nov 2026 15:44:31 -0700
-In-Reply-To: <20261117192153.3384031-2-ihor.solodrai@linux.dev>
+Date: Wed, 18 Nov 2026 15:59:56 -0700
+In-Reply-To: <20261117192153.3384031-4-ihor.solodrai@linux.dev>
 References: <20261117192153.3384031-1-ihor.solodrai@linux.dev>
-	 <20261117192153.3384031-2-ihor.solodrai@linux.dev>
+	 <20261117192153.3384031-4-ihor.solodrai@linux.dev>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.2-10+b1 
@@ -109,64 +109,64 @@ Precedence: list
 MIME-Version: 1.0
 
 On Tue, 2026-11-17 at 12:21 -0700, Ihor Solodrai wrote:
+> Kfuncs sharing an essential name, foo and foo___<flavor>, form a family.
+> When resolving a kfunc foo, libbpf binds the kernel's foo if the
+> prototypes are compatible, and otherwise the only family member whose
+> prototype passes bpf_core_types_are_compat() against the declaration.
+> That is only safe if no declaration can be compatible with two members
+> at once.
+>=20
+> bpf_core_types_are_compat() compares prototypes kind by kind, so it
+> acts as an equivalence and a pairwise check is enough. Run it on every
+> pair of family members after dedup, using libbpf's own function, and
+> fail the build if any pair is compatible. A foo___<flavor> with the
+> same deduplicated FUNC_PROTO as foo is an alias and is allowed: libbpf
+> binds foo first, so the alias is never picked in its place. There is
+> only one foo: btf_check_kfunc_name() refuses to register a module kfunc
+> named like a function in vmlinux or in another module. Dedup compares
+> parameter names too, so an alias has to copy the signature verbatim.
+>=20
+> Recognize family members by their bpf_kfunc decl tags rather than by
+> the BTF ID sets. The tags are what libbpf filters candidates on, and for
+> a module they also cover the vmlinux kfuncs in base BTF, so module
+> kfuncs get checked against vmlinux kfuncs of the same family.
+>=20
+> The bpf_kfunc_flavor family in bpf_testmod passes: ___v1 differs in
+> arity and ___v2 is an alias.
+>=20
+> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+> ---
 
-...
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 
-> +/* id is a kfunc named <name>___<flavor>, where len is strlen(name) */
-> +static bool btf_is_kfunc_flavor(const struct btf *btf, int id, const cha=
-r *name, size_t len)
+> =C2=A0tools/bpf/resolve_btfids/btf_colors.c |=C2=A0 11 +++
+> =C2=A0tools/bpf/resolve_btfids/btf_colors.h |=C2=A0=C2=A0 3 +
+> =C2=A0tools/bpf/resolve_btfids/main.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ | 134 ++++++++++++++++++++++++++
+> =C2=A03 files changed, 148 insertions(+)
+>=20
+> diff --git a/tools/bpf/resolve_btfids/btf_colors.c b/tools/bpf/resolve_bt=
+fids/btf_colors.c
+> index 5d307d70e7f2..91c10106319e 100644
+> --- a/tools/bpf/resolve_btfids/btf_colors.c
+> +++ b/tools/bpf/resolve_btfids/btf_colors.c
+> @@ -13,6 +13,17 @@ void btf_sha256(const void *data, size_t len,
+> =C2=A0	libbpf_sha256(data, len, out);
+> =C2=A0}
+> =C2=A0
+> +size_t btf_essential_name_len(const char *name)
 > +{
-> +	const struct btf_type *t =3D btf__type_by_id(btf, id);
-> +	const char *kname;
+> +	return bpf_core_essential_name_len(name);
+> +}
 > +
-> +	if (!btf_is_func(t))
-> +		return false;
-> +	kname =3D btf__name_by_offset(btf, t->name_off);
-> +	if (strncmp(kname, name, len) !=3D 0)
-> +		return false;
-> +	/* kname is <name> itself, already tried by the exact lookup */
-> +	if (kname[len] =3D=3D '\0')
-> +		return false;
-> +	if (bpf_core_essential_name_len(kname) !=3D len)
-> +		return false;
-> +	return btf_is_kfunc(btf, id);
+> +int btf_types_are_compat(const struct btf *btf1, __u32 id1,
+> +			 const struct btf *btf2, __u32 id2)
+> +{
+> +	return bpf_core_types_are_compat(btf1, id1, btf2, id2);
 > +}
 
-Why is `btf_is_kfunc` filter necessary?
-As far as I understand, main kfunc resolution logic does not check for it.
-Having different rules for exact name matches and for flavoured matches
-seem to be inconsistent for no good reason.
-
-...
-
-> @@ -9526,6 +9650,17 @@ static int bpf_object__resolve_ksym_func_btf_id(st=
-ruct bpf_object *obj,
-> =C2=A0
-> =C2=A0	kfunc_id =3D find_ksym_btf_id(obj, ext->essent_name ?: ext->name, =
-BTF_KIND_FUNC, &kern_btf,
-> =C2=A0				=C2=A0=C2=A0=C2=A0 &mod_btf);
-> +	if (need_kfunc_flavor(obj, ext, kern_btf, kfunc_id)) {
-> +		ret =3D find_kfunc_flavor_btf_id(obj, ext, &kern_btf, &mod_btf);
-> +		if (ret =3D=3D -ENOTUNIQ) {
-> +			/* an error even if declared __weak: ambiguity isn't absence */
-> +			pr_warn("extern (func ksym) '%s': more than one compatible kfunc flav=
-or\n",
-> +				ext->name);
-> +			return ret;
-> +		}
-> +		if (ret && ret !=3D -ESRCH)
-> +			kfunc_id =3D ret;
-> +	}
-
-Idk, I don't like that this is implemented as a special case:
-- Check exact name match first.
-- Check flavours in a separate loop.
-
-It appears that having a single loop looking for name candidates is a
-bit better from code structuring point of view.
-
-> =C2=A0	if (kfunc_id < 0) {
-> =C2=A0		if (kfunc_id =3D=3D -ESRCH && ext->is_weak)
-> =C2=A0			return 0;
+Can main.c include bpf/relo_core.h instead of this symbol-laundering scheme=
+?
+Or just define two extern prototypes?
 
 ...
