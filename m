@@ -1,54 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.132
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037846;
-	b=X5vj8tSnm0jEuDUXva5EISQ97CNRNh90TeHIwQL3ihUaGtTEpSlIpvoyGlswnsLxNofe
-	 hzD0Z62HqIdGPxCRNqdZTHCiLoyuO7ZPyznI8V7+zorAnw2M23f8bgRXlPffEOnpbqtlK
-	 bAm3j9+nMOCC5TQEJ0eeNviIIdx4hTplcMWfc8Wb4Ooa0oFTLd1xYA+3w1BiLLiihgeP7
-	 +1MrnzaY3KzKdfW934sXDkM306aMo1V6eZGDjSjWacndnnY9P85Ym4Ewp8kBXAlfbKPfl
-	 rvfmL77bfu0KUjlWdRsyRadpTzHaAXEz6lNZiqpMer4M26jBrsQD5Plcc+urT3+2eBA==
+	t=1795038150;
+	b=dUp08EDLR7ziUH9nTvfWRBywjzPkZxu/uxYsso6gHMAFQ+Oo0lFMqow/Kla5fK6yxfaA
+	 dSdSfBZIkXCsIfstVwwh0Nnl+KOBlwULznnU1d5EL0LJqok9rzFUw2awg8Xl1lVtCfwRm
+	 BgeBlHvR6bQOV6mAoyE9dop34M61Olb4HcNBC4UI8hm+SLzl8skrbxSDNnDCwolSTWccw
+	 l6ElePQsCwbHAAMH8Zkd+0CF8ZEX8fKHOvzEMflHlp8y4j+1/3/qABR0UtSlUAOGtp0LO
+	 kvmFzVyYPbvKQlrww52N5flGcC57vHWQgjeZAfPZxURbgOr6BAZyYJJDPpuSmUC7WSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037846;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=sjUB08oz3FeVpN/HDPa4HHY9IfRB4b/+glhwpbFwjMg=;
-	b=lCv/rEuFoMbakGv25O34ZHFnYatWciwTGAqPJGw6zgwu2uR2b9fOqngEEJaWxd+HtyeK
-	 he+0l5LNg92G0Wm9fnbSsk0NJBL9NobLFQJZqWJ6Z3CbaWthYpSVKm+CKc6UxKbUckGR/
-	 o8pOklvrfIdL5uBDZTPq15medoFFV27KNZ3FFyWbTwNkym3CqHcwSO4btmxuI/4xcMzIq
-	 YT15Yk7mofdynBrjNAcplYp62L4n0vUWnX8XvWAW/fSDzNBBWyGCEi5BTCSNzIxNypr06
-	 CgNC1EgzhK5x3ImiQ5ZAkuCwlAU9/v+ajRKe0u2ZJq3ZyPooyFmnLEOkjdTGwa/I8Og==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038150;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:Content-Transfer-Encoding:User-Agent:MIME-Version;
+	bh=pdzz7LkxowMA5/oolvKxj7aqpaNg52beDkUQ9AFP9q0=;
+	b=XHb7SGEDSdqDQmFF0gusLySGxvLvlPoN6SWL9wcvOfEvNTG8ZpirC8n81nNmA8bG15+S
+	 5GmspCOG9oSH4+vzQbbjjkYjbl/41A1EQJq/7SAtPDCS62Io9s75Go91tPGtm4wxHPZiz
+	 Cm9JIq1/c+vvdlcmefIVrHr17kPlaFqQBv4A8kf/YnaC5nkXQlGaGvdSvJWmYmv/2J5h7
+	 a+WYSEevoxrm9sX0zU8p4EuyyHMcgYwWhEZy5bq1apFHkz4BJBBmRlz7jeGSq0nAIY9uv
+	 A5B4gks06c8COezKqlxWRrvOwa4gSNJvpvj+LcVLLIR/Q0sYxJIM0e3I6Fsfs3aJw7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=F19YdPyI;
-	arc=none smtp.remote-ip=95.215.58.132
-Received: from mta1.migadu.com (out-132.mta1.migadu.com [95.215.58.132])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="qPT/T3Hm";
+	arc=none smtp.remote-ip=209.85.215.172
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF6A606A325
-	for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 21:37:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4EF6A606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC62606A325
+	for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 21:42:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8BC62606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=F19YdPyI
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=u7k8Mlc6Fymhtj+FfIGlaOLuMxhse5NF2Wwfz/aIR2I=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795037844; v=1; x=1795642644;
- b=F19YdPyIE+1qxZagD4FO+d2TukDaLriVWQqI4YW6kYpDsN/E8NJE3hZgHwGtkppX3zx/s0Gf
- 74/ahag/47nZlTqHcJxH54Kj0s6oTpJeMt3Irkmg9OgbSMsyvFyhM/InjHbYImV06bfh7IE1tiA
- NmXSVbs47mePU0pUbDgzXLCE=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 4af51873c45a5690;
-	Wed, 18 Nov 2026 21:37:23 +0000
-X-Mizu-Trace-ID: 4af51873c45a5690
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <6a1b6f05-448e-461c-bd79-0acd67fb7edc@linux.dev>
-Date: Wed, 18 Nov 2026 14:37:19 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qPT/T3Hm
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-cddc597d062so958909a12.3
+        for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 13:42:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795038150; x=1795642950; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=pdzz7LkxowMA5/oolvKxj7aqpaNg52beDkUQ9AFP9q0=;
+        b=qPT/T3HmZfZpSa6oYrZxtwd9sPS114Q90oNPTiszJ9I8WXJ6B2CvutvRg0KIXNin5+
+         pFdDQoj7vgK1yL5IQUBhiMSPjYos7rgMogrrvkG9WekAScR5DXUpN3tjoNEqej2DO5DS
+         q2DGwWRVfnvJrxUNS1b9jYZUp/2f37lQjo6ahpyIxtyRPOmxpvkyFLau2OoP9TNnphmR
+         kgg9tht8P+KUyktW7BtvApkCRLNnYaH709hThgp5BoM3mcoSvToK+9gDXdxeG4CYGxJ5
+         jM/H6xZ/3t96TFNg6tkYpNLGwQaEsJca+UgW9Ym8pZzNLLm8cY5zmL7x2zBmmodz9ikE
+         hBoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795038150; x=1795642950;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pdzz7LkxowMA5/oolvKxj7aqpaNg52beDkUQ9AFP9q0=;
+        b=dj6YVPKxiOWZFNykg8fo2Q7ei7EZL2AyK9jGM8DBQ9dhVD6qPPK6bpHOxf293jmBEy
+         uut+pNkROKOQwxkVmMT0InbFfrcC5Rgq/sGf3las98eKNXeam9HXfSgSXQiVcT9+WIDq
+         8iHmvAg9zQQcK7Akga1xglqnmvDFzcpgnYOo1e5aN5hBCiJJSYSV+ONq8k4UqoWpYjLr
+         lCCMNhQLbJ5ev+yaOC/2WAoUoGwB02mhkudvTWt+eoJJLIy07hHEpWIgbTwTBbTGGk8K
+         IfYy3loX1q7C/41Va2nvqHM0nqYPst6CEFR2KpdhDcqt5ntvoWfQYL0FP//O8vLFrAIM
+         FYow==
+X-Forwarded-Encrypted: i=1; AL+hErF41b8C3GrCjc+RO39lgSgjo/ti69yfw90jlBmAWYp6nY0ALwvQ1iyxxJrk7TmMCat/dcEdMd6d09A=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+QrrnOYdJg8VSGxlVVzI7pbbsSeM7YfXVur6heq04Bpk0fV+Gm
+	FpmA6VTJDtqFykYizPDn4CFTOQ9HPnyG/sNefdTiML7Y8ul5xRSqahyf
+X-Gm-Gg: AZFdTZeoQGZRKmOK9SkohHowHEyK0784ZbwrjZ2PkGRsuNmfd9MntNixY2fsFTqXu40
+	vs12Yz6ZeqBdwbVmSnpCBmQPTtrK8ZBrWhWX/ywCxURKo4rzHtMK+hVLCoR09y9gs4SG9zbr0Lg
+	NYtyS8ZdqgTG9ksUI6MCMb2SnODdkviePD/8hdQODRCPeH3Tm8FGT3F4z4BZLwTsvfe6qxu49rA
+	2OUfWuzrK/OEaCimDnRsT1ZOMfXg8aBsq4epKCEgQ6CZT/JuFndvPeD7sWZvnwXuG6Dm2ZumA0H
+	2iir9v+SRPT+4cL+HVwAN3eP5ijxut/wP5u5wK131LQMbvmjIKZBT2R3r0Wo3L/OuPtMXoEIsT/
+	o7pMzInqeBEP0ABoSXmr0pov0l6iP7ermhnqZPchUnrC9kP6h/ws8A1rfTyyH6PCE5osjpVWPWS
+	JY7dcaG+UiUsdflPY4f5rV9oxFzV2OlX7BqEf6mVtiwMrHkumMCdavVOLTFFMa+vMICa/HAORYL
+	az2peGZ0PjEefC3UC/jfAAAc6gk9wu+GIBSP2eFJKItPETi5KZittOZ15BT+SpILxJ6K/I9zvY5
+	tLvVCV49Mlc0hdsdA8OO35jcFKLWthBPJy2Qdhv/nfBTyDOjaTk5jFBs
+X-Received: by 2002:a17:90b:4b86:b0:3ab:1b19:78f4 with SMTP id 98e67ed59e1d1-3b3d06a487emr4167024a91.6.1795038149846;
+        Wed, 18 Nov 2026 13:42:29 -0800 (PST)
+Received: from [192.168.0.13] ([38.34.87.7])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b3fdf44c61sm63748a91.12.2026.11.18.13.42.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Nov 2026 13:42:29 -0800 (PST)
+Message-ID: <08d6be6e9e0dcf6570ecd83671e9dbe63a417607.camel@gmail.com>
+Subject: Re: [PATCH bpf-next v1 0/4] libbpf: Support kernel-side kfunc
+ flavors
+From: Eduard Zingerman <eddyz87@gmail.com>
+To: Ihor Solodrai <ihor.solodrai@linux.dev>, Alexei Starovoitov
+ <ast@kernel.org>,  Andrii Nakryiko <andrii@kernel.org>, Daniel Borkmann
+ <daniel@iogearbox.net>, Kumar Kartikeya Dwivedi	 <memxor@gmail.com>
+Cc: Alan Maguire <alan.maguire@oracle.com>, Emil Tsalapatis	
+ <emil@etsalapatis.com>, Jiri Olsa <jolsa@kernel.org>, Song Liu
+ <song@kernel.org>,  Tejun Heo <tj@kernel.org>, Yonghong Song
+ <yonghong.song@linux.dev>, bpf@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
+Date: Wed, 18 Nov 2026 14:42:27 -0700
+In-Reply-To: <df72a9ab1ebcebff573485a808e45cd493665e75.camel@gmail.com>
+References: <20261117192153.3384031-1-ihor.solodrai@linux.dev>
+	 <df72a9ab1ebcebff573485a808e45cd493665e75.camel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-10+b1 
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -58,109 +107,49 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v1 0/4] libbpf: Support kernel-side kfunc flavors
-To: Eduard Zingerman <eddyz87@gmail.com>, Alexei Starovoitov
- <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Alan Maguire <alan.maguire@oracle.com>,
- Emil Tsalapatis <emil@etsalapatis.com>, Jiri Olsa <jolsa@kernel.org>,
- Song Liu <song@kernel.org>, Tejun Heo <tj@kernel.org>,
- Yonghong Song <yonghong.song@linux.dev>, bpf@vger.kernel.org,
- linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-References: <20261117192153.3384031-1-ihor.solodrai@linux.dev>
- <df72a9ab1ebcebff573485a808e45cd493665e75.camel@gmail.com>
-Content-Language: en-US
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <df72a9ab1ebcebff573485a808e45cd493665e75.camel@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 
-On 2026-11-18 2:12 p.m., Eduard Zingerman wrote:
+On Wed, 2026-11-18 at 14:12 -0700, Eduard Zingerman wrote:
 > On Tue, 2026-11-17 at 12:21 -0700, Ihor Solodrai wrote:
->> An incompatible change to a kfunc's prototype, such as an added
->> parameter, breaks BPF programs built against the old one. libbpf
->> ignores the ___<flavor> suffix of a kfunc declared in a BPF program,
->> but makes an exact name look up on the kernel side, so the kernel
->> can't keep the old prototype available under the kfunc's name.
->>
->> sched_ext ran into this. cded46d97159 ("sched_ext: Make
->> scx_bpf_dsq_insert*() return bool") kept the old prototype as
->> scx_bpf_dsq_insert___compat, expecting libbpf to bind old binaries to
->> it, and broke them. 2dbbdeda77a6 ("sched_ext: Fix scx_bpf_dsq_insert()
->> backward binary compatibility") reversed the naming. A ___v2 kfunc
->> declared as vmlinux.h spells it doesn't bind: 56bbc91219c0
->> ("sched_ext: Fix scx_bpf_dsq_move_to_local___v2 compat detection")
->> fixed a compat macro that silently dropped enq_flags because of this.
-> 
-> Please prefer examples to prose in cover letters.
 
-The sched_ext story above narrates the commit history to illustrate
-the motivation for the feature.  Would you like to see code samples
-from there, or are you suggesting to drop the paragraph?
+...
 
-The documentation patch includes code examples of the new binding
-rules, I didn't want to duplicate that in the cover.
-
-> Also, please de-Claude the included prose.
-
-Please be more specific. Which "included prose"?
-
-> 
->> With this series, if the kernel's bpf_foo kfunc is missing or its
->> prototype is incompatible with the declaration, libbpf binds the
->> bpf_foo___<flavor> that has a compatible prototype. So a changed kfunc
->> can keep its name, and the old prototype stays available as foo___v1.
->>
->> resolve_btfids fails the build if two of bpf_foo and its flavors have
->> compatible prototypes, unless both have foo's exact prototype
->> (aliases), so the fallback finds at most one match.  This ensures at
-> 
+> > resolve_btfids fails the build if two of bpf_foo and its flavors have
+> > compatible prototypes, unless both have foo's exact prototype
+> > (aliases), so the fallback finds at most one match.=C2=A0 This ensures =
+at
+>=20
 > Why is an exception for kfuncs with identical prototypes necessary?
 
-For example, when the void scx_bpf_dsq_insert() is deprecated, the
-kernel side can do this:
+Ok, my helpful assistant points out the following use case:
 
-   Today:       void scx_bpf_dsq_insert(...)
-                bool scx_bpf_dsq_insert___v2(...)
+On kernel side:
 
-   Later:       bool scx_bpf_dsq_insert(...)
-                bool scx_bpf_dsq_insert___v2(...)  /* calls 
-scx_bpf_dsq_insert() */
+  __bpf_kfunc bool foo(struct task_struct *p, u64 flags);
+  __bpf_kfunc bool foo___v2(struct task_struct *p, u64 flags);
 
-Existing schedulers declare scx_bpf_dsq_insert___v2___compat.
 
-libbpf strips the last suffix, so the bpf progs still call
-scx_bpf_dsq_insert___v2(). The wrapper keeps them working during the
-transition, including with older libbpf.
+On BPF side:
 
-The exception allows to do this.
-Otherwise we break the ___v2___compat trick.
 
-> 
->> kernel / module build time that no ambigous kfunc flavors exist.
->> Documentation/bpf/kfuncs.rst describes the rules.
->>
->> Compatibility is determined by bpf_core_types_are_compat(), the check
->> libbpf already applies to kfuncs. Of the 70 same-name kfunc prototype
->> changes between v6.6 and bpf-next, it finds 8 incompatible (arity,
->> return kind, callback prototype). The other 62 (const, typedefs,
->> parameter names, integer widths, pointee struct names, annotation
->> suffixes) were made in place without breaking old callers.
-> 
-> Do you mean that without this series programs referring old prototypes
-> are broken?
+  extern bool foo(struct task_struct *p, u64 flags) __ksym;
+  extern bool foo___v2___compat(struct task_struct *p, u64 flags) __ksym;
 
-Yes, if the kernel changed the prototype in place and the BPF program
-still expects the old one. For example, 8fe4dc4f6456 ("bpf: change
-prototype of bpf_session_{cookie,is_return}") added a ctx argument to
-bpf_session_is_return() in v7.0. libbpf can't resolve an object's old
-no-argument declaration on that kernel.
+  /* Resolves to the kernel's foo(). */
+  foo(p, 0);
 
-This series alone doesn't fix this, but with it the kernel *can*
-provide bpf_session_is_return___v1(void) for the old callers.
+  /* libbpf strips ___compat; resolves to the kernel's foo___v2().
+   * workaround used before this series.
+   */
+  foo___v2___compat(p, 0);
 
-> 
-> ...
+New mechanics adds an obligation on the kernel side to maintain that
+foo and foo___v2___compat are semantically identical, despite being
+physically different functions. (Does it?)
 
+Would it be possible to use some kind of annotation, e.g.:
+- __alias(foo___v2) (an ELF symbol alias), or
+- __kfunc_alias(foo___v2)
+  (resolving to some sort of btf_decl_tag for resolve_btfids to act upon).
+And avoid allowing functions with compatible prototypes w/o exceptions.
+
+?
