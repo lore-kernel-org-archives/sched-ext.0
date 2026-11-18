@@ -1,100 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.52
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794993630;
-	b=YKKQOdieYk+vn2FrZJKE10La/JM+LlrUXcfq2t079NGxNWivwIvLg9Nm6k7OlYC94i1c
-	 eB9b7yJv2nrwT9s8w7gRVFfyW7z/aNxxAl7XeByNREuXVYlTmP83X7Ade7ILPPmsdkHko
-	 3HdyuB5Dh62/Jbo95NNjrwpJpwDqGH8zZMCpzjrWkLFgwKxpImHwlRELkT9sORCIjVk+H
-	 vHqIyzwQBSg4X3QH6BgQxxRGXUUl8Ar4ndPuBoFtWIVEn2W+n1ljVS97t2HKdE+vZ4Y2w
-	 ynBR0GVl/PjhW+nXpnPCAbtqzAzY9IbcXwfdViidcXE2+2ZVZxtIkkNHSDS29Ck/jgg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794993630;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.69
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794997497;
+	b=PxXZUB4o6+KCGlOjApaWXbKYc8EOQ4QDTFi+ZhiczPa4A0tWX2Z3BUhzW1QWf6Cv541d
+	 q3RYdz9t9djBfho/tyLEEO003FrL+GnfK72SCxujol82s+Iadvhx6coJuNyJytT1ejrhK
+	 PTcrb5cbJEeZU024WO/gPoRcnyvJvVoQ7gGEGOfajxwopEBGofeIRlvamy0Xgiao9uRjM
+	 teanxKFHze94NW0acovejx9ido9dXVrGbKcRnJdM3JnXN0iZt9odoezP7DD9nW3olPElx
+	 /zLBNwKCPlPka0cQpOKz7aWv6Q05Z13yjeWJLrbF8n3hvwd3EXWQcFccoPhecypgBnQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794997497;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=Aeo8Kc6gDZPXZvE0DmabfYTz/zNuvasGH9KV0/D9kjE=;
-	b=QCqdZww/JOE9LX7xj9Gwft456jFyhN/2kUeZSulUO6xInQ7ewt8wvkitDCo8BqDgzjbI
-	 LOTve4DUBlQd5VQMRJYten8vtE8toE8S1EyeKl9fEZfCyN+ly2r76n/EXLYwzHfysflnQ
-	 /JhBhTYFtArl7+Dc2GNwwafES3CUosD0/luaMU0uYREFewZ6Q9dwE/v1RpjT8kMNScxas
-	 EstrwCLoJUJzgtBoBih4FT+4L6DSug0HGqvdqCC0YHxWetWXIgUIy+c8EugrTe5LPZXxD
-	 0HWP9nwSwJ2yUPt5yuV6ZuedD0kCS83tZ6mWqRi8RADLhB/DZHydMB4X4ebkJqrOThQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mTSjVQ4R;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.52
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
+	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=If0wiTaVRkXQ5kmmpt319RkHXOqmyU3DcRDOmq3khpg=;
+	b=EIm6bKMppaDTnvjGeZRSS3mUefP8KOH0r5PZqRlCBBZzMbqaXzvD+Qxu1t1b/eVGqgdZ
+	 n15iHv2yn6qQpuP7tFW4PWWyKcw8yIefi3ubl5tF4nENGMTbDf+b92ezkZhtNkx9dIL61
+	 azHjDGkPW6wmrBWq0Tqcke3lASKvqJlj1TR8/2vEjhN/ChVLUmhWu7UFoZ82Hbn2tcJSW
+	 y67tTicd74ZGx8KpCyz47LHVDpoHzHOGM5i9ees8Y8DOwvv13twcjUU8JQX61H1mGTBUk
+	 QhTUCrOkdhkXmk6pxiJLsFXLhVEi0gQnNSbz8FJsU75tMidrb7A67c0gxOCcwk9ryfA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=HPA4EQVq;
+	arc=none smtp.remote-ip=209.85.221.69
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com [209.85.221.69])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1EB606A881
-	for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 09:20:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B1EB606A881
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BDD606A31C
+	for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 10:24:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29BDD606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mTSjVQ4R
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-6b47c1a3c74so1062425a12.3
-        for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 01:20:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794993628; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ns9fEBYm/OnDEJZxCzZJQBGo46PjsyD7Pqj9y4IIZyfEyRQ0MAN15JuvLqweDvcIdc
-         abm2jytn6HqEXlzJ2UBKarnZlRnFkXzhVIoc2gCS7sN6qap3DzgGQLxqst547vjf+yOp
-         Avdb0Kpf5xUWJ+FarWp/F6IoMstm9SiboguOOs9w3i1THQJG91MX+50Ib9pqKeKFBbLd
-         vErGZg8gzR72mRHngUrMpiw/CQouDBdMfnmFEoih4UryoVcKq/uoCOfgKXvFGeYHpqng
-         V17ywdtfpS8bGT+KH4uyKI5Ekqe156A9/2A+eBeDOoeOrokMYCo1lmt0OTWGFHn1exWN
-         th0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=Aeo8Kc6gDZPXZvE0DmabfYTz/zNuvasGH9KV0/D9kjE=;
-        fh=HMgL78ATWn9x2stC+20UuvE95ZwZT3razAmxy/q/314=;
-        b=lFHdsOOQI+eRIs9qFm2bPVaql+nM2i6gnl3vQSJ8E19v0e9G3qOUJ2kXhaFzlvr0yv
-         5QE/xwEZvCIi7IGBwRboA4MZs0qJlX3HvuO8pAZThzybFmWcLOLWiO4b52Xv4FGmUi/p
-         PEWMTbArI2mS11grup3Oejdvw49TqA8+nXbLzGpQPtWmZh8yUtMFj8dUTIjjjU0yPal5
-         2Gj2tP/P6uws16YkDvFPmBfyPiNJrFcSBCkXaIuhOQr/LjYRh+fTreTGob6NOIUqryEe
-         5H4qie2EqJ+8TPTFP49DqSuvdpp1+H8FSZZ4r9dGJqmpGE4AEH4YN0lpU/LVzLkZ1gS8
-         wMrQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=HPA4EQVq
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-4a4191ae436so755305f8f.2
+        for <sched-ext@lists.linux.dev>; Wed, 18 Nov 2026 02:24:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794993628; x=1795598428; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Aeo8Kc6gDZPXZvE0DmabfYTz/zNuvasGH9KV0/D9kjE=;
-        b=mTSjVQ4RMfX9s/8vHfEkNSVFgSOd1sBtGTaaq68mLX97LAs95wcWclagbv8POec+wM
-         piCUaJ2dZEfCYUiuaZRAHmaEKWi5Dt4iHVOKarhh5CRQY4n8OhmHHIvd584KZAlG80Xy
-         S1MgLEPW7yvmdWm/Yji7CIeDQwyCcOCSt2wQL1WooYpBLhhHn0DQRF1wnx3PcFexguVW
-         72z/L3AOuz95C8BMm+vDW6rlV+4niIgzxK2SF5AO0Z7OJb5TU2RJ8Yo4qXLKCE92gvwp
-         UrM+tJP/nMD7LA5PYNhQAIIlEXSGrdRoC8t9X3Eq1/j6qDC5ydbXZ1p/5CBJQ+JojaRv
-         br7Q==
+        d=google.com; s=20260707; t=1794997495; x=1795602295; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=If0wiTaVRkXQ5kmmpt319RkHXOqmyU3DcRDOmq3khpg=;
+        b=HPA4EQVqwunBPIqmWhVimoGqUJ9FnE3RZc6M0RHGcu0tvpVkxW6i14sMlzq92ZhYRz
+         D+/eLxuh4moO3G1P0PkCO9ASjo7lI28m2hfqUvvQcbAzA3oewOCAYVkGKpVkQvZTAppL
+         em1hHhVQmqxH57vIogh2DdbYM5AEWkM/wkt0Mbeb0FQR1AYPtX/ULKOJDJgtrtId153T
+         ttaLmvADSsmE1OtTwdtia4MPSYpug4Ktq6kcsIlAnx6eoneBxkJ1NGC11ljVW//XIpC0
+         NrYJQyZ1QmWJ3FGDB/tnjLOk0szhr4A8rrlz+E0kq1qGoX4Kmi6kGoo4dhW0BXSDnH6W
+         t9tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794993628; x=1795598428;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Aeo8Kc6gDZPXZvE0DmabfYTz/zNuvasGH9KV0/D9kjE=;
-        b=z4soKbAoQT+Q6NOJpt1AKC9URjCWEXnCHlh65GaOcDeGb5CXE+xik2NGdxoH4n7yY3
-         FnEND7zaa3jx872MDobDjhsV6kY/p8Yx24nrc7HzCw3Z0Grhr0okmIOWgfy/ylvi7JVI
-         j3WSgHR+LLsUJCsLNRdb31tqgr+3Z69GzRtwF8KmPwwXlrOKuXrDatFJrsKt8fPoTf10
-         OwVWRFKbD6i774BAqd/brD82NEhKhj0USWAQFJPnz3v7QDkiOXpklGBCMYLtlK0jS2qD
-         A8Zt5+VIbA8qK0kkqGI/cZUMrd6sf0kQpSllNB4HzbKypwVoQqbyfbOKv+yNdKRutGVB
-         Mpzw==
-X-Forwarded-Encrypted: i=1; AL+hErF+2P2ti2ryjzaQIwmaIONpQ7vr+SyhYzcT1N/Ca5kEH9GHcCs7s6O6YRqD/hTkdFjQp9lVYeQ4dk4=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9bss6wFVUR150cZIfl8oWwQRrHFrkqrVGOKRmbE+nRGswe8ttc
-	6OvBPT2IvzZDxqokMwiL4xrMBdHEIvjJUlyvLu1sjjZV4FkuRgdGtMWOAOF9fdlUG6hy1evArE9
-	720xJg/x20cxKrNwOI4BVXPSAvpwt8EACw6a1IHmLFg==
-X-Gm-Gg: AYBFou1W5jeNEE0gH1IqGyhveWvB18N3RK5L/Su+zwqakcuIrp2cN16YYV6t6vP1BX6
-	wPydeXGK+gpTd+z+WUW8g+mALGVeEpQrw1v3WkwJCnhDgDeRRUpbWOUUd6FJ2sCSr+7A4fhA2fv
-	VbhrmCGYYIQB2ojF54IqG96/QudUrrWELUScueLNXJHANgZex0zVA3lg0o2hEDQ2N5gG+s7vv3B
-	ZebKDWSW7n3GsVNUM+XxQrdQEX9DAcajQBWkzscb1wb5A3AaDFnptqbEfhw1d7tnh/s9RXQ45XC
-	4KqeY69iAcDY+9iplioPxMLTNTEZ/CS3PkiOSNY5AmHBOmtDA729e03x85K/vNT0V+Gtf7C5udc
-	H4GnBW0O8g4G6pj4DgbXqM+vkGc+YmNk1oVJH04PbdBhf1F+ODbz+YvTPCeU7+JV6cDuyOUnrVX
-	0N5Lyz5oMAMr9Y
-X-Received: by 2002:a05:6402:5025:b0:6b7:dda4:f72c with SMTP id
- 4fb4d7f45d1cf-6b88814ddbemr1418382a12.44.1794993627427; Wed, 18 Nov 2026
- 01:20:27 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794997495; x=1795602295;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=If0wiTaVRkXQ5kmmpt319RkHXOqmyU3DcRDOmq3khpg=;
+        b=bABLwFPWijq61HS1df6dhJmhoFRI3EA5Gg9Jll9l4S6r8hdtTHUxee9YT7L7LkdRF6
+         qve17ZKZStxNC3c3laUOO4nF55xHKtOiX6+RtfHGDKHAmQZV2ph0nY08y7BhywBNOiL9
+         wk6JGnxQ8Qs4MQu21EqtU7QxHmTKDOytQlidNcPDNWCCq8JaAuWfvlDveC0iI1+UTT62
+         7zt0u2WLr55qwKZtPZXoUdJYALQB3B02AhTA2MUAfmD9MZWwDKuySyMxDev1fJi7OFMz
+         GCn4mJaQilmmmifwNMsRYBseKvU79dtZ553XR/N6Ba8tKYbpvEL0dYIASxN+tOoMpFe4
+         qXyg==
+X-Forwarded-Encrypted: i=1; AL+hErFlyDbCBsCzucRYCLQe3cL1oki0GAcVPYsZ4WCUTEz2q2atpWF6E2HX0hPqOb7YO5YyecLfQju1izQ=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/I6JmZyEGPTl5cnKjR8FAfOMJy/02gwsUJo3eOCsyHxFKgyJP7
+	Ic7qD4vrKU9lvJ2DsLqNAXGA2ve/PFr7HpRrNmBNtFRZqkrSnNYVrvy7otmU2Ze23bSPFHzbVuA
+	J7KFDn+TgoivWOg==
+X-Received: from wmuh1.prod.google.com ([2002:a05:600d:4121:b0:4a1:f082:d6ca])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:3111:b0:4a6:4d6b:a840 with SMTP id 5b1f17b1804b1-4bb7da2bb49mr40194335e9.31.1794997495263;
+ Wed, 18 Nov 2026 02:24:55 -0800 (PST)
+Date: Wed, 18 Nov 2026 10:24:52 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -103,222 +75,110 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
- <20261106151947.3991524-2-vincent.guittot@linaro.org> <avr4MsRsjGfGHKKk@scheduler.schedules>
-In-Reply-To: <avr4MsRsjGfGHKKk@scheduler.schedules>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Wed, 18 Nov 2026 10:20:14 +0100
-X-Gm-Features: AclHuK_oniCwAqlI2oAZeu8xsFu1h8iipcGgGgvvNigzDOS5HzX_db5ZNqKqLFA
-Message-ID: <CAKfTPtBZ=Dc_X48EQ0yXMym0JrS=pWvbviyVyFri0tv5VdR3Eg@mail.gmail.com>
-Subject: Re: [PATCH 01/20 v3] sched/eevdf: Decay positive lag of sleeping entities
-To: Kayra Cizmeci <kayracizmeci@gmail.com>
-Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, 
-	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com, 
-	linux-kernel@vger.kernel.org, lukasz.luba@arm.com, rafael@kernel.org, 
-	linux-pm@vger.kernel.org, tj@kernel.org, void@manifault.com, 
-	arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev, 
-	qyousef@layalina.io, christian.loehle@arm.com, pierre.gondois@arm.com, 
-	sshegde@linux.ibm.com, tim.c.chen@linux.intel.com
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.1.703.gf848ed807c-goog
+Message-ID: <20261118102453.1315267-1-jpiecuch@google.com>
+Subject: [PATCH sched_ext/for-7.4-fixes] sched_ext: Don't route tasks to SCX
+ before __scx_enabled is fully patched
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 16 Nov 2026 at 14:57, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
->
->
-> Hi Vincent!
->
-> On Fri, Nov 06, 2026 at 04:19:28PM +0100, Vincent Guittot wrote:
-> > Similarly to delayed dequeue, which enables an entity to decay its negative
-> > lag while sleeping, a task should not keep a positive lag forever.
-> >
-> > The sleep duration and the weight are used to decay the positive lag at
-> > wakeup.
-> >
-> > Apply the decay when enqueueing on prev rq for which we hold the lock to
-> > get rq_clock_task().
-> >
-> > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-> > ---
-> >  kernel/sched/fair.c | 124 ++++++++++++++++++++++++++++++++------------
-> >  1 file changed, 90 insertions(+), 34 deletions(-)
-> >
-> > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> > index 0feec172fd37..5cd171f830d8 100644
-> > --- a/kernel/sched/fair.c
-> > +++ b/kernel/sched/fair.c
-> > @@ -897,6 +897,91 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
-> >       return avruntime - vlag != se->vruntime;
-> >  }
-> >
-> > +/*
-> > + * Signed add and clamp on underflow.
-> > + *
-> > + * Explicitly do a load-store to ensure the intermediate value never hits
-> > + * memory. This allows lockless observations without ever seeing the negative
-> > + * values.
-> > + */
-> > +#define add_positive(_ptr, _val) do {                           \
-> > +     typeof(_ptr) ptr = (_ptr);                              \
-> > +     __signed_scalar_typeof(*ptr) val = (_val);              \
-> > +     typeof(*ptr) res, var = READ_ONCE(*ptr);                \
-> > +                                                             \
-> > +     res = var + val;                                        \
-> > +                                                             \
-> > +     if (val < 0 && res > var)                               \
-> > +             res = 0;                                        \
-> > +                                                             \
-> > +     WRITE_ONCE(*ptr, res);                                  \
-> > +} while (0)
-> > +
-> > +/*
-> > + * Remove and clamp on negative, from a local variable.
-> > + *
-> > + * A variant of sub_positive(), which does not use explicit load-store
-> > + * and is thus optimized for local variable updates.
-> > + */
-> > +#define lsub_positive(_ptr, _val) do {                               \
-> > +     typeof(_ptr) ptr = (_ptr);                              \
-> > +     *ptr -= min_t(typeof(*ptr), *ptr, _val);                \
-> > +} while (0)
-> > +
-> > +static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq);
-> > +static unsigned long task_h_load(struct task_struct *p);
-> > +
-> > +static __always_inline
-> > +void decay_entity_lag(struct cfs_rq *cfs_rq, struct task_struct *p, int flags)
-> > +{
-> > +     struct sched_entity *se = &p->se;
-> > +     s64 delta_exec, vlag = se->vlag;
-> > +     unsigned long cfs_load;
-> > +     struct rq *rq;
-> > +
-> > +     WARN_ON_ONCE(se->on_rq);
-> > +
-> > +     /* Negative lag is managed by delayed dequeue path */
-> > +     if (vlag <= 0)
-> > +             return;
-> > +
-> > +     rq = rq_of(cfs_rq);
-> > +
-> > +     /* No fast access to prev rq task clock */
-> > +     if (flags & ENQUEUE_MIGRATED)
-> > +             return;
-> > +
-> > +     /* Compute sleep time */
-> > +     delta_exec = rq_clock_task(rq) - se->exec_start;
-> > +     if (unlikely(delta_exec <= 0))
-> > +             return;
-> > +
-> > +     /* For anything above ~4 seconds, save computation and clear the lag */
-> > +     if (unlikely(delta_exec >> 32)) {
-> > +             se->vlag = 0;
-> > +             return;
-> > +     }
-> > +
-> > +     /*
-> > +      * Use cfs' load and p's weight to estimate what would have been the
-> > +      * share for p. task's load contribution to cfs' load is replaced by
-> > +      * its weight.
-> > +      */
-> > +     cfs_load = cfs_rq_load_avg(cfs_rq);
-> > +     lsub_positive(&cfs_load, task_h_load(p));
-> > +     if (cfs_load) {
-> > +             unsigned long weight = scale_load_down(se->h_load.weight);
-> > +
-> > +             delta_exec *= weight;
-> > +             delta_exec = div64_long(delta_exec, cfs_load + weight);
-> > +     }
-> > +
-> > +     vlag -= calc_delta_fair(delta_exec, se);
-> > +
-> > +     /* vlag can't become neg while sleeping */
-> > +     se->vlag = max(0, vlag);
-> > +}
->
-> Look:
->
-> Let's say we have 3 tasks named TA, TB and TC. They all have the same
-> weight and the same slices. So TA gets picked, works for a while and then
-> sleeps for less than the rest of its slice.
->
-> So the part that I hate and love, math. For your diff, we do:
->
-> (sleep_time * weight) / (3 * weight)
->
-> 3 * weight here is TA + TB + TC, it equals to 3 * weight since they all
-> have the same weight.
->
-> So if sleep_time equals 2, weight equals 1, and slice equals 3 this equals
-> 2/3. If the lag is 2, we do 2 - 2/3 resulting with 4/3.
+scx_root_enable_workfn() sets scx_switching_all and calls
+static_branch_enable(&__scx_enabled) before switching tasks, and
+task_should_scx() gates only on scx_enabled(). static_branch_enable()
+patches jump-label sites in address order rather than atomically:
+task_should_scx() may be patched before __schedule().
 
-yes, we assume that TA would have run 1/3 of its sleep time
+If a concurrent fork or sched_setscheduler() runs in that window,
+task_should_scx() observes scx_enabled() and moves the running task
+from fair_sched_class to ext_sched_class, setting need_resched on the
+class degradation. The following __schedule() can still observe
+!scx_enabled() in next_active_class(), skip ext_sched_class, and pick
+rq->idle while the runnable SCX task is still rq->donor:
 
->
->
-> Later, place_entity() uses this formula to do V - ((Sum(weight) + weight) * lag) / Sum(weight)
-> So ((2 + 1) * 4/3) / 2 equals to 2. But this is wrong, no?
+  WARNING: kernel/sched/ext/ext.c:3840 at put_prev_task_scx+0x405/0x7a0
+  Sched_ext: enq_select_cpu (enabling+all), task: runnable_at=+0ms
+  Call Trace:
+   __schedule+0x5cc/0x1100
+   preempt_schedule_common+0x12/0x40
+   preempt_schedule_thunk+0x16/0x40
+   __sched_setscheduler+0x8d8/0x920
 
-why is this wrong ?
+Gate task_should_scx() on a scx_task_switch_enabled flag that is set with
+release semantics only after static_branch_enable(&__scx_enabled) has
+finished patching all call sites and scx_switching_all is updated, and
+cleared on disable alongside scx_switching_all.
 
-Assuming TB and TC have the same vruntime before placing TA, the
-average vruntime is avg == V(TB) == V(TC).
-place_entity will do V(TA) = avg - 2
-After placing TA, avg' = (V(TA) + V(TB) + V(TC)) / 3
-avg' = (3*avg - 2) / 3 = avg - 2/3
-TA's lag is : (avg - 2/3)  - (avg - 2) = 4/3 which is what we assumed above
-TB's lag equals TC's lag : (avg - 2/3)  - avg = -2/3
+This bug was found and the patch was written with the help of an AI
+coding assistant.
 
->
-> If we didn't decayed lag: ((2 + 1) * 2) / 2 equals 3.
-> So we would do V - 3.
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ kernel/sched/ext/ext.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-Which would end up once placed to
-avg' = (3*avg - 3) / 3 = avg - 1
-TA's lag is : (avg - 1)  - (avg - 3) = 2
-TB's lag equals TC's lag : (avg - 1)  - avg = -1
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 10de6bd865e8..e8c30a21e03e 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -134,6 +134,7 @@ DEFINE_PERCPU_RWSEM(scx_fork_rwsem);
+ static atomic_t scx_enable_state_var = ATOMIC_INIT(SCX_DISABLED);
+ static DEFINE_RAW_SPINLOCK(scx_bypass_lock);
+ static bool scx_init_task_enabled;
++static bool scx_task_switch_enabled;
+ static bool scx_switching_all;
+ DEFINE_STATIC_KEY_FALSE(__scx_switched_all);
+ static DEFINE_STATIC_KEY_FALSE(__scx_tid_to_task_enabled);
+@@ -6493,6 +6494,15 @@ bool task_should_scx(int policy)
+ 	if (!scx_enabled())
+ 		return false;
+ 
++	/*
++	 * static_branch_enable(&__scx_enabled) patches call sites one by one.
++	 * Wait until all sites are patched before routing tasks to SCX, so
++	 * __schedule() never sees !scx_enabled() when a task is on SCX. Pairs
++	 * with smp_store_release() in scx_root_enable_workfn().
++	 */
++	if (unlikely(!smp_load_acquire(&scx_task_switch_enabled)))
++		return false;
++
+ 	/* scx is taking over all SCHED_OTHER and SCHED_EXT tasks */
+ 	if (READ_ONCE(scx_switching_all))
+ 		return true;
+@@ -7568,6 +7578,7 @@ static void scx_root_disable(struct scx_sched *sch)
+ 
+ 	static_branch_disable(&__scx_switched_all);
+ 	WRITE_ONCE(scx_switching_all, false);
++	WRITE_ONCE(scx_task_switch_enabled, false);
+ 
+ 	/*
+ 	 * Shut down cgroup support before tasks so that the cgroup attach and
+@@ -8965,11 +8976,14 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 	percpu_up_write(&scx_fork_rwsem);
+ 
+ 	/*
+-	 * All tasks are READY. It's safe to turn on scx_enabled() and switch
+-	 * all eligible tasks.
++	 * All tasks are READY. Finish patching all scx_enabled() sites before
++	 * opening task_should_scx() and switching eligible tasks.
+ 	 */
+-	WRITE_ONCE(scx_switching_all, !(ops->flags & SCX_OPS_SWITCH_PARTIAL));
++	WARN_ON_ONCE(scx_task_switch_enabled);
+ 	static_branch_enable(&__scx_enabled);
++	WRITE_ONCE(scx_switching_all, !(ops->flags & SCX_OPS_SWITCH_PARTIAL));
++	/* pairs with smp_load_acquire() in task_should_scx() */
++	smp_store_release(&scx_task_switch_enabled, true);
+ 
+ 	/*
+ 	 * We're fully committed and can't fail. The task READY -> ENABLED
 
->
-> Now our objective is to add the sleep_time of the task to -3.
-> Because if the task didn't slept, in that time it would be working
-> instead of sleeping.
->
-> So, we should do V - 1. But we do V - 2.
+base-commit: 700a332c3fe33014bbd5ae852d71ba679fc29e0a
+-- 
+2.56.0.679.gc527c65306-goog
 
-Why ?
-You assume that the whole sleeping time would have been spent by TA
-running on the CPU but we don't really know. We can assume that a task
-with positive lag should run first, but this also depends on other
-tasks enqueued.
-My first version assumed the whole sleep time would have been used to
-run which is optimistic. Peter suggested using the ratio of weight and
-cfs loads instead which accounts more fairly for the running time.
-
->
->
-> AFAICT, we can't already know for sure how much will a task run even
-> when the sleep_time is smaller than the slice. Because of preemption
-> :-(.
->
-> The cleanest, the simplest and maybe the worst or the best solution I can think of
-> is just setting lag to 0 on every wakeup with positive lag TBH.
-
-Keeping eternal positive lag for a long sleeping task is unfair but on
-the other end, clearing all positive lag for a micro sleeping or
-because of waiting on a shared lock is also unfair
-
->
-> Or maybe, try to calculate when sleep_time is smaller than the slice,
-> but just set the lag to 0 when sleep_time is bigger or equal to slice.
-
-There is a difference between sleep time and lag. Even with a sleep
-time longer than the slice, the task can still have positive lag after
-sleeping (this is also true for runtime). All this depends on how many
-other tasks are running simultaneously and their weight
-
->
-> What you think?
->
-> Sreehc,
->
-> Kayra
