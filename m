@@ -1,80 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.39
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795156027;
-	b=g7qe6D0hFCf+BkM29tBV/wvJ/iakEsvnFigXk5iRkf1QOmT0xYHvw4OiIrtYsBm9frqR
-	 +iNNonoiwl0p4aQUrZFIjxRoGQcJONRCQC5rOuaFqHmgpP5gAJqnG/750bYj1SIebfF6M
-	 0ZPBRkeKAANUtSS7QkekMQZsEpWGBFad7itZRC6hyhuiP+V0WqoJw1e0E6kVfdznMJbl6
-	 vmm+MjSUtKDPjw8zhEXLTu27eOcyO9CYNsfM3qRcLw7o6IohA7Z49I/rjgg7Hgh0pYqtM
-	 XZFkgQMeJtxqrwWZK3KXWEu3Je0rlnNloeQFrqeKxmnhiJvnw79+payDyOBwhX7McXw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795156027;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=DxH4JHM06o8/H7CLAb3ZJvx3B+UrcQfFxBEh/cVScK0=;
-	b=alMARENjIkkhQfIrFrLZr0bHtjJcFY/96XeApBLmtMp373gDPFxguFtIY0EyoALyvHFo
-	 uHfoX3KmKlG0cTl8rCM/oOi0Ms+2uprgjIAx9PwFBvI92XUYnhRzkgbFeIJULzMwiJrM4
-	 SLYENM2xEr3nWQqD7CGr2dEs4yslOW6bgVMzrZwvhLNl8VEuDzE1Oz5H7NNF/cob5/Ra/
-	 crD1Kt2rZfbSxD4ijnq/tcKg2FzMmEidyoYsnQapOJW99pN7C/ERR/vYIIFGRQHIhPZiq
-	 YwtN0OiQvBzV262UEOjkL/hzMPIQCoA7p+eFwze1Ildsr2YieGCtAowsOYb9kUqsvxw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=f5FFAss8;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.39
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010039.outbound.protection.outlook.com [52.101.56.39])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.41
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795157086;
+	b=VWcyxxBEhu4EnX6xFRUSNOQDzkBAdmRsPmzvWmLuZ7Lhq+VfH1Gvm4tbdgnfx88mBIMd
+	 69goMCvVZIDiq/PwCmQvRS16e+m9NeZM7K1lQJBZksYTboYpPMzsgstywSBx4VL+k7mqQ
+	 DRNjvcOxWUYKdfUm06SAHgYE8vt9l7Onbg+0hiwnES0VScnW9GpRrCMEPvHn9AdtJlhkT
+	 TglN6ly16uLAbtxocKY/vrK13GgE8ICiyP7W+XAlCEcAS4hMtKHg75/smuMjl0G7CGyC4
+	 BQGAuxtoKQILNnWvcOzEPSek3NA/xfYuuB9mqqOCwwLQZksWpVjvg4mC6Wkwt9M2RSg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795157086;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=ibHuc2Ky7x6xbIQztLyKbwCm/OGk8fLoxdPIGUt/hMM=;
+	b=zpa2ru+cWgEuU9NLbz8nsvI2sA8tI4ZZeS2ckEqbshSOZ34fRY4EavgiHWTdrbKTUdgx
+	 e4YxCtiwtGUl8LFUBvtR/xuW+pXzkHXQOvlZ2plwX7JZe1jxdk1cFxH6w4t6HUgbqL+Rj
+	 Psy2GnA0gKRTJ8qAH24Yu6LWpM4CFm4G41HnohSiGQT/jktVIrsZsbSmNAHhsFw3w2Kub
+	 aLQOLhv75La/SxueGUdwBTji4ZfPO8pksFZO5YKPRDQJvAE1yXsUXxvk4eLo44xx6y58/
+	 eOaHIg+eE7foR6qmbM8C3JWisHMo0wczbPi8dqlpakJVFvNL+AAzQ+s+VEC0nqVP3PA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ywxQjVY7;
+	arc=none smtp.remote-ip=209.85.216.41
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EFF606A337
-	for <sched-ext@lists.linux.dev>; Fri, 20 Nov 2026 06:27:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B0EFF606A337
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FDD606A330
+	for <sched-ext@lists.linux.dev>; Fri, 20 Nov 2026 06:44:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59FDD606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=f5FFAss8
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KNzw4bf+kfra+PnUdhW/iotAxZCHRb201U5yxfzhZ96TL5E1EiuA4GUKLPzjP/W7rh+3a7266eaoectXgGT67jAQWi+XpGTt2rT2X1YIFbdjpYDaEYw85e/7Gn+mKPbxwwIGUe7m1sizlfStLE28/iBlcpGE/1B0V/Q47LlH87q86BWNacPAuV9Fd9DJwRNFLjhlo16W+NK1s6gKlNkiyqMwWAND+UWP/ngtdZL/02hADPC2bZnTIdmWUwiKIh+jxGvGwRvBe/uCx6HhvMWgpW/BYNmllSP9tn/3O/FQfe4upwn9eLTurbvVTo9gTgQZ3X/mF4GEri4vhGjpbrctsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DxH4JHM06o8/H7CLAb3ZJvx3B+UrcQfFxBEh/cVScK0=;
- b=Y3ZVjPmGcLjV9U+nmLPOFK3XCFieapBpnuQdpLfscwCbgXe6o/fzq7tTqImZ1EI8HVkXRmK+t4gMbCvq5H3DmHmQXGehzrkQxo8H2jmdSVHvtyIvqz7Cz43Qj1BGjKXE+E2Vm+4REBPfnDANbamjgOEYOzYXl0I+MXvRZV/MPN1lwlVC8+7ZG9YHDge42n1TDuzx/xOKKg9F+IKWV2v+605UmjV4UZqj32xZEFPreJAGvy0fkIcUpfHwbDvchZYypWhSWCoLFTc43CrKedvrpVpyD5nUaZFTMGTIgRJzBiTZeEkea/YLQT5ICxl5zPY5OxfbnSxA/P2OMjr5KbHtug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DxH4JHM06o8/H7CLAb3ZJvx3B+UrcQfFxBEh/cVScK0=;
- b=f5FFAss8/WYdNJsdWjgWwA/WUcXcpfOgU53OPuofqHRwEeu1vmOrSvlCDAElGeUE5HYBrGRKDny52qk+7M3TeGrrztbGNlJLB9mQkpye+tDXg/ZSySvvRbBtQ4VeUBx6iAucxju0JCkj949dCeqAo4ybGXGO2lXxhzMV4hEvDNNJCNfmcsdx2PIrfpx3wY1+fS4Vq7Iur7vjA84iZ3hjePh73jyuLpqnmxxqmpvjUzc2tAy+Gbrf7dq+oEvDU9ZixJo2wK7U4X4UAh08DdXjoM/Xtj8Y0vXQOZNZeH5VUXRdIfw1AbC0BRXNSRAxwkJSYZCsvp0QU6ZPIRNS0DT6cA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
- by CY8PR12MB7267.namprd12.prod.outlook.com (2603:10b6:930:55::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.10; Fri, 20 Nov
- 2026 06:27:00 +0000
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
- 06:27:00 +0000
-Date: Fri, 20 Nov 2026 07:26:53 +0100
-From: Andrea Righi <arighi@nvidia.com>
-To: Sechang Lim <rhkrqnwk98@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ywxQjVY7
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3ac9f49b984so329304a91.1
+        for <sched-ext@lists.linux.dev>; Thu, 19 Nov 2026 22:44:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795157086; x=1795761886; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ibHuc2Ky7x6xbIQztLyKbwCm/OGk8fLoxdPIGUt/hMM=;
+        b=ywxQjVY7bgcQtr7LiKs47YFHC5ztRMHkf7vkwgXIffgQURbVUS+B7mBy2fBkkxhyBA
+         nqYikTdyiwOcrsbl+ctu50EDt2EEc++n5WDjP19gmF73ye0jEd20vrwmotu3WV966zcu
+         OOCVRWB/FLnNEfIzT7K0nNtwxNSSMzCaGzZxj1ZjomkaTHclZ6GJzw7BCEGDsLycXYm0
+         f+HJqyygAA45tYcdO8GZTpG1gu/iXysMPNr5e3ZA0dyC+HkNEfGKUqE20rUp3MVwGatx
+         uHumjYa570GdtDqa7jsCWFUol/dvlxsH+wG052yyiugKH3Zw8ZCoGetEufhka3QWgmU9
+         hYaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795157086; x=1795761886;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ibHuc2Ky7x6xbIQztLyKbwCm/OGk8fLoxdPIGUt/hMM=;
+        b=wwveMxPe7z6dp24JC1IgAFPLJybjBwbwSLriv1nG3LxvDECTtZbZYDRvDQq5Oj5u3B
+         v4dxSPWmD4QC2En+nRklLyIN3vvLJQFnib/GLVp4ZleQC6ZEC/R1Fhu25Yb0/cR7kff3
+         3MxgYrOVVWQavYvtmw3MMrEOsWIBh8ZLIAjo8mAmDDWLa/w2g4mbo8wRA67QWidvRWv8
+         fKnSEr+rFD+m1NijRj4UT/U4tP1YOERgzZUQKc1CpPVmNGlfm3WdsisSJedgOEDLO1Tg
+         7IfOoINEBzdJbSHlIdUy0aBeexNcg5TdyTh6WsR+oCX01lURhF3Mg3cnzgk3VfMzDlg1
+         keAQ==
+X-Gm-Message-State: APuU4Z/6yQ7BXHsV+tMv4xgwX/BYoVGqszbUvdHsjBWUgSAMuRaGNJYT
+	wFeT6TCI6G18WRv7nBDmONaT1c6IYNPCZP9QFRblEdQPRcoP5BX4wr6j
+X-Gm-Gg: AZFdTZfHPWskoSiFuQmsVxynJ+kd42ldQughVrIRNlA7Rj1XVBEVADpBGqHuMvkdxlR
+	F+LUr4jKkTpd1gRz/HflmWhYFd6kypf/2RpXKmpZQaNe0RBmZqXPNHNI3kvBfmCD2+k3G3ntvXu
+	Ndxxk6CdQQ9uHyKE8+68CSnLw1S6pUJMUHiEuU+JzghAGH90vdgYWlUhzdgn0Ya5dZ9NeykC0Eh
+	pO5SCVzsCm5WFF5pcuEZK8hxl3lrsIBPVBnjNGDjXCcPe7HP4j/0xq0OHL2vPk2y3XhDoqAx0S4
+	4YcdN4bzsCzPstKmuPdHB4+sm7MMFJz9sr9Hg/7O4Lm83iG2MD7Cs2JudDGUNj9xtuFPYzuZirH
+	gwPtzzef035HwQxam3qrD6aD66Li6gNo1laNt7B/z7d3bTEXu3RgL0R3lS/MZNxREKr5uqAWbRF
+	zkU7NsO0AGO2MD4wXPS2V5oRIBp2eVu1jsP48ohApXFqBxKGFznvg+nopQlhbEDhV4RSW7aPY8B
+	uWhJLZqMj+SMMIqOVd24H3h73+VYBYfgVaCw40sk5b7XDyX1SntT2x8Ymc3wibOvFT7NXyVi02e
+	XNKz+FX2Hq4Ldgc+V324txpE328OHr6aIYSgc4VKhAgTVF+tRvYAsg==
+X-Received: by 2002:a17:90b:5546:b0:3b0:a1c6:95ae with SMTP id 98e67ed59e1d1-3b41c941f9amr1058404a91.31.1795157085609;
+        Thu, 19 Nov 2026 22:44:45 -0800 (PST)
+Received: from srsys1 ([147.46.174.222])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b4323bda5esm12916a91.3.2026.11.19.22.44.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2026 22:44:45 -0800 (PST)
+Date: Fri, 20 Nov 2026 06:44:28 +0000
+From: Sechang Lim <rhkrqnwk98@gmail.com>
+To: Andrea Righi <arighi@nvidia.com>
 Cc: sched-ext@lists.linux.dev, tj@kernel.org, void@manifault.com,
 	changwoo@igalia.com, mingo@redhat.com, peterz@infradead.org,
 	juri.lelli@redhat.com, vincent.guittot@linaro.org,
@@ -83,14 +89,9 @@ Cc: sched-ext@lists.linux.dev, tj@kernel.org, void@manifault.com,
 	haoluo@google.com, brho@google.com, joshdon@google.com,
 	linux-kernel@vger.kernel.org, bpf@vger.kernel.org
 Subject: Re: [PATCH] sched_ext: reject oversized dispatch_max_batch
-Message-ID: <av_oLZQzAtFe2vTr@gpd4>
+Message-ID: <av_sTGpIbkzvsp05@srsys1>
 References: <20261120054913.3795562-1-rhkrqnwk98@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261120054913.3795562-1-rhkrqnwk98@gmail.com>
-X-ClientProxiedBy: FR2P281CA0071.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:9a::6) To BL1PR12MB5174.namprd12.prod.outlook.com
- (2603:10b6:208:31c::19)
+ <av_oLZQzAtFe2vTr@gpd4>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -100,119 +101,75 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|CY8PR12MB7267:EE_
-X-MS-Office365-Filtering-Correlation-Id: aa630c09-708d-4ed0-9a26-08df46cf487d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|23010399003|366016|1800799024|376014|10067099003|11063799006|56012099006|261021123027099003|261022105027099003|261021121427099003|261022075727099003|261028144727099003|261102123227099003|261026140227099003|261102124527099003|261009223027099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	mki+iEGcdG1nm52Hz5H6pqz4I+70XJQcru9vKKRURZ5lo+NTJr6+7wv8phrhEjwe5QKO2bS2bFzP7VgmFVXTmTsj0T320b3Jp+T4rGJY7026TIgyKXivpbDgBqPKoMWyTVPwpU3sVFjzQoX5jXZLTfrkXxCA5n3wvmxEqv0FjbWqnA/LDU6CBG60RVe7J7PJjM6ivelCxarmDmQHWlOO+LzYaOKnib20z6XP26+cQDkLqx57otftAQYNENdWTZj7aWiLleOwgn82a3SClShpvushWsPyctgELTyvWmXBEYSvESLbU04YaRe+KJl35K5S7hv7uf9FLi6VxwCwrxE6C9WTpVBxtMMcWogJRMp8N1/Ry6xyCY0sbgBybuHk8rjYPCd/uyPXLo+rI+Gef0qKtRc/XAOV/uFKpWp/2uSkJ7r4EJI6M0GXKjoJr8bQt4EGjROSydTL0WXUjl80WpcI/PQvFQcnzLhI3GfU2nagUWNtPILhmAym6uhonKgackKpcbQK1JBAdmCLdT9XZXkC4eGfNeq+NbQrtFOzRsXrE8Oq0aj1kieAnW+Dl/0+/TahN0jlhpbi9vcLLQuYBEjE6RXb5B64d16D5los+5mc93H6WLhVoG+oUTjsgzKyNTCH9O81p4EsgIbYOa66+ZDI7Tr9go5DxuInH2PjYTD7Zgg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(23010399003)(366016)(1800799024)(376014)(10067099003)(11063799006)(56012099006)(261021123027099003)(261022105027099003)(261021121427099003)(261022075727099003)(261028144727099003)(261102123227099003)(261026140227099003)(261102124527099003)(261009223027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?IqoTg7E6gVTkjglOaCs9vnscT3nQ1zesKIhn3tu2E69IqUBuWzDHKhtqb7FP?=
- =?us-ascii?Q?eimgxKFTWm2KGE4qDhrb4G1nE7OXznLuh6K2wEjpO5JXQQroivgw/w2w575S?=
- =?us-ascii?Q?bZSVKOcSWcjRNon9I2G2SZfRtS93yRtdR4+bc3UyZDe/dv8XBlroNRQ8O+hl?=
- =?us-ascii?Q?D6DCohYw5bCMOI2mcXg3wf5g3Qpi/9QU6WMR2gX1xYz5eID0vCjaD4bqMWLz?=
- =?us-ascii?Q?FhJZOn1x6vGkPaYdAI7xlLDqbmnN2EEFc0c2kxJAqBjdoJ/gsC0CJW/XtVN2?=
- =?us-ascii?Q?oWrbg18EploJnqGF3KjQROyHr8PK+UDehpbFV/epEZHUjpn8b97pak5jmtyU?=
- =?us-ascii?Q?57+zjMUXOVdKEtK3dIymFk8Sc31dRF2DhmCpxZDTz1EqAhg2AdMwUVjNStj/?=
- =?us-ascii?Q?lZwt9GgdzxPbL+pwpfk7y2h7zg3RxYNuBrY8BVHlTROg5bYLbnJlQCfcwnxG?=
- =?us-ascii?Q?P+EzdqOmNa68mi4ApWMRBY7bbTTjSj011/kUwMOWT8Zr8yUlw0+7QF8+p0ap?=
- =?us-ascii?Q?lGCc4o5aERUPLiinFX0A8MHxGAWsCg7Et+bKnohSQNW19bA+o1ykhQ4v98/E?=
- =?us-ascii?Q?woEZ3rK5v9TUbARCbajXszSTmFhj7wDwsy5zFFjX4sEAtnJzU2THY45BcX3J?=
- =?us-ascii?Q?xMHYS3Pe4N7fTvGqe7TJIPpscXygYlv6msF9zX4NLHsTDSP/koiHDD0Jd8kP?=
- =?us-ascii?Q?jt1xm24XgRmSfwhVQlMKLWuzkvIvGgv1vO4xOHOAzwtET+FbjP+kv2jhwMgO?=
- =?us-ascii?Q?GHD0g4VkMDJivUMaadrKwzvKRkW8WfquT1fcTlL575yj+YBlHj5wKuL3b8I0?=
- =?us-ascii?Q?cKSke3A/gXxSwtKh7g7M8h+crALmhgPUbGqpJrqdPW3h6fTMWQOs2vCZS9ID?=
- =?us-ascii?Q?PdOhGj/E4kLGC2f+bZtKS6g2lMabsVF0QJRqJGA6EiOSooulCXLCTK4wYIiO?=
- =?us-ascii?Q?lwYs+eEm+Vjg35uU/1yrs+i6CY2MkHp7yl7mTTLT+mQvp8d8MwQWfdR5OATD?=
- =?us-ascii?Q?Tfv0aTD3UegLUj7E7lmOxmL737NcDcoan2BbY54H9qrDXf/WY6Rs9lH66lUr?=
- =?us-ascii?Q?p96+GZB684e0wNcp5KPTj2z7c2XXNFQ9+8rFetNhE5v4i68nNF3vsvvXg0zl?=
- =?us-ascii?Q?GrdKr8DOnmv/sAf3O1uOT5QtD22EpnSac27ffX6eXWIzlYiryuSyu4PoyoF/?=
- =?us-ascii?Q?bN5MaxQii0Qgoro99QcPpj88Y5BpRDkqny1rZIAKlkhMcvr/cKtyAbjcKUic?=
- =?us-ascii?Q?NFsDljBkv3X0/0ISQfCddWYJD8019TanTpRshrjEH38goMtPc3PHpqwYgDsk?=
- =?us-ascii?Q?pCOCG35j+4VtNFRtZ60vFDQ0J7YVekU4q6hpKlqQtoCNTjWRbIKey9O6mdTf?=
- =?us-ascii?Q?pPa7HvPqVSmT0VBjNBe7JCrWMEgDjiNIizAEv2o6S0sSJMpfp4LJ8ASCmnMm?=
- =?us-ascii?Q?yugE2cTvFidrdhtXHo1XnGtiQkhZcZFRrh33u8FvsSaUIoLhEQTRpemUnTJG?=
- =?us-ascii?Q?Hsh0u+yPlQqM0Dv2JzmvqXFP1lckhhasUCFQgN1LCW8qPpFCZNJ5MoziAMU2?=
- =?us-ascii?Q?rK88JQZxBnlYUOKWr9uN96gn/HelzTEydzzH+FWXRRpCzySJ+pOF1FU+rUmj?=
- =?us-ascii?Q?lS60A+V3TWd+iOICPHQkyQjTloHKg/zr/ULzAqB5YfuVoH3mzBivxrncF8OA?=
- =?us-ascii?Q?5XkHg8Hj5Wz6hp6pPCPrwsr77BjFsg/cQ9uhslgDM0XepUoTw1Vf2MH2Yr53?=
- =?us-ascii?Q?2IaUZfW82w=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aa630c09-708d-4ed0-9a26-08df46cf487d
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 06:26:59.9526
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZN0OSfWlQ5gFccGkWF3VDxPkze7ti0ksYALFAs7nI5YUuxcx9m6042o1K91ip5yKDS01i1MX9Oj2jVep5sF6wA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7267
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <av_oLZQzAtFe2vTr@gpd4>
 
-Hi Sechang,
+On Fri, Nov 20, 2026 at 07:26:53AM +0100, Andrea Righi wrote:
+>Hi Sechang,
+>
+>On Fri, Nov 20, 2026 at 05:49:08AM +0000, Sechang Lim wrote:
+>> bpf_scx_init_member() accepts dispatch_max_batch values up to INT_MAX.
+>> The value determines the size of the per-CPU dispatch buffer, but
+>> __alloc_percpu() rejects allocations larger than PCPU_MIN_UNIT_SIZE.
+>> With BPF_F_LINK, an oversized value passes the struct_ops map update
+>> and triggers an illegal-size warning during link creation before the
+>> allocation fails with -ENOMEM.
+>>
+>> Calculate the buffer size using the effective batch count, including
+>> the default used when dispatch_max_batch is zero. Reject values above
+>> the per-CPU allocation limit with -E2BIG during the map update, before
+>> the allocator is called.
+>>
+>> Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+>> Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+>> ---
+>>  kernel/sched/ext/ext.c | 9 +++++++--
+>>  1 file changed, 7 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+>> index 10de6bd865e8..93128da6b126 100644
+>> --- a/kernel/sched/ext/ext.c
+>> +++ b/kernel/sched/ext/ext.c
+>> @@ -9197,9 +9197,14 @@ static int bpf_scx_init_member(const struct btf_type *t,
+>>
+>>  	switch (moff) {
+>>  	case offsetof(struct sched_ext_ops, dispatch_max_batch):
+>> -		if (*(u32 *)(udata + moff) > INT_MAX)
+>> +		u32 batch = *(u32 *)(udata + moff);
+>> +		u32 nr = batch ?: SCX_DSP_DFL_MAX_BATCH;
+>
+>The fix makes sense, but with clang:
+>
+>In file included from kernel/sched/build_policy.c:71:
+>kernel/sched/ext/ext.c:9214:3: error: label followed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
+> 9214 |                 u32 batch = *(u32 *)(udata + moff);
+>      |                 ^
+>1 error generated.
+>
+>(also reported by sashiko)
+>
+>Can you wrap that case in braces, matching the nearby cases?
+>
+>Thanks,
+>-Andrea
+>
 
-On Fri, Nov 20, 2026 at 05:49:08AM +0000, Sechang Lim wrote:
-> bpf_scx_init_member() accepts dispatch_max_batch values up to INT_MAX.
-> The value determines the size of the per-CPU dispatch buffer, but
-> __alloc_percpu() rejects allocations larger than PCPU_MIN_UNIT_SIZE.
-> With BPF_F_LINK, an oversized value passes the struct_ops map update
-> and triggers an illegal-size warning during link creation before the
-> allocation fails with -ENOMEM.
-> 
-> Calculate the buffer size using the effective batch count, including
-> the default used when dispatch_max_batch is zero. Reject values above
-> the per-CPU allocation limit with -E2BIG during the map update, before
-> the allocator is called.
-> 
-> Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-> Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-> ---
->  kernel/sched/ext/ext.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 10de6bd865e8..93128da6b126 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -9197,9 +9197,14 @@ static int bpf_scx_init_member(const struct btf_type *t,
->  
->  	switch (moff) {
->  	case offsetof(struct sched_ext_ops, dispatch_max_batch):
-> -		if (*(u32 *)(udata + moff) > INT_MAX)
-> +		u32 batch = *(u32 *)(udata + moff);
-> +		u32 nr = batch ?: SCX_DSP_DFL_MAX_BATCH;
+Thanks for catching that. I'll wrap the case in braces and send v2
+shortly.
 
-The fix makes sense, but with clang:
-
-In file included from kernel/sched/build_policy.c:71:
-kernel/sched/ext/ext.c:9214:3: error: label followed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
- 9214 |                 u32 batch = *(u32 *)(udata + moff);
-      |                 ^
-1 error generated.
-
-(also reported by sashiko)
-
-Can you wrap that case in braces, matching the nearby cases?
-
-Thanks,
--Andrea
-
-> +
-> +		if (struct_size_t(struct scx_sched_pcpu, dsp_ctx.buf, nr) >
-> +				PCPU_MIN_UNIT_SIZE)
->  			return -E2BIG;
-> -		ops->dispatch_max_batch = *(u32 *)(udata + moff);
-> +
-> +		ops->dispatch_max_batch = batch;
->  		return 1;
->  	case offsetof(struct sched_ext_ops, flags):
->  		if (*(u64 *)(udata + moff) & ~SCX_OPS_ALL_FLAGS)
-> -- 
-> 2.56.1
-> 
+Bests,
+Sechang
+>> +
+>> +		if (struct_size_t(struct scx_sched_pcpu, dsp_ctx.buf, nr) >
+>> +				PCPU_MIN_UNIT_SIZE)
+>>  			return -E2BIG;
+>> -		ops->dispatch_max_batch = *(u32 *)(udata + moff);
+>> +
+>> +		ops->dispatch_max_batch = batch;
+>>  		return 1;
+>>  	case offsetof(struct sched_ext_ops, flags):
+>>  		if (*(u64 *)(udata + moff) & ~SCX_OPS_ALL_FLAGS)
+>> --
+>> 2.56.1
+>>
