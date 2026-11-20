@@ -1,97 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795157086;
-	b=VWcyxxBEhu4EnX6xFRUSNOQDzkBAdmRsPmzvWmLuZ7Lhq+VfH1Gvm4tbdgnfx88mBIMd
-	 69goMCvVZIDiq/PwCmQvRS16e+m9NeZM7K1lQJBZksYTboYpPMzsgstywSBx4VL+k7mqQ
-	 DRNjvcOxWUYKdfUm06SAHgYE8vt9l7Onbg+0hiwnES0VScnW9GpRrCMEPvHn9AdtJlhkT
-	 TglN6ly16uLAbtxocKY/vrK13GgE8ICiyP7W+XAlCEcAS4hMtKHg75/smuMjl0G7CGyC4
-	 BQGAuxtoKQILNnWvcOzEPSek3NA/xfYuuB9mqqOCwwLQZksWpVjvg4mC6Wkwt9M2RSg==
+	t=1795157777;
+	b=f9r+UI5X/KYMJVzPvyX3D9TNbrXUUSop0Xa8yHNSwHgZCMm9fV5sZC3ZDRkN33GONkm1
+	 vF+KKPnjnrS5c78tem60GTqFK5oXB3SGw1ipmd0wR6ohFIfokp4TDa+VTLp0oOMk164hZ
+	 7QRQR8gpByKxyqbfzZ0zIVc/duh19Oq5VMg78XvTmY8zzjEssmc3BCTBEt0vqU8V3iIQl
+	 vVimwhymp9Xw4RvjFj1zJ+MhIle1YQ76fKuU+BlPhZL7xn8URAy2tGMGzwru7f70ajIsd
+	 Yz6Hyc3Kupt8ESCYSrKwDgxVfEclnpTUe01vT/5bDXEALH/bcVCn7JHOugBWyPBcf6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795157086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795157777;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=ibHuc2Ky7x6xbIQztLyKbwCm/OGk8fLoxdPIGUt/hMM=;
-	b=zpa2ru+cWgEuU9NLbz8nsvI2sA8tI4ZZeS2ckEqbshSOZ34fRY4EavgiHWTdrbKTUdgx
-	 e4YxCtiwtGUl8LFUBvtR/xuW+pXzkHXQOvlZ2plwX7JZe1jxdk1cFxH6w4t6HUgbqL+Rj
-	 Psy2GnA0gKRTJ8qAH24Yu6LWpM4CFm4G41HnohSiGQT/jktVIrsZsbSmNAHhsFw3w2Kub
-	 aLQOLhv75La/SxueGUdwBTji4ZfPO8pksFZO5YKPRDQJvAE1yXsUXxvk4eLo44xx6y58/
-	 eOaHIg+eE7foR6qmbM8C3JWisHMo0wczbPi8dqlpakJVFvNL+AAzQ+s+VEC0nqVP3PA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=JSpsy0UKa4DIFK4RDl3FsapGjP10wN6PK5z9B1SUUFk=;
+	b=C0BP0HZkecTJg8W1hooO4+Uzbr9pia5igRNdaRAASzV1SktdDEPFlDqQdoWapPO3Jmj4
+	 ZyznHuFUqGBO5OR+RQK7ULV5QEeud/amAlslmtM0eElMYCuOaeipS7j4wszoWAdu9eePh
+	 Q1gYq/O0g/gz8RbboZul9/WCBxtZV7AKFdc1860AnM3wLV4H708gzuwbvDzt3/JERs8PR
+	 ZeOzrngDlCeRN2IxUwT3hPjwl5AOXhc+mRoKjrZC91zd+wkxuWZtVMFJpGNrHn2dzb8d6
+	 HcdDPHyJT1daI4U2fe0k8X+U/nvoJJXTZPsQsO3Cv64+/rRDeF/YHZZLzMmkNIb6tlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ywxQjVY7;
-	arc=none smtp.remote-ip=209.85.216.41
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=P4DTrecY;
+	arc=none smtp.remote-ip=209.85.216.46
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FDD606A330
-	for <sched-ext@lists.linux.dev>; Fri, 20 Nov 2026 06:44:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59FDD606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C9A606A325
+	for <sched-ext@lists.linux.dev>; Fri, 20 Nov 2026 06:56:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5C9A606A325
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ywxQjVY7
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3ac9f49b984so329304a91.1
-        for <sched-ext@lists.linux.dev>; Thu, 19 Nov 2026 22:44:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=P4DTrecY
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3b08cf16decso407873a91.0
+        for <sched-ext@lists.linux.dev>; Thu, 19 Nov 2026 22:56:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795157086; x=1795761886; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ibHuc2Ky7x6xbIQztLyKbwCm/OGk8fLoxdPIGUt/hMM=;
-        b=ywxQjVY7bgcQtr7LiKs47YFHC5ztRMHkf7vkwgXIffgQURbVUS+B7mBy2fBkkxhyBA
-         nqYikTdyiwOcrsbl+ctu50EDt2EEc++n5WDjP19gmF73ye0jEd20vrwmotu3WV966zcu
-         OOCVRWB/FLnNEfIzT7K0nNtwxNSSMzCaGzZxj1ZjomkaTHclZ6GJzw7BCEGDsLycXYm0
-         f+HJqyygAA45tYcdO8GZTpG1gu/iXysMPNr5e3ZA0dyC+HkNEfGKUqE20rUp3MVwGatx
-         uHumjYa570GdtDqa7jsCWFUol/dvlxsH+wG052yyiugKH3Zw8ZCoGetEufhka3QWgmU9
-         hYaQ==
+        d=gmail.com; s=20260707; t=1795157776; x=1795762576; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=JSpsy0UKa4DIFK4RDl3FsapGjP10wN6PK5z9B1SUUFk=;
+        b=P4DTrecYs9I6urL35WOwv6B1UN0TO1mYj+U4xMe1eoTyTCaT4AYLf+Gv3tos/rL10E
+         DBTLPE9VQNu6CCBIAiAWzVw38zWNvFZit+jT4nmI84DmUyWaEBYA49Pwq9/YHh3/q1h0
+         Z9624/AcMqZzwihrXTPN57j5HJqg9yyz1FeTYdK8PJKboxdheHFjzMLHnEza7z1fKOEa
+         PyWSdJUd1UfXXWfxyhEMRdlssiJU4YcKcNva/6GITHZm8ljg7TsxZX1yBVhe9O98fxFM
+         hTZ1MECnjPRvxMBImhb3BoSvdbtbJT6BbsqGcCwnrPE2RLRHy5XhKb45qIjnDLweCjxG
+         ze+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795157086; x=1795761886;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ibHuc2Ky7x6xbIQztLyKbwCm/OGk8fLoxdPIGUt/hMM=;
-        b=wwveMxPe7z6dp24JC1IgAFPLJybjBwbwSLriv1nG3LxvDECTtZbZYDRvDQq5Oj5u3B
-         v4dxSPWmD4QC2En+nRklLyIN3vvLJQFnib/GLVp4ZleQC6ZEC/R1Fhu25Yb0/cR7kff3
-         3MxgYrOVVWQavYvtmw3MMrEOsWIBh8ZLIAjo8mAmDDWLa/w2g4mbo8wRA67QWidvRWv8
-         fKnSEr+rFD+m1NijRj4UT/U4tP1YOERgzZUQKc1CpPVmNGlfm3WdsisSJedgOEDLO1Tg
-         7IfOoINEBzdJbSHlIdUy0aBeexNcg5TdyTh6WsR+oCX01lURhF3Mg3cnzgk3VfMzDlg1
-         keAQ==
-X-Gm-Message-State: APuU4Z/6yQ7BXHsV+tMv4xgwX/BYoVGqszbUvdHsjBWUgSAMuRaGNJYT
-	wFeT6TCI6G18WRv7nBDmONaT1c6IYNPCZP9QFRblEdQPRcoP5BX4wr6j
-X-Gm-Gg: AZFdTZfHPWskoSiFuQmsVxynJ+kd42ldQughVrIRNlA7Rj1XVBEVADpBGqHuMvkdxlR
-	F+LUr4jKkTpd1gRz/HflmWhYFd6kypf/2RpXKmpZQaNe0RBmZqXPNHNI3kvBfmCD2+k3G3ntvXu
-	Ndxxk6CdQQ9uHyKE8+68CSnLw1S6pUJMUHiEuU+JzghAGH90vdgYWlUhzdgn0Ya5dZ9NeykC0Eh
-	pO5SCVzsCm5WFF5pcuEZK8hxl3lrsIBPVBnjNGDjXCcPe7HP4j/0xq0OHL2vPk2y3XhDoqAx0S4
-	4YcdN4bzsCzPstKmuPdHB4+sm7MMFJz9sr9Hg/7O4Lm83iG2MD7Cs2JudDGUNj9xtuFPYzuZirH
-	gwPtzzef035HwQxam3qrD6aD66Li6gNo1laNt7B/z7d3bTEXu3RgL0R3lS/MZNxREKr5uqAWbRF
-	zkU7NsO0AGO2MD4wXPS2V5oRIBp2eVu1jsP48ohApXFqBxKGFznvg+nopQlhbEDhV4RSW7aPY8B
-	uWhJLZqMj+SMMIqOVd24H3h73+VYBYfgVaCw40sk5b7XDyX1SntT2x8Ymc3wibOvFT7NXyVi02e
-	XNKz+FX2Hq4Ldgc+V324txpE328OHr6aIYSgc4VKhAgTVF+tRvYAsg==
-X-Received: by 2002:a17:90b:5546:b0:3b0:a1c6:95ae with SMTP id 98e67ed59e1d1-3b41c941f9amr1058404a91.31.1795157085609;
-        Thu, 19 Nov 2026 22:44:45 -0800 (PST)
-Received: from srsys1 ([147.46.174.222])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b4323bda5esm12916a91.3.2026.11.19.22.44.40
+        d=1e100.net; s=20260707; t=1795157776; x=1795762576;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=JSpsy0UKa4DIFK4RDl3FsapGjP10wN6PK5z9B1SUUFk=;
+        b=K4K61wtoJH+EK6y8qioWyogkIbWxb3GQZAmg/ZfNwkXJq79mBxLqlOYG5EMs5ceTdX
+         L8r3CvN6zL7Kc3l45qDSmx/qdVcNTUey0si6Nff62YtF9jPcpkoKSYj2EeV60h0hM3Wj
+         RWmndWFHp5AGt2T8VubxVpkBrqnk2assaBPp7cejxScZHlApHtzqFXTTgZ7r1TOFCW8p
+         ZoX6Mqt1hMeRP4pimzysVm8gmG4pHyG1OtUOJeEEXBFNKJe+nlSyklpMwkQYt4llOnOe
+         gn0MyIaEojKUBBNXS5znHLhzHsACGoz9umbbekQs58QW92HYJzu1RKiiHAaieCBo7xYe
+         s+Uw==
+X-Gm-Message-State: APuU4Z+y1JLcFG+qZ5muSeUsl3fvhtueVbndL8jKiWnPK4iJsqlrNrpZ
+	nAOc2zF6mQ36cLbgEY/gkWL0NSGMaVcOp3qA0VmHVEqqsZAaSuXXfHE4Xdm2Jg==
+X-Gm-Gg: AZFdTZeXk/fo+1j47yDkUlNtl69QaskG3OspgFFtm9iYniz4SD9r50INFwEvXBQvTKA
+	tfUghSakkeaY+Lph4ujJQvr1W3ooPeWwr6SawwZtkIf6QTtcwtkq3xbT1fHEwnBKQNuDjrIzUsR
+	oyyzYb+IssnI78eNzs1o6BmhiFXgbbk/NV7Xz2VuWwu1avVCumspVhDLg2mUfHKWOWGtz+9+YgA
+	Bw2sTPIDuYxmI+ErkJwk1H5E/J1cxdW8wVoX7j7iYO5wU7NtswKOOYezo2UBWxPM1IfBug/TnfE
+	GO9ziMqcRCvh5Gv+clKI/b2l1Ffus58dGNTcThQD0D5RuEprxcyhIdxBi847vMC9SZkL1TYXHGy
+	FXPM3WoLbJfLFF2thmL6bvS6mvKW9+LePL+blwP9zYfJfZ/9vV7j2BF4DwdvhOU/8brRImAe/m8
+	11vofztcdsjBpD+PHHDEjrPfbaFHK28ISKxDfnotCJosTzfpTgr58SCoyHIorTxntVWkspsSitq
+	I7A+VmbsmhgVrvN9hes4cxZK/zRhHL6XcUNqC7mcOTzsSrguPAJ2U7lCaE+87hKuK+f80IKCSW/
+	dKn7TuDTD3SChyxXE/NoNs9u9NZnl0eaL+IqUEwCsPExaBvZFcQSaoJSGsMQ1z3h
+X-Received: by 2002:a17:90b:4a47:b0:3b3:fc1f:a5c4 with SMTP id 98e67ed59e1d1-3b41c8dc821mr1899005a91.20.1795157775908;
+        Thu, 19 Nov 2026 22:56:15 -0800 (PST)
+Received: from cps-manycore-1 ([147.46.174.222])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b420e1307csm1952926a91.7.2026.11.19.22.56.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2026 22:44:45 -0800 (PST)
-Date: Fri, 20 Nov 2026 06:44:28 +0000
+        Thu, 19 Nov 2026 22:56:15 -0800 (PST)
 From: Sechang Lim <rhkrqnwk98@gmail.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: sched-ext@lists.linux.dev, tj@kernel.org, void@manifault.com,
-	changwoo@igalia.com, mingo@redhat.com, peterz@infradead.org,
-	juri.lelli@redhat.com, vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
-	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com,
-	haoluo@google.com, brho@google.com, joshdon@google.com,
-	linux-kernel@vger.kernel.org, bpf@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: reject oversized dispatch_max_batch
-Message-ID: <av_sTGpIbkzvsp05@srsys1>
-References: <20261120054913.3795562-1-rhkrqnwk98@gmail.com>
- <av_oLZQzAtFe2vTr@gpd4>
+To: sched-ext@lists.linux.dev
+Cc: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com,
+	rostedt@goodmis.org,
+	bsegall@google.com,
+	mgorman@suse.de,
+	vschneid@redhat.com,
+	kprateek.nayak@amd.com,
+	haoluo@google.com,
+	brho@google.com,
+	joshdon@google.com,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH v2] sched_ext: reject oversized dispatch_max_batch
+Date: Fri, 20 Nov 2026 06:55:54 +0000
+Message-ID: <20261120065559.3979434-1-rhkrqnwk98@gmail.com>
+X-Mailer: git-send-email 2.56.1
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -101,75 +109,58 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <av_oLZQzAtFe2vTr@gpd4>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 20, 2026 at 07:26:53AM +0100, Andrea Righi wrote:
->Hi Sechang,
->
->On Fri, Nov 20, 2026 at 05:49:08AM +0000, Sechang Lim wrote:
->> bpf_scx_init_member() accepts dispatch_max_batch values up to INT_MAX.
->> The value determines the size of the per-CPU dispatch buffer, but
->> __alloc_percpu() rejects allocations larger than PCPU_MIN_UNIT_SIZE.
->> With BPF_F_LINK, an oversized value passes the struct_ops map update
->> and triggers an illegal-size warning during link creation before the
->> allocation fails with -ENOMEM.
->>
->> Calculate the buffer size using the effective batch count, including
->> the default used when dispatch_max_batch is zero. Reject values above
->> the per-CPU allocation limit with -E2BIG during the map update, before
->> the allocator is called.
->>
->> Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
->> Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
->> ---
->>  kernel/sched/ext/ext.c | 9 +++++++--
->>  1 file changed, 7 insertions(+), 2 deletions(-)
->>
->> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
->> index 10de6bd865e8..93128da6b126 100644
->> --- a/kernel/sched/ext/ext.c
->> +++ b/kernel/sched/ext/ext.c
->> @@ -9197,9 +9197,14 @@ static int bpf_scx_init_member(const struct btf_type *t,
->>
->>  	switch (moff) {
->>  	case offsetof(struct sched_ext_ops, dispatch_max_batch):
->> -		if (*(u32 *)(udata + moff) > INT_MAX)
->> +		u32 batch = *(u32 *)(udata + moff);
->> +		u32 nr = batch ?: SCX_DSP_DFL_MAX_BATCH;
->
->The fix makes sense, but with clang:
->
->In file included from kernel/sched/build_policy.c:71:
->kernel/sched/ext/ext.c:9214:3: error: label followed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
-> 9214 |                 u32 batch = *(u32 *)(udata + moff);
->      |                 ^
->1 error generated.
->
->(also reported by sashiko)
->
->Can you wrap that case in braces, matching the nearby cases?
->
->Thanks,
->-Andrea
->
+bpf_scx_init_member() accepts dispatch_max_batch values up to INT_MAX.
+The value determines the size of the per-CPU dispatch buffer, but
+__alloc_percpu() rejects allocations larger than PCPU_MIN_UNIT_SIZE.
+With BPF_F_LINK, an oversized value passes the struct_ops map update
+and triggers an illegal-size warning during link creation before the
+allocation fails with -ENOMEM.
 
-Thanks for catching that. I'll wrap the case in braces and send v2
-shortly.
+Calculate the buffer size using the effective batch count, including
+the default used when dispatch_max_batch is zero. Reject values above
+the per-CPU allocation limit with -E2BIG during the map update, before
+the allocator is called. This also covers registration without a link.
 
-Bests,
-Sechang
->> +
->> +		if (struct_size_t(struct scx_sched_pcpu, dsp_ctx.buf, nr) >
->> +				PCPU_MIN_UNIT_SIZE)
->>  			return -E2BIG;
->> -		ops->dispatch_max_batch = *(u32 *)(udata + moff);
->> +
->> +		ops->dispatch_max_batch = batch;
->>  		return 1;
->>  	case offsetof(struct sched_ext_ops, flags):
->>  		if (*(u64 *)(udata + moff) & ~SCX_OPS_ALL_FLAGS)
->> --
->> 2.56.1
->>
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+---
+v2:
+ - add braces (Andrea Righi)
+
+v1:
+ - https://lore.kernel.org/sched-ext/20261120054913.3795562-1-rhkrqnwk98@gmail.com/T/#u
+
+
+ kernel/sched/ext/ext.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 10de6bd865e8..56d75d179822 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -9196,11 +9196,17 @@ static int bpf_scx_init_member(const struct btf_type *t,
+ 	int ret;
+ 
+ 	switch (moff) {
+-	case offsetof(struct sched_ext_ops, dispatch_max_batch):
+-		if (*(u32 *)(udata + moff) > INT_MAX)
++	case offsetof(struct sched_ext_ops, dispatch_max_batch): {
++		u32 batch = *(u32 *)(udata + moff);
++		u32 nr = batch ?: SCX_DSP_DFL_MAX_BATCH;
++
++		if (struct_size_t(struct scx_sched_pcpu, dsp_ctx.buf, nr) >
++				PCPU_MIN_UNIT_SIZE)
+ 			return -E2BIG;
+-		ops->dispatch_max_batch = *(u32 *)(udata + moff);
++
++		ops->dispatch_max_batch = batch;
+ 		return 1;
++	}
+ 	case offsetof(struct sched_ext_ops, flags):
+ 		if (*(u64 *)(udata + moff) & ~SCX_OPS_ALL_FLAGS)
+ 			return -EINVAL;
+-- 
+2.56.1
+
