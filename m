@@ -1,80 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795164276;
-	b=UM61Bzp1TVXmnTrvj5ba+lnBz775cHVzmz16DYFK1UOxYSQQYq+1SY+i9SvJ08d3tUm5
-	 uSfkFdaW17KvnenarrD4BrCfLTyEyK5K+IYKkleSTYwxjuqL/QZCTyBXz+zhcdyTnxmZr
-	 K0Vhj+WFzBxjr8ZCNNFm9EKfvw5bumqdoyFeid7WOnMUNSMllPFCO9TqBKJMiE9G+8IGB
-	 5Bx3/IMT+GUSaggyMEh6Xs6ojc2S+i/q8smgOLhq8xG1omFUSSYMKBbHiq3EYi2vOzqGa
-	 sIgQjVc0MdKsK3Btf0lqAZ0UaWqXMNl/0bHcV/TO+IcJdKuGncuxBc9z9AfBL3+rO4g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795164276;
-	h=Received:DKIM-Signature:Received:From:Subject:Date:Message-Id:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:
-	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
-	 X-Endpoint-Received:X-Original-From:Reply-To;
-	bh=vnHkIsLxTap6PDAEihPAF/hMw6HkeMh5fdayIMgroaM=;
-	b=sdGh9pbF1DSf95IERl+nk9xNDM+2GRlE+stXKu4iqZpdWlVZvLjOZarBXc3WbLf/gQm7
-	 mGlktS7C9It7HHv+CA8xEIzLvK4AlUrvS6eS/StqMOndUXAZkdHgXy1H6Kx+JS8wWDnbf
-	 9l5uFruaG+3xtj+GQGswrnXGHVVRtKnjj91Gzp/zm4qm/j4iYIf9SwFsDSuTNuRIoxxDB
-	 ZZ6yFnUyEZ2f9yh0DTd+qVT0GnPnmDJ9a3rWM1zeO9SH9NsqltckAWa9Sgs73M+Ik7kQ2
-	 xyTMgIVQpG48FefdlqIxQHQIUi3H77VD7Xb2RDTzybdvt1ikSZJYbq7EN8ppYngxpxg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BiUDTPG3;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368FD606A7F5;
-	Fri, 20 Nov 2026 08:44:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BiUDTPG3
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795164275;
-	b=HT1SW3hww+8sgLB/+97F5wWBg2tc8EPgh6a3yqJ9LNj7yiGiBaECy9BkRLVBEzEjoQSE
-	 XskuuIuJJkLdi0pe3qOBFNCdLP+Dtk1GEimlwuIx8uCPTQt+5jNiLzCShl/Og+QQLBrTt
-	 HewBMyLcC/k/Or0MzqNmVMIrqaat0adCZgz+ri2IwDT47mlesSU3SdwzINN1RUmHRBMmd
-	 67tsZ+Is8rnMgSVjByUISO5rpaYASlwkS59tCwBJVTwNrJnIKqCnLwuwa8V9YceRoSDnf
-	 sXle7E5SDL2HbsAnDK3kHReKT+kLi2DunyGJMsJJzPLxA2qgYnlK6YZqRHWnu0/ufEA==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795164275;
-	h=DKIM-Signature:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To;
-	bh=vnHkIsLxTap6PDAEihPAF/hMw6HkeMh5fdayIMgroaM=;
-	b=cBONckJkDCgwBbfZJJ6tp8TKBdY49uHYgdfs6GA+258Hex3JdJO3zk1riKNlI/vepQJr
-	 7ahSTKfxLumD6LVFr71NqajW1bj2cK2BjehfTsXGPHbXv1pCcs0zw7tRC5reoItIK5o+R
-	 DFExaOVFBdq+t+kVn2n9/5wkzZ4Ju/1bFPedMdkUd/j4zdJxDRorxtEld8Gy5W5CQg93j
-	 4UH+N3BN1d8RlcXYPrcK3nQ22UbRsyPrjrLI2jv6lv56NXSP8f9M+c1SKU4Z7H9o318hg
-	 f4RNuL+GfqtaS8TC58kG+mxmQH7vW9lPogl/sUBa/pJS+9OQ4wQH6RQA411HPPs12SQ==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.126.103.232
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795166315;
+	b=VkmWHdzIPOmvZzYj/QsAnHrMwPV+ULwLLLG04b2CN9OmKOEeOjzbNwFzIcjPJJLjwvMc
+	 4dUDAkWsVZTFZgL3N2ctAheNILpnpHjiO8zgq59LoCdCjTz6v9fxyyFnAZzrNGCyHsoli
+	 V6J07JBao0Uu6iCJMzCxdmKIijxHFPT8j3Ada8X2UXZFHMewjI1Cq8z5WsFB+JY+BRLCh
+	 n/PCINS5dXMpPDv47vuLTp8Yt8f4WDDrmVrXTQ6YZ60B7LA3zwEp+LFurvHw2NvMqXAGv
+	 uzWGZXWCTdYfDW++F9LRu1vCrZ3oWDah46oHvmC3cwnA55sK+rZkJdKLSnsDQNfz+kA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795166315;
+	h=DMARC-Filter:X-UUID:X-CTIC-Tags:X-CID-P-RULE:X-CID-O-INFO:X-CID-INFO:
+	 X-CID-META:X-CID-BVR:X-CID-BAS:X-CID-FACTOR:X-CID-RHF:X-UUID:X-User:
+	 Received:From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding;
+	bh=F8c0szBg9qBHwMYngo+k10AIndbBzGKinqqurrP/q1M=;
+	b=T0RAPIkaXnahHWhjKAj7xj1aA1CwMewH0BMkppTXkaG3ymtO+H5Jnl/XerBfd7WbDs0J
+	 55Bslfy40MQ/Vtp6n84gpRs/mtTSwMjIG2aypRGJ0UWMSbrRs9HXL9mFX/u9KBoavuPZk
+	 NCKRX/MCypPP6FbFYuoJjuFMh0WyJ+BatXWrNmvw7ekSa59+nyPcVssz/dG2JVs6flyy0
+	 hPJrOTOK/iDdrFESE3y5DBiKdWs13Z0AJnxRH7E9gUcQ01uxCtJ37fPBZQaoLpIZcPfdz
+	 6GPcHRD99ANdmuT+0Mhkjs1byuSQCLofxtfLcFzsapzwevjYT7UHNdNGw7ztQZPsRag==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=kylinos.cn;
+	spf=pass smtp.mailfrom=kylinos.cn;
+	arc=none smtp.remote-ip=124.126.103.232
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 1E9D41F000D1;
-	Fri, 20 Nov 2026 08:44:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795164275;
-	bh=vnHkIsLxTap6PDAEihPAF/hMw6HkeMh5fdayIMgroaM=;
-	h=From:Subject:Date:To:Cc:Reply-To;
-	b=BiUDTPG3kZmMwtuQcLR4+7sONO+JEjcyNy+2wtE8BV0lp+BqNdQnXma8IaxalPT/i
-	 p4d97m18SBCwY69KMvT0HeYemwe3xb5E7kRUDbGmxu8SlGTL8gOO1IqXFvDOqsl/9j
-	 kJkhXOlaxRT4MJSjw0FDVVvOVoS/mkvLsnLgLM/F4RRLC1ev9lpZUhCZ+5+5OJn+AH
-	 vHMsyazDiwSJD/iLCrs8YGGjwLIkmaFUbdncCtqbRpCm7NLAQScOgpKmbyORd16SBK
-	 2hAhNIxyVJ1SyMUWEdmhbeRqPEpcFBF5rrO0tOL+4PNdc4mmZo7tYMgCA+m4OkbCvS
-	 4latatNEnfsqQ==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 8B253497A9;
-	Fri, 20 Nov 2026 08:44:34 +0000 (UTC)
-From: Hang Zhengyang via B4 Relay <devnull+hang.zhengyang1010.gmail.com@kernel.org>
-Subject: [PATCH sched_ext/for-7.5 0/2] sched_ext: idle: Don't stack a sync
- wakee behind a higher-class task
-Date: Fri, 20 Nov 2026 16:44:21 +0800
-Message-Id: <20261120-scx-fix75-v1-0-254f782ff9b0@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B9A606A326
+	for <sched-ext@lists.linux.dev>; Fri, 20 Nov 2026 09:18:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99B9A606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 56812648e4c311f19a56ed5b684f684d-20261120
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NO_NAME, HR_CTE_8B, HR_CTT_MISS
+	HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME, HR_SJ_LANG
+	HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE, HR_SJ_PHRASE_LEN
+	HR_SJ_PRE_RE, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME
+	IP_TRUSTED, SRC_TRUSTED, SA_TRUSTED, SA_EXISTED, SN_TRUSTED
+	SN_EXISTED, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_BAD
+	CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU
+	AMN_GOOD, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:0a05b280-e42b-4f50-97dc-55faa032f0cf,IP:10,
+	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:35
+X-CID-INFO: VERSION:1.3.19,REQID:0a05b280-e42b-4f50-97dc-55faa032f0cf,IP:10,UR
+	L:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:35
+X-CID-META: VersionHash:7db8b62,CLOUDID:b1673874644b880c8c8dde93e9a7f8fb,BulkI
+	D:261119223002FMBWSIFN,BulkQuantity:3,SF:10|66|78|81|82|83|101|102|127|153
+	|865|898,TC:nil,Content:0|15|50|99,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:
+	40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BR
+	E:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 56812648e4c311f19a56ed5b684f684d-20261120
+X-User: sunshaojie@kylinos.cn
+Received: from sunshaojie-pc [(114.244.3.119)] by mailgw.kylinos.cn
+	(envelope-from <sunshaojie@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1708704801; Fri, 20 Nov 2026 17:18:24 +0800
+From: Shaojie Sun <sunshaojie@kylinos.cn>
+To: arighi@nvidia.com
+Cc: bpf@vger.kernel.org,
+	changwoo@igalia.com,
+	emil@etsalapatis.com,
+	linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	sunshaojie@kylinos.cn,
+	tj@kernel.org,
+	void@manifault.com
+Subject: Re: [PATCH] tools/sched_ext: Add "arena" BTF type tag to the __arena qualifier
+Date: Fri, 20 Nov 2026 17:18:12 +0800
+Message-ID: <20261120091812.968482-1-sunshaojie@kylinos.cn>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <av_lQuuL5lgbW1BW@gpd4>
+References: <av_lQuuL5lgbW1BW@gpd4>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -84,103 +88,12 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MwQqDMBAFf0X27LYmxVj8FSkSk2fdi5aslID47
- waPwwxzkCIJlPrqoIS/qGxrAVNXFBa/fsESC5NtrDPGNqwh8yy5a9m/nXfxZRAwUel/CUXcr4E
- 0LIgj8v6ct8Tdo6XPeV6lfDYwbgAAAA==
-X-Change-ID: 20261120-scx-fix75-a86a6d31eceb
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
- Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
- Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
- Juri Lelli <juri.lelli@redhat.com>, 
- Vincent Guittot <vincent.guittot@linaro.org>, 
- Dietmar Eggemann <dietmar.eggemann@arm.com>, 
- Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, 
- Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, 
- K Prateek Nayak <kprateek.nayak@amd.com>, Shuah Khan <shuah@kernel.org>
-Cc: Kuba Piecuch <jpiecuch@google.com>, 
- Jonathan Bastari Thamrin <thamrinjonathan@gmail.com>, 
- Hui Su <sh_def@163.com>, sched-ext@lists.linux.dev, 
- linux-kernel@vger.kernel.org, bpf@vger.kernel.org, 
- linux-kselftest@vger.kernel.org, 
- Hang Zhengyang <hang.zhengyang1010@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795164273; l=3044;
- i=hang.zhengyang1010@gmail.com; s=20261008; h=from:subject:message-id;
- bh=+c5iTcPGpkwPWTC0M/a6nppfpfe0VFKGA2gyib/nlzg=;
- b=KW5iaCyxdPLwsuWYUfdcxn+/B/rhaa9ybvCDWxHbFnLzoMGK/ua2uAo1eyZbM26DtaqeMjoNT
- /RSr1OFRAP7C/J88aluS8E8yimXJKoTVA1UpY4PE5aTqlrBvdSYk7EW
-X-Developer-Key: i=hang.zhengyang1010@gmail.com; a=ed25519;
- pk=5drRny3PqRPLhKVB0YIQXN5YyD8miKCpXWhnEPvafAI=
-X-Endpoint-Received: by B4 Relay for hang.zhengyang1010@gmail.com/20261008
- with auth_id=1133
-X-Original-From: Hang Zhengyang <hang.zhengyang1010@gmail.com>
-Reply-To: hang.zhengyang1010@gmail.com
+Content-Transfer-Encoding: 8bit
 
-In sched_ext, the default idle CPU selection can put a sync wakee on
-the waker's CPU, even when the waker is an RT or DL task that keeps
-running. The wakee then waits there, sometimes for more than a second,
-while other CPUs are idle. Patch 1 stops this for higher-class wakers.
-Patch 2 adds a selftest that fails without patch 1.
+Hi Andrea,
 
-Tested on sched_ext/for-7.5 (c6cc52a72055) in an 8 vCPU KVM guest,
-non-debug kernel, booting each kernel twice:
+Thanks for the review.  I'll add the tag to the fallback definition of
+__arena in v2 as you suggested.
 
-                               before               after
-  RT waker, pipe               16/16 on CPU 0,      idle CPU,
-                               169 ms - 1.5 s       <= 0.6 ms
-  same, ALWAYS_ENQ_IMMED       16/16 late by        <= 0.6 ms
-                               16-483 ms
-  partial, fair waker          16/16 on CPU 0,      <= 0.6 ms
-                               half ~930 ms late
-  sync_wake_rt, 8/3/2 vCPUs    fails                passes
-  other sched_ext selftests    no change            no change
-
-With KASAN and lockdep on v7.4-rc2, sync_wake_rt fails without the fix
-and passes with it, with no warnings. If other tasks keep all CPUs
-busy, the test passes on both kernels, because the shortcut is only
-used when some CPU is idle. On bare metal I could only run an
-unpatched distro v7.0 kernel, because of Secure Boot. It has the same
-problem: the reader waited 168 ms or more.
-
-The cost: after a sync wakeup from a higher-class task, the wakee no
-longer runs on the waker's CPU. WF_SYNC doesn't promise this anyway.
-In a pipe ping-pong between an RT task and an EXT task, a round trip
-now takes ~9.8 us instead of ~6.5 us, because the EXT task stays on
-its own CPU. CFS also takes ~10 us here. The difference can be bigger
-on large non-SMT machines [1]. That series detects pairs of tasks that
-wake each other. If fair adopts it, we could keep the shortcut for
-such pairs.
-
-There is no Fixes tag. The shortcut has been there since sched_ext was
-added, and this patch changes where a task runs, not whether the
-kernel works correctly.
-
-Hui Su's patch "sched_ext: idle: Honor SCX_PICK_IDLE_CORE in CPU
-selection shortcuts" changes the line just before this code. Whichever
-patch is applied second will need a small rebase.
-
-I used Claude Code to find the issue, write the patches and run the
-tests. I reproduced the issue on bare metal and reviewed the patches.
-
-[1] https://lore.kernel.org/all/20261021-b4-sched-sync-wakeup-v7-1-91995ba5b596@gentwo.org/
-
----
-Hang Zhengyang (2):
-      sched_ext: idle: Don't stack a sync wakee behind a higher-class task
-      selftests/sched_ext: Test sync wakeups from an RT task
-
- kernel/sched/ext/idle.c                          |  11 +
- tools/testing/selftests/sched_ext/Makefile       |   1 +
- tools/testing/selftests/sched_ext/sync_wake_rt.c | 257 +++++++++++++++++++++++
- 3 files changed, 269 insertions(+)
----
-base-commit: c6cc52a72055ef9775b39937d02e39ca358ba042
-change-id: 20261120-scx-fix75-a86a6d31eceb
-
-Best regards,
--- 
-Hang Zhengyang <hang.zhengyang1010@gmail.com>
-
-
+Thanks!
+Shaojie
