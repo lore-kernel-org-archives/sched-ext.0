@@ -1,73 +1,45 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.184
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795221292;
-	b=bjeMb7woVTGtc6D5fj5dib6bv1+HKi9rbKIkmN5dzcf5C55Ah1C0LQ3j8KBUKF2KJxmb
-	 Bo1WmrOodfgmFA2klzr9KmAdDFxr3pbFnSuKjynvZlvg6qbB3iRJvIXVuEAOKP5WYQkLM
-	 Xo/CA3MVPaVDvhV0BcLjX64iPjCA3M9TsCauicmeLmfSvJYWqnKpJ7bm58wAsTTlpbXZE
-	 ER9RyvEWqjs5i+ZJW+g7Uzr0ybIMmjloc+8MYMHrpjZ/uA/Q5A1F4HD98HsMajbP5f/pF
-	 B6VReNoiD0M4TF+iESM+kdxWksEkaX9qdyfnK2nuMwQettxKV1u0V/bBElDJF29ai7A==
+	t=1795222686;
+	b=Kas8p/fjIhS8PQN0ruHXYOU74FROrYxtsFKx2ufQruv9nKUAB0W1UhXDJtMuIxlIFZgO
+	 zOAZLaqOaf7W2CvJJOa9oyphyCAmovz2xQYMo0veiY9PvA9kuLyU001sOlkl56KfUtBpA
+	 F9Idb4W0nDPPcmarJq68RjeTgiaBlY1eUCSUEn2+fDeM2SX+0Hq4ANWOvZMFse7iA67ED
+	 RfxOYVlg+I6lMULv3VmPQGpP2ShotY04eUXSFntPvdC18ZKLkk/+LXna9e7F1xmqlm1hw
+	 X7wPX5jGF+Sw+8/whhSLSSAWYuEXyvP84tzyveTwP29GOHeDO27Uda6UFhCP9bExsIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795221292;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=IJxvQwmayN5aQvdb4D+gCDBM0pWPSVbeJfqswUb7Wok=;
-	b=EwtdVvmRVaRWt2PsTS5n/JfjV4N6q4a7mG25wvV73dFFTNTcJPr1JMqoznyg5ZYKBT68
-	 DoyjSVEDn8K5ntj4we16sq3VqfANnqWzNKlXv4GYoSf1s1vOTSanYmXc6NxDgOpBw1LVU
-	 fZZv1C/prKPBPAF63h5pUacudqPtJOjpJsYdOczv1Z+XTS0QrjS2oRj5Kj6c/qFok8GIy
-	 DeGXIFUCQdxRBeKBnrLcd+XLE7kHiB8p6/nxt7PDsIGvE5mIZVaWYl9HdCp4/e0VhG8Ub
-	 Q443JWd/63yT6S2kJtfSlnFkY4S94dkaXCYMRO0jhByPJgFFvMnWPub7U4ckcEUxhqw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795222686;
+	h=Received:DKIM-Signature:Content-Type:MIME-Version:Message-Id:
+	 In-Reply-To:References:Subject:From:To:Cc:Date;
+	bh=uJD1XLuBURDcDFcsq3Mtzf+oZvN5DWxXiHNPxVkYQY8=;
+	b=0Ao7Lxp7uvsZvZBLChMgcIEh4+07xGcL6/azJldfcVNgu2ELHWXH/gSCvPFn9b5NNJP+
+	 KLlax3IZg3WKtyP6smKtpLpSooLRs4GtLeGkxWe1JSDxSpW37x/rVp4kjRPi8Is1CT54y
+	 uQ6EisEvHp/hERYKXTPylo0AAmQkhYN97lKepO5SCb6FxPjI4Eu8HUitJcoXBnuBkloLd
+	 OxylO+R0Mz/0hFLDoG2hLMYFQJyubIXN/UvW4VNnFMwN6Bq2BA050S54S0PewktHXJT8w
+	 oL+hxsg6lI02ABGovgyUe6WO0cmnqW/EWjdsQEYXSUW5+BTQwnTFayjSG3h05iJGJvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=t++J3V0s;
-	arc=none smtp.remote-ip=95.215.58.184
-Received: from mta1.migadu.com (out-184.mta1.migadu.com [95.215.58.184])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MZVWm02M;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A56560A2600
-	for <sched-ext@lists.linux.dev>; Sat, 21 Nov 2026 00:34:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A56560A2600
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E45A606A6A3;
+	Sat, 21 Nov 2026 00:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=t++J3V0s
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=lxpd3jvcjo6xVOgK2t+dAOJAF/GseY3ufo1PEnDz03A=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795221287; v=1; x=1795826087;
- b=t++J3V0skR6gynoHIH/0m0VsGC5pIUnFYhlVYaNriusrNqBoKBzR8wjw9m/LSMzWc1WjG/7B
- m4fZkLWzTowf5++WFHo8vEHeEx0aSaEJKcaiMWs5rZ7icUtVoG0iHdz8vo8BR4ocK44yAMOgDDa
- bEXQ5sXhHG6is3K4kZYTb1b8=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id 4f055eea9cb761d8;
-	Sat, 21 Nov 2026 00:34:47 +0000
-X-Mizu-Trace-ID: 4f055eea9cb761d8
-X-Migadu-Flow: FLOW_OUT
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-To: Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Alan Maguire <alan.maguire@oracle.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	bpf@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Subject: [PATCH bpf-next v2 6/6] docs/bpf: Describe how to change a kfunc's prototype
-Date: Fri, 20 Nov 2026 17:34:03 -0700
-Message-ID: <20261121003403.2928928-7-ihor.solodrai@linux.dev>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261121003403.2928928-1-ihor.solodrai@linux.dev>
-References: <20261121003403.2928928-1-ihor.solodrai@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MZVWm02M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8FB1F000C0;
+	Sat, 21 Nov 2026 00:58:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795222685;
+	bh=uJD1XLuBURDcDFcsq3Mtzf+oZvN5DWxXiHNPxVkYQY8=;
+	h=In-Reply-To:References:Subject:From:To:Cc:Date;
+	b=MZVWm02MunIUmEWxlkJ9/vwf1UXCEj7SLP28Ol5YAUsxEN5iUPWKkFbyVdzc/rZPj
+	 zML/isG4jsZzPuMHFAC0nS2MGjVkBblNWY+RxeNEsARRkIK8KaLnETb4K//3felPUn
+	 spdWiXR+/2AobLeD7AgDLWiq4BfXN2YSO2EuNCUMivEQ/LNlZNX2Qt/SEvJCoA8/hQ
+	 MeLoG7GQKurMXWFSagPVnJeUd4I0nJZLm13tDERBtfUvYbpokjkAvPylVToTzHxdPa
+	 B0yxv9jZsexPew7Ko/OTsH4nESOUjKegvRDrW1bnwHesOcpblIQHQjeDwAb1482m49
+	 HVxSZfkE578dg==
+Content-Type: multipart/mixed; boundary="===============6578065974918263349=="
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -77,126 +49,59 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-Id: <54e84c02a7b6c83300c6b3cebb35098208296cb592cf3ad506ff4cda9ad64fd7@mail.kernel.org>
+In-Reply-To: <20261121003403.2928928-7-ihor.solodrai@linux.dev>
+References: <20261121003403.2928928-7-ihor.solodrai@linux.dev>
+Subject: Re: [PATCH bpf-next v2 6/6] docs/bpf: Describe how to change a kfunc's prototype
+From: bot+bpf-ci@kernel.org
+To: ihor.solodrai@linux.dev,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,eddyz87@gmail.com,memxor@gmail.com
+Cc: alan.maguire@oracle.com,emil@etsalapatis.com,jolsa@kernel.org,song@kernel.org,tj@kernel.org,yonghong.song@linux.dev,bpf@vger.kernel.org,linux-kernel@vger.kernel.org,sched-ext@lists.linux.dev,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
+Date: Sat, 21 Nov 2026 00:58:03 +0000 (UTC)
 
-Add a section on changing a kfunc's prototype to the kfunc lifecycle
-expectations. libbpf now binds a ___-suffixed kfunc by prototype and
-resolve_btfids rejects kfuncs that libbpf can't tell apart, so kernel
-developers can keep BPF programs built against an old prototype loading,
-provided they follow the rules this section describes.
+--===============6578065974918263349==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+> docs/bpf: Describe how to change a kfunc's prototype
+
+TL;DR: Docs-only question: the kfuncs.rst paragraph warning against renaming a
+___vN kfunc for older libbpf seems to contradict the statement that older
+libbpf can't see it; which case does it protect?
+
+> diff --git a/Documentation/bpf/kfuncs.rst b/Documentation/bpf/kfuncs.rst
+> --- a/Documentation/bpf/kfuncs.rst
+> +++ b/Documentation/bpf/kfuncs.rst
+
+[ ... ]
+
+> +Only libbpf 1.9 and later look for ``bpf_foo___v1``. Older libbpf and light
+> +skeletons see only ``bpf_foo``, as after an in-place change.
+
+[ ... ]
+
+> +Don't rename a ``<name>___vN`` kfunc while older libbpf or light skeletons
+> +still load programs that call it by that name. libbpf 1.9 and later bind by
+> +prototype, so a rename doesn't affect them.
+
+This paragraph seems to contradict the earlier statement that older libbpf
+and light skeletons see only bpf_foo.
+
+Older libbpf strips the last ___ suffix from the declared name and looks up
+the exact remaining name, so it should never resolve a kernel function
+named <name>___vN, whatever name the program declares.
+
+If so, can a rename of bpf_foo___v1 break programs loaded by older libbpf,
+given that they could not bind it in the first place?
+
+Is there a case this paragraph is meant to protect, such as a program using
+a differently named declaration?  If so, could it be described, so that
+maintainers know which renames are safe?
+
+
 ---
- Documentation/bpf/kfuncs.rst | 96 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
+See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
 
-diff --git a/Documentation/bpf/kfuncs.rst b/Documentation/bpf/kfuncs.rst
-index c7da603cab77..4d60a13ecbe3 100644
---- a/Documentation/bpf/kfuncs.rst
-+++ b/Documentation/bpf/kfuncs.rst
-@@ -800,6 +800,102 @@ procedure is followed for removal:
- 3. After the deprecation period the kfunc will be removed. At this point, BPF
-    programs calling the kfunc will be rejected by the verifier.
- 
-+3.2 Changing a kfunc's prototype
-+--------------------------------
-+
-+libbpf drops the last ``___suffix`` from the name of a kfunc declared in a BPF
-+program and from the names of functions in kernel and module BTF, as it does
-+for CO-RE type names. Among the functions with the same remaining name, it
-+binds the one with a prototype that matches the declaration. Types are
-+compared kind by kind, and structs and unions by name only:
-+
-+.. code-block:: c
-+
-+	typedef struct task_struct task_t;
-+
-+	/* these match */
-+	int bpf_foo(struct task_struct *p, u32 flags);
-+	int bpf_foo(const task_t *p, u64 flags);
-+	int bpf_foo(struct task_struct___local *p, int flags);
-+
-+	/* none of these match the ones above */
-+	int bpf_foo(struct file *p, u32 flags);
-+	int bpf_foo(struct task_struct *p);
-+	void bpf_foo(struct task_struct *p, u32 flags);
-+
-+If the old and new prototypes match, change the kfunc in place. Otherwise the
-+new prototype keeps the name, and the old one stays available as
-+``<name>___v1`` (``___v2`` for the next change, and so on) for a deprecation
-+period, usually as a thin wrapper registered with the same flags:
-+
-+.. code-block:: c
-+
-+	__bpf_kfunc int bpf_foo(struct task_struct *p, u64 flags)
-+	{
-+		...
-+	}
-+
-+	/* bpf_foo() before flags was added */
-+	__bpf_kfunc int bpf_foo___v1(struct task_struct *p)
-+	{
-+		return bpf_foo(p, 0);
-+	}
-+
-+	BTF_ID_FLAGS(func, bpf_foo, KF_RCU)
-+	BTF_ID_FLAGS(func, bpf_foo___v1, KF_RCU)
-+
-+BPF programs built against either prototype then load:
-+
-+.. code-block:: c
-+
-+	/* built against the old prototype: binds bpf_foo___v1 */
-+	extern int bpf_foo(struct task_struct *p) __ksym;
-+
-+	/* built against the new prototype: binds bpf_foo */
-+	extern int bpf_foo(struct task_struct *p, u64 flags) __ksym;
-+
-+	/* the suffix doesn't select a kfunc: both bind bpf_foo___v1 */
-+	extern int bpf_foo___v1(struct task_struct *p) __ksym;
-+	extern int bpf_foo___local(struct task_struct *p) __ksym;
-+
-+	/* a stacked suffix binds nothing */
-+	extern int bpf_foo___v1___local(struct task_struct *p) __ksym;
-+
-+Only libbpf 1.9 and later look for ``bpf_foo___v1``. Older libbpf and light
-+skeletons see only ``bpf_foo``, as after an in-place change.
-+
-+If two kfunc names differ only in the ``___`` suffix, their prototypes must not
-+match, not even for aliases: libbpf can't tell them apart and fails to load a
-+program that declares either one, even as ``__weak``. For example, this widens
-+an offset to 64 bits and keeps the old prototype as ``bpf_bar___v1``:
-+
-+.. code-block:: c
-+
-+	__bpf_kfunc int bpf_bar(const struct bpf_dynptr *p, u64 offset);
-+
-+	/* bpf_bar() before offset was widened */
-+	__bpf_kfunc int bpf_bar___v1(const struct bpf_dynptr *p, u32 offset);
-+
-+``resolve_btfids`` rejects it::
-+
-+	ERROR: resolve_btfids: kfuncs bpf_bar and bpf_bar___v1 have matching prototypes
-+
-+Widening keeps the prototype matching, so it is done in place instead: drop
-+``bpf_bar___v1``, and programs built against the old prototype bind
-+``bpf_bar``. ``resolve_btfids`` checks registered kfuncs within vmlinux or one
-+module. libbpf catches other matches, such as between two modules, when loading
-+the program.
-+
-+Give the new prototype a name outside the family, not ``<name>___*``, if:
-+
-+- programs loaded by older libbpf or light skeletons must keep working, or
-+- the prototypes match but the change breaks callers, e.g. two integer
-+  parameters swap places.
-+
-+Don't rename a ``<name>___vN`` kfunc while older libbpf or light skeletons
-+still load programs that call it by that name. libbpf 1.9 and later bind by
-+prototype, so a rename doesn't affect them.
-+
- 4. Core kfuncs
- ==============
- 
--- 
-2.56.1
-
+CI run summary: https://github.com/kernel-patches/bpf/actions/runs/44845964556
+--===============6578065974918263349==--
