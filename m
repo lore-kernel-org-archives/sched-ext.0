@@ -1,72 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.197
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.199
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795321567;
-	b=F0uMviKZZzSci9ChOfRqBMHP7T6LiqmzmgqtpFYqrjDuV83phnRpgHy6p/1hX3RVVZ/X
-	 fUcv0qFSWpERS5BrovtUFLkVB7KK6fwpvIGTPzqmxb3Ia0IcPeo9hgEGT08bM7Uv9ez7i
-	 sOJ0vyOHLO1PnN31ila4b3i0Q6DLhqac1HdNQi2whT7SCxv17A7Ak4zGdH43DGOV8zrJb
-	 5OU2CfqNBOKaNrfmSta/O7LpPPWME4pMii5ZEEq4yl7wWe4ix+bEqEuMtMW3wn1WmZBIX
-	 MH4M2SF9esBVNG+/yuwhmuV5EaLuT839gZMsBHwropIkA4q8cFQ+dNOd86zz3Md0G9A==
+	t=1795328483;
+	b=xpke1ZbF5rwmXuXU8xIW9uqRNy+F8YyvIkzMZcXwrit7ytERX9BIM2PiFjetOfHl/5Zg
+	 OMaolfBfi9f8byDi+GManiQ+8anrzHEkaDoK+J+3NttWKbIrnxre4jF4mUrcz6Y4TJxjn
+	 SySwWNBK3fQ2MlDfFVWDKBg5LvU31xzAaHm1tZH3rdATGG4PBtXJ+GgH5gAZqIdun5SxJ
+	 DOFfZ+DQbESWOHBYN5XWk55oyn68qhQ76fStZZMQiJnhYm+tUHUnmFaIzsnIP8WT2kcrD
+	 aKi61RQ/qdjlgYhnfMQNya7htZK2kgzWh9mB3q/qZu0GMTc/QUXjdhZvLQ5tOQgSTvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795321567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795328483;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
-	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=0jg4qq9XadgtOFwiQ/w6ym8+ZsypQY27mB/+0Ay1dt0=;
-	b=O9H9k3tbfyIMOegg8dPjlMcDFfY4+PqNhK3KNjRJQ3emKngU/TieZ+LoJYpxn0190jH/
-	 NAFIuo2MA36CixD1PZtWWHrA8Gw0lWLfXPcmtrp9IC4Ou1WXSkZVv/NjcIGuG5DKDs7p4
-	 L8oqnybAq6fMF9WITwGa8fqZqc3VdgteiqRDAo60YRKmClbDI047kaaBSddiw5a8q9bZG
-	 Fj4BWWLbpKHoefST/71eDAc9cmZaQElh2oECpWUKh+dgzGFm0F+ns3In7MlP9Z709z7ul
-	 dNgoWGRszFZyzNo46rV+N87WWUhJ784CWDpjfrTNxmVrqCUnPAdoVMJ0YK/BSNwiJag==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type;
+	bh=koc9xJiwfj5fEHnmMrkj9b2J5u5Ubgro9rz3sdyn6XE=;
+	b=yI7yumiaWXmb38XsYC1DiDNRg3MyG90+QBCry1QttDXWry3PHYbtc9IlMmMoqx2KDQZ7
+	 qaf6Lpv9g6eljHauKP1R8aBslKL3BRpI19+0CE73hB3NQN0Z3er9D93QG4Ncu3B4+SBTU
+	 JiyjObZjjgJL/6V14zY8PQszd66V1n8buIpX2+CtPDEo+W6rYNEWxj4FDAuHNmtbQbwZ+
+	 n1LMoQ5waXeZWkahKc1kXUf33+Dm44LzrPg1Lj8VhFXmtB5IF4U2W4tiOuuKUIvnfINLl
+	 tRyi9BBZz+RO18UZmdC/0NCbjd47AbYb2W+ml5V5/ZluVOm39Iw9xOD34ao+iu5ET2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--penghuang.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=ESYKGgrJ;
-	arc=none smtp.remote-ip=74.125.82.197
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=cJKhU3NR;
+	arc=none smtp.remote-ip=74.125.82.199
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFAD606A32A
-	for <sched-ext@lists.linux.dev>; Sun, 22 Nov 2026 04:26:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2FFAD606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39358606A32A
+	for <sched-ext@lists.linux.dev>; Sun, 22 Nov 2026 06:21:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39358606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--penghuang.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=ESYKGgrJ
-Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-38355b03cb8so2247527eec.0
-        for <sched-ext@lists.linux.dev>; Sat, 21 Nov 2026 20:26:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=cJKhU3NR
+Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-386177b0516so6267203eec.1
+        for <sched-ext@lists.linux.dev>; Sat, 21 Nov 2026 22:21:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795321566; x=1795926366; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0jg4qq9XadgtOFwiQ/w6ym8+ZsypQY27mB/+0Ay1dt0=;
-        b=ESYKGgrJy0MOc5QwPRvQFVJsBuWHiY55b1TDAXjoeKl718nmA6emvVXdOPhU8/Nb8m
-         m9nmfpoZGQz8F9e+X66uYhGCu2oHFkiPaTFQwsYMVB4xIVqLbckcWOERkkLOGA5addyq
-         EdXwUPJEssPl8XfGuGOa6oGnvkuqZymjX9Ad4zoOCWX3loGbm9cdgPDhDH5x0AxlEwdE
-         VE7z7jIULYxSOajaae//JR6C+wT5OLz4jwKporJQaxKZE7lNKMgh4BxCP5DmWrbrpJ9O
-         QfB6e5Sk1EZVvWt+3OzXrpwrLovE3/bHKi2SSR5iciv91gSwEf+RWOUZHGVIDXA0bh7o
-         aNcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795321566; x=1795926366;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20260707; t=1795328482; x=1795933282; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=0jg4qq9XadgtOFwiQ/w6ym8+ZsypQY27mB/+0Ay1dt0=;
-        b=UDPPjK7GUPP2oWunb5kMFBQ4Z0NVJ5DMpSOuqPFkxUq/bTVBJfqJk1sIEnsvyBa0+3
-         fRzZWxqiBEMfnisfEIQSZBQh3MoHhduPsv/1jTr7t2qlf9TkUui3526Oz212HY/xHvr2
-         1+e9nwe+9Cjckl5bcsjWYYYaYH1pvM2exNzIL/wvNC15zs9gmI2hKVwO3KB+0m5o6dcT
-         qEmA6GYBSOYj4Oj3ixpbevBirYXlDKgNdpcI6rW2Ke0Oy0OqVs9vOSkQys9E8pNLbmPW
-         4bUYkLyHux5KCLX56hTZiKxek4+4OHZGU/Rh2XzvaA3UTswDW3UFknrnFoqzAKQ+D4q6
-         YanQ==
-X-Forwarded-Encrypted: i=1; AL+hErE+wmdzpAK3+QeWmkG2OhsQ53FuW7+tLjEFmy9J8Nw/orfNSU6F7MHVTA0+gY1c0rFzPYAk1aGNa00=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/6IhOVIzYkcfGagSuaVtGXGr/0my6X6teKnJdXygBYpR1nFvtC
-	ccbJWsl2oOLaeoddSy99cwyWjoLRapmKecsuLcopUMSmfO98MCiY11ynoMR/Hv215f9FJZWXJ5k
-	0Lmir+7eFsWL0cYmPxw==
-X-Received: from dlbsj2-n1.prod.google.com ([2002:a05:7022:f902:10b0:17d:5c89:d119])
+        bh=koc9xJiwfj5fEHnmMrkj9b2J5u5Ubgro9rz3sdyn6XE=;
+        b=cJKhU3NRn1OeLCTV3n6xLN9plA/abFgHHhcXof4uy9+Heol/lDm+6gmoj1IIG2nYBr
+         IgSjX8AvCzMqtobGL56vEfCnmBmSgp34+Ac4TVRiD68Wo0xSfNkCQSFfll6T3qEyvKpT
+         04ovycIQz38khUpGk1J5vBJdGfhtbmYV1f3hUstjxxIrceCqwAfBALxWYk/7N8zCHI1I
+         LG4giwnZ3BGiN2ncmMMaBPCLq++18lhli+70TtH/pm1TYHjVcJt5OgbtTzpmdMLJ4OQ2
+         1TgQt4aDmp/+KlprLQMfHuAvyUYd5W7NP3Br2Qwuo61ijhMeNbyjaBlSLrF/ODN5FHig
+         Qt+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795328482; x=1795933282;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=koc9xJiwfj5fEHnmMrkj9b2J5u5Ubgro9rz3sdyn6XE=;
+        b=OqCfSyrl+XxisIiuOxbM951hSnoPfvjRPDzIaqr8P1O+NM3jQnxxfQt3AUgUMJle+l
+         Ag9Kn9Ya6d/xGubRG89XjSagA6zPNvBRyqa4QvaaIrjUAiikI5wNvm0aKXXXHOagJ+Nc
+         5eTsSLD7M/tlmDnakIit9UcvkVITwX1F8P/+P0qxLrDiOJbNRjttFY64RsDMZ47Fcx39
+         8FO2Mg5QKol30hsOvx8TUhW+gc1Pg81zyeZ5kF6c8pLYmmWFBrtKb7QvB7VixtTnK33O
+         hzS3wRAsH+1X33uJanJ2ViA6I7egFxwO5qDqyRrHxJ8A3qy/grepMSTiDhnfLfw8BDxi
+         1QEw==
+X-Forwarded-Encrypted: i=1; AL+hErFGY+0wfg8a6rK2ue+hfM4HpcH+ZvYnyLhgQ4BCaH5P8bzzcJn+WgqFzfne/A67km7RDtkNgQ62V5A=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9zRjmETnyZDg4SNR7TnTK9wmsXlUaUdl95DHfnS4vnzAfltTdd
+	5aSmk9tHXaG95UX6VqJvnNA2kz7WNz2femOebV5WKvIp+84jwdI7SlC1Ip2/CsqeKzurSbK/tZF
+	0xhRSKLPELe/64HV2mA==
+X-Received: from dli24.prod.google.com ([2002:a05:7022:298:b0:195:d59a:94bc])
  (user=penghuang job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:701b:4281:20b0:14d:c7ae:85dd with SMTP id a92af1059eb24-1b55686523bmr8270361c88.7.1795321565734;
- Sat, 21 Nov 2026 20:26:05 -0800 (PST)
-Date: Sat, 21 Nov 2026 20:26:05 -0800
+ 2002:a05:701b:4593:b0:177:9a5b:a89 with SMTP id a92af1059eb24-1b556906925mr8700359c88.29.1795328481804;
+ Sat, 21 Nov 2026 22:21:21 -0800 (PST)
+Date: Sat, 21 Nov 2026 22:21:21 -0800
+In-Reply-To: <20261122033316.2819845-1-penghuang@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -76,114 +79,115 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
+References: <20261122033316.2819845-1-penghuang@google.com>
 X-Mailer: git-send-email 2.56.1.750.gf70dc682cf-goog
-Message-ID: <20261122042605.2996910-1-penghuang@google.com>
-Subject: [PATCH] sched_ext: Block donor on rt_mutex_setprio() switch to SCX
+Message-ID: <20261122062121.4172437-1-penghuang@google.com>
+Subject: [PATCH v2] sched_ext: Update other_load_avgs on set_next_task_scx and
+ idle entry
 From: Peng Huang <penghuang@google.com>
-To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, sched-ext@lists.linux.dev
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
-	Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>, 
-	Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt <rostedt@goodmis.org>, 
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
-	Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, 
-	John Stultz <jstultz@google.com>, linux-kernel@vger.kernel.org, penghuang@google.com
+To: tj@kernel.org, void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
+	sched-ext@lists.linux.dev
+Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
+	vincent.guittot@linaro.org, dietmar.eggemann@arm.com, rostedt@goodmis.org, 
+	bsegall@google.com, mgorman@suse.de, vschneid@redhat.com, 
+	kprateek.nayak@amd.com, haoluo@google.com, brho@google.com, 
+	joshdon@google.com, linux-kernel@vger.kernel.org, penghuang@google.com
 Content-Type: text/plain; charset="UTF-8"
 
-scx_prepare_setscheduler() and scx_root_enable_workfn() block any
-retained proxy donor before entering sched_ext so a blocked task is not
-carried across scheduling classes without sched_ext admission.
-rt_mutex_setprio() misses this cleanup when PI deboost returns a
-blocked RT or DL donor back to ext_sched_class.
+When scx_switched_all() is enabled, scheduler_tick() skips
+sched_balance_trigger(), so __update_blocked_others() no longer runs to
+decay RT, DL, IRQ, and HW pressure load averages. Other-class load
+averages then depend on scx_tick() and SCX_RQ_CAN_STOP_TICK transitions
+in set_next_task_scx().
 
-Expose scx_block_proxy_donor() via scx_prepare_class_switch() in ext.h
-and invoke it in rt_mutex_setprio() before sched_change when
-transitioning a task into ext_sched_class. Because rt_mutex_setprio()
-has already updated rq->clock, calling scx_block_proxy_donor() directly
-matches scx_prepare_setscheduler() and avoids double clock updates.
+If SCX_RQ_CAN_STOP_TICK stays unchanged (e.g., remaining set across an
+idle or RT interval on tickless CPUs, or remaining clear on finite-slice
+switches before a tick fires), or when an SCX task goes idle after an
+RT/DL interval without an intervening tick, stale RT/DL PELT values
+can remain elevated when consumers such as effective_cpu_util() or
+update_idle_rq_clock_pelt() read them.
 
-Fixes: be8be8acb268 ("sched_ext: Block proxy donors before taking control")
+Refresh update_other_load_avgs() once at the entry of set_next_task_scx()
+(before SNT_REPICK early return and before ops.running() for SNT_PICK /
+SNT_NORMAL), and in put_prev_task_scx() when transitioning to the idle
+class.
+
+Fixes: 22a920209ab6 ("sched_ext: Implement tickless support")
+Cc: stable@vger.kernel.org
 Signed-off-by: Peng Huang <penghuang@google.com>
 ---
- kernel/sched/core.c    |  4 +++-
- kernel/sched/ext/ext.c |  8 ++++++--
- kernel/sched/ext/ext.h | 12 ++++++++++++
- 3 files changed, 21 insertions(+), 3 deletions(-)
+Changes in v2:
+- Call update_other_load_avgs() once before SNT_REPICK return and before
+  ops.running() in set_next_task_scx() so BPF callbacks such as
+  scx_bpf_cpuperf_set() see updated PELT values, and cover SNT_REPICK.
+- Refresh other-class load_avgs in put_prev_task_scx() when transitioning to
+  idle_sched_class before ops.update_idle() and update_idle_rq_clock_pelt().
+- Link to v1: https://lore.kernel.org/r/20261122033316.2819845-1-penghuang@google.com
+ kernel/sched/ext/ext.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 5ed660f099a5..1a2a317f1194 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -7814,8 +7814,10 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
- 	prev_class = p->sched_class;
- 	next_class = __setscheduler_class(p->policy, prio);
- 
--	if (prev_class != next_class)
-+	if (prev_class != next_class) {
-+		scx_prepare_class_switch(rq, p, next_class);
- 		queue_flag |= DEQUEUE_CLASS;
-+	}
- 
- 	scoped_guard (sched_change, p, queue_flag) {
- 		/*
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 10de6bd865e8..4914da605519 100644
+index 10de6bd865e8..523f86be4d26 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -26,10 +26,14 @@ DEFINE_RAW_SPINLOCK(scx_sched_lock);
+@@ -3579,6 +3579,15 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e t
+ 	if (unlikely(rq->scx.kick_sync_pending) && (type == SNT_PICK || type == SNT_REPICK))
+ 		queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb, kick_sync_wait_bal_cb);
  
- /*
-  * Block a retained proxy donor, telling put_prev_task_scx() that the donor is
-- * about to be dequeued and must not be reenqueued.
-+ * about to be dequeued and must not be reenqueued. Caller holds @p->pi_lock
-+ * and @rq's lock and has already updated @rq's clock.
-  */
--static void scx_block_proxy_donor(struct rq *rq, struct task_struct *p)
-+void scx_block_proxy_donor(struct rq *rq, struct task_struct *p)
- {
-+	lockdep_assert_held(&p->pi_lock);
-+	lockdep_assert_rq_held(rq);
++	/*
++	 * Refresh other-class (RT/DL/IRQ/HW) load averages before ops.running()
++	 * (or returning on SNT_REPICK) so BPF callbacks such as
++	 * scx_bpf_cpuperf_set() observe fresh utilization while CFS PELT is
++	 * dormant. In the future, we might want to add a mechanism to update
++	 * load_avgs periodically on tick-stopped CPUs.
++	 */
++	update_other_load_avgs(rq);
 +
- 	rq->scx.flags |= SCX_RQ_PROXY_BLOCKING;
- 	sched_proxy_block_task(rq, p);
- 	rq->scx.flags &= ~SCX_RQ_PROXY_BLOCKING;
-diff --git a/kernel/sched/ext/ext.h b/kernel/sched/ext/ext.h
-index d32bc01071b0..d2e0e7a23639 100644
---- a/kernel/sched/ext/ext.h
-+++ b/kernel/sched/ext/ext.h
-@@ -19,6 +19,7 @@ void scx_rq_activate(struct rq *rq);
- void scx_rq_deactivate(struct rq *rq);
- int scx_check_setscheduler(struct task_struct *p, int policy);
- void scx_prepare_setscheduler(struct task_struct *p, int policy);
-+void scx_block_proxy_donor(struct rq *rq, struct task_struct *p);
- bool task_should_scx(int policy);
- bool scx_allow_ttwu_queue(const struct task_struct *p);
- bool __scx_allow_proxy_exec(const struct task_struct *p);
-@@ -54,6 +55,14 @@ static inline bool task_on_scx(const struct task_struct *p)
- 	return scx_enabled() && p->sched_class == &ext_sched_class;
+ 	if (type == SNT_REPICK)
+ 		return;
+ 
+@@ -3619,10 +3628,6 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e t
+ 	 * @p is getting newly scheduled or got kicked after someone updated its
+ 	 * slice. Update SCX_RQ_CAN_STOP_TICK to reflect whether the tick can be
+ 	 * stopped. See scx_can_stop_tick().
+-	 *
+-	 * Moreover, refresh the load_avgs just when transitioning in and out of
+-	 * nohz. In the future, we might want to add a mechanism to update
+-	 * load_avgs periodically on tick-stopped CPUs.
+ 	 */
+ 	if (can_stop_tick) {
+ 		if (!(rq->scx.flags & SCX_RQ_CAN_STOP_TICK)) {
+@@ -3634,14 +3639,10 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e t
+ 			 */
+ 			rq->scx.flags |= SCX_RQ_CAN_STOP_TICK;
+ 			sched_update_tick_dependency(rq);
+-
+-			update_other_load_avgs(rq);
+ 		}
+ 	} else {
+-		if (rq->scx.flags & SCX_RQ_CAN_STOP_TICK) {
++		if (rq->scx.flags & SCX_RQ_CAN_STOP_TICK)
+ 			rq->scx.flags &= ~SCX_RQ_CAN_STOP_TICK;
+-			update_other_load_avgs(rq);
+-		}
+ 
+ 		/*
+ 		 * @rq still references the outgoing scheduling context. A finite
+@@ -3863,6 +3864,14 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
+ 	if (next && next->sched_class != &ext_sched_class) {
+ 		scx_cid_sched_update(rq, NULL);
+ 		switch_class(rq, next);
++
++		/*
++		 * Refresh other-class load averages before entering idle so
++		 * ops.update_idle() and update_idle_rq_clock_pelt() observe
++		 * decayed RT/DL/IRQ/HW metrics while CFS PELT is dormant.
++		 */
++		if (sched_class_above(&ext_sched_class, next->sched_class))
++			update_other_load_avgs(rq);
+ 	}
  }
  
-+static inline void
-+scx_prepare_class_switch(struct rq *rq, struct task_struct *p,
-+			 const struct sched_class *next_class)
-+{
-+	if (scx_enabled() && next_class == &ext_sched_class)
-+		scx_block_proxy_donor(rq, p);
-+}
-+
- #ifdef CONFIG_SCHED_CORE
- bool scx_prio_less(const struct task_struct *a, const struct task_struct *b,
- 		   bool in_fi);
-@@ -73,6 +82,9 @@ static inline void scx_rq_deactivate(struct rq *rq) {}
- static inline int scx_check_setscheduler(struct task_struct *p, int policy) { return 0; }
- static inline void scx_prepare_setscheduler(struct task_struct *p, int policy) {}
- static inline bool task_on_scx(const struct task_struct *p) { return false; }
-+static inline void
-+scx_prepare_class_switch(struct rq *rq, struct task_struct *p,
-+			 const struct sched_class *next_class) {}
- static inline bool scx_allow_ttwu_queue(const struct task_struct *p) { return true; }
- static inline bool scx_allow_proxy_exec(const struct task_struct *p) { return true; }
- static inline void scx_proxy_donor_start(struct rq *rq) {}
 -- 
 2.56.1.750.gf70dc682cf-goog
 
