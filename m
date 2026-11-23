@@ -1,99 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795430103;
-	b=hHT7ytceTIBSKImylQ6lnM9d+NH6IJAdM4cOA005AvUeXCLnD9g35deVNjaUxgASzg4L
-	 Vbbi1wJpxf2Ahw5jawI5dT+++bePk7ZK4uN7qnhMrnJagtVTH9vQhi1Zd43bAo8TmDYFM
-	 lnhKysSasfv+RM9HUSmcptxChlYwBDBW0WZefJ5W6Dk8cOM2yLwEdm0Tb5UugyuPO3ANJ
-	 4Hno0NAwnqtBJIXM2lVXHVi0aTG+sexPzEyf2joICniXFl/ZUZErVJmzZ0wwlfaQzOWYQ
-	 xPFro3G8uaUx45NrmZ5WqLWwm4E0pw3SyrtH9gJZSTM1+ZPpV8M8Wx+tKbjWC9msjxA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795430103;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.72
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795442128;
+	b=3KqrPMFyB61+g+nrzbKJo0M0ZRTTdGz9F5mk1veKk4K02kT7udo9pq8rlGH9Jej+2hpm
+	 ycnis5ZtP3dJUtunoK2z+Ec2hg5NMnLOFLvqKM4NQX2Ki2BD+Uxr2yJdFonNF5DIkWzV3
+	 CpUhoAc8Bm3GR38nbDcgUYoPQZ9qceSAqRcvsYAZMHeHOJehbNIZ/3RREAI5eNbgbAuHf
+	 vl99fAJ4PkcVMSgr/P05HXUvWXBdZ8repfBfr1LYKtNYwNE9h/8TE/+7NiNJTN+eRmgET
+	 HaZkLP6ilHdvr242xYJh/ycVlYnoTqslRMYriB2F4F9PzFm2tM/Fa1cRAN5HAd2U1Ig==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795442128;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=FkLm2QDvo0RLh/Me+j1f+/tll97oLAwEndJ2bmbVDp8=;
-	b=T3+ohJ1xaww2JATnhAGg2CdR4c3xdcT8Yp8iZ0oNS+ye8Ixxtin7YXXCZYDcbhYu5fpL
-	 vX36G8f3ywnuRKvXrjwbYm2CtBMyfv8Cs4r4zFHQlGgVVAIMO6B0ZfneVpY5gS/ua4dlF
-	 eqtU2bWKeDw5ve/X4J28Aq+iUE7m4HQl8sslhXM0Aa+9c2koIPSwCqpccBCGCuavLohkO
-	 U7rFOr2duqqW0wyfMDny8JzWu/fmZjLqGcn36zRZ0h9p4GjgUu3T7+hRd0MH0stfvsEVU
-	 zbthqYyXuCl5tAMq0JvrtrtPTtv2RAxcHPvJSEHaiGJ1uG6MtDTxXqSb3beOMS3HnCg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=whbCRWOj;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
+	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=083CZZDs9hJjuz53tbRRme1ywjTKXEoDFd0O3aKN64M=;
+	b=zp8JhfItgrHQaAGAXD7xpXmXrXPSGXEvNZSZs/A39BKVugTj1BcGYaScqNuC3zWKGJAU
+	 d8auXc9L6sEFF57FvK00r2IXOJ5Ij4w5/FVldK/DvjNBR9P5Cml2JlQcMeXYs4VAmAVf7
+	 Oq8o+CQ4tyNKdTBrAQfBK2P1RB1BkNZHRBIDSdnXTqgBZ5gkkuu18YVc+Ujocf6ZLq1FZ
+	 qrvZQfMweNC+MRhf0HTiiwOyHYbA/CxjbjZryO5UuWaVCsLmbfPyD/SwJsF5p2Z3BBb0e
+	 f9lXNkG03JImxiOMSEbmhga0hyXXylTpaQQG+m94hYz2KH6//76fTL3r96UJhXTMWrw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=S4PbtcL5;
+	arc=none smtp.remote-ip=209.85.128.72
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC07606A31A
-	for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 10:35:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8CC07606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BA9606A31E
+	for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 13:55:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58BA9606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=whbCRWOj
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6bab10842f8so1454449a12.0
-        for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 02:35:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795430101; cv=none;
-        d=google.com; s=arc-20260327;
-        b=EW5Aaob5gqXnmqrAcyBa1u3h0JAeiKiDprVcRxA8z8QLVgSAtZ7+nPMxpzV3K+onZq
-         545qAprLSb/7+hZKMIDH95fvZRGD2Nxo5my9bdMMMuRjvdd71tGGqCypLLrtJ/TvqWkC
-         SyHWfCPSgWF5k+fNRt+msdcaswImMdM2VmzHNSE9yM+KGKjBtApU2xF2fhG0GKhpa9vm
-         OVR1k6ORa2hoUblNZjH/N3+nba0YCwmgqcf3xM8tQdI9WO0AjS2McycOc+Wjg/dQ/ENm
-         Apbpz0J+cBcQDbkCnZjUKl8kAH1kP7yDN8PzXTmtJkoqVwVeX75bhARZhw2F76aFdmYH
-         m4wA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=FkLm2QDvo0RLh/Me+j1f+/tll97oLAwEndJ2bmbVDp8=;
-        fh=QVxQuDk2F4xczyTwBZOqBWO0eYvyUDQ2GWh11BR793Y=;
-        b=pJm/VtjYrfqkRGPpL2vZFdI/M2dQpCo+B/RjXHqasd8txDXjg5/kQj5znIRT09Ljts
-         oF/WPDhwRizfRqEegmhoH/KLDkbTdzs6ziHwUa2KyBG0mtsW3rq82CFn+H9tmF3qYT9D
-         GhvhX/va4rw2coAg8xy+S1V6crF3wyz3hXIMq+53GowPd1SJiAysfMx1UExBuR1Daqnk
-         hITPFt8OWTTAXU8tik5GRmz2PCM6MoCMV1fE2C7pdtBYEKrkOb3un2Guadny8IM21j9b
-         2qhLJ8Fp00VXeepRwt4/xYSYXaBZqkNs5rFfb+O9l92psuGQ7dFKf58TMkYtbjE79UV5
-         j/gw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=S4PbtcL5
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4a17741243eso17227125e9.0
+        for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 05:55:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1795430101; x=1796034901; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FkLm2QDvo0RLh/Me+j1f+/tll97oLAwEndJ2bmbVDp8=;
-        b=whbCRWOjZWCa9wGU2so/MOOjPy1Id20hwT2Y4WRneUt60zYOHjil3tKaRr9izMCxG6
-         4x/9iMgqBBRljkvAmrQWnsWiDfvYHxUQZ6dG3VTOpCvUSmtq0W1z6pa60nodRqNk6NWp
-         kEnJ8/X0D3OabsKndk3lTY4SM+rQEqCEeFm5gXcodKQJfq8YtUMS1gcTQJ7jMbUEbGo3
-         IslFiCyGT3oEgQTRSQSwEuOp6+AxmVnq+MphIdO1lk3B/+l0vlemdCsl1wxZpEuP6hf8
-         McmR/ZX1NyVMfoGnVLV7zoWCV55kNiHPLLWTcKlB6LfD1hUqxB6vZ7fwnxhMGdv/E6KW
-         WuNQ==
+        d=google.com; s=20260707; t=1795442127; x=1796046927; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=083CZZDs9hJjuz53tbRRme1ywjTKXEoDFd0O3aKN64M=;
+        b=S4PbtcL5N+xT6OwmqNRw0hOBG++mRhs0wZecHHnhTFAsvN/ti1O38IJUvQRs1R8tAQ
+         /e98WuuIAQ+YngehdED7hSCTz208dEG+9pHeyRLPVQYIiSW9kBBZ2ov4cPQSFfpH0hvB
+         ZgLiQ7Sz1i//eqwtVdvwe8h/TXi0NfcgFeOSwZWzcAnAvkHmOYL4FWXoFHlLrk44qMgZ
+         en7RUn5ELQA7UG5FKuEKww6YMtFx2osFfqmuwD3WJ4jqsinqXCYvrx7GlmnbW4dMonXO
+         0HM1twNn8Lte+iBi+RiVME/C+MFHM+YuYlMmkfGJQUO0o/1oQP89eNQ+4g/ZVJojeO9Q
+         8JUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795430101; x=1796034901;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=FkLm2QDvo0RLh/Me+j1f+/tll97oLAwEndJ2bmbVDp8=;
-        b=QDJQtdSOCaBHu1ZEu1G4u91qB/EE7iC6QBZRMzZXqgoV/qm48YqVygw9dn/biPYQHX
-         XXGY7XymzYIbza2qJlNcpXM2257Znhqu6EzX7nqOJ4XUTULHg7LwLg/4MvcVG9DCFBSK
-         IdkW4fD11QgfHS5hqrnA9ECf5y729d8p0oUL800jVabmTj+0yXbPE2pTJmG/AGp/C+tK
-         ErxJZMOUR9sgK4Ztnq12umLl2xy1KKx0Dt1p5qs1tZVrh0jED4xzb+/10hYBmTBQJ+fb
-         bvQSjTwIRC8QYhwKutJH3AwhrgBhwbL9xBqwwl8cCrBQf+5MWI8EYRs22PN/Idj5G834
-         +hiw==
-X-Forwarded-Encrypted: i=1; AL+hErEDY/Uh6e6plJowEtUtEqpDEdZQyV1hBxYLidWcpdnIIQZYMn6jTbgnjhdbviX1I5Q4blo+EIYgOf0=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+FNxL2b9fsGkOE+mm5q2x+v2PCjD4KEbl9NT+R3DKTYb5L9nZB
-	HSNbOfZPK0pusV0z0cDNBoRpCy/r0yWWYCTvtnTcBsL3ybJzpMftJpk73l213C2ppjkTu6TpXZU
-	lSihrQmu0iSAP+J40dpGpHwGt4awr8PGySKh0ib3hUA==
-X-Gm-Gg: AZFdTZd6LvE6L+bH0QdDcbX5wvMiLuYbqFbwVHvgHaVubvohzvelVokVqQshQ7hGIbE
-	OITTCtTgpcZRcQ7sku61wWDJnMfpXACge3HqZ6TREEOyFxp3WaBLXSg2qjTE6oe0SXwRo5eWT1u
-	BnHWa/THS0fYpn1ST56QAkfFKzukyBVSaSg1Ra5PhE5e84W4H8ySjXnPkxnxpgF5A1XuufGXXtV
-	GNs6tZr4JP8TmHRgIeQC/otPgxj6ZDh2AutcDFqpo85HY8lpe31pu0aC4dFj5N++dMeIgQoti3r
-	PXgVhZQiHqPj+WFTe0RxHXeWgtV977Dwsd8+MJEtz99khpC7YF4+HmIDlI0Zs0jGbIFwvCGYHzf
-	FGLgsfk/f5t4vTRcP/DIPvh3nydZZ0nHLXxou06YOS77CRfh4v7Jf+IOKJKd41KFnCJ0SWA==
-X-Received: by 2002:aa7:db47:0:b0:6b7:aca7:2264 with SMTP id
- 4fb4d7f45d1cf-6ba37e6980dmr5721448a12.9.1795430100790; Mon, 23 Nov 2026
- 02:35:00 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795442127; x=1796046927;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=083CZZDs9hJjuz53tbRRme1ywjTKXEoDFd0O3aKN64M=;
+        b=x3xNXASIFzU4lTSvt7l7t721q/qQG0g42hYZdAHP8QSl72IgQh1+TBvgM2sKxOMs8U
+         znu8gEBy9NOxUjxuxwPQoY6vNq54tQdSev0vt/kkHRwNPCfnv11liTDIVE/7ohGZFi+d
+         nsPvA8FkfMVVn5pkZqdTGkgaSzsB8KeIsPM+V+DmL+b6B+1n6JBADJ1ufxFlYXg6kCRG
+         n+T5nVJ9hrHd914X+KfoL+5ZTJQLansyhVZV3qeSBQEJyW4va17eBe07zNH5dQg6m4JE
+         bNs8vQOVS4zZCVDcdAGU9pEdj/1/LmIWVWWWtPbGE0uaq3P6AnnZZUXu9Cn/UWU6epGA
+         6rBw==
+X-Forwarded-Encrypted: i=1; AL+hErGq5zBHXSx1Q9/oXrdE0lVS0yqYnbOJSe08rD1TxBKXgNMOo9U3lmrKKET/5tQWOcg8RhsdAHjiyjk=@lists.linux.dev
+X-Gm-Message-State: APuU4Z83tUehMpmtov6gk++nIqh+ShP5K3+o/YdylN5pGz3w5dDeNVEh
+	HX0WgFM2wQvD0W7asAwD1e1htMYGFPM0BlCK2i8IuS2q5ll6Vzic7qRpIwC48w6TlVevIWhEUoJ
+	MlB0r9RJHR4NmCQ==
+X-Received: from wmjq4.prod.google.com ([2002:a7b:ce84:0:b0:4a2:15af:d03c])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:820d:b0:4bb:5de1:e912 with SMTP id 5b1f17b1804b1-4bb887c3ae7mr227341395e9.1.1795442126571;
+ Mon, 23 Nov 2026 05:55:26 -0800 (PST)
+Date: Mon, 23 Nov 2026 13:55:23 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -102,76 +75,102 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <20261122015729.2512645-1-penghuang@google.com>
-In-Reply-To: <20261122015729.2512645-1-penghuang@google.com>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Mon, 23 Nov 2026 11:34:48 +0100
-X-Gm-Features: Aa3M54pS5nfq3tiUm_gWyIlrBynlKLIymvZi5sxhT7ewjNFDS4BdqeJJrs3PYqU
-Message-ID: <CAKfTPtCQpVhtVT7Mhqe1=Ukcmc1pX8Jgn9ypb64--8cJ-7G4BQ@mail.gmail.com>
-Subject: Re: [PATCH] sched/pelt: Skip dormant cfs util_sum under scx_switched_all
-To: Peng Huang <penghuang@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Juri Lelli <juri.lelli@redhat.com>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
-	Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, Tejun Heo <tj@kernel.org>, 
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org, 
-	sched-ext@lists.linux.dev, stable@vger.kernel.org
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.1.750.gf70dc682cf-goog
+Message-ID: <20261123135343.4131146-1-jpiecuch@google.com>
+Subject: [PATCHSET sched_ext/for-7.4-fixes] sched_ext: Don't allow unlocked
+ kfuncs from ops.dump() and ops.init_cids()
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 22 Nov 2026 at 02:57, Peng Huang <penghuang@google.com> wrote:
->
-> When scx_switched_all() is enabled, all fair-class tasks move to
-> sched_ext, scheduler_tick() skips sched_balance_trigger(), and fair_rq
-> scheduling is bypassed. As a result, rq->cfs.avg.util_sum stops updating
-> and retains whatever stale load was present prior to switching to SCX.
+scx_kf_allow_flags[] grants SCX_KF_ALLOW_UNLOCKED to ops.dump() and
+ops.init_cids(). That group contains scx_bpf_create_dsq(),
+scx_bpf_dsq_move*(), scx_bpf_dsq_reenq_task(), and
+scx_bpf_select_cpu_*().
 
-When all tasks are moved to sched_ext, fair utilization should be 0
+1) ops.dump() had SCX_KF_UNLOCKED since commit 07814a9439a3
+   ("sched_ext: Print debug dump after an error exit") because its
+   caller holds no rq lock. Commit 4c30f5ce4f7a ("sched_ext: Implement
+   scx_bpf_dispatch[_vtime]_from_dsq()") then made DSQ moves callable
+   from SCX_KF_UNLOCKED contexts, and commit d1d3c1c6ae36 ("sched_ext:
+   Add verifier-time kfunc context filter") carried the grant into
+   scx_kf_allow_flags[].
 
->
-> When a CPU later goes idle, update_idle_rq_clock_pelt() still adds this
-> dormant rq->cfs.avg.util_sum. If stale cfs.avg.util_sum plus active RT
-> and DL util_sum reaches divider, update_idle_rq_clock_pelt() treats the
-> rq as overutilized, continuously increments rq->lost_idle_time, and
-> stalls rq_clock_pelt(), which in turn freezes RT and DL PELT updates.
->
-> Exclude rq->cfs.avg.util_sum in update_idle_rq_clock_pelt() while
-> scx_switched_all() is active so dormant CFS load cannot stall idle
-> rq_clock_pelt().
+   However, scx_dump_state() runs ops.dump() with IRQs disabled under
+   scx_dump_lock, including from scx_disable_irq_workfn() (hardirq) and
+   SysRq-D. On a live SysRq-D dump, an ops.dump() that calls
+   scx_bpf_dsq_move() migrates tasks and runs nested SCX ops from
+   inside the dump:
 
-This is not the right solution but a bandaid to hide the issue. When
-there is not fair task,  rq->cfs.avg.util_sum shoudl become null.
-Please look at why it is not null.
-It could be that the update stops before everything has been
-propagated correctly in the task group tree
+     sysrq_handle_sched_ext_dump()          /* may run in hardirq */
+       scx_dump_state()
+         raw_spin_lock_irqsave(&scx_dump_lock)
+         ops_dump_init()                    /* arms scx_dump_data */
+         ops.dump()
+           scx_bpf_dsq_move()
+             kf_switch_rq_lock(task_rq(p))
+             raw_spin_lock(&dsq->lock)
+             move_task_between_dsqs()
+               move_remote_task_to_local_dsq()
+                 deactivate_task(src_rq)
+                 activate_task(dst_rq)
+                   ...
+                     ops.dequeue()          /* nested SCX op */
 
->
-> Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Peng Huang <penghuang@google.com>
-> ---
->  kernel/sched/pelt.h | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/kernel/sched/pelt.h b/kernel/sched/pelt.h
-> index f921302dc40f..6d31e1fbd094 100644
-> --- a/kernel/sched/pelt.h
-> +++ b/kernel/sched/pelt.h
-> @@ -138,7 +138,12 @@ static inline void update_rq_clock_pelt(struct rq *rq, s64 delta)
->  static inline void update_idle_rq_clock_pelt(struct rq *rq)
->  {
->         u32 divider = ((LOAD_AVG_MAX - 1024) << SCHED_CAPACITY_SHIFT) - LOAD_AVG_MAX;
-> -       u32 util_sum = rq->cfs.avg.util_sum;
-> +       /*
-> +        * Under scx_switched_all(), CFS PELT is dormant and may stay stale;
-> +        * exclude it so idle CPUs do not trip lost_idle_time and freeze RT
-> +        * PELT.
-> +        */
-> +       u32 util_sum = scx_switched_all() ? 0 : rq->cfs.avg.util_sum;
->         util_sum += rq->avg_rt.util_sum;
->         util_sum += rq->avg_dl.util_sum;
->
-> --
-> 2.56.1.750.gf70dc682cf-goog
->
+   Any scx_bpf_dump() call from the nested op also splices output into
+   the active dump because scx_dump_data is armed on this CPU.
+   scx_bpf_dsq_reenq_task() takes the same rq and DSQ locks, and
+   scx_bpf_select_cpu_*() take p->pi_lock and run idle CPU selection.
+   ops.dump_cpu() and ops.dump_task() already deny all
+   context-sensitive kfuncs.
+
+2) Commit 874fdc0e86e4 ("sched_ext: Add ops.init_cids() to finalize the
+   cid layout before init") granted SCX_KF_ALLOW_UNLOCKED alongside
+   SCX_KF_ALLOW_INIT_CIDS. ops.init_cids() runs before
+   scx_cid_publish_tables(), scx_arena_pool_init(), and
+   scx_alloc_pshards(). Its only job is to finalize the cid layout via
+   scx_bpf_cid_override(), so it has no reason to create DSQs or call
+   the DSQ move and re-enqueue kfuncs.
+
+Patch 1 removes SCX_KF_ALLOW_UNLOCKED from ops.dump() and restricts
+ops.init_cids() to SCX_KF_ALLOW_INIT_CIDS. All remaining
+SCX_KF_ALLOW_UNLOCKED ops run in process context with IRQs enabled and
+hold no rq, DSQ, or pi locks.
+
+Patch 2 adds the unlocked_kfunc selftest. Without patch 1, the test
+fails with:
+
+  ERR: unlocked_kfunc.c:49
+  unlocked_kfunc_fail_dump loaded when it should have been rejected
+  not ok 1 unlocked_kfunc #
+
+The patches were written with the help of an AI coding assistant.
+
+Kuba Piecuch (2):
+  sched_ext: Don't allow unlocked kfuncs from ops.dump() and
+    ops.init_cids()
+  selftests/sched_ext: Add unlocked_kfunc test
+
+ kernel/sched/ext/ext.c                        |  8 +-
+ tools/testing/selftests/sched_ext/Makefile    |  1 +
+ .../selftests/sched_ext/unlocked_kfunc.bpf.c  | 69 ++++++++++++++++++
+ .../selftests/sched_ext/unlocked_kfunc.c      | 73 +++++++++++++++++++
+ .../sched_ext/unlocked_kfunc_cid.bpf.c        | 67 +++++++++++++++++
+ .../sched_ext/unlocked_kfunc_fail_dump.bpf.c  | 26 +++++++
+ .../unlocked_kfunc_fail_init_cids.bpf.c       | 22 ++++++
+ 7 files changed, 264 insertions(+), 2 deletions(-)
+ create mode 100644 tools/testing/selftests/sched_ext/unlocked_kfunc.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/unlocked_kfunc.c
+ create mode 100644 tools/testing/selftests/sched_ext/unlocked_kfunc_cid.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/unlocked_kfunc_fail_dump.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/unlocked_kfunc_fail_init_cids.bpf.c
+
+
+base-commit: 2f7928516314f37d7cb334675656b4412edc8be3
+-- 
+2.56.1.750.gf70dc682cf-goog
+
