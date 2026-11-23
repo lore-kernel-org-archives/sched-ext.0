@@ -1,72 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.69
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795454285;
-	b=Dye40XtoQMAJuax/KvrziRZhhK+kZie0dt+mYMpZsEDq4Nd/AqsyML3AOyz7Bq6JeHF3
-	 2wObKl+fWN0sSuua0+eOhQsY7Orlzk8+V1W7OkpzxQ3PG37iNWK3XY2EeU6QwPge2JPwE
-	 8qvQhFGCSB6YJ1Jp4GJzcJi/T9bZ85/dwN4r0FYYeifhJWxcppT4AXGs1E9sCHEqF+wz1
-	 4WARDgyBrSAJd8338RlO1uznvzqBiQimIEYk+JjKlRTcFkuZZlHcXfTOSv7eX76n6zAae
-	 dE4pjk+6mlcozJgIXbMiHJcY4LU//C46JbK6azYCCQv2F4FE7uxxDhO0noDLWmmrpUw==
+	t=1795454286;
+	b=bV7BYE+p3jPxdIw/q1JxORNK31Gq7j97Cueryn1l3zC+AZha53VySm/gvbCS9ySiwSPf
+	 a1euxEMbZyu91I4dJlxMUwiZ3MLZSIfVybH13DYA9qtQcmTiyWqhPNKlK1t8sl9oOTmmH
+	 eKbCwPN+Wpi2KkVa/l+pzg5rVsPi8h2SqK01b/S5FasRwV86R+GoSgvEeO2m8C49yE+Gt
+	 YXTPWPqTTnOHMQU7N8Q80g4roJHovRQpKjmhonLA0sfxPMVmLbTRi/KzXEHosQnlXL/oa
+	 /x4p90cBc27qqBcCU+Aui+OjkwdnpqeASkbxGsKaUldVzZ/VU03LS0cj5lkLe2R46lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795454285;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795454286;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
-	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=SjPU9PszbvbGis4LQNlKF5kEGLQKetvEHjZ+pbNntGc=;
-	b=VxaGjP7MQmTYorAZljRH3t9e1n6ZlsX8dSNh35FSoaaY31B3MDdJpGdHi/yrlbflzgc2
-	 C7DqpZDnCBS3C1JrdXsSM/RTcn7oPEn4CfjFGpAM5PoCzc8e25BSU0LW1fs06+XuC5Rxa
-	 if/BiwtLqSOlqVTEzmhZNSkQQHSkbIVEbL5nLFQFxe4vAip7uVpo2O/twLCqf6Vz2cKTm
-	 pjGetqqHFsPbi5hitmLkQHZej2UxzocEOkqZlEOiXEHBSyrLGgLQPjtMbK+F1o/1LWCG1
-	 6uBDDG8xsELp1wsGtJ8JkYLeTxq1DfTUldpAxbZHRqH0Z7DlJ7rmomrIl6rx/h1jvfQ==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type;
+	bh=DhavAmcGgx7rmczz3jLQXngN/KVyd2Bv9UK1AdUvPrs=;
+	b=okGvjwANCzUdk6foyuUPaEy9OtSndc4zfya1EN3uVYC3pzXPAm6rQLnmlyD47efZ7Bmt
+	 BPzggyuL24mz5jg42mAayfK7Wu7Q/Syg+1SuSQOcL6NRBCkXScYfrlLHi1B90Qg4d+9dm
+	 gkZBz7oUZ6JWQv05AUaZT2HJeWH3lvvxNwLWmJLwzbtmH8K1pVYPkpztyLR7cecWTJVP3
+	 /xQraIJ0rGbV7VAkzWTzmWCQsTh4NthoZcaFRoMjFtoc+4gDpQesQwuYKTMhmI5Qrj4pn
+	 Yu5qnXB8BnrqERUV78PyhQSKc/2xvDojlq5j5r2AdrES2TTIYDJOCEGpkRFl4oAn1yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=EBJxy17I;
-	arc=none smtp.remote-ip=209.85.221.69
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com [209.85.221.69])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=RBssgFXi;
+	arc=none smtp.remote-ip=209.85.218.71
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F74C606A31A
-	for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 17:18:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7F74C606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F45A606A32C
+	for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 17:18:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F45A606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=EBJxy17I
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-4915ba023d4so2165175f8f.0
-        for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 09:18:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=RBssgFXi
+Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-c514c051a65so329891166b.2
+        for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 09:18:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795454284; x=1796059084; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=SjPU9PszbvbGis4LQNlKF5kEGLQKetvEHjZ+pbNntGc=;
-        b=EBJxy17IcHGIcR/anRJKcdTG88BW0PIH01o8oLGN0WftuoIoZ8JfRDZ6Y/MaaSOHOI
-         az/CsuHX933tYCq2lwKT/CRMnuoAWbiWGZ8fbBLC0NugrAx4BEmNbDHU1rjYPHI82KCy
-         8CmF+r3zSm1jwFE3eOtNZoY5qOVoauz139GsX0a+r9YdiMFsIi0CtjxcR83p2PrYEG5Z
-         EmDPUyv0iASZEgc9+Sl6ge8m2m3IIYt+D4TO9FX6SmgC3SjfFQPwiTNczrCHAWWQ5yKH
-         J4Sa5zqtd3CAwiz2/H2zim98J95sARs7+OXkSs0atjba8+3arTCE144+Q08XA01vAVa5
-         JLhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795454284; x=1796059084;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20260707; t=1795454285; x=1796059085; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=SjPU9PszbvbGis4LQNlKF5kEGLQKetvEHjZ+pbNntGc=;
-        b=jw3nWqvU55WtdIWlhleiFCdcJ9yP/xF/w2Hz1BTpC9E0dG3elfBOJ3FblyPrfFA7eW
-         NFSabuk4ZUEe40XAqY/ZzvEoBvnlzASv9Q1+0y69J5u58V7rtnQ43Cq3TZsInsf9Kags
-         t6qDA1VuORfYSFs/5OwMg7EzUwJaSP9aIfrrlpubWS1v9gwubbxLuX3bcg1HgQ/J6poF
-         0dESfUuU3QjaamnD+XLe+cxHHdRofm4JVpD6Kl//E7oB/01ykjXriMK8dxMCePTowxqh
-         qK1Alw+H3qkBPDiom3U2ugei1Goo19WWSzTMR04X/99LZYIKz+uleKKpOINxCl48PLLs
-         ge+Q==
-X-Forwarded-Encrypted: i=1; AL+hErH8A2/PoYA2pbJ7kQpUCAwqKRzetMWRxMDRcl+jeuT7LXcc4eZWxWAJOHC+KgHu6pt+/yJFpfCO98w=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+s0pykyefJarwTtr0LPH7A+q4QBS5cRy3nkOLId8viBjAIAAbT
-	+FAi8/q3cr838MR5EreMkUHb94yyQPHqdehGqGruA42GWSFztSQFaq/4LJzHkroH9YYUZ7KPede
-	He3gA7+AMTP057Q==
-X-Received: from wmbgx21.prod.google.com ([2002:a05:600c:8595:b0:4a1:f1e1:c6d6])
+        bh=DhavAmcGgx7rmczz3jLQXngN/KVyd2Bv9UK1AdUvPrs=;
+        b=RBssgFXiCln9PxZH3lpNzAl7xm89ZPA/c4jInyvqVMomruMP1saBfXJB6pyLriag1N
+         96gMnUGLfxrVuBAimD/PeFfCrUskyVeo2qnphf9KOQf74vJpEowX1J/Wrld4tONDNZgN
+         sn9UIMopPXnnVPPqW+N0MPEQiN1lpNjSBl8KDxJIec4JpMYq2LoW7L4jEy8WTsF/cKo5
+         b4s7gNovnh38IdO82Xu2DVYMgf8xiIr7OmtJuqGayXW85lfMtZ1ER+jYnpBeb3YXeHV1
+         6B6/quCYVf5W/ZahIA0SrHwWOlGRbuqLpIbr76QJMLVW4SREIksVyjLzjxrIkGhPmZXS
+         8jLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795454285; x=1796059085;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DhavAmcGgx7rmczz3jLQXngN/KVyd2Bv9UK1AdUvPrs=;
+        b=zY42uDVm+FRI7F/BcWSq9QsVriixw+T5QRSR+vmuJ5+r9Q/RRN9chE7CwC4sRQ/515
+         88y08UyRmsfulP2Gzmwu3Tor0r2i+d9bXUxU4IAhKa96jeG0gXX0yuQlWzI+WiDc7g0C
+         rS5bz7bNkrPjnYUa4NlbXqnWsamXNhHfe29A2I67owtlRRO2Mh3K2+xxYHPoP3sIeExX
+         8CoRJjykPzTOyG5WnlU24Cf91PDfSZjzHkTkAW+TT+oBNtX/7NSO/aZ20inozgU8+FmU
+         5heKQEV1y7K+xuMy5DT52kLGVLVp1YSvWXPjw8V1x8n2hKrcOMvbSS/+ULh4Lqroj3+B
+         bYqg==
+X-Forwarded-Encrypted: i=1; AL+hErGkbF5BXRqlrEDX1iBZY1PjCYgEADIZ6nsgkxpcuDYuT2EaBYSn+mMyzpdNGbaPONfMsf5mmP+Rywg=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9L5f7LCCin46xvRBX/fwgOon24PFiT33OdnN2Gm+jC1Jse0Xo/
+	s0tG2W12xi2N/XOtErRTwwGwfcUh0YyzUG28fNqG+SbllFStNQe0vN2/jSSgrEYV33akFuCKUxk
+	WbDLy8q4DeP4wMQ==
+X-Received: from ejcmy38.prod.google.com ([2002:a17:906:5a66:b0:c51:1899:3ad0])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:4ecd:b0:4a3:12fb:1ef1 with SMTP id 5b1f17b1804b1-4bb8881e81cmr262843005e9.29.1795454283534;
- Mon, 23 Nov 2026 09:18:03 -0800 (PST)
-Date: Mon, 23 Nov 2026 17:18:00 +0000
+ 2002:a17:907:d01:b0:c51:8d3d:eef with SMTP id a640c23a62f3a-c518d3d16a1mr53924366b.12.1795454284661;
+ Mon, 23 Nov 2026 09:18:04 -0800 (PST)
+Date: Mon, 23 Nov 2026 17:18:01 +0000
+In-Reply-To: <20261123171637.3859594-1-jpiecuch@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -76,9 +79,11 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
+References: <20261123171637.3859594-1-jpiecuch@google.com>
 X-Mailer: git-send-email 2.56.1.750.gf70dc682cf-goog
-Message-ID: <20261123171637.3859594-1-jpiecuch@google.com>
-Subject: [PATCH RESEND v2 0/2] sched: Fix SCX_ENQ_CPU_SELECTED for queued wakeups
+Message-ID: <20261123171637.3859594-2-jpiecuch@google.com>
+Subject: [PATCH RESEND v2 1/2] sched/core: Preserve WF_RQ_SELECTED across
+ queued wakeups
 From: Kuba Piecuch <jpiecuch@google.com>
 To: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, Tejun Heo <tj@kernel.org>
 Cc: Kuba Piecuch <jpiecuch@google.com>, David Vernet <void@manifault.com>, 
@@ -86,57 +91,96 @@ Cc: Kuba Piecuch <jpiecuch@google.com>, David Vernet <void@manifault.com>,
 	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-SCX_ENQ_CPU_SELECTED is meant to tell ops.enqueue() whether
-ops.select_cpu() ran for a wakeup. However, wakeups delivered through
-the ttwu wakelist never have the flag set, because sched_ttwu_pending()
-drops WF_RQ_SELECTED. Schedulers that set SCX_OPS_ALLOW_QUEUED_WAKEUP
-therefore cannot tell whether ops.select_cpu() was skipped, and
-SCX_EV_SELECT_CPU_FALLBACK is undercounted.
+ENQUEUE_RQ_SELECTED tells a sched_class that ->select_task_rq() was
+called for a task wakeup. sched_ext exposes this flag to BPF schedulers
+as SCX_ENQ_CPU_SELECTED.
 
-Patch 1 carries WF_RQ_SELECTED across the wakelist the same way
-WF_MIGRATED already is. Patch 2 adds a selftest. In a 4-vCPU VM, without
-patch 1 the test reports that all of the roughly 100k queued wakeups in
-a 2s run had ops.select_cpu() called but SCX_ENQ_CPU_SELECTED clear.
-With patch 1 there are none.
+When a BPF scheduler sets SCX_OPS_ALLOW_QUEUED_WAKEUP, a wakeup can be
+delivered through the ttwu wakelist in two ways:
 
-Patch 1 changes kernel/sched/core.c and include/linux/sched.h, and Tejun
-has acked it, so this resend is rebased onto tip/sched/urgent.
+ 1) from the p->on_cpu path, before ->select_task_rq() is called. In this
+    case WF_RQ_SELECTED is not set and SCX_ENQ_CPU_SELECTED is correctly
+    clear;
 
-The bug was found, and the series was drafted, with the help of an AI
-coding agent.
+ 2) from ttwu_queue(), after ->select_task_rq() has been called. In this
+    case WF_RQ_SELECTED is set in wake_flags, but sched_ttwu_pending()
+    only carries WF_MIGRATED across the wakelist, so the flag is dropped
+    and ops.enqueue() is wrongly told that ops.select_cpu() was skipped.
+    This also results in undercounting SCX_EV_SELECT_CPU_FALLBACK events.
 
-Resend of v2:
-- Rebase onto tip/sched/urgent (f4eb2ace3efd); no code or commit-message
-  changes.
+Fix case 2 by preserving WF_RQ_SELECTED across the wakelist in the same
+way WF_MIGRATED is, so that ttwu_do_activate() passes
+ENQUEUE_RQ_SELECTED to activate_task(). Case 1 is unaffected.
 
-Changes in v2:
-- Patch 1: Reword the description to distinguish the wakelist path
-  before ->select_task_rq() from the one after it, and fix the
-  ttwu_do_activate() name (Andrea). Add Acked-by from Tejun and
-  Reviewed-by from Andrea.
-- Patch 2: Give each ping-pong task its own two CPUs and dispatch to
-  SCX_DSQ_LOCAL. The waker and the wakee then always run on different
-  CPUs, so the test no longer depends on tasks spreading out on their
-  own (Sashiko). Skip on systems with fewer than four CPUs.
+Fixes: 3539c6411a7c ("sched_ext: Implement SCX_OPS_ALLOW_QUEUED_WAKEUP")
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ include/linux/sched.h |  6 ++++--
+ kernel/sched/core.c   | 10 +++++++++-
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-v2: https://lore.kernel.org/all/20261026114429.209588-1-jpiecuch@google.com/
-v1: https://lore.kernel.org/r/20261023144811.2230393-1-jpiecuch@google.com
-
-Kuba Piecuch (2):
-  sched/core: Preserve WF_RQ_SELECTED across queued wakeups
-  selftests/sched_ext: Test SCX_ENQ_CPU_SELECTED with queued wakeups
-
- include/linux/sched.h                         |   6 +-
- kernel/sched/core.c                           |  10 +-
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- .../sched_ext/enq_cpu_selected.bpf.c          | 111 ++++++++++
- .../selftests/sched_ext/enq_cpu_selected.c    | 194 ++++++++++++++++++
- 5 files changed, 319 insertions(+), 3 deletions(-)
- create mode 100644 tools/testing/selftests/sched_ext/enq_cpu_selected.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/enq_cpu_selected.c
-
-
-base-commit: f4eb2ace3efdd8b6e3b0946bbd316166edb1a51e
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index e4f6323d7855..34dbcb81f2fd 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1008,7 +1008,7 @@ struct task_struct {
+ 	/* Unserialized, strictly 'current' */
+ 
+ 	/*
+-	 * This field must not be in the scheduler word above due to wakelist
++	 * These fields must not be in the scheduler word above due to wakelist
+ 	 * queueing no longer being serialized by p->on_cpu. However:
+ 	 *
+ 	 * p->XXX = X;			ttwu()
+@@ -1018,9 +1018,11 @@ struct task_struct {
+ 	 *     p->on_rq = 0;			p->sched_remote_wakeup = Y;
+ 	 *
+ 	 * guarantees all stores of 'current' are visible before
+-	 * ->sched_remote_wakeup gets used, so it can be in this word.
++	 * ->sched_remote_wakeup and ->sched_rq_selected get used, so they can
++	 * be in this word.
+ 	 */
+ 	unsigned			sched_remote_wakeup:1;
++	unsigned			sched_rq_selected:1;
+ #ifdef CONFIG_RT_MUTEXES
+ 	unsigned			sched_rt_mutex:1;
+ #endif
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index c9890ed35df7..a36c5e951aae 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -4000,13 +4000,20 @@ void sched_ttwu_pending(void *arg)
+ 	update_rq_clock(rq);
+ 
+ 	llist_for_each_entry_safe(p, t, llist, wake_entry.llist) {
++		int wake_flags = 0;
++
+ 		if (WARN_ON_ONCE(p->on_cpu))
+ 			smp_cond_load_acquire(&p->on_cpu, !VAL);
+ 
+ 		if (WARN_ON_ONCE(task_cpu(p) != cpu_of(rq)))
+ 			set_task_cpu(p, cpu_of(rq));
+ 
+-		ttwu_do_activate(rq, p, p->sched_remote_wakeup ? WF_MIGRATED : 0, &rf);
++		if (p->sched_remote_wakeup)
++			wake_flags |= WF_MIGRATED;
++		if (p->sched_rq_selected)
++			wake_flags |= WF_RQ_SELECTED;
++
++		ttwu_do_activate(rq, p, wake_flags, &rf);
+ 	}
+ 
+ 	/*
+@@ -4050,6 +4057,7 @@ static void __ttwu_queue_wakelist(struct task_struct *p, int cpu, int wake_flags
+ 	struct rq *rq = cpu_rq(cpu);
+ 
+ 	p->sched_remote_wakeup = !!(wake_flags & WF_MIGRATED);
++	p->sched_rq_selected = !!(wake_flags & WF_RQ_SELECTED);
+ 
+ 	WRITE_ONCE(rq->ttwu_pending, 1);
+ #ifdef CONFIG_SMP
 -- 
 2.56.1.750.gf70dc682cf-goog
 
