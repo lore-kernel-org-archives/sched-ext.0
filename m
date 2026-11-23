@@ -1,47 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795445751;
-	b=VaVH+n3tIdRHXEz2YI5lHfZcoZdc9saiIDOllUdjtF96oZcf/XYLg1as6J0CAs4RwxM0
-	 AbfDy5R2ZhHgbN9NxZUolfIbZxVGUaMMheLw/2XEYP9aEskDz9CNvXqzf+zP9+0LYYyxa
-	 M8k/QPxXad6cXwc8Hq0v5f0AHMSnMwCdW8xPweuoTTF9pAjBmBiUgqowZZ1+JdEl/Q5un
-	 fnmj6yO1dzg8myZMe3FIxv7DtW6bU1BcipHZK+wjm+Vhz/I8vcfXmqnaMPIVfhUxDDT1Q
-	 e0V+UQQTKS6iphzZxkDz7PlkFMg5skveurUN4MtyXITL4mQjG9RUDoRuj748Zdu+72w==
+	t=1795446041;
+	b=YPXQSeyTV19wBDX8OWw54M0QBDa1J2wCnzg1riBxkH8XCia8XXi8i9OU4MmyQzlrO4wO
+	 eETQTHg7Jkru9wEacIEkiA7mD6YougjptjNOnUBShf47lrDfZT6UJmwK5S1G0oPBbWMKF
+	 yJ2PI5KMBMIU29Is8GUEzkXV8SCWAj2gkulcyVU2FL3RDgohj6uNe5jy4aniSwkfzFDqM
+	 4oGiOx4MjMqC150b+52o7zRYkCIA48cbLQJg2jJXUyyZfyG3i94Hr4dgTPGQZIhNl9n3Y
+	 F+J1YvBR4Pk32069xD3R/hO+7D2gvZXegD5R86wCtdNW2msAJY6t/26B5IpGIkxDyiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795445751;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=j/h5+InIgw+oRV5XVGghF+dc8gVnvSCX4IyDa2vlatQ=;
-	b=2Q564BsXx5EuHyrK1+2k0BFa70fFR7y+o2ES3Hbytjl/Ebi/jCAC6WKbZjCRZqGqpsdY
-	 ap9/NLNrvFy1XNqcc/wcMNaN7oaMp9/OPc74R9hzI8pZ7cVA/8DpydYf1UiIJjaxwW8ee
-	 SohbE4+SLPGh4Iz4EX3GX0nrgh93nmnQjRkNgTNcT+Alo/CCXPjySawuPj7XFstELlxUP
-	 me82xwPgYo65V2q4wLzfMpPXU+uPlbb4sU248wep7YJ63T2pUm0dj6O7CpPg2IvwGKkY7
-	 GcTgXcPFUwiDJ9gcePoj/5fhbOVkWq3hQrZ+UhpftL7tpFEa/i5mf6NkHxA8Ni4MXCg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795446041;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
+	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=rZGIgt43Cw6Sh7wQQz7ZyN3D/rQTxkgTC4ooK6q+yrU=;
+	b=XwDmnCX6JAelNZ5t9u7PhQ0pFPbNGLyulMT9VcGiCFDjgAzI+W8/2tyfEt1r6Mtfmdc6
+	 tAcF4FL3RgVGV5LRJn/u5n2oVoHWUZvCP6OGrx44l5uTo0qXqmE2d2VLCGFUhdOvsgLE7
+	 mDLj5cUAHansqIKrZ2gAQVBryFeWb+g1mEPTWa4qJnqetb2R/o1vvwqx+brznzzNcP7bL
+	 3AZC40VuOKpMVGTfMuRHIWQep+CYvtHOztqwEecczV0q50BbG41TQC/568x8KIBST+KRq
+	 de7Lcc6KeocgEqU5DprMxtKCYIONf32kbKeP5hkslcl7kyNUONVkfH8It31DaSvSUQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g15yqKJ1;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=IMIQM8kA;
+	arc=none smtp.remote-ip=209.85.128.71
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBA3606A33F;
-	Mon, 23 Nov 2026 14:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A23606A31E
+	for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 15:00:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0A23606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g15yqKJ1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6A91F00ADE;
-	Mon, 23 Nov 2026 14:55:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795445751;
-	bh=j/h5+InIgw+oRV5XVGghF+dc8gVnvSCX4IyDa2vlatQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=g15yqKJ104GfUNSAW0Qb//DcC3LHnWolXoi53f4U02ZcvIeTcxEt6WV9PtNY1lacF
-	 X3mGSF4kQfKwcr0HmD3wsvEY7EVKmjBBngjKOWs2AMXX2ORccqhVar879FYZVBqeuj
-	 bu/Fshcx8THuutvlpkggKcNxnK74KToG5Sc/yaSNw2UoHVYj5zpkKMTa4uJFclFXMk
-	 Zis0D74nrRQsIXHlL7KrELKwlj03pkpACiYpKzYeQIauVhpGeb2wqR5yWoNW3uBtgA
-	 Wse/jXCTY1/NMyVJrzcYYgELA9KIBuHSqNQLhM4wUT34Vg+LSjhEDx5WnzQWibO+3H
-	 6TGfpAOfyqt8g==
-Message-ID: <adf5a84b-5d80-4c02-91f5-12def2c37304@kernel.org>
-Date: Mon, 23 Nov 2026 14:55:47 +0000
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=IMIQM8kA
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4bb680f0ac4so21910895e9.0
+        for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 07:00:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795446039; x=1796050839; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=rZGIgt43Cw6Sh7wQQz7ZyN3D/rQTxkgTC4ooK6q+yrU=;
+        b=IMIQM8kAquQFdpptWq4tM/5UU6/gb4d8bDSPs4ILCdY9in/u/8oqC8w5ItezkeakBW
+         hejFOzXlRkmbnuWNif5uxAZWdo7OUiZg5M1cYq9pxMaMhCpWdodMjFHhXggczzmkfVG+
+         XoE0Mjw4trKUkSR3+HXw78HlkRNKvhGiY82yNMft6f7uK0xFf/JkWeYmyDjrIUs49OJr
+         kn9GDWD1G0JCaFWuwwsHd5TmW/n5/5t0LJwmEbc6fTqzWG+rxgdSmfYu5UqPbiOpyEty
+         lifNsOgK4I8fzc5bgBegDBAzbt0jQIcQHzW1BnaaatRKT85F1F4t/Rve4mOqMXC2hW0u
+         iBeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795446039; x=1796050839;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rZGIgt43Cw6Sh7wQQz7ZyN3D/rQTxkgTC4ooK6q+yrU=;
+        b=I46OOwzt1D323sbx0IFFzrmbf6GVP3hSzJcoUjOAGs6lWQMNxN8CWB27IAfScp3c5m
+         d1HnkiW662GuZsUee9inmCiATsYjEvrGUzXxZ4TnZrgMOgzgZUhw7paWIc+B+gput074
+         SV+ZCCR/0lKRtw7ZqtJV+zJ8AqI65mPIT5OWwLvKj9LhE50+cB335Buk/QIXgUXsZpl0
+         xFVgomBLMYOGraCZSuhIKV412rZYX/Vpv91/fhJsQa906bnP9QbEvd5JCn9YILBsSKVZ
+         Mp8LjoMuD4wEaIdva+97M0cJEf6iqlwfUSHBnUbpaBsYzhQwp7TOtDG9a2M5lKd9lq4g
+         wq6Q==
+X-Forwarded-Encrypted: i=1; AL+hErHT9143rk4QqMhG4TUW9eLc4OhitmblPXZmsz+aV+5u+vVCeWHa7vZOtSTbE6EZzhSQhx2SICk9gMk=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9AX+PhxzfZTprsiCAGqjtv+QbUmI0nmRrGAgdiorKzwb65gvNA
+	DHAFFuS3CRBVqOndW3BNspyV3ci3x5ROEroQQs+RBVFwkbYnRZDTzLt/OjNj1VFzt9tBXlYjl2u
+	Gq3CabquGYhKf9w==
+X-Received: from wrpd5.prod.google.com ([2002:adf:f2c5:0:b0:49e:1f29:9f51])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:4e87:b0:4a3:59c9:a758 with SMTP id 5b1f17b1804b1-4bb88922c81mr246144405e9.32.1795446038772;
+ Mon, 23 Nov 2026 07:00:38 -0800 (PST)
+Date: Mon, 23 Nov 2026 15:00:36 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -50,44 +75,86 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 1/6] libbpf: Separate interfaces shared with
- in-tree tools
-To: Ihor Solodrai <ihor.solodrai@linux.dev>,
- Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Eduard Zingerman
- <eddyz87@gmail.com>, Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Alan Maguire <alan.maguire@oracle.com>,
- Emil Tsalapatis <emil@etsalapatis.com>, Jiri Olsa <jolsa@kernel.org>,
- Song Liu <song@kernel.org>, Tejun Heo <tj@kernel.org>,
- Yonghong Song <yonghong.song@linux.dev>, bpf@vger.kernel.org,
- linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-References: <20261121003403.2928928-1-ihor.solodrai@linux.dev>
- <20261121003403.2928928-2-ihor.solodrai@linux.dev>
-From: Quentin Monnet <qmo@kernel.org>
-Content-Language: en-GB
-In-Reply-To: <20261121003403.2928928-2-ihor.solodrai@linux.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.1.750.gf70dc682cf-goog
+Message-ID: <20261123145927.577162-1-jpiecuch@google.com>
+Subject: [PATCHSET sched_ext/for-7.4-fixes] sched_ext: Fix and tighten RCU
+ usage in kfuncs
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>, Ryan Newton <newton@meta.com>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-2026-11-20 17:33 UTC-0700 ~ Ihor Solodrai <ihor.solodrai@linux.dev>
-> resolve_btfids links libbpf statically and uses its BTF header
-> accessor, field iterator and SHA-256 helper. libbpf_internal.h
-> also defines logging macros and poisons kernel integer typedefs,
-> so resolve_btfids wraps the hash helper in a separate source file.
-> 
-> Move the shared declarations to libbpf_tools.h and use them
-> directly in resolve_btfids. The header is for in-tree tools and
-> stays uninstalled. No shared-library symbols change.
+Several sched_ext kfuncs dereference RCU-protected state without taking
+rcu_read_lock() themselves. They depend on the caller's context instead,
+but that context does not always satisfy rcu_read_lock_held().
+
+The verifier treats every non-sleepable program as being inside an RCU
+read-side section, and KF_RCU_PROTECTED only checks that. bpf_timer
+callbacks are non-sleepable, but bpf_timer_cb() calls them directly
+from hrtimer softirq, with no trampoline and so no rcu_read_lock():
+
+  hrtimer softirq
+    bpf_timer_cb()
+      timer callback (BPF)
+        scx_bpf_dsq_peek()
+          rcu_dereference(dsq->first_task)   <- rcu_read_lock_held() == 0
+
+With CONFIG_PROVE_RCU=y this triggers:
+
+  WARNING: suspicious RCU usage
+  kernel/sched/ext/ext.c:11170 suspicious rcu_dereference_check() usage!
+  ...
+  Call Trace:
+   lockdep_rcu_suspicious+0x11a/0x160
+   scx_bpf_dsq_peek+0x7d/0xd0
+   bpf_timer_cb+0xf9/0x130
+
+  WARNING: suspicious RCU usage
+  kernel/sched/ext/ext.c:11961 suspicious rcu_dereference_check() usage!
+  ...
+  Call Trace:
+   lockdep_rcu_suspicious+0x11a/0x160
+   scx_bpf_tid_to_task+0x2ae/0x2e0
+   bpf_timer_cb+0xf9/0x130
+
+A sleepable program inside bpf_preempt_disable() hits the same check.
+Both contexts are RCU readers, so these are lockdep false positives, not
+use-after-frees, but they make PROVE_RCU kernels noisy for any scheduler
+that peeks a DSQ or resolves a tid from a timer.
+
+The sub-cap kfuncs (scx_bpf_sub_grant(), scx_bpf_sub_revoke() and
+scx_bpf_sub_caps()) are reachable from the same contexts. They avoid
+the warning only because they disable IRQs and every RCU check on their
+paths (rcu_dereference_all(), bpf_rcu_lock_held(),
+rcu_read_lock_any_held()) accepts that. In scx_qmap, for example, the
+round-robin bpf_timer callback calls scx_bpf_sub_revoke() and
+scx_bpf_sub_grant(), which look up the child sched in scx_sched_hash
+with rcu_read_lock_held() == 0.
+
+Patch 1 adds guard(rcu)() to scx_bpf_dsq_peek() and
+scx_bpf_tid_to_task(), matching scx_bpf_cpu_curr() and
+scx_bpf_cid_curr(). This fixes both warnings.
+
+Patch 2 adds guard(rcu)() to the three sub-cap kfuncs, matching
+scx_bpf_sub_dispatch() and scx_bpf_sub_kill_bstr(). This makes their
+RCU section explicit, so a future plain rcu_dereference() on those paths
+does not reintroduce the warning. No functional change.
+
+The patches were written with the help of an AI coding assistant.
+
+Kuba Piecuch (2):
+  sched_ext: Fix suspicious RCU usage in KF_RCU_PROTECTED kfuncs
+  sched_ext: Take rcu_read_lock() explicitly in sub-cap kfuncs
+
+ kernel/sched/ext/ext.c | 4 ++++
+ kernel/sched/ext/sub.c | 3 +++
+ 2 files changed, 7 insertions(+)
 
 
-Hi Ihor, the change in bpftool's Makefile looks OK and I understand the
-motivation for libbpf_tools.h for resolve_btfids. But I find it a bit
-confusing to move away from libbpf_internal.h only partially for
-bpftool, and to have a split dependency on both libbpf_internal.h and
-libbpf_tools.h. Have you considered moving the other objects that
-bpftool requires from libbpf_internal.h to libbpf_tools.h as well?
+base-commit: 2f7928516314f37d7cb334675656b4412edc8be3
+-- 
+2.56.1.750.gf70dc682cf-goog
 
-Thanks,
-Quentin
