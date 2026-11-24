@@ -1,53 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.197
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795477726;
-	b=JV4T9NU087TtJl0D0o5pCOCR/7qNmmCcL8zKYvbZ8VNuVMkPTKoanyHiOEPvvpDbqXWh
-	 ypzw0X5lzoTXMDC4e+Zd+ZEr4qvsHZVsChi1sROJ3ZIzRX+8y0OkKoiTaBGUcvtVSH9/G
-	 IgfQ4MmC6ouW4BKbyQx6vAOgJUCY+kvkd/d6gZkZhbVojXqN10USidjE9l9xIA7Khbzlx
-	 sSLksX3qUD65fgc0AJrHfDx950SKXCgVInnub5/BryWkEJWOZXW1zDs725DTHnXn9VVlL
-	 ZDtP2b+09mCBqRz0EJNQq/Tiy/Zz7nroVmgtWF/6JjvyibvUnAPIxrB+yjqwC6577Ng==
+	t=1795481265;
+	b=WNAMxDHIj/HwasYWWITb5G/fsR+eo1JgThsBRAmkktFde40RmJyYjyBFswXICbeILmn3
+	 PH8dYsSNgCShRA6zrQRc3q9qx/m5XLGTgTvCLFz1sOoBjDSXLWq3i5yf5iIQFjrko+uIQ
+	 +quwmA8lqHhJempFVckXlhAmOZgNUJZABwr/5fbq9sKg5+Gsji0gAUs9SGDPV9m7im1XP
+	 8o/v3bFDyH+o7Lq8ZbCrahifyR+Ie51oaHNmpTalF1Ol6h5cIe5hiOuNu7ecrXfWFXMum
+	 56hiokfwDhgD3RRgP7jQemyH+1iB+tGv0GcvPaAdUSC4M4gnOVYxCsxonVbCFrmn6+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795477726;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=ylKTuNgUblLqNxL717J4Osbex/tTFtCBiDG2Kicf2sU=;
-	b=5F8cueCsNkvWTmNZ168w7ol8vlaaxgiMHD+VOiHoci9B1q/punUEaJfMpMogPtiz6WX4
-	 Zx2XPyi0Y1qwcRSDkCkN+5jigxXLMHMOfheeFHhsqa8SzLww/g1Eo3xV6okwX1R6l3B8G
-	 mc0frn8UAH6Xor653xPLLO7UP6ltXri/fYzeJysGT00ihIY5Z5qSoYzescrULm2uAcJm0
-	 U4dRWwgbe3sXHjbChH5HgVgiw1j5sRJoa9OdWgEbeO31LLk1VCbfqOsV7YEAg5VcJrIfY
-	 fHWMqjR+9NBmO9KBO1t6uYFsPcKuRvrc1p7PmEMdmAuguOdZtQNNHYSYktMo2lNeTzQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795481265;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type;
+	bh=tDMwizw/fxrX9EdkfSy3P0m+iIcym6dxr577RysOy0w=;
+	b=kg4imeZSMwKMIyxHjWZFmaiouwikiKRzfmN7s8lVvpElD9yRTiTavl919SaccA5yt668
+	 DaLhY659xgH5hJrvuMJ4Z82Wbw05Uvzw3g7mril/nekutvHZPDFEJO5hguOaKzVX05e4S
+	 4hOy6ooyG08g8ZRqKO4txayvaXfO81ooE6lOdV94JJY3BKvxcISQFoqjhChMSQ+AVFPOC
+	 /oECKgU4u5IJbkgVYwMEjtC9p7iMvRBNVBIwGpFGVuCH8/jwvvqNLcv/t/NxSL5QhEW1+
+	 DmhBdY3fuOGzNwqC1SF9OkJCKEmeZk6Givo46eXRYZqQFgvhLL8UZBZWErZhz67Fa7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Ri0xaxb/";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--penghuang.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="ihB/lW1y";
+	arc=none smtp.remote-ip=74.125.82.197
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3553B606A31E;
-	Mon, 23 Nov 2026 23:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB8D606A322
+	for <sched-ext@lists.linux.dev>; Tue, 24 Nov 2026 00:47:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ABB8D606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--penghuang.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ri0xaxb/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 567051F000D0;
-	Mon, 23 Nov 2026 23:48:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795477725;
-	bh=ylKTuNgUblLqNxL717J4Osbex/tTFtCBiDG2Kicf2sU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Ri0xaxb/mXM+T7KSjkcttZNPnjkWTBK6w8vvma+CjUcU8xw6CqThdGemhLy8Jgj2E
-	 3mYsNjyzcnKM2YfybsyC1YyXLxGxOqYd4KgQ3uN8N6f3QSgo+Syu9QM33wW38fwQ6G
-	 n5gTZTGDk/dO9nfl7KP2lnsu2TWDobZ9x/wdKUQSKzCwdgChnDIudTUEBjncZu+OgP
-	 Q0WjJh6mpl91uYxGDYuhydkXqlpXunX9l9U0lnoMe47X7fumngbd77cmTy6/yzLaKe
-	 lYRYMrAQir1ourDpSKXROx9LdW3DapCQpZFeNrNZHJZuqbCeAvf9pbAxGmlrQ5ikDi
-	 6cngnGwzHrwVw==
-Date: Mon, 23 Nov 2026 13:48:44 -1000
-Message-ID: <861e8b931f99acf9c44cff722d5e94e7@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Peng Huang <penghuang@google.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>, Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] sched/pelt: Skip dormant cfs util_sum under scx_switched_all
-In-Reply-To: <20261123160934.2289260-1-penghuang@google.com>
-References: <20261122015729.2512645-1-penghuang@google.com> <CAKfTPtCQpVhtVT7Mhqe1=Ukcmc1pX8Jgn9ypb64--8cJ-7G4BQ@mail.gmail.com> <20261123160934.2289260-1-penghuang@google.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=ihB/lW1y
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-386a65fca25so2585341eec.0
+        for <sched-ext@lists.linux.dev>; Mon, 23 Nov 2026 16:47:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795481264; x=1796086064; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tDMwizw/fxrX9EdkfSy3P0m+iIcym6dxr577RysOy0w=;
+        b=ihB/lW1yUoMF0YB19Au+wGfD5QXVBAPUibh+0JBp89Ux6ZcYqTbEXSvtden4ngCHad
+         GgjVVcM3P0qqAV4++3TXnpWWeKrRG60Yi3gAIN3XFW9T7+xXLMfilbWdOYojwLttAsCH
+         H3PJBxLf1fDo1McAS17FeUyx2uqSMQ4WTwjvcIzQKyT4l2RhPIpJT3KDdWXXSo+5vxZy
+         K5QTP3QOu2I70QAC+r33dYrvG30Pvwo7+fdssBfqQTqqeFx/+wg/VThQextkZxA5XasJ
+         /eTJsKESHpXrIvMvz8P8lXO/qZV/iXWXRmmGY66p0HVAt0gUbRJt7HD+VBYrYEMEAVJ6
+         ELZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795481264; x=1796086064;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tDMwizw/fxrX9EdkfSy3P0m+iIcym6dxr577RysOy0w=;
+        b=k24Gu3wSUcgzRToFjenJLZJJQh2mMU26d6FcQD7jInf3Ak7TS2jbaF6tvOh2H/A9i5
+         bfmhQWyu3AS1guUC0hKf1RjZzUevzr77PsTLpjgyu0kpf2lW2cgspbJu4vcx2KbUV9A6
+         9DKN8US4mukDnX/JIwCPfXlosTRJmF/Ju5IQk2WX98Zr9ZIoHuNnuzYCehOFdzor+nzg
+         mQEuUhpcuq4nNWCAxnot1rq08b46FfGwswETw6DHzA7PXPq68ELDOkNMrElJcg1ubkw8
+         OF9yzvBeaPaO2p2qwbbFgoj3JfxQYMSg5ZRIaitCgpTDbf9SD6L6LltxFVUP6iRU4Z45
+         y+gQ==
+X-Forwarded-Encrypted: i=1; AL+hErHyh48/2fqppA2p202Hbz05tx2OMDxjTWahTEJoWmBjY1C6r/IqfN1OY4h37xPU463cxID+heUDL9M=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9yY3mo1HNFIH3BKhbWlisN4IeyPXjEpaUgaqBR5V7OJnqZpvM3
+	3MPApyfCG+X8QjqrZ86xacsPinrV692kR7nZ8El2N9JJF1wt1uzX/6+Q5fqyqFfZ2dEgcP5wiY6
+	ecv9uNMp/HFATOKlzvw==
+X-Received: from dycnb22.prod.google.com ([2002:a05:7301:b16:b0:386:af9c:96b6])
+ (user=penghuang job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:7301:2108:b0:386:b99:8ff9 with SMTP id 5a478bee46e88-3860b999354mr11840342eec.40.1795481263233;
+ Mon, 23 Nov 2026 16:47:43 -0800 (PST)
+Date: Mon, 23 Nov 2026 16:47:42 -0800
+In-Reply-To: <861e8b931f99acf9c44cff722d5e94e7@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -56,38 +78,56 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20261122015729.2512645-1-penghuang@google.com>
+ <CAKfTPtCQpVhtVT7Mhqe1=Ukcmc1pX8Jgn9ypb64--8cJ-7G4BQ@mail.gmail.com>
+ <20261123160934.2289260-1-penghuang@google.com> <861e8b931f99acf9c44cff722d5e94e7@kernel.org>
+X-Mailer: git-send-email 2.56.1.831.g720f3f5937-goog
+Message-ID: <20261124004742.1248371-1-penghuang@google.com>
+Subject: Re: [PATCH] sched/pelt: Skip dormant cfs util_sum under scx_switched_all
+From: Peng Huang <penghuang@google.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: Peng Huang <penghuang@google.com>, Vincent Guittot <vincent.guittot@linaro.org>, 
+	Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Juri Lelli <juri.lelli@redhat.com>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
+	Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, 
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org, 
+	sched-ext@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hello, Peng.
+Hi Tejun,
 
-On Mon, Nov 23, 2026 at 08:09:34AM -0800, Peng Huang wrote:
-> For v2, rather than touching update_idle_rq_clock_pelt(), how about
-> adding a fair helper (similar in spirit to rq_offline_fair() ->
-> clear_tg_offline_cfs_rqs()) and calling it from scx_enable() in the
-> existing per-CPU scx_switched_all() loop (where rq->lock is held,
-> rq->clock is updated, and rq->cfs.h_nr_queued == 0)? Specifically, it
-> would walk leaf_cfs_rq_list bottom-up (plus &rq->cfs) to:
-> - flush cfs_rq->removed,
-> - clear load/runnable/util _sum and _avg on the empty cfs_rqs and
->   their tg_ses while preserving last_update_time and period_contrib,
-> - clear tg contributions via clear_tg_load_avg(), remove the empty
->   cfs_rqs from leaf_cfs_rq_list, and update rq->has_blocked_load.
+On Mon, Nov 23, 2026 at 01:48:44PM -1000, Tejun Heo wrote:
+> I'm not familiar with this code, so I may be missing something, but
+> doesn't __update_blocked_fair() already do most of this? It walks
+> leaf_cfs_rq_list bottom-up, flushes cfs_rq->removed and propagates the
+> result to the parent. It just stops running once scx_switched_all() is
+> set. Maybe the helper can run the blocked load update once on each rq
+> from that loop instead of open-coding the clearing? If I'm reading it
+> right, one pass after all the tasks have switched would take care of #1.
 
-I'm not familiar with this code, so I may be missing something, but
-doesn't __update_blocked_fair() already do most of this? It walks
-leaf_cfs_rq_list bottom-up, flushes cfs_rq->removed and propagates the
-result to the parent. It just stops running once scx_switched_all() is
-set. Maybe the helper can run the blocked load update once on each rq
-from that loop instead of open-coding the clearing? If I'm reading it
-right, one pass after all the tasks have switched would take care of #1.
+Yes, Vincent suggested the same thing, and I sent v2 earlier today doing
+that one-pass drain via __sched_balance_update_blocked_averages(rq) in
+scx_enable():
 
-As for #2, are the leftover sums big enough to matter for
-update_idle_rq_clock_pelt()? It looks like fair can leave similar
-leftovers behind once the avgs reach zero.
+  https://lore.kernel.org/r/cover.1795462673.git.penghuang@google.com
 
-Thanks.
+> As for #2, are the leftover sums big enough to matter for
+> update_idle_rq_clock_pelt()? It looks like fair can leave similar
+> leftovers behind once the avgs reach zero.
 
---
-tejun
+You're right -- for update_idle_rq_clock_pelt(), #2 on its own is tiny
+(< divider, i.e. < 1/1024 capacity per recently-decayed group) and is
+not nearly enough to cause an issue once #1 is drained. #1 was the real
+culprit in our reproduction.
+
+I only split #2 out as patch 1/2 in v2 per Vincent's suggestion to clean
+up the util_sum != 0 residual in update_tg_cfs_*() when _avg == 0 (which
+otherwise keeps cfs_rq_is_decayed() false and leaves empty parent
+cfs_rqs on leaf_cfs_rq_list in fair). Patch 2/2 alone already resolves
+the sched_ext issue.
+
+Thanks,
+Peng
