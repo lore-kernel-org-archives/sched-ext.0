@@ -1,96 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.200.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795513401;
-	b=VNkAsy9TAKwr4xcu+BhDapN6BuWuPAlVq+YM3/p0NybRFGn4MjJD2Ob7B0uKB+x8BNu0
-	 SYMgV08ztwK1NpE8YsVxK3yI9mAUZ2dUVdHRvIFP+6o/nNuPTSE5hD7I63uYlRlnRz3Lk
-	 ueD1HhCaYWtgwNUDwUKISGJz/JApM40HjZonJLYUtB7TnzUe2Cf2VQ245ZGOXqZuEoYhc
-	 BUydjrrAswpmA8EReb75Lmi9o59aOivXrr2+irU7DHjhtWHbfYvJDCD2E6hiBHyTGhuGv
-	 OEgdZi1ktPJUVBZtrRmYXqhxeLR61W5duMKGGCFFkKfxeADygUx6Sv6UDiW3WWnSuXA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795513401;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=KU8Dr3J60PmTanKiFFbUDhLRx/eyKakjPN6r5APrkko=;
-	b=bh4MEDKbQjln0CGZyVGVIPCvOwLsI4rCZwwNUbcSIJAy2FZhtfYy9wUAp/93Uv9S4Uat
-	 mpuWVRg7W55Jcip7po2eKiTnR/UU+pzdOynNzyTwPGGFlDTNhabz7PkJlqzFCzKaNjci9
-	 f7xVldXpBmedSOz3ZXPl23hqvvx2mI5QC80ZZDVIvkb9JoyXngHJSDcZg/kd7GD3MOKuL
-	 8SNGB8lyPzr+U3eZFG4tgEJUXhlwgyIHR6DSR50PXaeGhLKHDm66jrWSmK9WqvQs7ub8W
-	 sNeT1PgeN8q/XEniYeeOD9OSA0hrbPfNPqgAFFV9QJjMM+VF4hyMCalSHw0J12XvjtA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=feYB6ywp;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.200.45
-Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012045.outbound.protection.outlook.com [40.107.200.45])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795514722;
+	b=gUUi8VgeIzTj7YEeZGt8TNXH+Fypak3JZM6Fg14SPyNCg42suz9c3lsGlEuYx3C8yqfp
+	 l0rjKVqLQISCs/RyJ7mhZknVWN8hy0iwT0oRkCy6IKwWBdF8N4F6+LcZNa4nDYlcKQAty
+	 Ws63ynX/IHr0XXsVvKboTLm7QBvrfhuiWqRjlZ6MGATwk+RB5bvMLhr6WvCP8KkZdipj1
+	 BVYACeQQwyb5iob9OHUK5u4TS0GwObflDqLSMp/D2IAsL1kRZjNrOPcw8Vm+qOJJj6Gdp
+	 x721RdvfsLLkjox9X7DyBDYMEJca/s+wv+ibSLb0MgK0i613e3e9bXpilvJwUPAv85A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795514722;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=h8PsPIoWLmVL975tN402YNrehaZsdtj3RGMKgtoV45I=;
+	b=QuxOxLDSZ8KfwNs5UBr/iElCu1hs9lDSEbGr+AfWcuTJLUQh7mRUc8i+JEOxmPv24IhE
+	 jj3+zh8uoNjBv+un17xZolyCrXr4wGJzy0OAyncO+v3Jf4LCVP6z6gJZET40OG1EA9wei
+	 j296+c95Okie7m3v/Hr+P+22JbFALTTGnBbwt0K/Q2ogmPXKSqP5m4NE7GcaptXlACMpj
+	 cAiIcz+CrrSFLj/bWAXlHoiRNmo+qkejN7m6tDFqLLgF97d5Qr9KWnc/tQJOyXbNE/iy1
+	 upoumubkmH1MMzIuDngPtFz7ibAEu8Oc8BQbgTAeIxHzIBZ94PV0bEXSb8/H8YK5ZUw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="XQsm0/gN";
+	arc=none smtp.remote-ip=74.125.82.176
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B413E606A6AC
-	for <sched-ext@lists.linux.dev>; Tue, 24 Nov 2026 09:43:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B413E606A6AC
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7CC606A326
+	for <sched-ext@lists.linux.dev>; Tue, 24 Nov 2026 10:05:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B7CC606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=feYB6ywp
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vf8MEz7SrF2K8/Eokt0XUce73HmFRxn9H1q3PmBcnDUhK+gdjF86q/3/BpRY3zvu8cIThtV4P/miqF0e99F9VMcVkRFZq5XnbEIyYDWKI5deX48j47wsmsqRPMmIIuF3FH17rJn4X87JyBafb9D/oHUuQwhv5PDFNDuFTUGMxBOTSZ3mIrOmeRUXm1V28JSmuPM0GZNncbQfhQKhAEJ8KnB8BNxLRSMd2z/bhk3M9crP1p+baVTtVjzjTw31RKMUqm7mYOlgnxRSaiJcPam2gl7ZNn35iadQqh30ra8gn25Qj6gbBAWjRHnhtKnWKK9FWuVbI2f0aR6TJAePMS8rLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KU8Dr3J60PmTanKiFFbUDhLRx/eyKakjPN6r5APrkko=;
- b=kP71IvQ62csX498fBeOpCAz+x0NntwrSmaj3AyhxbFEu1Y5UwCulSPNm6gyhG5pJW/5lojj6KzkDOYS6zYoyTLBB63AY7LGCW8Tx2glrfTFcLsAoQMnKPezxyck3oGD7cKhSW8Rop335zrZMBuA8/054Kdfl2TbHCOkYLfZz0vzs9w9FVlv230zs6cmxZ6T448BCKxzwj5YzrUtGN+Jw0cUVN/s/H8T5xXc1jrfurmCy0/YFbGb6b3oLr3JMEHW96s/yPCuJkqDUErUiRFaCvw/g+rmwyTcQFguWF7L1OJwn4csmbdQWkcXbrg48FEv7Vr/mfW3GVZCE17I6Oxj0sA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KU8Dr3J60PmTanKiFFbUDhLRx/eyKakjPN6r5APrkko=;
- b=feYB6ywp+fh5OtSHU+Z6a2Iu1BwOiCkw1gljP+fKtOvvsphXUI1i6e6QBHOg8q98+5q1ZpGG42EZJtSjJEGFg/vPxugSpHSYS+iGYCwf3JzcwKO8/fsmVa/Q/dhmngbQ47Zkq/CcSqyhdX+khsFNyrAJlzO/Xg7FIrBnUgCm3X88XnfzK6f2GTl/QpBqOgcz187cw3YLm32EZ0mWBfmMkVmwb9qxO04+bAbRGqx9dy6FRTX84sVp3BOpn+9qz3dAzncSV9RuKnM+5Tr0V6ekwxPFXtn8JklycRGyB2M6DaXeKMA5W3kWp0l0MsLLv9BWVuNKlKB4sdejSD7soeVCYw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
- by MN0PR12MB6054.namprd12.prod.outlook.com (2603:10b6:208:3ce::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Tue, 24 Nov
- 2026 09:43:14 +0000
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0639.012; Tue, 24 Nov 2026
- 09:43:14 +0000
-Date: Tue, 24 Nov 2026 10:43:05 +0100
-From: Andrea Righi <arighi@nvidia.com>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XQsm0/gN
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-38692f62b22so3976342eec.0
+        for <sched-ext@lists.linux.dev>; Tue, 24 Nov 2026 02:05:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795514721; x=1796119521; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=h8PsPIoWLmVL975tN402YNrehaZsdtj3RGMKgtoV45I=;
+        b=XQsm0/gNvQOrG0KBt2pbdLhdBQICGv6MmBGCLhTB1wpXbARrvbzJR0Cyj18LeehigJ
+         vr/umCSVRvJrrnNMXVXyJKcZMeWhQxLbZH3qzHEZr0Tw4VCc1BLDL9AIVBOPtZliAX4H
+         QZ3XsOdCN/9fVFfQteiHyaHoluqbD9wEw7nr439srGdEPDsyCEEq/PFgZt/kBN9Qzp1X
+         03dR4r10xwWNvrPnyS+CMCDgayj/xQlP1TM7sUX9zXPRg2C65hbZoR4CaFKmbtQwo2rw
+         S5EOIY743/OTithPkXDCK8defHUgZfxCYq2o9ywrtB4s4ac17HQSImBEC1AhUn8F5wiu
+         61zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795514721; x=1796119521;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=h8PsPIoWLmVL975tN402YNrehaZsdtj3RGMKgtoV45I=;
+        b=AjkCzhAWY14q+aXId2+222Inlmz6xTe7TR14YY4ZkMt7v9AzGQ2quLe7MeLHIFnKLV
+         F/mw0i7pPG/+r49Lj31fNmHuAyaaIovQOtvMmyQCPy4zNpHBQKdftzqMj3ukOFbScRQl
+         xQosWXi4dvuvz8fwCEqqN2BvgCOoHqufELodJyBkg1MV5sGBJ0hDaYVBHJSgcu/QaoR/
+         VGYXO6aWAbjYqmSFD/RHyY4NEImYYvSLx7593W4rHIxjLBGqvZRLcM/AjbM+G9iam5AV
+         8931lSKreX68zsQj2Do20l0S8oY7r4tc2bnWKyME6Urcy0eMmm4hvqSSMnctyg3NS/4h
+         p3gA==
+X-Gm-Message-State: APuU4Z8KQSlvVDSzr5aqmHQmHdC/GrL6wtimX4jUWPd3JlwnRlqlMO/P
+	sJH5gDVkJ9qILlbKpaCyLgEHfcwKUDqExRZ9dONVcsjKs8PM8fzfMV56
+X-Gm-Gg: AZFdTZemDi3JCdoays2pEbq/IwLgYUXu2FquEUAM75fg1VXvVxZiaHHygvLEt5NFy8A
+	XWfc9CcQqeAUbm+ZHTLdWQbXjcZPgkrV9QIAIREOsGmj1xuPDNjmWjuK74+fSXn5YpjYqky2JTu
+	gh7fibCyr1LJYzcJuQbeVzK5wrE/T/tDZ5iBdJGoTo2ASHLTYCgWIiz57ZJgkJkf39Z2aBvxG2d
+	7gRI1e/p9AofM7Z0FE0PAHlGo5lzUrPTgvPvHebZTpf/lHCfxuerQZw3ucrZiFkeXH2HP7WKS3N
+	hbx5ReDY+FTa9ZVk45w3+61b9DuDeLKoAls4YL6cHYxwBI0Di4YfSoMyyb1Us+4/miuSD+rL8Eq
+	o3ZGU4YTY+EkE860nq0J47G/iAzPd91no3GUQk1acFD3tluCG+4frf1akv5jHR/SH4BwIz5e1b4
+	0+EtiiUDb/sXya8Mv4u24baKkCvZJEmnClTq7PermCTrKQVRYo1GfeMFxQWAlldZFye7C30reP6
+	66r72xheG94ejplSYNUGo2IMOPfTqJOAs9bws6S7oDOT5tSvR1K0MXaoT8wdgPU+7Leg2vDhnNT
+	HdfGPBdls2xM0xwSTb5Tu+VVM0XlPadSN9NCtAFb+DX4LfWSHmDhvL7kSXKNwvDP
+X-Received: by 2002:a05:7301:3a82:b0:374:ea35:9069 with SMTP id 5a478bee46e88-3856fb67380mr13583566eec.39.1795514720624;
+        Tue, 24 Nov 2026 02:05:20 -0800 (PST)
+Received: from cps-manycore-1 ([147.46.174.222])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-386aaae4960sm19080284eec.18.2026.11.24.02.05.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2026 02:05:20 -0800 (PST)
+From: Sechang Lim <rhkrqnwk98@gmail.com>
+To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>, chengyang.chou@mediatek.com,
-	stable@vger.kernel.org, JaeJoon Jung <rgbi3307@gmail.com>
-Subject: Re: [PATCH sched_ext/for-7.4-fixes] sched_ext: Don't request private
- stacks the JIT can't provide
-Message-ID: <awVcKS_leVA8gmix@gpd4>
-References: <20261123145450.12725-2-yphbchou0911@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261123145450.12725-2-yphbchou0911@gmail.com>
-X-ClientProxiedBy: MI3PEPF00004EA9.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::44d) To BL1PR12MB5174.namprd12.prod.outlook.com
- (2603:10b6:208:31c::19)
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] sched_ext: reject oversized exit_dump_len
+Date: Tue, 24 Nov 2026 10:05:03 +0000
+Message-ID: <20261124100508.1060692-1-rhkrqnwk98@gmail.com>
+X-Mailer: git-send-email 2.56.1
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -100,138 +95,37 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|MN0PR12MB6054:EE_
-X-MS-Office365-Filtering-Correlation-Id: b74b98f4-fab9-40e7-da7c-08df4a0f5bfb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|7416014|366016|1800799024|11063799006|261022075727099003|261026121527099003|10067099003|261009223027099003|56012099006|261022105027099003|261021121427099003|261102123227099003|261026140227099003|261028144727099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	LOBX+iw5X0zXiYZutcNNStLczlHdFweXtUUPf6HPt9//2y+7z/CNFlal/Qe/zSBLA+MS9+SaCbit0xh3rv+GDUC2p4WfRcTHM1RPf2SJzxaKmdJVdPnV4s+DEFYQqQjGXZoH0WXnKMnx6dGUyJ/f0Sdz+sQg/cIsnEdlw8hmClbQpm4JH/33gPABiLBKqkuP5KU6n40DVOMk6Nz9XkEpeGbjRfogft0xBeRgQiaUAX1o0bvLGAkEHzf9mkHYop1a5dXQ1ZMfvHp5BaF2rSzUASFwz9pOGYXCFIuh4CZozp9LGYv0XYTEd+tqODbJ4sv+SlJz1YLRMM3WEBRp3kTRDKecpg6JAEZf5JsoZc9KbrOqb7FdF9Mu3czmEABgzSjUVEldR3ezn4wmIB90NYNcEPfooT8K2Oh8go/AatYAk+8rImjPzp4xlkARL41+Yzg+Rna+fvykZaJJf33OhkGJDA71Pzq1r0WCBfiwy9n/7xVZYT6oE7NRZoV11+WGPvzs77/BWG+BTejZ3WojQUEmNVuaImt1L4aqxSeLecAE9ZDSWlT8bMwAM3wstabps8kxUsI+bs44SNay9+JJVq9rZhe8E5mgor55J3e3clKfaK05oRlstLjZX1zZn/K3LCwxoZ+g/hZ9N4pagxVTZGeVFfJYq5uDruGEWWr2Mv5Nh0M=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(7416014)(366016)(1800799024)(11063799006)(261022075727099003)(261026121527099003)(10067099003)(261009223027099003)(56012099006)(261022105027099003)(261021121427099003)(261102123227099003)(261026140227099003)(261028144727099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?CFUPXRdMMjzuoAqG+WjQfpDI7xqVB0DWe9SDBDNbemdYCcqrDn6nD3dnc+Hj?=
- =?us-ascii?Q?cOrkwy/PMkoUT3DoJxo36LNONS/iNmdsdo6mEnvfKR7ZyOC5ps5MND34xDqF?=
- =?us-ascii?Q?yZubZC9+v/Vbo36JNi2sKCk5Vftrt8uQ2lzSjL485mTVgDuG0+jnLqPIYDWg?=
- =?us-ascii?Q?UrzPlnTDMV8YL2OncrWqyHdQ9Jee9mGx/jx/WRn9ilEMtVhayjp4G4E029FE?=
- =?us-ascii?Q?6Ye5PUgdspZd8jEvJvlpzBeaPfpC/KR/MO3ASknpyO1gO76rfEdqAVF+9MBU?=
- =?us-ascii?Q?BYlvRFuw8XvQHA+3xcSTJCoSjG2sUFUPEnkDidVtn3fKn61dZfR81146jkR2?=
- =?us-ascii?Q?0PpCuzf/QcSq0A+8mkXce+TiSYPsIBsPnRRwMrUzT8lJ8A21ti8Ef3qo8mOD?=
- =?us-ascii?Q?z6kQiwx4T+o63Gonr6deOzZwflWR+RPgwkzO/DDjT/EJf6pHHoTHH2IYTddY?=
- =?us-ascii?Q?beNs9jlwbSPsfLHP72o4Ql6RkhU/6YNqNWN2kNeHnE46Vd5MXqggHP8J4gC1?=
- =?us-ascii?Q?0uFbEaroff7MP7bKY3HunLvGp+3sjXBAqXQEGI/eevcD/y8INnPvr+TqzKqc?=
- =?us-ascii?Q?3zfX/BnU3U5HSt5J+vjs/tTlU15VaFEfRuOYj8Uj9FX03MbJzjf3Zl5518Wb?=
- =?us-ascii?Q?X94k+bkXe2bQXtsAnteK2uIuVbRFaFszareG9k6nnwrlNMB4m/17C+cegg1C?=
- =?us-ascii?Q?jKqDYrJK2E9/UYn7VoKFyEjUG4xrXaoo1azTys4cUZ0IcvaM4Bko2To+14jT?=
- =?us-ascii?Q?Tsap33JbIVtKAydo8JI6gCUCWAm3Z+xNQ2TlNHCr9kUdgT2CPn56Aj/xCvr/?=
- =?us-ascii?Q?ldxoHDSGyO+Oz68t8QfsKiOQZcMPg8IvGQZo7I1Ovw9SaaZBfhgnVE6zISGq?=
- =?us-ascii?Q?8XFNI8OZPsxNItcCua3WE62OzNwqYp/uLIjPFtGU2yV0Tp4IH+mFo0N6GxbC?=
- =?us-ascii?Q?oSQGX4AAe9VhxjsykPy2jy45zIPKFEnh9TcV1wdSBjtIE5MOKQTx+qB13Y59?=
- =?us-ascii?Q?0+vrUToYZ9YizFvL8y2JMoMUfG58ph2sRSljfxCkUFW7HzSK8Q2lAmUM4Q1N?=
- =?us-ascii?Q?sEAC2oHyFvmqqe9K7zE1xBUSj9uqdaT+T0OdBQUvRSC8+hOUNgayLbN+Juu0?=
- =?us-ascii?Q?S/p51ozueqiBqhFVU5nhhz9U3dzrON31BD3C8tNEnMHpV0FBflSLDFC5ZHra?=
- =?us-ascii?Q?ljfX7qz1XByLC6FRr+z80iTmfoJp+qQZFLqWWu3B4A5RicTJHsUhjr0GWo2Z?=
- =?us-ascii?Q?gVg59nS8b0VcHz1i4KJwMMJIP+aPNfm/EXIAFE/4fLUoqbbR0jXnIs/lwNGT?=
- =?us-ascii?Q?rQlYvlsUBXA4iTAYsadxgBhd2q0QPCRB700RgOtAoJV2+Cjnu7paFID0SUuQ?=
- =?us-ascii?Q?aw0Oo4g/b1WvJQ9h0ZPh0CmssfZ0s5lRLQjVDUVq8VZC3nUddZp9kzm0gcbE?=
- =?us-ascii?Q?/jKh029qZatAbB35Ju7DFYXAxHF1TntfBUNXasHUl4/17PYPs1kpbla9zaVu?=
- =?us-ascii?Q?abf5sm8V86G4f92V2MlyD7o3nNJUPOwdvyVIqYHRnUtHEQXXLYddoNOcH9M+?=
- =?us-ascii?Q?rRmJK5TI13lUlkVbwznmZ1lFcj0qh4zG9gOFvSVd2Ht3W773w+8yywzJory1?=
- =?us-ascii?Q?BOTo3ecBIGhi3cebHYJ5RnZiBNftyzhLwNz99aDDYuQMOJ0zwYVf3v2Ppl5G?=
- =?us-ascii?Q?NFtmMl253ijlo+6A9GFr/SBJRM6Ogcc4uYYKzwxVLdDVpE+e?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b74b98f4-fab9-40e7-da7c-08df4a0f5bfb
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2026 09:43:14.1012
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: naBdBWBZsdcoNzNnDZyIHfSgarTl9XbGg6qUdaUajGfqk6nbp2PSLTKg6jo4NJC+taYQfEOz0G5p02v98lvAxA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6054
+Content-Transfer-Encoding: 8bit
 
-Hi Cheng-Yang,
+When a BPF scheduler is enabled, alloc_exit_info() allocates the exit
+dump buffer with kvzalloc(ops->exit_dump_len). bpf_scx_init_member()
+stores exit_dump_len from the struct_ops map value without an upper
+bound, so a length above INT_MAX reaches kvzalloc(), which warns and
+fails, and the enable fails with -ENOMEM.
 
-On Mon, Nov 23, 2026 at 10:54:51PM +0800, Cheng-Yang Chou wrote:
-> Since commit 4f8b122848db ("sched_ext: Add basic building blocks for
-> nested sub-scheduler dispatching"), bpf_scx_check_member() requests a
-> private stack for ops.dispatch(), and later also for ops.sub_caps_updated(),
-> whenever CONFIG_EXT_SUB_SCHED is set, which is the default.
-> 
-> The verifier fails the load with -EACCES if the JIT doesn't support
-> private stacks, so on architectures whose JIT doesn't, like riscv64,
-> no BPF scheduler that implements ops.dispatch() can be loaded.
-> 
-> The private stack is only needed when these operations nest, which only
-> happens with sub-schedulers. Don't request it if the JIT can't provide
-> it, and refuse to attach sub-schedulers in that case. Root schedulers
-> then load as they did before sub-scheduler support was added.
-> 
-> Fixes: 4f8b122848db ("sched_ext: Add basic building blocks for nested sub-scheduler dispatching")
-> Cc: stable@vger.kernel.org # v7.1+
-> Reported-by: JaeJoon Jung <rgbi3307@gmail.com>
-> Link: https://lore.kernel.org/all/20260810031418.95364-1-rgbi3307@gmail.com/
-> Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+bpf_scx_init_member() already rejects oversized dispatch_max_batch and
+timeout_ms values with -E2BIG. Reject an exit_dump_len above INT_MAX in
+the same way, so that the map update fails before the value is used.
 
-Looks good to me.
+Fixes: 07814a9439a3 ("sched_ext: Print debug dump after an error exit")
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+---
+ kernel/sched/ext/ext.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 10de6bd865e8..6dfe70249a7d 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -9221,6 +9221,8 @@ static int bpf_scx_init_member(const struct btf_type *t,
+ 		ops->timeout_ms = *(u32 *)(udata + moff);
+ 		return 1;
+ 	case offsetof(struct sched_ext_ops, exit_dump_len):
++		if (*(u32 *)(udata + moff) > INT_MAX)
++			return -E2BIG;
+ 		ops->exit_dump_len =
+ 			*(u32 *)(udata + moff) ?: SCX_EXIT_DUMP_DFL_LEN;
+ 		return 1;
+-- 
+2.56.1
 
-Thanks,
--Andrea
-
-> ---
-> On riscv64 in QEMU (-M virt) running for-7.4-fixes,
-> 
->   # echo 1 > /proc/sys/net/core/bpf_jit_enable
->   # ./scx_simple
-> 
->   libbpf: prog 'simple_dispatch': BPF program load failed: -EACCES
->   libbpf: prog 'simple_dispatch': -- BEGIN PROG LOAD LOG --
->   Private stack not supported by jit
-> 
-> With it, scx_simple loads and runs.
-> 
->  kernel/sched/ext/ext.c | 3 +++
->  kernel/sched/ext/sub.c | 6 ++++++
->  2 files changed, 9 insertions(+)
-> 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 10de6bd865e8..3248ed57c2bb 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -9294,6 +9294,9 @@ static int bpf_scx_check_member(const struct btf_type *t,
->  	 * sub-scheds and sub-scheds themselves but I don't know how to access
->  	 * struct_ops from here.
->  	 */
-> +	if (!bpf_jit_supports_private_stack())
-> +		return 0;
-> +
->  	switch (moff) {
->  	case offsetof(struct sched_ext_ops, dispatch):
->  		prog->aux->priv_stack_requested = true;
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index d2a20114eaa2..7c069a289766 100644
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
-> @@ -2246,6 +2246,12 @@ void scx_sub_enable_workfn(struct kthread_work *work)
->  		goto out_unlock;
->  	}
->  
-> +	/* nesting ops need private stacks, see bpf_scx_check_member() */
-> +	if (!bpf_jit_supports_private_stack()) {
-> +		ret = -EOPNOTSUPP;
-> +		goto out_unlock;
-> +	}
-> +
->  	cgrp = cgroup_get_from_id(ops->sub_cgroup_id);
->  	if (IS_ERR(cgrp)) {
->  		ret = PTR_ERR(cgrp);
-> -- 
-> 2.56.0
-> 
-> 
