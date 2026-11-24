@@ -1,54 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.232
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795560624;
-	b=E4Jbkz/v3vBBndcZuh9Qg3csjlq52jdwZv/rMBj813ywHFJ5C/0QTxCzpQ4OVhcFoIt6
-	 Qqf3WmqGqcMfPewtVmYrSLiGl3d5i5bQOJBz1lB2uK2sn8OUgvyYdW74XUFvxxcbIxymO
-	 bl1UTaAqRBMljgXToCkqUCxA1nT3TV5k8YrkPRFA3Iwj/ykPAZX9R2VnHBYm3zTR7r1jo
-	 N6mj6M7RRcJi4t0lq6jxX4ryXjMYZDThxEaDL0zO06zMBTsdHnfXdxwX+hwW6cykEfmDv
-	 tjJcLUIeZfrZTkZG1LbsDedFLOO3eHEgnF2s6NC1uNusS3rdYaCBZpdF8enZhTsVy/Q==
+	t=1795560769;
+	b=nzZSRU68hRzVwFQ/zR+zBo/u3Sj/5VdocIq6O23LiWrKW46ym8BONCXL1yDkX3u66kYh
+	 oUfwIbNdpmBgJVIF0g/4ybGfsbLGT80jiHeCByIugySDQBbKFPYDAnA6aE75IO5y51+s+
+	 8O7W/OpXWeMVjDiRUI+6ijsFSNc55Vd9AE1YlmIicg6Zou7mioO6lotjVJOMYGwefjXpH
+	 ExWTLIRDFklSnDuY5ape/JnfChdAdiGBHwghYMsrolQbBJAnndqZ/p8pZRdeYd8p5ZccP
+	 NjcCmjtiKrcpfG95jZeGM/iG/g/Or9spF2c1nztVoncpGKjLDpR9Yu3eDGAFdl6kzdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795560624;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795560769;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:Content-Language:From:To:Cc:References:In-Reply-To:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=g4vaPQV74jjxKmY5Gc7djswsfNDRHhGFLeRXFEbgJNo=;
-	b=TQ4I8S99clmJIppkhbahCETFXZ64zw+CZA117jCfBiIo3Mx5A2tDJ7HZmUiKx3eMGMKZ
-	 frpKGpdtJ+uJSIycGyXq0kr6Spr0CtjxW7m+WfI5eNHr0FXaXVFvrT+hUG/huSW9yCajf
-	 scIcQWm3HfIqtQwzo0a2dHEoTc7ph7goWpE8f/nHUDDKd+iNNM4Atpfw99Bewk8i4XUOr
-	 oLNZdf+4d9ZRIx07SnEGTOd3pDKmvvvoSLf7tPrNaHbb7Fv/OT0dUYPRvKw3EM1vy8TFN
-	 GDaZ8KsS1BgO20dN6FIwFk+my3sYbcyAVOwBLdsiCkqiqOc3YxqdDidmSwl77bDiAEg==
+	bh=yQKyOvawwuO1atA3WB4zRh3RGdgT+yLKezQY+myigjY=;
+	b=D8NW6yiQfwjDMZ2cUlWSqoHaXvoB1LP+AIStHD78aWZXnNovyEsQvfYLMC5//3Irmghr
+	 +P1rTd01IaQA/h2+YXNTD0u14l5cK8easNYvUI55Xnch/2mlOFWhHcLezx9qhCyCK89qf
+	 FtmYW3PJkfZn3ywepcJTRxl7brmgqAGsl60bOl6PWFgLsA7h9dKKh12dY/xG5vHI5xGfl
+	 bnAj/ukerem9ZhfyTPHk1yCeJpiJDobsoBr6hLjn0Mnii+my1zw6crhZ2cWpuUkaSW6gm
+	 Xsx+9wg73wZTG20DgLw1c5aR6cUXSjg9pYolzILfrnRR8T58C54vbe6uATY466ECtmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=TGN3MB1D;
-	arc=none smtp.remote-ip=95.215.58.124
-Received: from mta1.migadu.com (out-124.mta1.migadu.com [95.215.58.124])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=xBNIXxBk;
+	arc=none smtp.remote-ip=91.218.175.232
+Received: from mta0.migadu.com (out-232.mta0.migadu.com [91.218.175.232])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0965606A32A
-	for <sched-ext@lists.linux.dev>; Tue, 24 Nov 2026 22:50:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C0965606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC17606A321
+	for <sched-ext@lists.linux.dev>; Tue, 24 Nov 2026 22:52:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DC17606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=TGN3MB1D
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=xBNIXxBk
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=8BfRfPvn8AcFnIZbjU313Zrp06xfpw0x4Vh6IODgOkc=;
+DKIM-Signature: a=rsa-sha256; bh=7c2eK5ZRoYhnY7geiYrgE1DFXHDzKCbM54tHz+l+sEo=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795560620; v=1; x=1796165420;
- b=TGN3MB1DVf1+VRcO794TtcfIiuwbNED9ST83zuhScRqNYIqxyNejVcjXCVV8s0R3e1edMr+x
- GcAY4dmbV0TDb5sh2YHUKk4Jst+O+1rVfsqPZCQrZCvID+Smm7x5LjvLcZTQ3vcQDUPXnMfXFQc
- JW2hn/RUlxuFjQ5ufiFJGufY=
+ t=1795560767; v=1; x=1796165567;
+ b=xBNIXxBk2CRHLR+Tp+h7cgJ9NofnLvGZsK2zRJb3ARl2dQR72hbn/La/SJFu0TnvSwZ5/W4n
+ YzCcEYqNb3g8+RXTI6wF1rBrtBl/Q3rh1raWwGpoK4AkqKgdKYm28iuMQFiBzo+/sUMu3pQMmvA
+ gv9F0NioGN3bRnZGcEoI7enw=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 20d3cf91c86cc936;
-	Tue, 24 Nov 2026 22:50:18 +0000
-X-Mizu-Trace-ID: 20d3cf91c86cc936
+Received: by smtp.migadu.com with ESMTPS id 2315a5e7c2c7fbb3;
+	Tue, 24 Nov 2026 22:52:47 +0000
+X-Mizu-Trace-ID: 2315a5e7c2c7fbb3
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <10ad779b-708b-4b0b-b6af-54f3d7414f82@linux.dev>
-Date: Tue, 24 Nov 2026 15:50:14 -0700
+Message-ID: <a34def3c-0b04-4f28-823d-9c629285ecdf@linux.dev>
+Date: Tue, 24 Nov 2026 15:52:42 -0700
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -59,100 +59,95 @@ List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3 1/6] libbpf: Separate interfaces shared with
+Subject: Re: [PATCH bpf-next v2 1/6] libbpf: Separate interfaces shared with
  in-tree tools
-Content-Language: en-US
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-To: Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Eduard Zingerman
- <eddyz87@gmail.com>, Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Alan Maguire <alan.maguire@oracle.com>,
+To: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc: Quentin Monnet <qmo@kernel.org>, Alexei Starovoitov <ast@kernel.org>,
+ Andrii Nakryiko <andrii@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
+ Eduard Zingerman <eddyz87@gmail.com>,
+ Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+ Alan Maguire <alan.maguire@oracle.com>,
  Emil Tsalapatis <emil@etsalapatis.com>, Jiri Olsa <jolsa@kernel.org>,
  Song Liu <song@kernel.org>, Tejun Heo <tj@kernel.org>,
  Yonghong Song <yonghong.song@linux.dev>, bpf@vger.kernel.org,
  linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-References: <20261124224811.16134-1-ihor.solodrai@linux.dev>
- <20261124224811.16134-2-ihor.solodrai@linux.dev>
-In-Reply-To: <20261124224811.16134-2-ihor.solodrai@linux.dev>
+References: <20261121003403.2928928-1-ihor.solodrai@linux.dev>
+ <20261121003403.2928928-2-ihor.solodrai@linux.dev>
+ <adf5a84b-5d80-4c02-91f5-12def2c37304@kernel.org>
+ <faecfef3-ac9f-41be-8bc3-83a66572066a@linux.dev>
+ <CAEf4Bza6oDkY=mfa4PedrQYtjYnkefTs2m-wVatK9BGoNLd-wA@mail.gmail.com>
+Content-Language: en-US
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <CAEf4Bza6oDkY=mfa4PedrQYtjYnkefTs2m-wVatK9BGoNLd-wA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 2026-11-24 3:48 p.m., Ihor Solodrai wrote:
-> resolve_btfids and bpftool link libbpf statically and use some of its
-> internal helpers from libbpf_internal.h. That header also defines
-> logging macros and poisons kernel integer typedefs, so resolve_btfids
-> wraps the SHA-256 helper in a separate source file.
-> 
-> Move the declarations these tools use to libbpf_tools.h and include it
-> instead of libbpf_internal.h. The header is for in-tree tools and stays
-> uninstalled. No shared-library symbols change.
-> 
-> No functional change.
+On 2026-11-24 3:47 p.m., Andrii Nakryiko wrote:
+> On Mon, Nov 23, 2026 at 9:44 AM Ihor Solodrai <ihor.solodrai@linux.dev> wrote:
+>>
+>> On 2026-11-23 7:55 a.m., Quentin Monnet wrote:
+>>> 2026-11-20 17:33 UTC-0700 ~ Ihor Solodrai <ihor.solodrai@linux.dev>
+>>>> resolve_btfids links libbpf statically and uses its BTF header
+>>>> accessor, field iterator and SHA-256 helper. libbpf_internal.h
+>>>> also defines logging macros and poisons kernel integer typedefs,
+>>>> so resolve_btfids wraps the hash helper in a separate source file.
+>>>>
+>>>> Move the shared declarations to libbpf_tools.h and use them
+>>>> directly in resolve_btfids. The header is for in-tree tools and
+>>>> stays uninstalled. No shared-library symbols change.
+>>>
+>>>
+>>> Hi Ihor, the change in bpftool's Makefile looks OK and I understand the
+>>> motivation for libbpf_tools.h for resolve_btfids. But I find it a bit
+>>> confusing to move away from libbpf_internal.h only partially for
+>>> bpftool, and to have a split dependency on both libbpf_internal.h and
+>>> libbpf_tools.h. Have you considered moving the other objects that
+>>> bpftool requires from libbpf_internal.h to libbpf_tools.h as well?
+>>
+>> Hi Quentin, thank you for taking a look.
+>>
+>> I haven't considered that, and it seems like a good idea to me.
+>>
+>> The way I thought about this is that in practice libbpf has at least
+>> three levels of (userspace, non-BPF) API:
+>>     - public API defined in the symbols map
+>>     - internal API, shared helpers and such
+>>     - API for the in-tree users, that doesn't make sense to make
+>>       public
 
-I posted v3 with the refactoring as described in my comment [1].
+Hi, Andrii. Just saw your comment after posting.
 
-However now I'm thinking it might be an overkill. With the re-design
-vs v1, resolve_btfids now only needs btf_kfunc_proto_match(), if it
-includes relo_core.h, so the new libbpf_tools.h is not as appealing.
-
-Speaking of "API levels", libbpf_internal.h has already been
-functioning as the "in-tree users only", and there is another special
-user among those: the selftests (see paste below). So if v3 is landed
-as posted, we now have two "levels" of in-tree users.
-
-It's... fine, but not exciting. Adding libbpf_tools.h doesn't help
-that much, and dropping it doesn't hurt. It's all bikeshedding, not
-directly relevant to the series, ultimately caused by name collisions
-between resolve_btfids and libbpf (u32 poisoning and pr_* macros).
-
-Quentin, Andrii, Eduard, please let me know if anyone has a strong
-preference here, I'm happy to respin. Thanks!
-
-[1] 
-https://lore.kernel.org/bpf/faecfef3-ac9f-41be-8bc3-83a66572066a@linux.dev/
-
-$ grep -rl --include="*.[ch]" 'include.*libbpf_internal.h' 
-tools/testing/selftests/bpf
-tools/testing/selftests/bpf/prog_tests/bpf_obj_pinning.c
-tools/testing/selftests/bpf/prog_tests/btf_field_iter.c
-tools/testing/selftests/bpf/prog_tests/btf_sanitize.c
-tools/testing/selftests/bpf/prog_tests/core_reloc_raw.c
-tools/testing/selftests/bpf/prog_tests/cpu_mask.c
-tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-tools/testing/selftests/bpf/prog_tests/get_smp_processor_id.c
-tools/testing/selftests/bpf/prog_tests/global_data_init.c
-tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-tools/testing/selftests/bpf/prog_tests/kprobe_multi_testmod_test.c
-tools/testing/selftests/bpf/prog_tests/module_fentry_shadow.c
-tools/testing/selftests/bpf/prog_tests/perf_branches.c
-tools/testing/selftests/bpf/prog_tests/perf_buffer.c
-tools/testing/selftests/bpf/prog_tests/raw_tp_test_run.c
-tools/testing/selftests/bpf/prog_tests/recursive_attach.c
-tools/testing/selftests/bpf/prog_tests/sha256.c
-tools/testing/selftests/bpf/prog_tests/test_global_funcs.c
-tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-tools/testing/selftests/bpf/prog_tests/uprobe_syscall.c
-tools/testing/selftests/bpf/prog_tests/signed_loader.c
-tools/testing/selftests/bpf/prog_tests/tracing_multi.c
-tools/testing/selftests/bpf/urandom_read.c
-tools/testing/selftests/bpf/urandom_read_lib1.c
-tools/testing/selftests/bpf/trace_helpers.c
-
+Please see:
+https://lore.kernel.org/bpf/10ad779b-708b-4b0b-b6af-54f3d7414f82@linux.dev/
 
 > 
-> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-> ---
->   tools/bpf/bpftool/Makefile            |   6 +-
->   tools/bpf/bpftool/common.c            |   2 +-
->   tools/bpf/bpftool/gen.c               |   3 +-
->   tools/bpf/bpftool/prog.c              |   2 +-
->   tools/bpf/bpftool/xlated_dumper.c     |   2 +-
->   tools/bpf/resolve_btfids/btf_colors.c |  15 +--
->   tools/bpf/resolve_btfids/btf_colors.h |   4 -
->   tools/bpf/resolve_btfids/main.c       |   5 +-
->   tools/lib/bpf/libbpf_internal.h       | 162 +----------------------
->   tools/lib/bpf/libbpf_tools.h          | 184 ++++++++++++++++++++++++++
->   10 files changed, 199 insertions(+), 186 deletions(-)
->   create mode 100644 tools/lib/bpf/libbpf_tools.h
+> well, I don't think encouraging this with extra "libbpf_tools.h" is a
+> good thing. I'd prefer to keep stuff like that in libbpf_internal.h
+> (because it is meant to be internal to libbpf, with bpftool and
+> resolve_btfids being a special case)
 > 
-> [...]
+> Do I understand correctly that the problem is mostly in poisoning?
+> should we just guard those pragmas with #ifdef check and let
+> resolve_btfids disable that, if desired?
+
+Yes, this appears to be the root cause so to speak.
+An #ifdef may help as well, yes.
+
+> 
+>>
+>> I felt like the last one needs a header to reduce the amount of
+>> copy-paste. I don't like "libbpf_tools.h", it gives me "10k loc
+>> utils file" vibes, but I couldn't come up with a better name. Open
+>> to suggestions.
+>>
+>> I need to look into bots' feedback, and I expect there will be a v3,
+>> so I'll see what bpftool parts can be moved to the new header as well.
+>>
+>> Thanks!
+>>
+>>>
+>>> Thanks,
+>>> Quentin
+>>
+>>
+
