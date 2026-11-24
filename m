@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795531594;
-	b=iht2rsodTSpVnKtl2yfyw1Kme6EspOMzGFQne8F9zrmklXqq/vYgKoY7qYrNmwOpC/jP
-	 Pg6DTHMsVnfcUM+mUCPJvzVfOg0XcC224iszQEetTnyI32Hn5aDv0GNiBiFlWDvWFcYsd
-	 ZcvlEqZNOJC0jjxNTmQtM2VCfSCah1C/ImjExQvl2PfplFGaTMLeRVJFSA34yGm6PI2N0
-	 bhzZ2S59uzYmZB58/w9EtQ5Wl3zrwA6U6XW7yga3DOAdGWwD7Tzz8UQKAdzTbnnpF8Zod
-	 P8g3FH8wiNX9PAK3oPXArfl+FH2eh9kKZ27lQ1TXs+RJkPbV3A7bIiqDEmqmRIv1+1g==
+	t=1795532699;
+	b=azK0s0qzy+gKNDAtMVa/7bQ7E6/grR2wZ55EJztyXnQbnxPu7RwsTbg0wTZqgZRV1CEr
+	 iNqtLY+rHbpj/qdha2zcgp8xk5Mkm0jbg9wDmGvmgyXEbqdogQTuhwR13dI1TjW5JmhvC
+	 QKxnonj6gXOM3pXkWl04Reqie5pZRm1qS/BLaAf3qjCg6sQYTAvAJtM8UK+rP4QLoq+Ne
+	 shyuuRnc5IU5K71e88ueSN+4MS4sJhszJ27pss70MgqKcCyV+m6pE67Cer8H/wkM7PfcC
+	 8ER6cqto1wTO+tDLEuJr/Xvmxp4v980I01dEkHVwCaZZ/UADKtJDSMxCopAoNEaLoqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795531594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795532699;
 	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=3Lv9eGAT4sC6Ih+H1I7zqnLbKSrdGGSIjsX699t43rk=;
-	b=PAH2RbBlgGuL2rXLSFFMsrU+L3yisxnqQKgX5rGvp+S9RgOygfeJ8kfkAtD13xa5miUg
-	 XmygbkHJWDZhlh/XBwciTJRwEhr/XctM587TdiRBOJBrIjpjpvR5rEb9Kahg6pOKVoqqk
-	 eynrqF69GJ2uJqbOlJUqGcUgM4+M0tMYyOSUW9DIzYhHI8ho0aBt+myW92teHFOwymEhS
-	 4Ag5AaemGjh1yAtEeGht7HifLrvuEI+JEcxVtE9hdAY2bb5xPgX2r5ADmkvYNmmc6dVe/
-	 I5wzpdlxqfs7u9SQ9XdMhS/lzwDcYQ8/Dx48mWIEUalixBcB8DP/6tEGtjCN9RWWLtQ==
+	bh=bcl2PJvXV04dgKnYFVKpNkpO3QtdQMhmYVAKnAGdZ5U=;
+	b=05z7b/GS/HmPda4qbbKlLUBVafpccbq54UCbocMkXZUAaW34BLrePB0GjbSqPD3/LhFj
+	 Ugk2QDrCItbKegyJJHFBiQ1uuJH3ugYJo6VjK5qwPP1bDj5fJkyyAB1xlVAV6Q1F7xOhR
+	 ++3r04ZQDQjiCw7f76GF/bWZWVwHU209IyY//ZmFTCfMc1/9Y4VF/VicQ51Oc1ZUxAHVN
+	 t9aaD4dKLPlDmmwB9NGUbc3Cg5RTxIKkkjDfs5NFzbJflSfEv+GQWsRnnw3oV0zPASgUU
+	 rOovy3iNjKsK1f4q+z+VgcZpcPrVwpZyiM+j7r9tR8FgoE4kaJ4CUaYFbu0NQpsCicA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AjtNl1ZJ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=A54tfeEH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBEB606A31E;
-	Tue, 24 Nov 2026 14:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE87606A321;
+	Tue, 24 Nov 2026 15:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AjtNl1ZJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5752B1F000CF;
-	Tue, 24 Nov 2026 14:46:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=A54tfeEH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254171F000C4;
+	Tue, 24 Nov 2026 15:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795531593;
-	bh=3Lv9eGAT4sC6Ih+H1I7zqnLbKSrdGGSIjsX699t43rk=;
+	s=k20260515; t=1795532699;
+	bh=bcl2PJvXV04dgKnYFVKpNkpO3QtdQMhmYVAKnAGdZ5U=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=AjtNl1ZJJ/kWR35fgzCFeqiUpEtHyfkuEy2fOtvVlpQq014Di5dffjjwrqFzC7oLw
-	 PPypvHbaFyhjed6O7UnnvlttxnJr6JsafvACoySk9pft0bjZJulIvffj6KAIy239Bb
-	 x0Znpb4OyRuap6G6m2CEhedVjsC4IjnTiJgaMYBa5gy6YOzNr1I8GLadnYZd/+RbGd
-	 x2ZpSRUidubrrzMrtmfW4n3AdNQvNW5u8gSNOEapmOJDMlnL7mDxCJgXTQrSqUCyeO
-	 IRQz5TzFPzgEnP81cgC4wFRpdH6KDqyWRT2Y1PKNPdObxsUZkVsnVIO8WXSyaMiMu6
-	 glB8qBpidzDog==
-Date: Tue, 24 Nov 2026 04:46:32 -1000
-Message-ID: <63a74522c0ac114cc14846a3880424e3@kernel.org>
+	b=A54tfeEHcgsWXjg+SJ53FX8mlg9+10DfPv1euMYyBpDB+2aS2f1+SZdyb0Smj466K
+	 JDkUHT74+DWFsxn/ONKro23IhjtkV007bHB2YTuT07Tia15OnltAlmrTYxc95XP7Ce
+	 BOZAdG8C1iR8AAuwgws/UpLZGWsNdxScd2LMqGHKq7i8AiX4iNJKWUHSL1zuLa6u7n
+	 aK8BwXBh/t9FMyFHt/7SAIGZhI+Ifhj8C+Fx6FngmGMakuCZq2vRAMSE/RnSvXdko/
+	 kXN/m8i2pI0LLl6oRAoIncWLXPPelxtb3U539vogmQiUX6QXoKH+sXHpMBBO9Dh1fQ
+	 VVM9zQMaf3tPw==
+Date: Tue, 24 Nov 2026 05:04:58 -1000
+Message-ID: <322ab097a3e7c2dbae960aee2e8b4573@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: Peter Zijlstra <peterz@infradead.org>
-Cc: Kuba Piecuch <jpiecuch@google.com>, Ingo Molnar <mingo@redhat.com>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND v2 1/2] sched/core: Preserve WF_RQ_SELECTED across queued wakeups
-In-Reply-To: <20261123171637.3859594-2-jpiecuch@google.com>
-References: <20261123171637.3859594-1-jpiecuch@google.com> <20261123171637.3859594-2-jpiecuch@google.com>
+Cc: Peng Huang <penghuang@google.com>, Ingo Molnar <mingo@redhat.com>, Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] sched_ext, sched/fair: Drain blocked load on scx_switched_all
+In-Reply-To: <2b1ef28e12d12a1f894827b951910c1979d54d45.1795462673.git.penghuang@google.com>
+References: <20261122015729.2512645-1-penghuang@google.com> <cover.1795462673.git.penghuang@google.com> <2b1ef28e12d12a1f894827b951910c1979d54d45.1795462673.git.penghuang@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -62,14 +62,13 @@ Content-Transfer-Encoding: 7bit
 
 Hello, Peter.
 
-On Mon, Nov 23, 2026 at 05:18:01PM +0000, Kuba Piecuch wrote:
-...
-> Fix case 2 by preserving WF_RQ_SELECTED across the wakelist in the same
-> way WF_MIGRATED is, so that ttwu_do_activate() passes
-> ENQUEUE_RQ_SELECTED to activate_task(). Case 1 is unaffected.
+On Mon, Nov 23, 2026 at 12:13:51PM -0800, Peng Huang wrote:
+> Export __sched_balance_update_blocked_averages() and call it on each
+> CPU in scx_enable()'s per-CPU scx_switched_all() loop so pending
+> cfs_rq->removed entries and task-group propagations are drained cleanly.
 
-Like Tao's ENQUEUE_RQ_SELECTED patch, this one only affects sched_ext. Can
-I take it through sched_ext too?
+This looks fine to me and this probably should go through sched_ext too.
+Can you please ack?
 
 Thanks.
 
