@@ -1,72 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.72
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795606122;
-	b=UGG1UwjJXp9MwzAYB1uRvR6AAkdqgGgcLCtWv6EAp/c855ie2dLXGvPTU+8PC4RVbsv/
-	 PeJSYYFtP+3VRQiQFEiN/ZaKCLT4x6iswhbacMijkREfwpa/03nEGQvaoR4YV2wGdwXRE
-	 egJN4ZqY7GEowsDIO44VxNO6FIRzAGdusmHwryxa63tJrD9DOQeqzxhgLqeOV9lcM0tXm
-	 36lBMy3FGsATHxaULnbnUVi6v7wiBX43VQcXpnZZa8Bz+kj9T4tpPsZGctLG4aFXKg0lw
-	 TfrT9/LFELOyYix2+Ci/jgA23rQPq+XszTV7kCyWtGjkWajJjEMSFWBq4EK3hrjyBCA==
+	b=MX5qxHXabMauS3l9LzP2/oL2jMr0s1oU6wR1VamP94eS+mDf54x9EoeAEPmdUe90P5tL
+	 wCqfj5uunopo6iqhsT0YGWpBCnrCpuKXuumt0sEycGfzpDpvjdsU3eCHd4PQNKPfdh5Th
+	 1I5/46lXcXedquG3NBaLSdgM4luz7yqKvCWrqwj6ODxyUTsd9EHcdg57V/iFjwBbv6tBi
+	 ilxnDhZSOmdkRHjqXav0h++aI0JAWrECmLd3JUMS1nwqgif5S2EMXRLEMB4tNlXYt07Do
+	 KMD4SrMXpmQYAg6Sdz03fdlOkmuxZsnycz8MqJPk7MH29qnlfgi9DiQ78KiGbTWNsIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795606122;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
-	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=ZYZwLQfYchu10NlP8wZM+iDrPykFs3AzjnpE4jR9w34=;
-	b=gnVxFxiYzg3f9Ji9gEiVzQU+1FGt98woOl9aq2HH3HYh5gCENjJTm2pRHYAALLwABsEd
-	 dMpFfBISpvIKdiCD3fMC1AuXDr4vUCiGMOpO0GN9rpFrVIj0h1ooxtqi4yFNkSpgKsdqX
-	 h/r8/FhpDWNTSlBZ0H/yBs8qZUk7WXexfJs8x4qmG/4D+63x2AeAPu/xNH8xr4vEGQGzI
-	 tKDL9RRywboNn/lG+llMf/SMNZGoR0mjta+BVHpr08asU3XH1H7KoBUIpmztIU12HXOEh
-	 4L8tvOfOkxuLn2XoL0I87OkJwOYzMLEYduTRCu1W+aX/g8tXRYyfus0mfIT9TpOE3mg==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type;
+	bh=hjrWtGqjdTkvqbgRLAZG9FmN7gaLopZWwSHoe/hNnVk=;
+	b=h3tmHLRJ1Ny3jsHZwDQkh5TydzMf9a9tEVjJqX5OpZFGEuFr0T73vLknNNrpuMhk2UBe
+	 SpGyvnip8qUvtpQaLccsHSbtrdewLGKZGEbUtuvwndZcoNY0M1CS4tSn7iekkdsRXmV29
+	 IFOYZlOejMAT9SvdSkW1lV3fS7j/TSlH1lm1Mu8VKu05Q4gXyzbuNhtsP6qlvBxNS8svd
+	 WaA4ApUUnsW3XgttkPyyV5W8amjEyxsgWw/T3AJigam7yt3kSjH6bK4SSOaN36s4CW7jT
+	 wtSr2nOmXl80TnzpAa0R4aK8Oov5QprYG1wPAjzbBZDuiSjuqhy3GJzgIUdpOfj7btw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=PusHJyW9;
-	arc=none smtp.remote-ip=209.85.221.72
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com [209.85.221.72])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=QFxFRZRU;
+	arc=none smtp.remote-ip=209.85.128.71
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E73A606A327
-	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 11:28:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E73A606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898EF606A32D
+	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 11:28:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 898EF606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=PusHJyW9
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-4a7c864000eso3334797f8f.0
-        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 03:28:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=QFxFRZRU
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4bb66fc3aa6so48420985e9.2
+        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 03:28:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795606120; x=1796210920; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ZYZwLQfYchu10NlP8wZM+iDrPykFs3AzjnpE4jR9w34=;
-        b=PusHJyW9rLycbzxwulSj7P6+sWFSW2C6AuH/v8HVdsBmcFS11cvvVW+yODQB247nb/
-         BDU7JrtzSJdAKuMThewXZ49OUte4ZC7DNjx8uOeeQz1pZGTphz6Zr9Fz1e3kne4NOXD/
-         GB+1AGzi9wMT4dTM+0c5w6k1lbbxqhvNAALGGiSxLWRR8XITH/6+CgSMrtDaoBtJhBGe
-         18cw4AkAfNDlqNalvfKuw7kPJrxH/opkLs96dB7xKEllhGs5JblA66Vwow/8qHRh61dG
-         fh16z5a8Je919aOPPIxVa5wnSE6aFFuwJpynoV2qkiKNgvgGXTJe7OVo/ORSV2gW8UdA
-         cH4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795606120; x=1796210920;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20260707; t=1795606121; x=1796210921; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ZYZwLQfYchu10NlP8wZM+iDrPykFs3AzjnpE4jR9w34=;
-        b=kYtucXw8ESJYpIWXNAXemr6x5xjMpXyCzdXe+MIkxXvCvuVmYaKhmqqvtHkcbzaMo+
-         gliXwATmTNY7ZN0w2UOSmABiTRk8HPUvFDP473wsfVoU0IywJ02YAt8JGQodt/hDknPr
-         rpmSbUgSi0onxMerth0sW5ijf42UDi8d1Cr2rdAJHSKp0I51CWbS2LuKuh1YLooZ6UVe
-         bLr5S7NvElzdyeSvTm9A8KoQI6RdntB3E+0nTZkB7JjVhhQ6/OKkmc1doY3m0QpND5x4
-         kUSmZ/5GCDtmB5aPrK5e3xB6Qxv6bSx7evFurjhmD5+lsTLNoAzmaMIyuOxxlPMG8iq1
-         xWiQ==
-X-Forwarded-Encrypted: i=1; AL+hErH17LWfFohhL/2DSEPW3yknzVKw7FPy8CAiRT+YvHNRuxK3ju0fPkcn5t0Vk4oA3pqmNQJ7VrAAbTY=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/rSnojEeQvD43UCIgrYIx8KrosubySiZfTqaZmwr2tBZ4c1Fc6
-	MHIZXsh3IieRUoQjhFhfsLQVUwXprulxNTUjgKU+O6mR5OTY2Fx9/OkpRyzge0bpVv2bcFM28Kc
-	l1D9tfB3gkFXIYQ==
-X-Received: from wrpg9.prod.google.com ([2002:adf:f3c9:0:b0:4b7:8eec:f673])
+        bh=hjrWtGqjdTkvqbgRLAZG9FmN7gaLopZWwSHoe/hNnVk=;
+        b=QFxFRZRUcUOGyZkNchZQKV7kc8b54FdzFiltpJ5A1M0zc3VgslCd2FuOfdmuyx0E7t
+         Js4gyBE7L7Zx/+dc+Qo339hEkItwsUnwiJF5bmDNBhmXVqWFNfEFX8fGajmLsxrkkveP
+         jOYAKtANWDlyPhsiPX/IDd4N/Y6dSYlyspRrHELDPg1LpqamyUU2lvLXnSmIZtvMMqnc
+         CabbivciTBHCfuiI20xTS04peI5WfeCK1jxYRU7I3goFnLW6UWT4ykgnT02sSZYQGTIz
+         VN9w+a3bh2SdTG9QrVwR6Bk97Gw/5fWcCL4VWkYdNWH4fKwmElGq8rSbE8SVef4Bu21/
+         tClQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795606121; x=1796210921;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hjrWtGqjdTkvqbgRLAZG9FmN7gaLopZWwSHoe/hNnVk=;
+        b=O2QNHKEWaFyzRb6+2U3+XYqATd+G+fxL338Y5c62P1Z5i9WpaRBAJUd0g9126HoQ7I
+         SedKS0ODZ+nw1DmE3a9GD2nBMRud7ZGpQ1PgtaxOsjAcJRvzdQpj7hBx2+sSs6Xipiyz
+         +ob9ugR/+WwsHtJc7nSt2pW1Fx8xxCwfghik112n9w+08LW6TOkUOpn6H0nqL6Rdma4U
+         UtApov2EuMVB8a/Y5/549lPjWlMupNEpKe2Fj2x8Q4WjkGkM/0OpnR5C1XoN1Ka6ydnr
+         DYJ463D8OOZ+Pr3Nay+VApskjll1dwzu/h04lo5qEKBOIPGPONFYFKLn9MWcKibDSFR6
+         UxYw==
+X-Forwarded-Encrypted: i=1; AL+hErENKARSHMQhbF2mVyDURZF/n7H4R1EHzPo990C4j5VzU+L+AUpVLjCIEDjV1xLmcDj8Q8gzoOfxiEU=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9Q2qnw1/W71CKqMrbtQGhibgycmmut/cED2Dv4+a1m74hRcinw
+	G7SbC3eETRGKtOoAO2JzehV+bfi1wuXS7YjbGT2kk7qQOspleVOTYW/YHM8RWq00BT/mxl4miAF
+	GaEuqGOVjmvAojg==
+X-Received: from wrxf1.prod.google.com ([2002:a05:6000:1281:b0:4a5:46fd:392d])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6000:4812:b0:4a6:bc53:247f with SMTP id ffacd0b85a97d-4abb7d45e6cmr30551834f8f.48.1795606119414;
- Wed, 25 Nov 2026 03:28:39 -0800 (PST)
-Date: Wed, 25 Nov 2026 11:28:34 +0000
+ 2002:a05:600c:4585:b0:4a1:83f0:7c91 with SMTP id 5b1f17b1804b1-4bb8882948dmr358570145e9.18.1795606120690;
+ Wed, 25 Nov 2026 03:28:40 -0800 (PST)
+Date: Wed, 25 Nov 2026 11:28:35 +0000
+In-Reply-To: <20261125112553.1539758-1-jpiecuch@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -76,10 +79,10 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
+References: <20261125112553.1539758-1-jpiecuch@google.com>
 X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
-Message-ID: <20261125112553.1539758-1-jpiecuch@google.com>
-Subject: [PATCHSET v2 sched_ext/for-7.4-fixes] sched_ext: Fix ops_state and
- ops.dequeue() locking in dispatch
+Message-ID: <20261125112553.1539758-2-jpiecuch@google.com>
+Subject: [PATCH v2 1/4] sched_ext: Factor out release_dispatching_and_lock_task_rq()
 From: Kuba Piecuch <jpiecuch@google.com>
 To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
 	Changwoo Min <changwoo@igalia.com>
@@ -87,124 +90,119 @@ Cc: Kuba Piecuch <jpiecuch@google.com>, fangqiurong <fangqiurong@kylinos.cn>,
 	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-finish_dispatch() hands a task claimed in SCX_OPSS_DISPATCHING to
-scx_dispatch_enqueue(), which inserts it into the target DSQ and only
-then, after dropping the DSQ lock and (for SCX_DSQ_GLOBAL) after calling
-ops.dequeue(), stores SCX_OPSS_NONE. When the task is remote,
-finish_dispatch() holds the dispatching CPU's rq lock, not the task's.
-This causes three problems.
+Factor the holding_cpu + SCX_OPSS_NONE + switch_rq_lock() handoff out of
+dispatch_to_local_dsq() into release_dispatching_and_lock_task_rq() so
+that other remote dispatch paths can share it.
 
-1) The task is visible on the DSQ while still DISPATCHING. Another CPU
-   can consume and requeue it before the dispatcher's final store, which
-   then overwrites the new state. Without the waits described below:
+No functional change.
 
-     CPU 0 (finish_dispatch(), rq0)        CPU 1 (rq1 == task_rq(p))
-     ------------------------------        ------------------------------
-     QUEUED -> DISPATCHING
-     insert p into global_dsq, unlock
-     ops.dequeue(p) ...
-                                           scx_consume_global_dsq()
-                                             moves p to local DSQ
-                                           reenq_local()
-                                             ops.enqueue(p)
-                                             ops_state = QUEUED(qseq')
-     ops_state = NONE
-       -> QUEUED(qseq') is lost, later
-          finish_dispatch()es of p see
-          NONE and drop it, p stalls
+Cc: stable@vger.kernel.org # v7.1+
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ kernel/sched/ext/ext.c | 73 ++++++++++++++++++++++++++----------------
+ 1 file changed, 45 insertions(+), 28 deletions(-)
 
-   Commit 7de9a6fb44ea ("sched_ext: Wait for SCX_OPSS_DISPATCHING before
-   reenqueueing a task") and commit 2935062be771 ("sched_ext: Wait for
-   SCX_OPSS_DISPATCHING before moving tasks off DSQs") paper over this
-   with scx_wait_dispatching() at every place that takes a task off a
-   DSQ. Consuming a task from the global DSQ then busy-waits, with the
-   task's rq lock held and IRQs off, until the dispatching CPU returns
-   from ops.dequeue(). Lockdep can't see that dependency.
-
-2) For a remote task dispatched to SCX_DSQ_GLOBAL (or to a destroyed
-   user DSQ, which falls back to the global DSQ), task_leave_custody()
-   does an RMW of p->scx.flags without the task's rq lock. DISPATCHING
-   keeps dequeues away, but other paths update p->scx.flags under the rq
-   lock without dequeueing:
-
-     CPU 0 (finish_dispatch(), rq0)        CPU 1 (scx_sub_enable_workfn())
-     ------------------------------        ------------------------------
-     QUEUED -> DISPATCHING
-     lock global_dsq, insert p
-     tmp = p->scx.flags
-                                           task_rq_lock(p)
-                                           p->scx.flags |= SUB_INIT
-                                           task_rq_unlock(p)
-     p->scx.flags = tmp & ~IN_CUSTODY
-       -> SCX_TASK_SUB_INIT is lost
-
-3) In the same case ops.dequeue() runs with scx_locked_rq() pointing at
-   the dispatching CPU's rq, although SCX_CALL_OP_TASK() promises the
-   task's rq is locked. kfuncs that operate on the locked rq then act on
-   the wrong CPU, e.g.:
-
-     scx_dispatch_sched()                       /* CPU 0, rq0 locked */
-       ops.dispatch()
-         scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL)  /* task_cpu(p) == 1 */
-       scx_flush_dispatch_buf()
-         finish_dispatch()
-           scx_dispatch_enqueue(rq0, global_dsq, p)
-             ops.dequeue(p)
-               scx_bpf_cpuperf_set(1, ...)
-                 scx_error("Invalid target CPU 1")
-
-Patch 1 factors the holding_cpu + SCX_OPSS_NONE + switch_rq_lock()
-handoff out of dispatch_to_local_dsq() into
-release_dispatching_and_lock_task_rq() with no functional change.
-
-Patch 2 clears ops_state in scx_dispatch_enqueue() while the target DSQ
-(or rq) is still locked and before ops.dequeue(), so a task found on a
-DSQ is never DISPATCHING. finish_dispatch() now inserts a remote task
-into the global DSQ under the task's rq lock via
-dispatch_remote_task_to_global_dsq(), using
-release_dispatching_and_lock_task_rq(). On a destroyed user DSQ,
-scx_dispatch_enqueue() clears ops_state after scx_error() and returns
-without falling back to the global DSQ, leaving scx_bypass() to recover
-the task. SCX_TASK_IN_CUSTODY is only set with the task's rq locked,
-lockdep assertions are added, and the now impossible QUEUED &&
-!IN_CUSTODY retry in ops_dequeue() and a stale comment in scx_bypass()
-are dropped.
-
-Patch 3 removes scx_wait_dispatching() and all its callers, as it can no
-longer find a DISPATCHING task. ops_dequeue() keeps its own wait.
-
-Patch 4 makes dequeue_remote check in ops.dequeue() that
-scx_bpf_locked_rq() is the task's rq, and adds a scenario that inserts
-tasks into SCX_DSQ_GLOBAL from remote CPUs. dequeue_remote fails without
-patch 2.
-
-The patches were written with the help of an AI coding assistant.
-
-Changes in v2:
-- Split release_dispatching_and_lock_task_rq() extraction out into a
-  separate preparatory patch (Patch 1) (Tejun).
-- Patch 2: On a destroyed user DSQ in scx_dispatch_enqueue(), clear
-  ops_state and return instead of falling back to the global DSQ,
-  letting scx_bypass() recover the task and dropping the bool return and
-  finish_dispatch() retry (Tejun).
-
-v1: https://lore.kernel.org/all/20261123170846.3165648-1-jpiecuch@google.com/
-
-Kuba Piecuch (4):
-  sched_ext: Factor out release_dispatching_and_lock_task_rq()
-  sched_ext: Fix ops_state and ops.dequeue() locking races in dispatch
-  sched_ext: Remove scx_wait_dispatching()
-  selftests/sched_ext: Test that ops.dequeue() runs with the task's rq
-    locked
-
- kernel/sched/ext/ext.c                        | 264 ++++++++++--------
- kernel/sched/ext/internal.h                   |   1 -
- .../selftests/sched_ext/dequeue_remote.bpf.c  |  34 ++-
- .../selftests/sched_ext/dequeue_remote.c      |  37 ++-
- 4 files changed, 208 insertions(+), 128 deletions(-)
-
-
-base-commit: 97e1c7d467d07734f8f5c8c64730e1f7c415bd46
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index efa1d01d03af..d6505d90e2c6 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -3166,6 +3166,48 @@ bool scx_consume_global_dsq(struct scx_sched *sch, struct rq *rq)
+ 	return scx_consume_dispatch_q(sch, rq, &sch->pnode[node]->global_dsq, 0);
+ }
+ 
++/**
++ * release_dispatching_and_lock_task_rq - Release DISPATCHING and lock task_rq
++ * @p: task being dispatched, owned by the caller (e.g. through
++ *     %SCX_OPSS_DISPATCHING)
++ * @locked_rq: currently locked rq
++ * @src_rq: @p's rq, stable while the caller owns @p
++ *
++ * @p is on a possibly remote @src_rq which we need to lock. If dequeue is in
++ * progress, it'd be locking @src_rq and waiting on DISPATCHING, so we can't
++ * grab @src_rq lock while holding DISPATCHING.
++ *
++ * As @p is wholly ours, we can pretend that we're moving from a DSQ and use the
++ * same mechanism - mark the task under transfer with holding_cpu, release
++ * DISPATCHING and then follow the same protocol. See
++ * unlink_dsq_and_switch_rq_lock().
++ *
++ * On return, @src_rq is locked. Return %true if @p is still ours, with
++ * holding_cpu cleared. Return %false if @p was lost to a dequeue.
++ */
++static bool release_dispatching_and_lock_task_rq(struct task_struct *p,
++						 struct rq *locked_rq,
++						 struct rq *src_rq)
++{
++	p->scx.holding_cpu = raw_smp_processor_id();
++
++	/* store_release ensures that dequeue sees the above */
++	atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_NONE);
++
++	if (locked_rq != src_rq)
++		switch_rq_lock(locked_rq, src_rq);
++
++	/* task_rq couldn't have changed if we're still the holding cpu */
++	if (likely(p->scx.holding_cpu == raw_smp_processor_id()) &&
++	    !WARN_ON_ONCE(src_rq != task_rq(p))) {
++		/* the handshake is over, see unlink_dsq_and_switch_rq_lock() */
++		p->scx.holding_cpu = -1;
++		return true;
++	}
++
++	return false;
++}
++
+ /**
+  * dispatch_to_local_dsq - Dispatch a task to a local dsq
+  * @sch: scx_sched being operated on
+@@ -3189,7 +3231,7 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
+ {
+ 	struct rq *src_rq = task_rq(p);
+ 	struct rq *dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
+-	struct rq *locked_rq = rq;
++	struct rq *locked_rq;
+ 
+ 	/*
+ 	 * We're synchronized against dequeue through DISPATCHING. As @p can't
+@@ -3203,36 +3245,11 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
+ 		return;
+ 	}
+ 
+-	/*
+-	 * @p is on a possibly remote @src_rq which we need to lock to move the
+-	 * task. If dequeue is in progress, it'd be locking @src_rq and waiting
+-	 * on DISPATCHING, so we can't grab @src_rq lock while holding
+-	 * DISPATCHING.
+-	 *
+-	 * As DISPATCHING guarantees that @p is wholly ours, we can pretend that
+-	 * we're moving from a DSQ and use the same mechanism - mark the task
+-	 * under transfer with holding_cpu, release DISPATCHING and then follow
+-	 * the same protocol. See unlink_dsq_and_switch_rq_lock().
+-	 */
+-	p->scx.holding_cpu = raw_smp_processor_id();
+-
+-	/* store_release ensures that dequeue sees the above */
+-	atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_NONE);
+-
+ 	/* switch to @src_rq lock */
+-	if (locked_rq != src_rq) {
+-		switch_rq_lock(locked_rq, src_rq);
+-		locked_rq = src_rq;
+-	}
+-
+-	/* task_rq couldn't have changed if we're still the holding cpu */
+-	if (likely(p->scx.holding_cpu == raw_smp_processor_id()) &&
+-	    !WARN_ON_ONCE(src_rq != task_rq(p))) {
++	locked_rq = src_rq;
++	if (release_dispatching_and_lock_task_rq(p, rq, src_rq)) {
+ 		bool fallback = false;
+ 
+-		/* the handshake is over, see unlink_dsq_and_switch_rq_lock() */
+-		p->scx.holding_cpu = -1;
+-
+ 		/*
+ 		 * If @p is staying on the same rq, there's no need to go
+ 		 * through the full deactivate/activate cycle. Optimize by
 -- 
 2.56.1.839.g22a8290db9-goog
 
