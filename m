@@ -1,75 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.71
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.92.199
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795614379;
-	b=Fd438RZsvZak2+NI81UcPb7NeoHEJP7QK3ZOgNEa4BgDBpIaZWX3R+usL12tY81BrMFz
-	 oDc7jWHEb2Utl9yDjG2m3Z93OpRisrJM/j3BP2T3uuC49iLMgxi1gsL+k0AFqpGQVCDjC
-	 kDrm4Bbk1idQ893poeVUimHm24trcOhnxgrDzlGUQuLEoGZLFMCD2z9mUzKDnSt7A8E5j
-	 ZeBYi9PI4paiX0MLEwBgoA7WJTqsfJ8HnZSWVGH3VrbOgGWRlp20rcI76Kc1dNN1IL6m1
-	 8jHKxiXAA1kV/ln/JMBaJrrp6YbMyjB9Caa7QVMc5Pj/PGK/x1wfKPblYA1Li4T6pbw==
+	t=1795615051;
+	b=JUkiEZz8o9CWCeOCdre7+tQSX6xoi6QFxmsIZ6I8szyhunwe8tCZVIV/fbFAQtoCT6PA
+	 +kHMNHPL4pqDwJjyxEHjYrzp1eJmhChJxOAmx+yUidfMzPhFm/h7Cx07sgP1FAkqT0ECs
+	 qzJ65oHU6j0OueVjkjGXWbChxxzesbyHBa1f4fKF7IKo7NZscrrhNp5xV8if7APbxMpN4
+	 4aldbCcsp3LHUvyfS8S7Stv8R8jl8+yrvjZMRsDMun4q73AimBRKQL/IA5vYHZEA5ygI8
+	 ebJqtKwaAGsuH1NnXMgbxWV3CYhUYeouE9QlDJi2EA64Hu/tsWNr4EiWE9IFrPW0NPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795614379;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
-	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
-	 Content-Type;
-	bh=hkC7knUlQ5bvCCnLhIKdyMONWGi8riIRNrWMCj0qGvQ=;
-	b=t4YbIAfodMj96PuHVyZCLO+5IyW0GXJtGdn/3uC81ExuxpQEd+55HQZ70MuxTxGmGwu7
-	 n3SNQuS7JfMhYJfZdOQ7jqbKvz76bN1mj4Dol9t0HAd6j7iYPEERC2EAQW2nJaeD84vKG
-	 x+Ln2Kjz9vKMP5dTfK0xjWlRi/Kpi9ZbbCEsDrkzGpVAeWlGBR5mKQpXS7ulCGrwnxt0z
-	 /fA90Q4GakypbrGA0EkPvVvqaphZ7hIUeXw0hUY7DyfdbPf4jUuanPqNNJoe0qmUx27Yv
-	 g8WtcLgAJDfmteJYgPJjTTFBm/CmBGtPJpeZDP3ZxiS4sEKYtvOqp5PSrM9emGRDN8A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795615051;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=gOrWyrBHu08rumkxjoyMPHrvfJq60EHLDWwwyU2TDXw=;
+	b=eMxiDHlu1W7DP798dTMBtCOg5GArTQBE2XDX3IZSb+2ycyOkvYWPCUL2cz1CjxlwYBEA
+	 xkE4wcTJjMEaBtKxO47AQ078Ser6UucbQOgW2p/7yssS+q3IFIgKvAPSWwxnVSgU3OxNa
+	 ODAO7UO9x7vXCH2PNvsO+WiyLveUVDt5M6QsMFOhN2pTsO5Fmgw/jCUVDWo5aE/75Y6tC
+	 XQVAPu59Mf7bIWmhvVws3Mri/ujEPuYvLktenSt8GvsNBXEVrdrb1qo4WwHxlVNm6JV6x
+	 2p1JT4E+47zoCBZcRCx4SvTWJwqdKk53UBPkINBuEWSUBwRDWB0aXdmcE8W72PenHtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Jo1s8UEE;
-	arc=none smtp.remote-ip=209.85.128.71
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=infradead.org;
+	spf=pass smtp.mailfrom=infradead.org;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=Te9hgV1v;
+	arc=none smtp.remote-ip=90.155.92.199
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC80606A32D
-	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 13:46:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CFC80606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34260606A321;
+	Wed, 25 Nov 2026 13:57:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 34260606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Jo1s8UEE
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4bb64c99bb8so47075545e9.1
-        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 05:46:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795614377; x=1796219177; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hkC7knUlQ5bvCCnLhIKdyMONWGi8riIRNrWMCj0qGvQ=;
-        b=Jo1s8UEE3CbBJCIiiKMqj0sIxmA1b6SJlgvCLjoLH7awjt5CqY+UG2SEfqUKA6XJ+K
-         LQq/tR25gEVAUpLvzhR9kjZ8kJASkLJTGjHY6Qqtn822g3E/HggvpKfqNPddHQUYOYCd
-         bbL2RWXyUmB2+IyDY1kTKQPx0VxUa1wmkQOu1hoJ5aPM436Qy9fHE0QkVf4qbMD4DCvw
-         pkm5zXE4VZ3cI12exFQ6Z4j1gi1YwiZJPTLADZZwVOo8n5MMX5JD/LAsdTvYUuMYD/TR
-         +GDrqrlEHTLnulHwtnVlLLO7uafrLs95vNt27RyUsK/8X00n3Jtf2NHXnevfRLJ+s7eU
-         NCtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795614377; x=1796219177;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=hkC7knUlQ5bvCCnLhIKdyMONWGi8riIRNrWMCj0qGvQ=;
-        b=pT5krV2+DCItCO/bdhC8SPNSOzvXvuI+tyoDciqt/qonX3YTItTlybJmLKy0JoL03e
-         N+9Inie/VrzqpBskb7uyQkC6PY4i7bWjml3F9wrIO9G3/bHjCLhAIOEM3swizNooqw8X
-         0QzfGqYZqPW2dUUuZOk3vfC685sVy79itnRmOvu31gRzntDjNlDycMsKI2S1HQVhJz66
-         +8witjOElJ+yMeK6Q12Eweyg7h+GE+l5pnfPPvRB+B5nDz56blcmzSbn2Mb58N5DaMMa
-         Il1EGm4VL6rEAymokTh/t1tFdfiUE4JxHaVbmC0ccl0NOrq+hk48IL4W6MJHCpA6pCVQ
-         yEVw==
-X-Forwarded-Encrypted: i=1; AL+hErGOcP89m0x5t40sFmQhfr9rF7IWa1KH51xJVMIlERzFyJXeIhgIiRxWtab/7Jq8tVTIhkA6eDKwXhU=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8GE332OCuRT0ex9xGHj+MaMAEa5MzWaF3Hn6TEshPt8dplLfZO
-	/wa4cLHqW7/2IVt9iFA9DJyfDo9k/5knZuN2g8BXHkOVD+TwgN50YxIVIhCo9cHaj7ISJ4dEh3G
-	dR9IAVtqNa8HFqA==
-X-Received: from wmcn22.prod.google.com ([2002:a05:600c:c0d6:b0:4a1:f1e1:c6d6])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:5487:b0:4bb:5de1:e92c with SMTP id 5b1f17b1804b1-4bb88813157mr368724395e9.26.1795614376787;
- Wed, 25 Nov 2026 05:46:16 -0800 (PST)
-Date: Wed, 25 Nov 2026 13:46:16 +0000
-In-Reply-To: <2026112535-handcraft-glance-0edb@gregkh>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=Te9hgV1v
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=gOrWyrBHu08rumkxjoyMPHrvfJq60EHLDWwwyU2TDXw=; b=Te9hgV1v6uYq0M1ajAcGUIIcs3
+	hW2RnD5SP0gzH2RuCUpJ8/JsC32feZdOP2cJG5PytdnX7jSoJkbZwWzEIOIo8DbL62zhlAOk8kDSQ
+	/8mnf/fQNbZhZ/qWtWJNJyHKhgIxSZRZgJTru9ERxQrA0DlzRSRm0hXKiAEyTAqr4euGf03lAdLpL
+	KyTj77b49He2p/xHTwsd5TcndZBWRY08ldV4P3VcY1DAyA2oAGjj/fxh/cr4U0da1PfJTeyF2IomI
+	KlkiQmKzLSFdmbetoP/i9y8MJRQcv7HiFNeIHbmfJM3WrsCtl+Ub9sZQvjjf7Epd+cYRELG3HwwlI
+	YbZ4CDjA==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+	id 1xWDUz-00000005N8g-2QVo;
+	Wed, 25 Nov 2026 13:57:25 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id BC1693008BF; Wed, 25 Nov 2026 14:57:23 +0100 (CET)
+Date: Wed, 25 Nov 2026 14:57:23 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	David Dai <david.dai@linux.dev>, Ingo Molnar <mingo@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Hang Zhengyang <hang.zhengyang1010@gmail.com>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCHSET sched_ext/for-7.5] sched_ext: Start ext_server from
+ the tick
+Message-ID: <20261125135723.GD2668804@noisy.programming.kicks-ass.net>
+References: <20261125103420.2785659-1-tj@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -78,99 +79,53 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <2026112535-handcraft-glance-0edb@gregkh>
-X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
-Message-ID: <20261125134541.3432982-1-jpiecuch@google.com>
-Subject: [PATCH 6.18.y] sched_ext: Read exit_kind before flushing in scx_flush_disable_work()
-From: Kuba Piecuch <jpiecuch@google.com>
-To: stable@vger.kernel.org
-Cc: Kuba Piecuch <jpiecuch@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>, Sashiko <sashiko-bot@kernel.org>, sched-ext@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261125103420.2785659-1-tj@kernel.org>
 
-scx_disable_workfn() sets exit_kind to SCX_EXIT_DONE before it tears the
-scheduler down. scx_flush_disable_work() reads exit_kind after syncing
-disable_irq_work and flushing disable_work, so it can observe DONE from
-a disable_work that was queued after its flush and return while the
-teardown is still running:
+On Wed, Nov 25, 2026 at 12:34:18AM -1000, Tejun Heo wrote:
+> Hello,
+> 
+> ext_server starts when the first task is enqueued on a CPU's rq and stops
+> when its pick finds no task. As the BPF scheduler can run a task on any CPU
+> whichever rq it is queued on, tasks can wait for a CPU whose ext_server has
+> stopped with no enqueue to start it again, and a higher class task which
+> keeps the CPU starves them until the watchdog fires. scx_central with a
+> SCHED_FIFO task spinning on a CPU shows it.
+> 
+> Peter pointed out the problem when ext_server was being added [1]. Hang's
+> recent patch which starts ext_server on every enqueue [2] helps but leaves
+> cases like the above.
+> 
+> This patchset also starts ext_server from the tick, while a higher class
+> task is running on the CPU:
+> 
+> - If the local DSQ has a task, right away. This covers a task which another
+>   CPU inserts after the pick came up empty.
+> 
+> - Otherwise, if any task is runnable on SCX, at most once a server period.
+>   Only ops.dispatch() can tell whether the BPF scheduler has a task for the
+>   CPU, and the server's pick calls it.
+> 
+> Whether any task is runnable comes from per-node counts of rqs which have
+> tasks, which a per-node timer lowers lazily, and a global count of such
+> nodes, which is all the tick reads.
+> 
+> This is a departure from how dl servers are usually driven and there may be
+> better ways to go about it, but it does seem to solve the problem properly
+> without adding much overhead.
 
-  CPU A                          CPU B
-  -----                          -----
-  scx_vexit()
-    scx_claim_exit() -> true
-                                 bpf_struct_ops_map_link_detach()
-                                   bpf_scx_unreg()
-                                     scx_disable()
-                                       scx_claim_exit() -> false
-                                     scx_flush_disable_work()
-                                       irq_work_sync()      // not queued
-                                       kthread_flush_work() // not queued
-    irq_work_queue()
-  scx_disable_irq_workfn()
-    kthread_queue_work()
-  scx_disable_workfn()
-    exit_kind = SCX_EXIT_DONE
-    scx_root_disable()
-                                       atomic_read() -> SCX_EXIT_DONE
-                                   bpf_map_put()
+This is all pretty awful; at the same time I don't really know if I
+have a better solution at hand either :(
 
-Once bpf_scx_unreg() returns, its caller drops the struct_ops map
-reference, and the struct_ops trampolines can be freed while
-scx_root_disable() is still running and can still call into the BPF
-scheduler, e.g. ops.exit().
+Could you perhaps punt the responsibility to the DSQ? Each DSQ has both:
 
-Read exit_kind before syncing and flushing, with acquire ordering paired
-with the atomic_try_cmpxchg() in scx_disable_workfn(). DONE is only set
-from disable_work, so once it is observed, the following
-kthread_flush_work() sees the queued work and waits for the teardown to
-finish.
+ - a count of how many tasks it has
+ - a sense of what CPUs it targets
 
-This patch was created with the help of an AI coding assistant.
+Right? So can it make sure nr_tasks CPUs of its destination are running
+ext_server?
 
-Fixes: d99f7a32f09d ("sched_ext: Fix scx_flush_disable_work() UAF race")
-Cc: stable@vger.kernel.org # v7.1+
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/sashiko-outbox-195908@kernel.org/
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-(cherry picked from commit 3133107d98057595c0af39ff907c852134926912)
-[ jpiecuch: applied kernel/sched/ext/ext.c hunk to kernel/sched/ext.c;
-  kept error_irq_work instead of disable_irq_work. ]
-
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
----
- kernel/sched/ext.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index af5828f09304..882e06a76a16 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4247,10 +4247,17 @@ static void scx_flush_disable_work(struct scx_sched *sch)
- {
- 	int kind;
- 
-+	/*
-+	 * scx_disable_workfn() sets SCX_EXIT_DONE before tearing down. Read
-+	 * exit_kind with acquire ordering (paired with atomic_try_cmpxchg() in
-+	 * scx_disable_workfn()) before syncing and flushing so that, once DONE
-+	 * is seen, the following flush observes the queued work and waits for
-+	 * the teardown to finish.
-+	 */
- 	do {
-+		kind = atomic_read_acquire(&sch->exit_kind);
- 		irq_work_sync(&sch->error_irq_work);
- 		kthread_flush_work(&sch->disable_work);
--		kind = atomic_read(&sch->exit_kind);
- 	} while (kind != SCX_EXIT_NONE && kind != SCX_EXIT_DONE);
- }
- 
-
-base-commit: 4700e3adf3b24b39dd4929e9c6d62811ba3ccea8
--- 
-2.56.1.839.g22a8290db9-goog
-
+That might avoid all this extra accounting and timers you're adding just
+to keep stuff 'running.
