@@ -1,74 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.72
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.70
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620865;
-	b=dQNPC20kssyBLc8BzDViluGLKW42ArXiOJxlser1pI5ItHdcFXAT7NkSCZxaGvQYrW9O
-	 UZPlJX27oEPbcZPWeYo5t91eVLpmHjOoMEnAmLwRD73k6W02op0HAA2OBABJJuqrVew1E
-	 Xn6UuZ9NxqL+lysmSLFRZKLb3+RYqAY5Z0tyWlHVutWMkh6waZoWQZs6whiWTM5HIct0n
-	 9sc7zJi6FApxwZjKjyM5Qp18K/v9E7eXYER87awy8ZjbpL8m9xeHS1SzY/H3NHSulhxXl
-	 9GWJGc1qnJtqR02Bk4Q0F3W+vF2BvAtlkgAFltuUMzxsjUpyFccIJHNM2Y2MrdkUlIQ==
+	t=1795620866;
+	b=icmVUjGP7QKFI0AMfbPG+SrfZxI9366SR9+ZkdJxcfH5KqUoMhPvkXXdeTfY9bRCsgF0
+	 5lhHvs2mRQIflLkxNoU5VgO101r4MY5YBbdwFU/zqaajb2p+NBGw6OiV4K0NI6QxmsWnT
+	 LhZBa47bhakCgC3T4MnxcFK6rG9CAWPxtOgPdza55IXZ7Ghm9qdaoGSnRyLPgvwpogXsG
+	 DMJN1J6GF3AkyHYCNcfkh9VBEOzhguw3Z7JgsZm4ZhcKm8Jt0lHrAMr+lD6jKArblhztF
+	 B9XNxNPFN0Ix90tQYnha4I38020+dlzH/i6+inOcN+84rzK4utcjG9qxt8KeQ3uF9+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620866;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
 	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
 	 Content-Type;
-	bh=KinJlHopK6bybWfdH+Z3VhGjbEHAS/fH8cSNDqvPnfA=;
-	b=MV52i6s78cmnH1+ju38Onsd0XICc/HKx6iv4tPEKbyjbKbDtNyqeJvD8vcHLEGwMaDSm
-	 ReoEtowXKQZfF1Hh5G4lvBBqTU8dND0JeAuvneEBSEjT0hTZhcko+2uGYoOZjsFTZEbSS
-	 VEbggELJUmHEOCuJWR1WjKNgkX/+Pq28EnfVtH4uWmWF1PUbHAmBScjnNBh/P54kclej+
-	 ec4dkbBkShkvJ/ugDXwX3LEU9SO+rAr6syMEnzXh3vvLpQRCCWI8VmpT3RrxoaAV73uLb
-	 w+X2py/V9pIuFsdMB+VUWJOFXWWWJ/qVSGLMFAClgJhZFJBKoiWgFG+P95d0EbyyAtw==
+	bh=8l9s48cBd/rt+ucRPW5523+jZ1OWhLcxRKhL/h7UiBA=;
+	b=Ho0J6eTkNsnxbaqhumosuVAa6QiK5FGI7E8la82zKkwG2TXRt65urbL6Rflsn7pk0ake
+	 zb80rSD2Yq4CK2Qt0RFjUVntc4tv7ZpKW3VuNRGaBVjhBNd1L/Ri4cStkL+g8jkVtpzdi
+	 59OzFiAMtVzxsJxUW2i9hnnMmE50asP74S6C4XJvmm6drHODV2ubXD/y16zhqkiU8hI/4
+	 9vc6xgsxRXso5j3TXnB8+QtW1nCEzaLY5DODDYNvyWHRQPTCZOZXXvnjZFGNLeSExQn8Q
+	 v+j2wINw+iuOsnkgAj1rT/aLqy5f9WQFYHFHM4rjoKyn08li/a/KyJuDFzqPLMNCEhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="lAIno2L/";
-	arc=none smtp.remote-ip=209.85.128.72
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=MLu4TvuN;
+	arc=none smtp.remote-ip=209.85.221.70
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com [209.85.221.70])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D55606A327
-	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 15:34:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1D55606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0A2606A335
+	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 15:34:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F0A2606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=lAIno2L/
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4bb69d84053so43115705e9.0
-        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 07:34:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=MLu4TvuN
+Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-49337a224a8so3627762f8f.3
+        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 07:34:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795620863; x=1796225663; darn=lists.linux.dev;
+        d=google.com; s=20260707; t=1795620865; x=1796225665; darn=lists.linux.dev;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=KinJlHopK6bybWfdH+Z3VhGjbEHAS/fH8cSNDqvPnfA=;
-        b=lAIno2L/UHN03j/DGcExoLTK3Z2KoPcJAK6ivvCamb7P0IS31pACe1nMPcG4RWeJHi
-         TVIJo0GaewhLdPy/iGPabEb28Pu2dfr/1BnbKA6JUrv7JMDExzcruDuOPxhmtzCsK0W9
-         YJwrAxK3yf4rmqgHHdzVMjfJy+bsf7jp0yxHYAxAm6/kMz7H3ly+RiKbCSE5RUpedgpu
-         YvMJOSQU81vb+eGC+Af/hIFT3ZV+4rFw4ly2XRrtOWtcZwDa0eITJwzOXZamNXgapu1T
-         VWG/+XtyWvlB/93SHRuSi69DO+E2J3PlnXoFreuaA99WZYHr1YzodqaDSGHK4ZxDQmO6
-         13XA==
+        bh=8l9s48cBd/rt+ucRPW5523+jZ1OWhLcxRKhL/h7UiBA=;
+        b=MLu4TvuN7C9uuHnE3h0sL7xGqm0eMNT/1FNMf1+X/+tdREQjOmweYtkQ7W4J06/bnT
+         A0cKuuljQUU7/dw6LqmXYeJjvmHIyXNDas/uEfLO4vtJqaoOSckCroYP35LrPjdOJRzi
+         XVXGWpT9Wf+Lsj2q2bvLTGv7/dp4Ahh4nz+Bdf7z99aXR5B4EQKH6X9bNNwGDHCTGbJ+
+         LTMxi2v9kQzPdJrjAYbd2FxGcT4khTnbTX179PH5pZsjyuseykHcQ/Q+Jc3NI/FOpLAT
+         Dd8eXbdx75j4uMKoJ1B5XthKPcQhsEXkKUAkjr6CGSIOm+ZUwMT528WqW3qx+xqGo/ay
+         M85A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795620863; x=1796225663;
+        d=1e100.net; s=20260707; t=1795620865; x=1796225665;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=KinJlHopK6bybWfdH+Z3VhGjbEHAS/fH8cSNDqvPnfA=;
-        b=g+2WcH6fKURNR3t3lBP6SBDjX+8kN90yTpRWrYKqFbo2AJS08YNAQnZ85F3NhUtJHd
-         2/0Gi0nE9dBvPucG1SuvVDH1R1iw8WYzrovm3oGnwFshY1NEnfzT/h+/TJHiyoVJzR/a
-         6SAqirjxFy+0PtqGZUQN+5nfV2Hc7nMAtz+nx/nBFwmjPfnsQ6Cy1pAm2Iz8AbU6cA7m
-         G4HqJdK4fs705wo20R9XI5lHEgYqXz8ctetbbZpbaUtq6Xle+yZTV+cNNmRlNmtTrjNp
-         7ouIViUxWDBXYE9Z9fshBq0epirn2HhU5UlvrrQwqa37Q73d2EGuX12PyaVdSVi45Of9
-         e+mw==
-X-Forwarded-Encrypted: i=1; AL+hErF3a3OVkSj/0AeM6HHy4AvTEPtLIclvfhCw9oXarsC5FygkZIa03456Q6AG10VDPE4joU+qQy+O+rA=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9OurL/VhLSMX4bl44ME4JbJiMC8vL8CbHTuRRh88pLLXya/PqV
-	UKioR4ylbfJ1XWsnbbdxFESEHcRuLp0ROittXvBResHOGiSQEix415cpi5JTiolTwCBfQDjD48O
-	8Xy8HkqRbWDqk7w==
-X-Received: from wmfq8.prod.google.com ([2002:a05:600c:2e48:b0:4bb:5bb3:d156])
+        bh=8l9s48cBd/rt+ucRPW5523+jZ1OWhLcxRKhL/h7UiBA=;
+        b=ToRzfbIbL8RWgwJ9LtLtyl1piTcgD9UJYFyE1WrRWuvq26nhSPJ/LI9Qt/koU+ME3J
+         +9iusAVipVaDQ/fDDgZ16LSioPYVsvHK43uIejmsRSt+lEZI1byfXiIiiAjf7kuXMqs/
+         HX+h9DYgiZAfLBBcy856YJ+2xIiel6Y0HhVCgt8FzZqe01ytUUE0OSnQQUnWdJAoAfzz
+         dodbjLkiah2tUd0ZCDIsANaCKoYN2rdqk9d26cX7brqURbma8aM3JwrvkukAx1Q9pNX7
+         msqzIF8H7YlShSk2q1pM+7qDg9Kh/lyWyztesxwusMvQm4AVEzEsS+QiraMdJNWk1xq4
+         V3vw==
+X-Forwarded-Encrypted: i=1; AL+hErEVCZCWRJBBpauyjt41x3QkEiLuc5Z30/L6SnpLf6+AlIGDHJhgGGV8BvC/18faAIxHVjVDEerUwiE=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/NVRH5VnDJZVDAzB482Llq2uqmzTXPdaTrChOVJ68cVFKoxs4d
+	DRHbTgD9Ximt9+LzU1V4ShNUCYwWa8SILhWmaR3d6Ouj4GYGyyW31w2KKS+EFql+BI1ZMcAmO6b
+	QfVD+jJGX265LGQ==
+X-Received: from wroe1.prod.google.com ([2002:adf:ef01:0:b0:48e:3465:b63e])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:a087:b0:4bb:5c92:ce22 with SMTP id 5b1f17b1804b1-4bb887fe887mr367808505e9.8.1795620863173;
- Wed, 25 Nov 2026 07:34:23 -0800 (PST)
-Date: Wed, 25 Nov 2026 15:34:20 +0000
+ 2002:a05:6000:288e:b0:49e:4ba2:a775 with SMTP id ffacd0b85a97d-4abb86e50eamr35228561f8f.56.1795620864367;
+ Wed, 25 Nov 2026 07:34:24 -0800 (PST)
+Date: Wed, 25 Nov 2026 15:34:21 +0000
 In-Reply-To: <20261125153353.1364467-1-jpiecuch@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -81,9 +81,9 @@ Precedence: list
 Mime-Version: 1.0
 References: <20261125153353.1364467-1-jpiecuch@google.com>
 X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
-Message-ID: <20261125153353.1364467-2-jpiecuch@google.com>
-Subject: [RFC PATCH 1/2] sched_ext: sub: Defer ops.sub_caps_updated() out of
- SCX op contexts
+Message-ID: <20261125153353.1364467-3-jpiecuch@google.com>
+Subject: [RFC PATCH 2/2] selftests/sched_ext: Test that ops.sub_caps_updated()
+ runs unlocked
 From: Kuba Piecuch <jpiecuch@google.com>
 To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
 	Changwoo Min <changwoo@igalia.com>
@@ -91,289 +91,347 @@ Cc: Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-scx_bpf_sub_grant() and scx_bpf_sub_revoke() are in scx_kfunc_ids_any and
-deliver ops.sub_caps_updated() synchronously with a NULL locked_rq.
-__SCX_CALL_OP() leaves scx_locked_rq_state untouched when locked_rq is
-NULL, so ops.sub_caps_updated() inherits whatever context its parent
-called grant or revoke from:
+Add sub_caps_ctx. A cid-form root grants and revokes caps to a child
+sub-scheduler from ops.enqueue() (SCX_CAP_PERF) and ops.select_cid()
+(SCX_CAP_PREEMPT). The child calls scx_bpf_cidperf_set() on every cid from
+ops.sub_caps_updated(), which aborts the child if the callback inherits
+the parent's rq lock. The test is skipped on a single cpu, where the only
+cid is the parent's rq.
 
-- From ops.sub_attach() or a BPF timer, scx_locked_rq() is NULL. From an
-  rq-locked op (such as ops.enqueue(), or scx_qmap repartitioning a
-  grandchild from ops.sub_ecaps_updated()), scx_locked_rq() points at the
-  parent's rq. Unlike other callbacks, the child cannot safely tell which
-  state it is in: scx_bpf_locked_rq() aborts the child when unlocked,
-  scx_bpf_cidperf_set() aborts it with "Invalid target CPU" on any cid
-  outside the parent's rq, and SCX_DSQ_LOCAL in scx_bpf_dsq_reenq() and
-  scx_bpf_dsq_nr_queued() resolves to scx_locked_rq() ?: this_rq().
-
-- Because ops.sub_caps_updated() may propagate grant/revoke to its own
-  children, synchronous delivery can fan out across a subtree of
-  descendant callbacks while holding the parent's rq lock, p->pi_lock
-  (from ops.select_cpu()) or scx_dump_lock (from ops.dump*()), extending
-  lock hold time.
-
-- From ops.dump*(), scx_dump_data.cpu remains set, so a child calling
-  scx_bpf_dump() writes into the parent's dump instead of failing.
-
-Give ops.sub_caps_updated() a consistent unlocked context by deferring
-delivery when grant or revoke runs in an SCX op context (an rq lock held,
-kf_tasks[] set, ops.select_cpu() or ops.dump*()). Queue the deliveries on
-a global list and kick a per-cpu hard irq_work, or an online cpu's when
-this cpu is going down. Suppress the kick while PM is in progress, where
-irq_work_queue() can malfunction in the syscore phase, and kick any queued
-deliveries from scx_sub_pm_end(). Queued nodes stay in flight so later
-updates keep coalescing into them. Before freeing a scheduler's pshards,
-scx_free_pshards() drops its queued entries and flushes every cpu's
-irq_work.
-
-Fixes: 5f2a9a4c2e6c ("sched_ext: Add coalescing sub_caps_updated() notifier for sub-schedulers")
-Cc: stable@vger.kernel.org # v7.3+
 Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
 ---
- kernel/sched/ext/ext.c      |   6 ++
- kernel/sched/ext/internal.h |   8 +++
- kernel/sched/ext/sub.c      | 129 ++++++++++++++++++++++++++++++++++--
- 3 files changed, 139 insertions(+), 4 deletions(-)
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../selftests/sched_ext/sub_caps_ctx.bpf.c    | 136 +++++++++++++++
+ .../selftests/sched_ext/sub_caps_ctx.c        | 165 ++++++++++++++++++
+ 3 files changed, 302 insertions(+)
+ create mode 100644 tools/testing/selftests/sched_ext/sub_caps_ctx.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/sub_caps_ctx.c
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index efa1d01d03af..570d6c923904 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -7964,6 +7964,12 @@ static void ops_dump_exit(void)
- 	scx_dump_data.cpu = -1;
- }
- 
-+/* whether this cpu is in scx_dump_state(), where scx_bpf_dump() is allowed */
-+bool scx_in_dump(void)
-+{
-+	return READ_ONCE(scx_dump_data.cpu) == raw_smp_processor_id();
-+}
-+
- static void scx_dump_task(struct scx_sched *sch, struct seq_buf *s, struct scx_dump_ctx *dctx,
- 			  struct rq *rq, struct task_struct *p, char marker)
- {
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 58652370da5a..69846ac85a44 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -909,6 +909,8 @@ struct sched_ext_ops {
- 	 * cpu, once it is in effect.
- 	 *
- 	 * May call scx_bpf_sub_grant() / scx_bpf_sub_revoke() on children.
-+	 * Even if the parent called grant / revoke under an rq lock or from
-+	 * ops.select_cpu() or ops.dump*(), this callback runs unlocked.
- 	 */
- 	void (*sub_caps_updated)(const struct scx_cmask *cmask, u64 caps);
- 
-@@ -1666,6 +1668,11 @@ enum scx_cap_flags {
-  *
-  * (3) leads to deferred delivery. Events accumulate during grant/revoke and are
-  * delivered after the shard lock is released.
+diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
+index 9a776a8a36ff..caedba9dcde9 100644
+--- a/tools/testing/selftests/sched_ext/Makefile
++++ b/tools/testing/selftests/sched_ext/Makefile
+@@ -196,6 +196,7 @@ auto-test-targets :=			\
+ 	select_cpu_dispatch_bad_dsq	\
+ 	select_cpu_dispatch_dbl_dsp	\
+ 	select_cpu_vtime		\
++	sub_caps_ctx			\
+ 	rt_stall			\
+ 	test_example			\
+ 	total_bw			\
+diff --git a/tools/testing/selftests/sched_ext/sub_caps_ctx.bpf.c b/tools/testing/selftests/sched_ext/sub_caps_ctx.bpf.c
+new file mode 100644
+index 000000000000..e6613fc23d15
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/sub_caps_ctx.bpf.c
+@@ -0,0 +1,136 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * A cid-form root scheduler which grants and revokes caps to a child
++ * sub-scheduler from its rq-locked ops.enqueue() and from ops.select_cid(), and
++ * a child which calls scx_bpf_cidperf_set() on every cid from
++ * ops.sub_caps_updated().
 + *
-+ * When grant or revoke runs in an SCX op context (an rq lock held,
-+ * ops.select_cpu() or ops.dump*()), caps_updated_deliver_or_defer() defers the
-+ * delivery to an irq_work so that ops.sub_caps_updated() always runs unlocked
-+ * instead of inheriting the caller's context.
-  */
- struct scx_caps_updated {
- 	raw_spinlock_t		lock;
-@@ -2314,6 +2321,7 @@ bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
- 			    struct scx_dispatch_q *dsq, u64 enq_flags);
- bool scx_consume_global_dsq(struct scx_sched *sch, struct rq *rq);
- bool scx_rq_online(struct rq *rq);
-+bool scx_in_dump(void);
- void scx_flush_dispatch_buf(struct scx_sched *sch, struct rq *rq);
- s32 scx_init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id, struct scx_sched *sch);
- __printf(2, 3) void scx_dump_line(struct seq_buf *s, const char *fmt, ...);
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 7c069a289766..d535b9258b10 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -66,7 +66,10 @@ static DECLARE_WAIT_QUEUE_HEAD(ecaps_offline_waitq);
- static struct cpumask scx_frozen_cpus;
- static DECLARE_WAIT_QUEUE_HEAD(scx_frozen_cpus_waitq);
- 
--/* between the PREPARE and POST notifications of a PM cycle */
-+/*
-+ * True between the PREPARE and POST notifications of a PM cycle. Updated under
-+ * caps_updated_deferred_lock.
++ * ops.sub_caps_updated() must not inherit the parent's rq lock context. If it
++ * did, scx_bpf_cidperf_set() on any cid other than the parent's locked rq's
++ * would fail with "Invalid target CPU" and abort the child.
 + */
- static bool scx_pm_in_progress;
- 
- /**
-@@ -307,6 +310,47 @@ void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch)
- 		rcu_assign_pointer(pos->scx_sched, sch);
- }
- 
-+/*
-+ * Queue of ops.sub_caps_updated() deliveries deferred out of SCX op contexts.
-+ * Queued entries stay linked on scx_caps_updated->node_in_flight so that
-+ * caps_updated_record() keeps coalescing into them.
-+ *
-+ * Each cpu has its own hard irq_work:
-+ * - A single irq_work queued on multiple cpus can run irq_work_single()
-+ *   concurrently and clear IRQ_WORK_BUSY early, breaking irq_work_sync().
-+ * - A dying cpu still runs SCX ops after hotplug parks its irq_work thread,
-+ *   which would strand a regular irq_work on PREEMPT_RT.
-+ */
-+static void caps_updated_deferred_workfn(struct irq_work *irq_work);
-+static LIST_HEAD(caps_updated_deferred);
-+static DEFINE_RAW_SPINLOCK(caps_updated_deferred_lock);
-+static DEFINE_PER_CPU(struct irq_work, caps_updated_deferred_irq_work) =
-+	IRQ_WORK_INIT_HARD(caps_updated_deferred_workfn);
++#include <scx/common.bpf.h>
++
++char _license[] SEC("license") = "GPL";
++
++#define MAX_CIDS	1024
++
++struct {
++	__uint(type, BPF_MAP_TYPE_ARENA);
++	__uint(map_flags, BPF_F_MMAPABLE);
++	__uint(max_entries, 1 << 8);
++#if defined(__TARGET_ARCH_arm64) || defined(__aarch64__)
++	__ulong(map_extra, 0x1ull << 32);
++#else
++	__ulong(map_extra, 0x1ull << 44);
++#endif
++} arena SEC(".maps");
++
++struct sub_caps_ctx_cmask {
++	union {
++		struct scx_cmask mask;
++		u64 words[CMASK_NR_WORDS(MAX_CIDS) + 2];
++	};
++};
++
++struct sub_caps_ctx_cmask __arena_global all_cids;
++
++u64 child_cgid;
++u64 nr_enqueued, nr_selected, nr_grants, nr_revokes, nr_caps_updated, nr_perf_set;
++
++UEI_DEFINE(uei);
 +
 +/*
-+ * Drop @sch's deferred caps_updated deliveries before freeing its pshards.
-+ * scx_sched_free_rcu_work() calls this after two RCU grace periods post
-+ * unlink, so scx_bpf_sub_grant/revoke() cannot queue new entries for @sch.
++ * Toggle @cap on all cids of the child every 8th call. ops.select_cid() and
++ * ops.enqueue() toggle different caps so that neither turns the other's grant
++ * or revoke into a no-op.
 + */
-+static void caps_updated_cancel_deferred(struct scx_sched *sch)
++static void toggle_child_cap(u64 cap, u64 seq)
 +{
-+	struct scx_caps_updated *cu, *tmp;
-+	s32 cpu;
++	u64 cgid = child_cgid;
 +
-+	scoped_guard (raw_spinlock_irqsave, &caps_updated_deferred_lock) {
-+		list_for_each_entry_safe(cu, tmp, &caps_updated_deferred, node_in_flight) {
-+			if (container_of(cu, struct scx_pshard, caps_updated)->sch != sch)
-+				continue;
-+			guard(raw_spinlock)(&cu->lock);
-+			list_del_init(&cu->node_in_flight);
-+		}
-+	}
-+
-+	/* wait for any workfn that already spliced @sch's entries */
-+	for_each_possible_cpu(cpu)
-+		irq_work_sync(per_cpu_ptr(&caps_updated_deferred_irq_work, cpu));
-+}
-+
- static void free_pshard(struct scx_pshard *pshard)
- {
- 	struct scx_caps_updated *cu;
-@@ -327,6 +371,7 @@ void scx_free_pshards(struct scx_sched *sch)
- 
- 	if (!sch->pshard)
- 		return;
-+	caps_updated_cancel_deferred(sch);
- 	for (si = 0; si < sch->nr_pshards; si++)
- 		free_pshard(sch->pshard[si]);
- 	kfree(sch->pshard);
-@@ -1034,6 +1079,77 @@ static void caps_updated_deliver(struct list_head *to_deliver)
- 	}
- }
- 
-+static void caps_updated_deferred_workfn(struct irq_work *irq_work)
-+{
-+	LIST_HEAD(to_deliver);
-+
-+	/* hard irq_work, same irq-disabled context as a synchronous delivery */
-+	lockdep_assert_irqs_disabled();
-+
-+	scoped_guard (raw_spinlock, &caps_updated_deferred_lock)
-+		list_splice_init(&caps_updated_deferred, &to_deliver);
-+
-+	caps_updated_deliver(&to_deliver);
-+}
-+
-+static void caps_updated_kick_deferred(void)
-+{
-+	s32 cpu = smp_processor_id();
-+
-+	lockdep_assert_held(&caps_updated_deferred_lock);
-+	lockdep_assert_irqs_disabled();
-+
-+	/*
-+	 * During the PM syscore phase, irq_work_queue() can malfunction.
-+	 * scx_sub_pm_end() kicks the queue when the PM cycle finishes.
-+	 */
-+	if (unlikely(scx_pm_in_progress))
++	if (!cgid || (seq & 7) || nr_grants + nr_revokes >= 4096)
 +		return;
 +
-+	if (likely(cpu_online(cpu))) {
-+		irq_work_queue(this_cpu_ptr(&caps_updated_deferred_irq_work));
-+		return;
-+	}
-+
-+	/*
-+	 * When hotplug parks a dying cpu's migration thread, ops.update_idle()
-+	 * runs after smpcfd_dying_cpu() already drained local irq_work. Route
-+	 * to an online cpu; cpus_write_lock() keeps cpu_online_mask stable.
-+	 */
-+	cpu = cpumask_first(cpu_online_mask);
-+	if (likely(cpu < nr_cpu_ids))
-+		irq_work_queue_on(per_cpu_ptr(&caps_updated_deferred_irq_work, cpu),
-+				  cpu);
-+}
-+
-+/*
-+ * If the caller runs in an SCX op context (an rq lock held, ops.select_cpu()
-+ * or ops.dump*()), defer @to_deliver to an irq_work. Otherwise deliver it now.
-+ *
-+ * ops.sub_caps_updated() is called with a NULL locked_rq, which leaves
-+ * scx_locked_rq() untouched. Delivering synchronously here would inherit the
-+ * parent's scx_locked_rq() or dump state and hold the parent's rq lock, pi_lock
-+ * or scx_dump_lock across any cascading grant/revoke down the subtree.
-+ */
-+static void caps_updated_deliver_or_defer(struct list_head *to_deliver)
-+{
-+	lockdep_assert_irqs_disabled();
-+
-+	if (likely(!scx_locked_rq() && !current->scx.kf_tasks[0] &&
-+		   !this_rq()->scx.in_select_cpu && !scx_in_dump())) {
-+		caps_updated_deliver(to_deliver);
-+		return;
-+	}
-+
-+	if (list_empty(to_deliver))
-+		return;
-+
-+	scoped_guard (raw_spinlock, &caps_updated_deferred_lock) {
-+		list_splice_tail_init(to_deliver, &caps_updated_deferred);
-+		caps_updated_kick_deferred();
++	if ((seq >> 3) & 1) {
++		scx_bpf_sub_revoke(cgid, cap, &all_cids.mask);
++		__sync_fetch_and_add(&nr_revokes, 1);
++	} else {
++		scx_bpf_sub_grant(cgid, cap, &all_cids.mask, NULL);
++		__sync_fetch_and_add(&nr_grants, 1);
 +	}
 +}
 +
- /*
-  * Deliver caps owed to @sch that couldn't be delivered earlier (e.g. a grant
-  * taken during its sub_attach(), before has_op was set). Called once has_op is
-@@ -1325,6 +1441,7 @@ void __scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 
- void scx_sub_pm_begin(void)
- {
-+	guard(raw_spinlock_irqsave)(&caps_updated_deferred_lock);
- 	WRITE_ONCE(scx_pm_in_progress, true);
- }
- 
-@@ -1376,7 +1493,11 @@ void scx_sub_pm_end(void)
- 				   cpumask_weight(&scx_frozen_cpus));
- 	}
- 
--	WRITE_ONCE(scx_pm_in_progress, false);
-+	scoped_guard (raw_spinlock_irqsave, &caps_updated_deferred_lock) {
-+		WRITE_ONCE(scx_pm_in_progress, false);
-+		if (!list_empty(&caps_updated_deferred))
-+			caps_updated_kick_deferred();
++/* grant / revoke from the ops.select_cid() context */
++s32 BPF_STRUCT_OPS(sub_caps_ctx_select_cid, struct task_struct *p, s32 prev_cid, u64 wake_flags)
++{
++	toggle_child_cap(SCX_CAP_PREEMPT, __sync_fetch_and_add(&nr_selected, 1));
++	return prev_cid;
++}
++
++/* grant / revoke while holding the enqueue rq lock */
++void BPF_STRUCT_OPS(sub_caps_ctx_enqueue, struct task_struct *p, u64 enq_flags)
++{
++	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
++	toggle_child_cap(SCX_CAP_PERF, __sync_fetch_and_add(&nr_enqueued, 1));
++}
++
++void BPF_STRUCT_OPS(sub_caps_ctx_sub_caps_updated, const struct scx_cmask *cmask, u64 caps)
++{
++	u32 nr_cids = scx_bpf_nr_cids();
++	s32 cid;
++
++	/* @cmask is an arena pointer, associate the arena */
++	asm volatile("" :: "r"(&arena));
++
++	__sync_fetch_and_add(&nr_caps_updated, 1);
++
++	/* any cid must be accepted when no rq lock is held */
++	bpf_for(cid, 0, nr_cids) {
++		if (!scx_bpf_cidperf_set(cid, SCX_CPUPERF_ONE))
++			__sync_fetch_and_add(&nr_perf_set, 1);
 +	}
- 	cpumask_clear(&scx_frozen_cpus);
- 	wake_up_all(&scx_frozen_cpus_waitq);
- }
-@@ -2981,7 +3102,7 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 
- 	ret = any_denied ? -EPERM : 0;
- out:
--	caps_updated_deliver(&to_deliver);
-+	caps_updated_deliver_or_defer(&to_deliver);
- 	return ret;
- }
- 
-@@ -3073,7 +3194,7 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
- 		}
- 	}
- 
--	caps_updated_deliver(&to_deliver);
-+	caps_updated_deliver_or_defer(&to_deliver);
- }
- 
- /**
++}
++
++s32 BPF_STRUCT_OPS(sub_caps_ctx_sub_attach, struct scx_sub_attach_args *args)
++{
++	child_cgid = args->ops->sub_cgroup_id;
++	return 0;
++}
++
++void BPF_STRUCT_OPS(sub_caps_ctx_sub_detach, struct scx_sub_detach_args *args)
++{
++	child_cgid = 0;
++}
++
++s32 BPF_STRUCT_OPS_SLEEPABLE(sub_caps_ctx_init)
++{
++	u32 nr_cids = scx_bpf_nr_cids();
++	s32 cid;
++
++	if (nr_cids > MAX_CIDS) {
++		scx_bpf_error("nr_cids=%u exceeds MAX_CIDS=%d", nr_cids, MAX_CIDS);
++		return -EINVAL;
++	}
++
++	cmask_init(&all_cids.mask, 0, nr_cids);
++	bpf_for(cid, 0, nr_cids)
++		cmask_set(cid, &all_cids.mask);
++
++	return 0;
++}
++
++void BPF_STRUCT_OPS(sub_caps_ctx_exit, struct scx_exit_info *ei)
++{
++	UEI_RECORD(uei, ei);
++}
++
++SCX_OPS_CID_DEFINE(sub_caps_ctx_ops,
++		   .select_cid		= (void *)sub_caps_ctx_select_cid,
++		   .enqueue		= (void *)sub_caps_ctx_enqueue,
++		   .sub_caps_updated	= (void *)sub_caps_ctx_sub_caps_updated,
++		   .sub_attach		= (void *)sub_caps_ctx_sub_attach,
++		   .sub_detach		= (void *)sub_caps_ctx_sub_detach,
++		   .init		= (void *)sub_caps_ctx_init,
++		   .exit		= (void *)sub_caps_ctx_exit,
++		   .name		= "sub_caps_ctx");
+diff --git a/tools/testing/selftests/sched_ext/sub_caps_ctx.c b/tools/testing/selftests/sched_ext/sub_caps_ctx.c
+new file mode 100644
+index 000000000000..5881a6312cb6
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/sub_caps_ctx.c
+@@ -0,0 +1,165 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Grant and revoke caps to a sub-scheduler from the parent's rq-locked
++ * ops.enqueue() and verify that the child's ops.sub_caps_updated() runs in an
++ * unlocked context.
++ */
++#include <errno.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <time.h>
++#include <unistd.h>
++#include <sys/stat.h>
++#include <sys/wait.h>
++#include <bpf/bpf.h>
++#include <scx/common.h>
++
++/* opaque to userspace, must match the size in sub_caps_ctx.bpf.c */
++#define MAX_CIDS	1024
++struct sub_caps_ctx_cmask {
++	__u64 words[(MAX_CIDS + 63) / 64 + 1 + 2];
++};
++
++#include "sub_caps_ctx.bpf.skel.h"
++#include "scx_test.h"
++
++#define CGRP_ROOT	"/sys/fs/cgroup"
++#define CGRP_PATH	CGRP_ROOT "/sub_caps_ctx"
++#define NR_WORKERS	8
++
++struct ctx {
++	struct sub_caps_ctx *parent;
++	struct sub_caps_ctx *child;
++	struct bpf_link *parent_link;
++	struct bpf_link *child_link;
++};
++
++static struct ctx test_ctx;
++
++static void write_file(const char *path, const char *buf)
++{
++	FILE *f = fopen(path, "w");
++
++	if (!f)
++		return;
++	fputs(buf, f);
++	fclose(f);
++}
++
++static enum scx_test_status setup(void **ctx)
++{
++	struct sub_caps_ctx *skel;
++	struct stat st;
++
++	if (!__COMPAT_struct_has_field("sched_ext_ops_cid", "sub_caps_updated"))
++		return SCX_TEST_SKIP;
++
++	/* a single cid is always the parent's rq, which scx_bpf_cidperf_set() accepts */
++	if (sysconf(_SC_NPROCESSORS_ONLN) < 2)
++		return SCX_TEST_SKIP;
++
++	write_file(CGRP_ROOT "/cgroup.subtree_control", "+cpu");
++	if (mkdir(CGRP_PATH, 0755) && errno != EEXIST) {
++		fprintf(stderr, "Failed to create %s (%s)\n", CGRP_PATH, strerror(errno));
++		return SCX_TEST_SKIP;
++	}
++	SCX_FAIL_IF(stat(CGRP_PATH, &st), "Failed to stat %s", CGRP_PATH);
++
++	skel = SCX_OPS_CID_OPEN(sub_caps_ctx_ops, sub_caps_ctx);
++	SCX_OPS_LOAD(skel, sub_caps_ctx_ops, sub_caps_ctx, uei);
++	test_ctx.parent = skel;
++
++	skel = SCX_OPS_CID_OPEN(sub_caps_ctx_ops, sub_caps_ctx);
++	skel->struct_ops.sub_caps_ctx_ops->sub_cgroup_id = st.st_ino;
++	SCX_OPS_LOAD(skel, sub_caps_ctx_ops, sub_caps_ctx, uei);
++	test_ctx.child = skel;
++
++	*ctx = &test_ctx;
++	return SCX_TEST_PASS;
++}
++
++/* sleep and wake repeatedly to drive the parent's ops.enqueue() */
++static void worker(void)
++{
++	struct timespec ts = { .tv_nsec = 100 * 1000 };
++	int i;
++
++	for (i = 0; i < 2000; i++)
++		nanosleep(&ts, NULL);
++	exit(0);
++}
++
++static enum scx_test_status run(void *arg)
++{
++	struct ctx *ctx = arg;
++	pid_t pids[NR_WORKERS];
++	int i, status;
++
++	ctx->parent_link = bpf_map__attach_struct_ops(ctx->parent->maps.sub_caps_ctx_ops);
++	SCX_FAIL_IF(!ctx->parent_link, "Failed to attach parent");
++
++	ctx->child_link = bpf_map__attach_struct_ops(ctx->child->maps.sub_caps_ctx_ops);
++	SCX_FAIL_IF(!ctx->child_link, "Failed to attach child");
++	SCX_GT(ctx->parent->bss->child_cgid, 0);
++
++	for (i = 0; i < NR_WORKERS; i++) {
++		pids[i] = fork();
++		SCX_FAIL_IF(pids[i] < 0, "Failed to fork");
++		if (!pids[i])
++			worker();
++	}
++	for (i = 0; i < NR_WORKERS; i++)
++		SCX_FAIL_IF(waitpid(pids[i], &status, 0) != pids[i] || status,
++			    "Worker %d failed", i);
++
++	/* let deferred notifications drain */
++	usleep(100 * 1000);
++
++	printf("enqueued=%lu selected=%lu grants=%lu revokes=%lu caps_updated=%lu perf_set=%lu\n",
++	       (unsigned long)ctx->parent->bss->nr_enqueued,
++	       (unsigned long)ctx->parent->bss->nr_selected,
++	       (unsigned long)ctx->parent->bss->nr_grants,
++	       (unsigned long)ctx->parent->bss->nr_revokes,
++	       (unsigned long)ctx->child->bss->nr_caps_updated,
++	       (unsigned long)ctx->child->bss->nr_perf_set);
++
++	SCX_ASSERT_ALIVE(ctx->child, uei);
++	SCX_ASSERT_ALIVE(ctx->parent, uei);
++	SCX_GT(ctx->parent->bss->nr_grants, 0);
++	SCX_GT(ctx->parent->bss->nr_revokes, 0);
++	SCX_GT(ctx->child->bss->nr_caps_updated, 0);
++
++	bpf_link__destroy(ctx->child_link);
++	ctx->child_link = NULL;
++	bpf_link__destroy(ctx->parent_link);
++	ctx->parent_link = NULL;
++
++	SCX_EQ(ctx->child->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
++	SCX_EQ(ctx->parent->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
++
++	return SCX_TEST_PASS;
++}
++
++static void cleanup(void *arg)
++{
++	struct ctx *ctx = arg;
++
++	if (ctx->child_link)
++		bpf_link__destroy(ctx->child_link);
++	if (ctx->parent_link)
++		bpf_link__destroy(ctx->parent_link);
++	sub_caps_ctx__destroy(ctx->child);
++	sub_caps_ctx__destroy(ctx->parent);
++	rmdir(CGRP_PATH);
++}
++
++struct scx_test sub_caps_ctx = {
++	.name = "sub_caps_ctx",
++	.description = "Check ops.sub_caps_updated() runs unlocked after a locked grant",
++	.setup = setup,
++	.run = run,
++	.cleanup = cleanup,
++};
++
++REGISTER_SCX_TEST(&sub_caps_ctx)
 -- 
 2.56.1.839.g22a8290db9-goog
 
