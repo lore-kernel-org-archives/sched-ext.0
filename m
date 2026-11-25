@@ -1,71 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795602864;
-	b=f+eOofoxI5xDg0xj7XTW9LYXSg/LbwKn27aghcZzGSZNi3DPf/nDYBbNMwy60jaqpB0V
-	 QznBn5UnSfU8z7Tw5rq150sg5HJv7YGbDWr4LYYg4dOhFoF35Hm53AWzgGDtWDL0+iN5m
-	 6I/oO8NzQrKdoPHz7EB66vreTiJSdqienO7E/p6PhFt7GyeXbrLKAIwHSVewOLwzOlplJ
-	 EevuKDQN+PoMdF7zYJMWvyvMYYzJP/+dTAmMi1AopybrSvHQLs+zGOMTXmwMCweu8xhSM
-	 UQMEicQfeZL2SRg8ZfKsRAqRl7KWI2dw3zbxtB096S9fMtmWM1jV6R4Geoe5WY4gKSw==
+	t=1795604849;
+	b=HywIKjnzgwScrNICNP+wtELcL9gyRqn7kWtnJp8Jry4KJL8IHl9pqIJ+/vljW5ZFQkgB
+	 /QmTwYeqGN3Ert8N4bULonwpfCbH4gfohLB8VwdRU7pl+NbRZD/nq6VuoRhT+T5Hi+91W
+	 Df6zkh/GrR9GeRVUiU5jyNYBrIPiK8V4ogVQYGrpqJ7MmkqlFOFZa7fPrcewvsUFJLcVE
+	 ekuv7BMMx61A4Q8w5bq9LnketqclMmtpWPcby6ufp1L+hyu6zOwknW8CZ6JWkvSLIh+pF
+	 cVIwRgQHdHqiFO89uFC7K0UYiOdrP1xC3KHbTPW4IOTl8WPosuIlJDoiu6oMPu/LrJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795602864;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=Bh40TMQ5zhqKhhc1ugkinINTk0/FKZGuX15jzq2MuC4=;
-	b=t/6Gu3bgnaOQk4gO/68z47VS7/hgfpVTNxsbFCetrgfqtKfcVM3Cs1vpEKkLUIp/pZJK
-	 SajqI8+z2cdyevjBGcQjgXIUid5Kr/YJV3oSgcch+39Hw270IxJmLSGmqi0p45MGsR/zx
-	 ALb9BnxgDz90lG5lpH/k2sCz8atTtiYYWjCBsxXWZ+7coVhT1+3xbZ9Nm8VKCS71+LcrN
-	 VhDiuTqCpxiLLhgo677fhqcoRMe8tbgTBQpgkfl9+uJgxfUfiPTLF/SGnwSpvIZvIT8Yd
-	 2sIFVZF/CtLiRpXSand4Rm7kd3niaIIo9G84z1oiXdo5i5gmopQhfBNu4FrK1PE9O7Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795604849;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type;
+	bh=Dhj/6IC/S9UakA2XJuOoikLp4Ldc+YWWX4fLcWh8PR0=;
+	b=3gbPJNEXoVe72HRV6Dq2Fne6hqMRJPrp+r8G56K5AVLcM2WIZ147Gxr56xNY1YOZBDcP
+	 haZQZNOrl7beT8sY2e4lFscW9Do3ZQzFfC7LXkhtRgZD/tb9ddEVtXDjCYbE24tJ/51Nk
+	 FO6+zGb6PfKP2DKWLUk5NTheg1HJI6sOeqiURAI3oHIK3RL5bCE9ZDADmnWDMf/3XEjT4
+	 gjBdbj0+lCpIBmPjV9cfcQJfFvd6uTqKyV4P2qHVYJwLYXAIE8ydteV8S2ZAjJvqWoOYW
+	 p65bNyC/bj1oA4sfdm4NUhqQ98QzQB5ExrYO0+18Q7KqvxIfYUZYHsuqu9jM/e2PUZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YtO4sPJd;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=cGgmY5e4;
+	arc=none smtp.remote-ip=209.85.128.71
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE5760A2633;
-	Wed, 25 Nov 2026 10:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF062606A32E
+	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 11:07:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF062606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YtO4sPJd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB561F0283E;
-	Wed, 25 Nov 2026 10:34:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795602864;
-	bh=Bh40TMQ5zhqKhhc1ugkinINTk0/FKZGuX15jzq2MuC4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YtO4sPJdsOSCmMfmxPBa3Dfa9iRH2Gh7rYDuzbhJUwi27/WPFg5eCf3o9Shc3D8AZ
-	 ImbZioyqZ+gubnF2vxoRfKo2BtaghKaFQZ0jvrP1YL+l0j4ulqa0M1tXUw5g0KZFn1
-	 ApXKNQP+E+2z5gzwx3s5uYD4w7VBINLKbnemmAnNfQoHOVuXiHn7SCPwLgYXoUUI70
-	 8M5KL3owxhJcEDekt/aTpA1EQVNXs1nqAsFU5N/5ARcA+isAsCThTF4wx7PLNi8HJY
-	 t+jhGVSi0uXnRsuZLwtcElpu344inEfWPXZPhg7EwV9yBwlZmSuynwheUN2vAMP2Lp
-	 tmnSqDkB+WN8g==
-From: Tejun Heo <tj@kernel.org>
-To: sched-ext@lists.linux.dev
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Hang Zhengyang <hang.zhengyang1010@gmail.com>,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 2/2] sched_ext: Start ext_server from the remote tick on nohz_full CPUs
-Date: Wed, 25 Nov 2026 00:34:20 -1000
-Message-ID: <20261125103420.2785659-3-tj@kernel.org>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261125103420.2785659-1-tj@kernel.org>
-References: <20261125103420.2785659-1-tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=cGgmY5e4
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-49953abe51fso40108975e9.1
+        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 03:07:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795604847; x=1796209647; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Dhj/6IC/S9UakA2XJuOoikLp4Ldc+YWWX4fLcWh8PR0=;
+        b=cGgmY5e4ztw9fxLzy2h6pXowy6ZVO2gOGxu4eE8R9hpseIMS+BStQTnjXP5QSSRY1p
+         HyRcyWkE38dk5EG9HVAGoMgEDliaTqOqKFbN1y/symJJzee/qrjbBpZyDYbI5X8VlKu9
+         ReLfgOzqYrWyETjMo8ONZma28ZnKLSu558MDAP7Bb2Po0mzjFyirN5hxgmFBE1+jK2Ka
+         CtqMrNWFwHju3BgIDIoB+nlUkzWz7OIdS1HWWXJ50X3OHjw1evmoFfrzQKOlQdLDaElt
+         jK0lSD/UaXcmXth0iPT0PRdI8CqxR0yuQwHj7mrg9dVzCspe68qe7gI0AmGBzG2GMjzo
+         r49g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795604847; x=1796209647;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Dhj/6IC/S9UakA2XJuOoikLp4Ldc+YWWX4fLcWh8PR0=;
+        b=Q4qM1CQphXxcRzwkbqnHiVrJZUuE7DNPMJgCD72TGhNazOZneQJDqJcbyNo27iHnuy
+         1KLoSftursXm8ugBt6wXjStP6q5vNE4a1/DyT6K32iSl4MFmy+qJ9lkQC2pQ7lCHBVmR
+         hx6o3xnCvUmXoQRLlAGgFUEPoTDjtr/d3VXyWbHFflYT+u1Ix07ODbAEFYhOVBeEPqaT
+         Xroc8O2fi5JH58gVpjVZ729mcx3EkKABL2MwqU0c5BxZD8pUEi2lFPqhOsrUt8IQphWG
+         IeatCWFtg552qt7WazOfJ3K4R2GVbhrqTvApQ9KEuDpmzo9Kn8Scjo4y8kIiEbcZWi2d
+         o64A==
+X-Forwarded-Encrypted: i=1; AL+hErH5FFYmz35xcTNKdTFEGvepKtmwNGGzTlJ+1DXxi8N5o8qmc3JE6sLc4WFVo0LmNMoZdxeLhu2lkaw=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8A4GEjNyvLz+rBCtYrfytBpk5zPKsqvdD/TrV0Q2FHnA2EaSrx
+	FNDGCfl7JhjZ9qsVwEl0gVy6zdY4ff17fNlSrqr4W2bSo2EI1pPMo2RvYa6SvmeYYsMcf8a1gpO
+	9k3rGh4bzM6bj/g==
+X-Received: from wmjy5.prod.google.com ([2002:a7b:cd85:0:b0:4bb:6476:9406])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:4e8e:b0:4ba:59fa:510e with SMTP id 5b1f17b1804b1-4bb8893014dmr358786765e9.23.1795604846985;
+ Wed, 25 Nov 2026 03:07:26 -0800 (PST)
+Date: Wed, 25 Nov 2026 11:07:26 +0000
+In-Reply-To: <d0843faaef949300df9b51a09e36a696@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -74,80 +78,54 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20261123170846.3165648-1-jpiecuch@google.com> <20261123170846.3165648-2-jpiecuch@google.com>
+ <d0843faaef949300df9b51a09e36a696@kernel.org>
+X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
+Message-ID: <20261125110637.211132-1-jpiecuch@google.com>
+Subject: Re: [PATCH 1/3] sched_ext: Fix ops_state and ops.dequeue() locking
+ races in dispatch
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>, fangqiurong <fangqiurong@kylinos.cn>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On a nohz_full CPU, the tick can stop while SCHED_FIFO tasks or a single
-SCHED_RR task run, and ext_server is no longer started from it.
-sched_tick_remote() does the tick's work once a second for a CPU whose tick
-is stopped. Start ext_server from there too.
+Hi Tejun,
 
-A nohz_full CPU running an RT task is now made to dispatch about once every
-two seconds while any task is runnable on SCX. Setting the CPU's ext_server
-runtime to 0 turns that off.
+On Wed, 25 Nov 2026 00:18, Tejun Heo wrote:
+> On Mon, Nov 23, 2026 at 05:10:32PM +0000, Kuba Piecuch wrote:
+>> @@ -1871,8 +1884,10 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+>>
+>>  		if (unlikely(dsq->id == SCX_DSQ_INVALID)) {
+>>  			scx_error(sch, "attempting to dispatch to a destroyed dsq");
+>> -			/* fall back to the global dsq */
+>>  			raw_spin_unlock(&dsq->lock);
+>> +			if (rq != task_rq(p))
+>> +				return false;
+>> +			/* fall back to the global dsq */
+>>  			dsq = find_global_dsq(sch, task_cpu(p));
+>>  			raw_spin_lock(&dsq->lock);
+>
+> I don't think the task needs to go to the global DSQ here. The scheduler
+> is being ejected at this point and bypass is going to cycle all its
+> runnable tasks. Maybe we can just let go of the task and return, for both
+> the local and remote cases, and let the abort path recover it? What the
+> BPF scheduler sees after scx_error() doesn't matter as long as the
+> scheduler can be ejected and all the tasks are recovered. That'd get rid
+> of the bool return and the retry in finish_dispatch().
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/core.c    |  1 +
- kernel/sched/ext/ext.c | 12 ++++++++++++
- kernel/sched/ext/ext.h |  2 ++
- 3 files changed, 15 insertions(+)
+Good point. Every caller that can pass a user DSQ here (direct_dispatch(),
+finish_dispatch(), and move_task_between_dsqs()) has @p on its rq's
+runnable_list and can't run on an rq that scx_bypass() has already walked,
+so clearing ops_state (when SCX_ENQ_CLEAR_OPSS is set) and returning after
+scx_error() leaves @p to be recovered by bypass just like
+SCX_EXIT_ERROR_REENQ. Will change this in v2.
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 1ac779bb34f7..7a8ae8e8d7c6 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5925,6 +5925,7 @@ static void sched_tick_remote(struct work_struct *work)
- 				WARN_ON_ONCE(delta > (u64)NSEC_PER_SEC * 30);
- 			}
- 			curr->sched_class->task_tick(rq, curr, 0);
-+			scx_tick_remote(rq);
- 
- 			calc_load_nohz_remote(rq);
- 		}
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index e081f853a155..c96d94a7767a 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -4511,6 +4511,18 @@ void scx_tick(struct rq *rq)
- 	ext_server_tick(rq);
- }
- 
-+#ifdef CONFIG_NO_HZ_FULL
-+/*
-+ * Called once a second while @rq's tick is stopped. An RT task can keep the
-+ * tick stopped with tasks runnable on SCX, see ext_server_tick().
-+ */
-+void scx_tick_remote(struct rq *rq)
-+{
-+	if (scx_enabled())
-+		ext_server_tick(rq);
-+}
-+#endif
-+
- static void task_tick_scx(struct rq *rq, struct task_struct *donor, int queued)
- {
- 	struct scx_sched *sch = scx_task_sched(donor);
-diff --git a/kernel/sched/ext/ext.h b/kernel/sched/ext/ext.h
-index 366cc1d7089b..6ce6d50ac393 100644
---- a/kernel/sched/ext/ext.h
-+++ b/kernel/sched/ext/ext.h
-@@ -9,6 +9,7 @@
- #ifdef CONFIG_SCHED_CLASS_EXT
- 
- void scx_tick(struct rq *rq);
-+void scx_tick_remote(struct rq *rq);
- void init_scx_entity(struct sched_ext_entity *scx);
- void scx_pre_fork(struct task_struct *p);
- int scx_fork(struct task_struct *p, struct kernel_clone_args *kargs);
-@@ -63,6 +64,7 @@ bool scx_prio_less(const struct task_struct *a, const struct task_struct *b,
- #else	/* CONFIG_SCHED_CLASS_EXT */
- 
- static inline void scx_tick(struct rq *rq) {}
-+static inline void scx_tick_remote(struct rq *rq) {}
- static inline void scx_pre_fork(struct task_struct *p) {}
- static inline int scx_fork(struct task_struct *p, struct kernel_clone_args *kargs) { return 0; }
- static inline void scx_post_fork(struct task_struct *p) {}
--- 
-2.56.1
+> Also, can you please factor out release_dispatching_and_lock_task_rq()
+> from dispatch_to_local_dsq() in a separate prep patch?
 
+Sure, will split that out into a prep patch in v2.
+
+Thanks!
