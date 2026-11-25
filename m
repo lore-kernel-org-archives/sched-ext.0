@@ -1,75 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.70
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620866;
-	b=icmVUjGP7QKFI0AMfbPG+SrfZxI9366SR9+ZkdJxcfH5KqUoMhPvkXXdeTfY9bRCsgF0
-	 5lhHvs2mRQIflLkxNoU5VgO101r4MY5YBbdwFU/zqaajb2p+NBGw6OiV4K0NI6QxmsWnT
-	 LhZBa47bhakCgC3T4MnxcFK6rG9CAWPxtOgPdza55IXZ7Ghm9qdaoGSnRyLPgvwpogXsG
-	 DMJN1J6GF3AkyHYCNcfkh9VBEOzhguw3Z7JgsZm4ZhcKm8Jt0lHrAMr+lD6jKArblhztF
-	 B9XNxNPFN0Ix90tQYnha4I38020+dlzH/i6+inOcN+84rzK4utcjG9qxt8KeQ3uF9+g==
+	t=1795622717;
+	b=tFpRYh/uSTBsDLqPlJzZqQCMqSIm6yOkKXmylfLzZqP1F0Q7BxMOY9NukEcJGgUMTR3L
+	 dePcJOpzENhNUVdXdazi077nI4ZAnRSZfKYfzjSzrBG6Sww9abNFGa6+Ui1iy1Nc2zXtr
+	 76Pb3J+AGQuxKH2tnp7gu87kAet1ic9SNqE/SWINlRxFMPZZrXcpH9eXjZFdHaV9qv3YP
+	 FMdve3a3OUAgOpBD/Y2zJkeLH/xtEFfqcafiKmGqj1HvGV1O2L5q4wXtErorXwCPQkbwz
+	 SeFIvPMsrjgHS5iQrbNHNbpQc1cHTiItIQWrPX8NQbRUnakY3TFOVQd1QCmDRS6A9uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620866;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
-	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
-	 Content-Type;
-	bh=8l9s48cBd/rt+ucRPW5523+jZ1OWhLcxRKhL/h7UiBA=;
-	b=Ho0J6eTkNsnxbaqhumosuVAa6QiK5FGI7E8la82zKkwG2TXRt65urbL6Rflsn7pk0ake
-	 zb80rSD2Yq4CK2Qt0RFjUVntc4tv7ZpKW3VuNRGaBVjhBNd1L/Ri4cStkL+g8jkVtpzdi
-	 59OzFiAMtVzxsJxUW2i9hnnMmE50asP74S6C4XJvmm6drHODV2ubXD/y16zhqkiU8hI/4
-	 9vc6xgsxRXso5j3TXnB8+QtW1nCEzaLY5DODDYNvyWHRQPTCZOZXXvnjZFGNLeSExQn8Q
-	 v+j2wINw+iuOsnkgAj1rT/aLqy5f9WQFYHFHM4rjoKyn08li/a/KyJuDFzqPLMNCEhQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622717;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=6GE+oW9VUCeYQjdlVSh11j1PrHRV8CvUfIrZyP+fpIU=;
+	b=pMZj/vDIoBV0YMZBxDxTmDWVzLjW9NNUaqyByxf1e65EMDFwRr8eanZ313INaYeUnPVG
+	 byQ6IxObYoOFP0lae1+eF1R+oVI0Iu7NqTxg+UqdCqI6d3aiZ5mXjgw44QVUv5Ve9/Qo5
+	 szCYuxewH3gs+JcgJiuba7jDeua8bKTj5I69IAkh3aWY+KZ4PFtZSrFw0C6hWJzW9vIOn
+	 KNGmyg06TENwQp4fCLnU/2si/bdV5ZcwEiMvo1qNmqkyVnrsXJ7vn+B3vN4P2jDViHICF
+	 /gmIX38rzYsjRE2QLl4Pf2adlAM0hwTwNNSEcIK/YOdY9SameaMmEoWkHus6mIj+arA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=MLu4TvuN;
-	arc=none smtp.remote-ip=209.85.221.70
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com [209.85.221.70])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0A2606A335
-	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 15:34:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F0A2606A335
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="f/SYFLql";
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57611606A326
+	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 16:05:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57611606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=MLu4TvuN
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-49337a224a8so3627762f8f.3
-        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 07:34:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795620865; x=1796225665; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8l9s48cBd/rt+ucRPW5523+jZ1OWhLcxRKhL/h7UiBA=;
-        b=MLu4TvuN7C9uuHnE3h0sL7xGqm0eMNT/1FNMf1+X/+tdREQjOmweYtkQ7W4J06/bnT
-         A0cKuuljQUU7/dw6LqmXYeJjvmHIyXNDas/uEfLO4vtJqaoOSckCroYP35LrPjdOJRzi
-         XVXGWpT9Wf+Lsj2q2bvLTGv7/dp4Ahh4nz+Bdf7z99aXR5B4EQKH6X9bNNwGDHCTGbJ+
-         LTMxi2v9kQzPdJrjAYbd2FxGcT4khTnbTX179PH5pZsjyuseykHcQ/Q+Jc3NI/FOpLAT
-         Dd8eXbdx75j4uMKoJ1B5XthKPcQhsEXkKUAkjr6CGSIOm+ZUwMT528WqW3qx+xqGo/ay
-         M85A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795620865; x=1796225665;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=8l9s48cBd/rt+ucRPW5523+jZ1OWhLcxRKhL/h7UiBA=;
-        b=ToRzfbIbL8RWgwJ9LtLtyl1piTcgD9UJYFyE1WrRWuvq26nhSPJ/LI9Qt/koU+ME3J
-         +9iusAVipVaDQ/fDDgZ16LSioPYVsvHK43uIejmsRSt+lEZI1byfXiIiiAjf7kuXMqs/
-         HX+h9DYgiZAfLBBcy856YJ+2xIiel6Y0HhVCgt8FzZqe01ytUUE0OSnQQUnWdJAoAfzz
-         dodbjLkiah2tUd0ZCDIsANaCKoYN2rdqk9d26cX7brqURbma8aM3JwrvkukAx1Q9pNX7
-         msqzIF8H7YlShSk2q1pM+7qDg9Kh/lyWyztesxwusMvQm4AVEzEsS+QiraMdJNWk1xq4
-         V3vw==
-X-Forwarded-Encrypted: i=1; AL+hErEVCZCWRJBBpauyjt41x3QkEiLuc5Z30/L6SnpLf6+AlIGDHJhgGGV8BvC/18faAIxHVjVDEerUwiE=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/NVRH5VnDJZVDAzB482Llq2uqmzTXPdaTrChOVJ68cVFKoxs4d
-	DRHbTgD9Ximt9+LzU1V4ShNUCYwWa8SILhWmaR3d6Ouj4GYGyyW31w2KKS+EFql+BI1ZMcAmO6b
-	QfVD+jJGX265LGQ==
-X-Received: from wroe1.prod.google.com ([2002:adf:ef01:0:b0:48e:3465:b63e])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6000:288e:b0:49e:4ba2:a775 with SMTP id ffacd0b85a97d-4abb86e50eamr35228561f8f.56.1795620864367;
- Wed, 25 Nov 2026 07:34:24 -0800 (PST)
-Date: Wed, 25 Nov 2026 15:34:21 +0000
-In-Reply-To: <20261125153353.1364467-1-jpiecuch@google.com>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=f/SYFLql
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6D5B42F;
+	Wed, 25 Nov 2026 08:05:12 -0800 (PST)
+Received: from [10.57.69.217] (unknown [10.57.69.217])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1C0883F632;
+	Wed, 25 Nov 2026 08:05:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795622715; bh=Q18/gANHfBS9yusGn73g+rKuPFygV4jQITWOkgLzLKw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=f/SYFLqlrH7fMaiAmXY47z5gjemNut7y8vgnBcixaHbyN4WQO1DePlV16mYVcHcOk
+	 efbHdspYW8kj0bR7SjlplxmrVK5oWrZTGWve23HywrPLTUkSQGDgPB6K02s6jH4q2P
+	 dJg28w6A9ItJNFyownAMj3CuUeE9NWArbgN90yxg=
+Message-ID: <17853c0e-9981-47f2-a62e-8ac4b2a192a6@arm.com>
+Date: Wed, 25 Nov 2026 16:05:08 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -78,360 +52,346 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261125153353.1364467-1-jpiecuch@google.com>
-X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
-Message-ID: <20261125153353.1364467-3-jpiecuch@google.com>
-Subject: [RFC PATCH 2/2] selftests/sched_ext: Test that ops.sub_caps_updated()
- runs unlocked
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>
-Cc: Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/20 v3] sched/eevdf: Decay positive lag of sleeping
+ entities
+To: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
+ dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+ mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com,
+ linux-kernel@vger.kernel.org, lukasz.luba@arm.com, rafael@kernel.org,
+ linux-pm@vger.kernel.org, tj@kernel.org, void@manifault.com,
+ arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev,
+ qyousef@layalina.io, christian.loehle@arm.com, pierre.gondois@arm.com,
+ sshegde@linux.ibm.com, kayracizmeci@gmail.com, tim.c.chen@linux.intel.com,
+ elif.topuz@arm.com
+References: <20261106151947.3991524-1-vincent.guittot@linaro.org>
+ <20261106151947.3991524-2-vincent.guittot@linaro.org>
+ <50f73e24-bf40-4fcf-a232-8747087ddbeb@arm.com>
+ <CAKfTPtDJFkSJm67CzoB=p5PCc60eVToEcy-=bxaThLXr5KGd7A@mail.gmail.com>
+Content-Language: en-US
+From: Elif Topuz <elif.topuz@arm.com>
+In-Reply-To: <CAKfTPtDJFkSJm67CzoB=p5PCc60eVToEcy-=bxaThLXr5KGd7A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add sub_caps_ctx. A cid-form root grants and revokes caps to a child
-sub-scheduler from ops.enqueue() (SCX_CAP_PERF) and ops.select_cid()
-(SCX_CAP_PREEMPT). The child calls scx_bpf_cidperf_set() on every cid from
-ops.sub_caps_updated(), which aborts the child if the callback inherits
-the parent's rq lock. The test is skipped on a single cpu, where the only
-cid is the parent's rq.
+Hi Vincent,
 
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
----
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- .../selftests/sched_ext/sub_caps_ctx.bpf.c    | 136 +++++++++++++++
- .../selftests/sched_ext/sub_caps_ctx.c        | 165 ++++++++++++++++++
- 3 files changed, 302 insertions(+)
- create mode 100644 tools/testing/selftests/sched_ext/sub_caps_ctx.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/sub_caps_ctx.c
+On 25/11/2026 08:17, Vincent Guittot wrote:
+> Hi Elif,
+> 
+> On Tue, 24 Nov 2026 at 16:13, Elif Topuz <elif.topuz@arm.com> wrote:
+>>
+>> Hi Vincent,
+>>
+>> On 06/11/2026 15:19, Vincent Guittot wrote:
+>>> Similarly to delayed dequeue, which enables an entity to decay its negative
+>>> lag while sleeping, a task should not keep a positive lag forever.
+>>>
+>>> The sleep duration and the weight are used to decay the positive lag at
+>>> wakeup.
+>>>
+>>> Apply the decay when enqueueing on prev rq for which we hold the lock to
+>>> get rq_clock_task().
+>>>
+>>> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+>>> ---
+>>>  kernel/sched/fair.c | 124 ++++++++++++++++++++++++++++++++------------
+>>>  1 file changed, 90 insertions(+), 34 deletions(-)
+>>>
+>>> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+>>> index 0feec172fd37..5cd171f830d8 100644
+>>> --- a/kernel/sched/fair.c
+>>> +++ b/kernel/sched/fair.c
+>>> @@ -897,6 +897,91 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
+>>>       return avruntime - vlag != se->vruntime;
+>>>  }
+>>>
+>>> +/*
+>>> + * Signed add and clamp on underflow.
+>>> + *
+>>> + * Explicitly do a load-store to ensure the intermediate value never hits
+>>> + * memory. This allows lockless observations without ever seeing the negative
+>>> + * values.
+>>> + */
+>>> +#define add_positive(_ptr, _val) do {                           \
+>>> +     typeof(_ptr) ptr = (_ptr);                              \
+>>> +     __signed_scalar_typeof(*ptr) val = (_val);              \
+>>> +     typeof(*ptr) res, var = READ_ONCE(*ptr);                \
+>>> +                                                             \
+>>> +     res = var + val;                                        \
+>>> +                                                             \
+>>> +     if (val < 0 && res > var)                               \
+>>> +             res = 0;                                        \
+>>> +                                                             \
+>>> +     WRITE_ONCE(*ptr, res);                                  \
+>>> +} while (0)
+>>> +
+>>> +/*
+>>> + * Remove and clamp on negative, from a local variable.
+>>> + *
+>>> + * A variant of sub_positive(), which does not use explicit load-store
+>>> + * and is thus optimized for local variable updates.
+>>> + */
+>>> +#define lsub_positive(_ptr, _val) do {                               \
+>>> +     typeof(_ptr) ptr = (_ptr);                              \
+>>> +     *ptr -= min_t(typeof(*ptr), *ptr, _val);                \
+>>> +} while (0)
+>>> +
+>>> +static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq);
+>>> +static unsigned long task_h_load(struct task_struct *p);
+>>> +
+>>> +static __always_inline
+>>> +void decay_entity_lag(struct cfs_rq *cfs_rq, struct task_struct *p, int flags)
+>>> +{
+>>> +     struct sched_entity *se = &p->se;
+>>> +     s64 delta_exec, vlag = se->vlag;
+>>> +     unsigned long cfs_load;
+>>> +     struct rq *rq;
+>>> +
+>>> +     WARN_ON_ONCE(se->on_rq);
+>>> +
+>>> +     /* Negative lag is managed by delayed dequeue path */
+>>> +     if (vlag <= 0)
+>>> +             return;
+>>> +
+>>> +     rq = rq_of(cfs_rq);
+>>> +
+>>> +     /* No fast access to prev rq task clock */
+>>> +     if (flags & ENQUEUE_MIGRATED)
+>>> +             return;
+>>> +
+>>> +     /* Compute sleep time */
+>>> +     delta_exec = rq_clock_task(rq) - se->exec_start;
+>>> +     if (unlikely(delta_exec <= 0))
+>>> +             return;
+>>> +
+>>> +     /* For anything above ~4 seconds, save computation and clear the lag */
+>>> +     if (unlikely(delta_exec >> 32)) {
+>>> +             se->vlag = 0;
+>>> +             return;
+>>> +     }
+>>> +
+>>> +     /*
+>>> +      * Use cfs' load and p's weight to estimate what would have been the
+>>> +      * share for p. task's load contribution to cfs' load is replaced by
+>>> +      * its weight.
+>>> +      */
+>>> +     cfs_load = cfs_rq_load_avg(cfs_rq);
+>>> +     lsub_positive(&cfs_load, task_h_load(p));
+>>> +     if (cfs_load) {
+>>> +             unsigned long weight = scale_load_down(se->h_load.weight);
+>>> +
+>>> +             delta_exec *= weight;
+>>> +             delta_exec = div64_long(delta_exec, cfs_load + weight);
+>>> +     }
+>>> +
+>>> +     vlag -= calc_delta_fair(delta_exec, se);
+>>> +
+>>> +     /* vlag can't become neg while sleeping */
+>>> +     se->vlag = max(0, vlag);
+>>> +}
+>>> +
+>>>  /*
+>>>   * Entity is eligible once it received less service than it ought to have,
+>>>   * eg. lag >= 0.
+>>> @@ -4693,38 +4778,6 @@ account_entity_dequeue(struct cfs_rq *cfs_rq, struct sched_entity *se)
+>>>       cfs_rq->nr_queued--;
+>>>  }
+>>>
+>>> -/*
+>>> - * Signed add and clamp on underflow.
+>>> - *
+>>> - * Explicitly do a load-store to ensure the intermediate value never hits
+>>> - * memory. This allows lockless observations without ever seeing the negative
+>>> - * values.
+>>> - */
+>>> -#define add_positive(_ptr, _val) do {                           \
+>>> -     typeof(_ptr) ptr = (_ptr);                              \
+>>> -     __signed_scalar_typeof(*ptr) val = (_val);              \
+>>> -     typeof(*ptr) res, var = READ_ONCE(*ptr);                \
+>>> -                                                             \
+>>> -     res = var + val;                                        \
+>>> -                                                             \
+>>> -     if (val < 0 && res > var)                               \
+>>> -             res = 0;                                        \
+>>> -                                                             \
+>>> -     WRITE_ONCE(*ptr, res);                                  \
+>>> -} while (0)
+>>> -
+>>> -/*
+>>> - * Remove and clamp on negative, from a local variable.
+>>> - *
+>>> - * A variant of sub_positive(), which does not use explicit load-store
+>>> - * and is thus optimized for local variable updates.
+>>> - */
+>>> -#define lsub_positive(_ptr, _val) do {                               \
+>>> -     typeof(_ptr) ptr = (_ptr);                              \
+>>> -     *ptr -= min_t(typeof(*ptr), *ptr, _val);                \
+>>> -} while (0)
+>>> -
+>>> -
+>>>  /*
+>>>   * Because of rounding, se->util_sum might ends up being +1 more than
+>>>   * cfs->util_sum. Although this is not a problem by itself, detaching
+>>> @@ -8152,7 +8205,7 @@ static void
+>>>  enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
+>>>  {
+>>>       int rq_h_nr_queued = rq->cfs.h_nr_queued;
+>>> -     int task_new = !(flags & ENQUEUE_WAKEUP);
+>>> +     int task_wake = flags & ENQUEUE_WAKEUP;
+>>>       struct sched_entity *se = &p->se;
+>>>       struct cfs_rq *cfs_rq = &rq->cfs;
+>>>       unsigned long weight;
+>>> @@ -8185,6 +8238,9 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
+>>>       if (p->in_iowait)
+>>>               cpufreq_update_util(rq, SCHED_CPUFREQ_IOWAIT);
+>>>
+>>> +     if (task_wake)
+>>> +             decay_entity_lag(cfs_rq, p, flags);
+>>> +
+>>>       curr = (cfs_rq->curr == se);
+>>>       /*
+>>>        * This can actually happen with CFS_BANDWIDTH, a task can be throttled
+>>> @@ -8225,7 +8281,7 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
+>>>        * into account, but that is not straightforward to implement,
+>>>        * and the following generally works well enough in practice.
+>>>        */
+>>> -     if (!task_new)
+>>> +     if (task_wake)
+>>>               check_update_overutilized_status(rq);
+>>>
+>>>       assert_list_leaf_cfs_rq(rq);
+>>
+>> I have tested the patchset with cyclictest and rtapp like you mentioned in your
+>> cover letter. I have used Ampere Altra with 160 cpus.
+>>
+>> I run these sets:
+>> - cyclictest with a 3777 us period and default slice with 2xNR_CPUS rt-app tasks
+>> that run continuously with default slice.
+>> - cyclictest with a 3777 us period and 8ms slice with 2xNR_CPUS rt-app tasks
+>> that run continuously with a 16ms slice.
+>> - cyclictest with a 3777 us period and default slice with 2xNR_CPUS rt-app tasks
+>> run periodically with default slice.
+>> - cyclictest with a 3777 us period and 8ms slice with 2xNR_CPUS rt-app tasks run
+>> periodically with a 16ms slice.
+>> I have also run them 130 seconds.
+>>
+>> Cases with continuous rt-app:
+>>
+>> | Kernel   | Slice   |   Samples |   P50 |   P90 |   P99 |   P99.9 |   Max |
+>> |:---------|:--------|----------:|------:|------:|------:|--------:|------:|
+>> | base     | Default |     34403 |    53 |    54 |    56 |     287 |  3996 |
+>> | patch    | Default |     26748 |  1979 |  5637 |  7119 |    9264 | 10895 |
+> 
+> the p99.9 increase is somewhat expected and related to patches 1-4
+> because we soften the capacity of short task to preempt current when
+> they have the same slice
+> 
+>> | base     | 8/16 ms |     34406 |    53 |    54 |    56 |     269 | 11880 |
+>> | patch    | 8/16 ms |     34256 |    53 |    54 |    62 |    9126 | 15429 |
+> 
+> The p99.9 value is not expected. Is it something that you can
+> repeatedly reproduce? Also, what was the slice of other tasks on your
+> system? if they stay to default 2.8ms they can disturb your test by
+> preventing cyclictest to preempt rt-app. I noticed that when rt or
+> deadline threads (like sugov) woke up simultaneously it could disturb
+> cyclictest preemption. I'm working on fixing this for the next version
+> I will look more deeply at this case while preparing the next version
 
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index 9a776a8a36ff..caedba9dcde9 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -196,6 +196,7 @@ auto-test-targets :=			\
- 	select_cpu_dispatch_bad_dsq	\
- 	select_cpu_dispatch_dbl_dsp	\
- 	select_cpu_vtime		\
-+	sub_caps_ctx			\
- 	rt_stall			\
- 	test_example			\
- 	total_bw			\
-diff --git a/tools/testing/selftests/sched_ext/sub_caps_ctx.bpf.c b/tools/testing/selftests/sched_ext/sub_caps_ctx.bpf.c
-new file mode 100644
-index 000000000000..e6613fc23d15
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/sub_caps_ctx.bpf.c
-@@ -0,0 +1,136 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * A cid-form root scheduler which grants and revokes caps to a child
-+ * sub-scheduler from its rq-locked ops.enqueue() and from ops.select_cid(), and
-+ * a child which calls scx_bpf_cidperf_set() on every cid from
-+ * ops.sub_caps_updated().
-+ *
-+ * ops.sub_caps_updated() must not inherit the parent's rq lock context. If it
-+ * did, scx_bpf_cidperf_set() on any cid other than the parent's locked rq's
-+ * would fail with "Invalid target CPU" and abort the child.
-+ */
-+#include <scx/common.bpf.h>
-+
-+char _license[] SEC("license") = "GPL";
-+
-+#define MAX_CIDS	1024
-+
-+struct {
-+	__uint(type, BPF_MAP_TYPE_ARENA);
-+	__uint(map_flags, BPF_F_MMAPABLE);
-+	__uint(max_entries, 1 << 8);
-+#if defined(__TARGET_ARCH_arm64) || defined(__aarch64__)
-+	__ulong(map_extra, 0x1ull << 32);
-+#else
-+	__ulong(map_extra, 0x1ull << 44);
-+#endif
-+} arena SEC(".maps");
-+
-+struct sub_caps_ctx_cmask {
-+	union {
-+		struct scx_cmask mask;
-+		u64 words[CMASK_NR_WORDS(MAX_CIDS) + 2];
-+	};
-+};
-+
-+struct sub_caps_ctx_cmask __arena_global all_cids;
-+
-+u64 child_cgid;
-+u64 nr_enqueued, nr_selected, nr_grants, nr_revokes, nr_caps_updated, nr_perf_set;
-+
-+UEI_DEFINE(uei);
-+
-+/*
-+ * Toggle @cap on all cids of the child every 8th call. ops.select_cid() and
-+ * ops.enqueue() toggle different caps so that neither turns the other's grant
-+ * or revoke into a no-op.
-+ */
-+static void toggle_child_cap(u64 cap, u64 seq)
-+{
-+	u64 cgid = child_cgid;
-+
-+	if (!cgid || (seq & 7) || nr_grants + nr_revokes >= 4096)
-+		return;
-+
-+	if ((seq >> 3) & 1) {
-+		scx_bpf_sub_revoke(cgid, cap, &all_cids.mask);
-+		__sync_fetch_and_add(&nr_revokes, 1);
-+	} else {
-+		scx_bpf_sub_grant(cgid, cap, &all_cids.mask, NULL);
-+		__sync_fetch_and_add(&nr_grants, 1);
-+	}
-+}
-+
-+/* grant / revoke from the ops.select_cid() context */
-+s32 BPF_STRUCT_OPS(sub_caps_ctx_select_cid, struct task_struct *p, s32 prev_cid, u64 wake_flags)
-+{
-+	toggle_child_cap(SCX_CAP_PREEMPT, __sync_fetch_and_add(&nr_selected, 1));
-+	return prev_cid;
-+}
-+
-+/* grant / revoke while holding the enqueue rq lock */
-+void BPF_STRUCT_OPS(sub_caps_ctx_enqueue, struct task_struct *p, u64 enq_flags)
-+{
-+	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+	toggle_child_cap(SCX_CAP_PERF, __sync_fetch_and_add(&nr_enqueued, 1));
-+}
-+
-+void BPF_STRUCT_OPS(sub_caps_ctx_sub_caps_updated, const struct scx_cmask *cmask, u64 caps)
-+{
-+	u32 nr_cids = scx_bpf_nr_cids();
-+	s32 cid;
-+
-+	/* @cmask is an arena pointer, associate the arena */
-+	asm volatile("" :: "r"(&arena));
-+
-+	__sync_fetch_and_add(&nr_caps_updated, 1);
-+
-+	/* any cid must be accepted when no rq lock is held */
-+	bpf_for(cid, 0, nr_cids) {
-+		if (!scx_bpf_cidperf_set(cid, SCX_CPUPERF_ONE))
-+			__sync_fetch_and_add(&nr_perf_set, 1);
-+	}
-+}
-+
-+s32 BPF_STRUCT_OPS(sub_caps_ctx_sub_attach, struct scx_sub_attach_args *args)
-+{
-+	child_cgid = args->ops->sub_cgroup_id;
-+	return 0;
-+}
-+
-+void BPF_STRUCT_OPS(sub_caps_ctx_sub_detach, struct scx_sub_detach_args *args)
-+{
-+	child_cgid = 0;
-+}
-+
-+s32 BPF_STRUCT_OPS_SLEEPABLE(sub_caps_ctx_init)
-+{
-+	u32 nr_cids = scx_bpf_nr_cids();
-+	s32 cid;
-+
-+	if (nr_cids > MAX_CIDS) {
-+		scx_bpf_error("nr_cids=%u exceeds MAX_CIDS=%d", nr_cids, MAX_CIDS);
-+		return -EINVAL;
-+	}
-+
-+	cmask_init(&all_cids.mask, 0, nr_cids);
-+	bpf_for(cid, 0, nr_cids)
-+		cmask_set(cid, &all_cids.mask);
-+
-+	return 0;
-+}
-+
-+void BPF_STRUCT_OPS(sub_caps_ctx_exit, struct scx_exit_info *ei)
-+{
-+	UEI_RECORD(uei, ei);
-+}
-+
-+SCX_OPS_CID_DEFINE(sub_caps_ctx_ops,
-+		   .select_cid		= (void *)sub_caps_ctx_select_cid,
-+		   .enqueue		= (void *)sub_caps_ctx_enqueue,
-+		   .sub_caps_updated	= (void *)sub_caps_ctx_sub_caps_updated,
-+		   .sub_attach		= (void *)sub_caps_ctx_sub_attach,
-+		   .sub_detach		= (void *)sub_caps_ctx_sub_detach,
-+		   .init		= (void *)sub_caps_ctx_init,
-+		   .exit		= (void *)sub_caps_ctx_exit,
-+		   .name		= "sub_caps_ctx");
-diff --git a/tools/testing/selftests/sched_ext/sub_caps_ctx.c b/tools/testing/selftests/sched_ext/sub_caps_ctx.c
-new file mode 100644
-index 000000000000..5881a6312cb6
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/sub_caps_ctx.c
-@@ -0,0 +1,165 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Grant and revoke caps to a sub-scheduler from the parent's rq-locked
-+ * ops.enqueue() and verify that the child's ops.sub_caps_updated() runs in an
-+ * unlocked context.
-+ */
-+#include <errno.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <time.h>
-+#include <unistd.h>
-+#include <sys/stat.h>
-+#include <sys/wait.h>
-+#include <bpf/bpf.h>
-+#include <scx/common.h>
-+
-+/* opaque to userspace, must match the size in sub_caps_ctx.bpf.c */
-+#define MAX_CIDS	1024
-+struct sub_caps_ctx_cmask {
-+	__u64 words[(MAX_CIDS + 63) / 64 + 1 + 2];
-+};
-+
-+#include "sub_caps_ctx.bpf.skel.h"
-+#include "scx_test.h"
-+
-+#define CGRP_ROOT	"/sys/fs/cgroup"
-+#define CGRP_PATH	CGRP_ROOT "/sub_caps_ctx"
-+#define NR_WORKERS	8
-+
-+struct ctx {
-+	struct sub_caps_ctx *parent;
-+	struct sub_caps_ctx *child;
-+	struct bpf_link *parent_link;
-+	struct bpf_link *child_link;
-+};
-+
-+static struct ctx test_ctx;
-+
-+static void write_file(const char *path, const char *buf)
-+{
-+	FILE *f = fopen(path, "w");
-+
-+	if (!f)
-+		return;
-+	fputs(buf, f);
-+	fclose(f);
-+}
-+
-+static enum scx_test_status setup(void **ctx)
-+{
-+	struct sub_caps_ctx *skel;
-+	struct stat st;
-+
-+	if (!__COMPAT_struct_has_field("sched_ext_ops_cid", "sub_caps_updated"))
-+		return SCX_TEST_SKIP;
-+
-+	/* a single cid is always the parent's rq, which scx_bpf_cidperf_set() accepts */
-+	if (sysconf(_SC_NPROCESSORS_ONLN) < 2)
-+		return SCX_TEST_SKIP;
-+
-+	write_file(CGRP_ROOT "/cgroup.subtree_control", "+cpu");
-+	if (mkdir(CGRP_PATH, 0755) && errno != EEXIST) {
-+		fprintf(stderr, "Failed to create %s (%s)\n", CGRP_PATH, strerror(errno));
-+		return SCX_TEST_SKIP;
-+	}
-+	SCX_FAIL_IF(stat(CGRP_PATH, &st), "Failed to stat %s", CGRP_PATH);
-+
-+	skel = SCX_OPS_CID_OPEN(sub_caps_ctx_ops, sub_caps_ctx);
-+	SCX_OPS_LOAD(skel, sub_caps_ctx_ops, sub_caps_ctx, uei);
-+	test_ctx.parent = skel;
-+
-+	skel = SCX_OPS_CID_OPEN(sub_caps_ctx_ops, sub_caps_ctx);
-+	skel->struct_ops.sub_caps_ctx_ops->sub_cgroup_id = st.st_ino;
-+	SCX_OPS_LOAD(skel, sub_caps_ctx_ops, sub_caps_ctx, uei);
-+	test_ctx.child = skel;
-+
-+	*ctx = &test_ctx;
-+	return SCX_TEST_PASS;
-+}
-+
-+/* sleep and wake repeatedly to drive the parent's ops.enqueue() */
-+static void worker(void)
-+{
-+	struct timespec ts = { .tv_nsec = 100 * 1000 };
-+	int i;
-+
-+	for (i = 0; i < 2000; i++)
-+		nanosleep(&ts, NULL);
-+	exit(0);
-+}
-+
-+static enum scx_test_status run(void *arg)
-+{
-+	struct ctx *ctx = arg;
-+	pid_t pids[NR_WORKERS];
-+	int i, status;
-+
-+	ctx->parent_link = bpf_map__attach_struct_ops(ctx->parent->maps.sub_caps_ctx_ops);
-+	SCX_FAIL_IF(!ctx->parent_link, "Failed to attach parent");
-+
-+	ctx->child_link = bpf_map__attach_struct_ops(ctx->child->maps.sub_caps_ctx_ops);
-+	SCX_FAIL_IF(!ctx->child_link, "Failed to attach child");
-+	SCX_GT(ctx->parent->bss->child_cgid, 0);
-+
-+	for (i = 0; i < NR_WORKERS; i++) {
-+		pids[i] = fork();
-+		SCX_FAIL_IF(pids[i] < 0, "Failed to fork");
-+		if (!pids[i])
-+			worker();
-+	}
-+	for (i = 0; i < NR_WORKERS; i++)
-+		SCX_FAIL_IF(waitpid(pids[i], &status, 0) != pids[i] || status,
-+			    "Worker %d failed", i);
-+
-+	/* let deferred notifications drain */
-+	usleep(100 * 1000);
-+
-+	printf("enqueued=%lu selected=%lu grants=%lu revokes=%lu caps_updated=%lu perf_set=%lu\n",
-+	       (unsigned long)ctx->parent->bss->nr_enqueued,
-+	       (unsigned long)ctx->parent->bss->nr_selected,
-+	       (unsigned long)ctx->parent->bss->nr_grants,
-+	       (unsigned long)ctx->parent->bss->nr_revokes,
-+	       (unsigned long)ctx->child->bss->nr_caps_updated,
-+	       (unsigned long)ctx->child->bss->nr_perf_set);
-+
-+	SCX_ASSERT_ALIVE(ctx->child, uei);
-+	SCX_ASSERT_ALIVE(ctx->parent, uei);
-+	SCX_GT(ctx->parent->bss->nr_grants, 0);
-+	SCX_GT(ctx->parent->bss->nr_revokes, 0);
-+	SCX_GT(ctx->child->bss->nr_caps_updated, 0);
-+
-+	bpf_link__destroy(ctx->child_link);
-+	ctx->child_link = NULL;
-+	bpf_link__destroy(ctx->parent_link);
-+	ctx->parent_link = NULL;
-+
-+	SCX_EQ(ctx->child->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
-+	SCX_EQ(ctx->parent->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+static void cleanup(void *arg)
-+{
-+	struct ctx *ctx = arg;
-+
-+	if (ctx->child_link)
-+		bpf_link__destroy(ctx->child_link);
-+	if (ctx->parent_link)
-+		bpf_link__destroy(ctx->parent_link);
-+	sub_caps_ctx__destroy(ctx->child);
-+	sub_caps_ctx__destroy(ctx->parent);
-+	rmdir(CGRP_PATH);
-+}
-+
-+struct scx_test sub_caps_ctx = {
-+	.name = "sub_caps_ctx",
-+	.description = "Check ops.sub_caps_updated() runs unlocked after a locked grant",
-+	.setup = setup,
-+	.run = run,
-+	.cleanup = cleanup,
-+};
-+
-+REGISTER_SCX_TEST(&sub_caps_ctx)
--- 
-2.56.1.839.g22a8290db9-goog
+yes, I have run the same experiment few more times and got the similar results.
+As you said other tasks stayed to default 2.8ms in the system.
 
+> 
+>>
+>> Percentage differences:
+>>                                         base |                  patch
+>> slice                                default |                default
+>> 99th Percentile                           56 |         7119 (-12612%)
+>> 99.9th Percentile                        287 |          9264 (-3128%)
+>> Maximum                                 3996 |          10895 (-173%)
+>>
+>>                                         base |                  patch
+>> slice                               8ms/16ms |               8ms/16ms
+>> 99th Percentile                           56 |              62 (-11%)
+>> 99.9th Percentile                        269 |          9126 (-3293%)
+>> Maximum                                11880 |           15429 (-30%)
+>>
+>>
+>> Cases with periodic rt-app:
+>>
+>> | Kernel   | Slice   |   Samples |   P50 |   P90 |   P99 |   P99.9 |   Max |
+>> |:---------|:--------|----------:|------:|------:|------:|--------:|------:|
+>> | base     | Default |     33795 |    56 |   901 |  4366 |    6156 |  9039 |
+>> | patch    | Default |     33081 |    60 |  2734 |  5055 |    6395 |  9165 |
+>> | base     | 8/16 ms |     34419 |    56 |    61 |    86 |     291 |   554 |
+>> | patch    | 8/16 ms |     34419 |    56 |    59 |    77 |     161 |   540 |
+> 
+> Thise results are more aligned with my expectations
+> 
+>>
+>> Percentage differences:
+>>                                         base |                  patch
+>> slice                                default |                default
+>> 99th Percentile                         4366 |            5055 (-16%)
+>> 99.9th Percentile                       6156 |             6395 (-4%)
+>> Maximum                                 9039 |             9165 (-1%)
+>>
+>>                                         base |                  patch
+>> slice                               8ms/16ms |               8ms/16ms
+>> 99th Percentile                           86 |              77 (+10%)
+>> 99.9th Percentile                        291 |             161 (+45%)
+>> Maximum                                  554 |              540 (+3%)
+>>
+>> With the periodic rt-app the difference between base and patches are lower, and
+>> using custom slices I can see the improvement. However, when using continuous
+>> rt-app, especially with the default slice case, I see the worst latency. I have
+>> noticed that this difference is coming from "decay_entity_lag()". If I
+>> understand correctly, most of the time cyclictest's lag reduced to zero after
+>> decay_entity_lag(), and it cannot preempt the rt-app tasks.
+> 
+> yes, patches 1-4 have the benefit to reduce preemption between tasks
+> using the same slice but at the cost of scheduling latency for short
+> sleeping tasks.
+> 
+>>
+>> I have also run hackbench with continuous NR_CPUS rt-app tasks with default
+>> slices and custom slices (hackbench with a 8ms slice and rt-app with a 16ms
+>> slice). Both threads-pipe and process-pipe for g=1 and f=160 gave around 50%
+>> worst execution time with default slice. When using custom slice, this
+>> difference is much lower.
+> 
+> I haven't run those tests but will look into them. Have you tried
+> hackbench alone and did you see some differences?
+
+When running alone, the results are similar.
+
+Default slice:
+MODE    IPC      G  FD |    Base(s)/CV |   Patch(s)/CV |   diff%
+----------------------------------------------------------------
+process pipe     1  10 |   0.028/40.1% |   0.034/48.5% |  -22.9%
+process pipe     1  20 |   0.093/38.5% |   0.081/57.2% |  +13.0%
+process pipe     1  40 |   0.281/20.5% |   0.286/25.7% |   -1.9%
+process pipe     1  80 |    0.824/4.8% |    0.844/5.3% |   -2.5%
+process pipe     1 160 |    3.429/4.8% |    2.558/9.6% |  +25.4%
+process socket   1  10 |   0.069/59.9% |   0.073/42.7% |   -5.3%
+process socket   1  20 |   0.208/26.4% |   0.191/36.2% |   +8.4%
+process socket   1  40 |    0.445/4.4% |    0.445/4.7% |   +0.2%
+process socket   1  80 |    1.034/6.4% |    1.040/7.4% |   -0.5%
+process socket   1 160 |    2.983/1.7% |    2.895/0.8% |   +2.9%
+threads pipe     1  10 |   0.048/40.1% |   0.055/37.2% |  -15.3%
+threads pipe     1  20 |   0.107/39.3% |   0.135/31.8% |  -26.5%
+threads pipe     1  40 |   0.269/36.7% |   0.260/33.9% |   +3.5%
+threads pipe     1  80 |   0.706/21.3% |    0.929/4.9% |  -31.6%
+threads pipe     1 160 |    2.523/5.9% |    2.705/5.4% |   -7.2%
+threads socket   1  10 |    0.110/8.7% |   0.099/22.2% |  +10.2%
+threads socket   1  20 |    0.215/8.0% |   0.230/11.1% |   -6.9%
+threads socket   1  40 |   0.423/39.2% |   0.420/29.7% |   +0.7%
+threads socket   1  80 |    1.134/2.7% |    1.043/5.3% |   +8.1%
+threads socket   1 160 |    3.111/2.1% |    3.036/1.1% |   +2.4%
+
+[...]
+
+Thanks,
+Elif
