@@ -1,74 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.71
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.69
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795607458;
-	b=heiyGwYSCGtgQMKB7k82bycN/IrqAcRkbbVCygrCPnAUwafAEGl1k9n6mCJ3zLR+16GN
-	 U97H8tmYBVu6SB6jsCHkE8LIZAQEpYcX9a1IWTipAPFxkZdI2nigtz4flBkTrrfKa/uxp
-	 6WkP5/pTalehY30wYxzG3SNws+suiiSNlwpYxGrNbvyxluocyjdZtL26sAgWN/uqBVtXC
-	 5N+oH+7YMYZf2UEOH6W1zKmHFcNorBemYBHzGh+aKZjOTDFqf9FA7OEtSLTD+OFlLqRnz
-	 rYk0QksHo7vfj7cSF15GBhsXnJI96avkMxL4BL9mD/y2kQ2Pr3FPkgENgxdgf6PTOmA==
+	t=1795607459;
+	b=jNjbXsyqnYU9KZ18xv8CyyuBIoQ0irheWitwCXmVdu1MbRaj0rck+sR0cIt+cWx9MOS2
+	 XMUBM80vcB54Q6Et12ivtZRzApdXC4arFCQoyvBAWzjUBQ3q2LGzXamOqX2IOPAPfsk5L
+	 8k5q5LyztP3b8bWhrh0FXs+5mF4FytbrzfjxxEOhnwRrv17kMy6uVflq8LiN5bzYmU54K
+	 GmXzmHE/POrRZUs1Q7sg8VzwSeprB0D/bMjsysaxeRnVQfrZfCl7wSti1lT0eZ8vZeqq1
+	 5qWYhQSCa+Imqj0S6nbZbTOqxLapRIBgiv91KHq960M4v0LTYQlB/kxabdxzTJOmZkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795607458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795607459;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
 	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
 	 Content-Type;
-	bh=TXuUl6JwjM4h8oApvNR/deLsebMYXTD4leQjsrz4ULg=;
-	b=NNQh3WD52fwJDtX2llsJbBjgxwMheKyCJ87w9RdQvi4GdFtDmGBheYrDukpiOxh7Y2zw
-	 eK+LyyWX2YQ54wdFLlNEkHvmhNOgdWbGLwce6ilq8KQwVIxarl55lmF5r/a5URVenR8CI
-	 jA9gSGqExGexXV1D9eksec08dEZgj2Wpl6aZAUCZbFOhlLNforyj7tpzJRNZ4vNCHrVu0
-	 vhwqjVfiMoXhINszqxBHfNgGoOQ+vc2Zsh0J5B2/VSyARg5XlH8ckkh0qiRzuNODR96tG
-	 9owhSQ2Q9ZPBy++u0tNIxcMJdSscuktfeWl6MLO9rpo2amc/6xRi9K4c+dRnx9Hu1Cg==
+	bh=XxpHxjNY3UsTDcTzG60Yu5gGt0anPZ0u89T3qoWHlA4=;
+	b=ipujAlLhOfg94+Fza/pzPFmhJ1Y317uLFBpK9IUcaw+nRkC/9qg2lhyWmADP387MSMLY
+	 uyqziogWSbOO5A8i5kUwme7+dD6Ub8P0/HZkCzjd2/9Iojf31Rc7Ff12MGDIHEPWfcWyf
+	 PauQiOBtHUtHlnhhjxxnMAM6cNUtxeK2fmD80jQblEGWpjy/qETG8I4TYsZKkGUnGeG7/
+	 sUXUkNFoPRYwUZy455ENfz0QljSiIjkV91n+Zgw3BBQL0IrRgB7lGA95mLdC7aeibx+e1
+	 Jp4Tlb7DSjn4lMlSxnJy6MLxXYlHvvt3BdeTFSXPAmXjN8FQabNTvc8rX+yhKEt04nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=hJpQinn9;
-	arc=none smtp.remote-ip=209.85.128.71
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=ahAHraVB;
+	arc=none smtp.remote-ip=209.85.221.69
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com [209.85.221.69])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58829606A687
-	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 11:50:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58829606A687
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED85F606A327
+	for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 11:50:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ED85F606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=hJpQinn9
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4bb69d84053so40750265e9.0
-        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 03:50:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=ahAHraVB
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-48c6a1d4034so3263358f8f.0
+        for <sched-ext@lists.linux.dev>; Wed, 25 Nov 2026 03:50:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795607457; x=1796212257; darn=lists.linux.dev;
+        d=google.com; s=20260707; t=1795607456; x=1796212256; darn=lists.linux.dev;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=TXuUl6JwjM4h8oApvNR/deLsebMYXTD4leQjsrz4ULg=;
-        b=hJpQinn9H1DPV6i/7UOO3KbELkrym6QZgvfPRq1V/Mume0hqfKF+o4bgeWRkYZGMLP
-         JH7CBj086UGZdbIU8oA1TKef4Gn25SZrfXuEH9RvoUNcJL32rmPHhjFsSOfkbMJweGv2
-         L2kAllnXqk/85bT7wPrlyrt4mGcY4owJQiIkvrTGKyomanG9FvVIglWkBsf7tRuom2Bb
-         qOZgptUG8n3M0H7KeBQRtIJ+4Xy+ZJs36S+b9gU8qgMqJvyMb87chrP99ydmiNsP1YAW
-         sVz1yPSG3FiqxWrEwFiMzn1T5zUIkr77RLNGo7V4yIr/H1QELczUGqCqouuOddIx2Rzw
-         10gQ==
+        bh=XxpHxjNY3UsTDcTzG60Yu5gGt0anPZ0u89T3qoWHlA4=;
+        b=ahAHraVBsutAP2tIAi6aeTrR+aDr/QAu4J0nuRyBfs61dx4SA+CozBmYnXzYLGRyVn
+         XnBArk+I1XqjqW6/o8PFCtEnYPqgUvkqzbbc+/viMoqqAzeoXgLkO13SJ19yGP6hlQRK
+         RqELPjB0vx7ywEOjXF+RFaDOmdSDELYGd08lEwEsMZvJceFSwfepca8nKa+VUYRfiXo3
+         rsPUG5hEhda1FcTEtw9zGfTmNtVDPfcDHCJDWjJRJ7l2MHVG6+Lu6GAWPGojeZqo2L7N
+         V9CgNHqwLK+YVEy/QhpqzhPXkUge0U7yH/Igcm0EnRH3hAzahfrJvofJW9iWKzNJxY6C
+         tdWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795607457; x=1796212257;
+        d=1e100.net; s=20260707; t=1795607456; x=1796212256;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=TXuUl6JwjM4h8oApvNR/deLsebMYXTD4leQjsrz4ULg=;
-        b=WweWeAPDkb3G071YPtaG99TIG8gljIg69hsME7mcTDH7lkQdWC/3Z4GbzjNpYlC5vv
-         vvp9ITYhSI09RD6pJHqtJNJF5x+6Yc37H6wY5BinBjwN4MZEk+Z1t5/cN0w/mP9GAL5d
-         LWab1OqifV5RXbVz++6l9fe3U556v3581xW99CODSCc8QZgMBwQmm5VNnhRzJMKpKLHR
-         YmQXNfF0mhyslsUMee2nj24tqo9FrdZ0iI2AQEg+iMH339tyjwWJuyVy1HXcwpH/miBi
-         BmRqN9cK+BKsG5AXAxKADMtoyHmt+s/ek6PFnqHnMwFszKNgiMaA3CqZGafQPlVLJ2rh
-         hVYA==
-X-Forwarded-Encrypted: i=1; AL+hErFXyrKfEbf3kr0sc0LoCvh6EdkYiV93d2m5MLzk3zcY86e2T2VtrwvqGI7Gpsmg5MQMCxHiAEdSYMU=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/KSeFB32sljyJn2QZ0pXveZnjD0aYm9r43Sf+HuXxNqKA4TsqS
-	XfMRtBzjPhvBKZwqvf1z0nAIKG7bjh6duftL4OQae7L1ek/UZ83jOknuNL2C7zsS81WhXOK5s6+
-	ImxkMbv82g7tRJQ==
-X-Received: from wrf12-n2.prod.google.com ([2002:a05:6000:43cc:20b0:48e:d59:85ff])
+        bh=XxpHxjNY3UsTDcTzG60Yu5gGt0anPZ0u89T3qoWHlA4=;
+        b=kYWQj69p322kYDApj7mNFPlhhtTjaPUzC4Kbdg/Ak2GiwixIQ3QhwOOABWZUAtD+fi
+         lB3pINlhi23OfFyMmj6+L/K2dcTkPIVIhFiRgI+uOFa70Gti+/rdXj0kyYjF5QUG//14
+         ojkvaLB4caPp7A6p9xPxhhTzwhQhNiFo378D7kxb3toHONTcxnUZSE/B/zwpPutOBuSI
+         45woQenKtkAy5LsodEsmKrXxoHxx9eiT/LaA/rhQETAc8tahvVxz62Ap5Pd8uYR3vRe2
+         FxDR0/+0DfhpQSgZ5h91wbfDne0Fr5wRfPQWdEF5C3rjotWzDmVubEDY0LZuGqSZc/Up
+         FBsA==
+X-Forwarded-Encrypted: i=1; AL+hErGnvQ0cYPH6v3aS33BKUbR23s9c04gYTTkaT3V5zm3LcceQT2Zz0hlJ105aFCzZnF8lbPpZo70ZboE=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9vaiQ1uv+QzXOZ7uHZR2ORGKsqCdOBLUyPJkVk0p8Ud3KUcT/3
+	G/KnIENtBu/HAsqWLmD5AQ1/oxVBcPKC8+eVW1N00tqJbPFABwnvz7KPu6d+w7hJvh42BLKSqdX
+	5msLa+i1U8KciTQ==
+X-Received: from wmbiv17.prod.google.com ([2002:a05:600c:5491:b0:4b6:5d12:e070])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600d:8402:b0:4a3:5a91:5f61 with SMTP id 5b1f17b1804b1-4bb88806287mr278427545e9.14.1795607456575;
- Wed, 25 Nov 2026 03:50:56 -0800 (PST)
-Date: Wed, 25 Nov 2026 11:50:53 +0000
+ 2002:a05:600c:46cc:b0:4bb:69b3:2b42 with SMTP id 5b1f17b1804b1-4bb888277b3mr377419855e9.16.1795607455071;
+ Wed, 25 Nov 2026 03:50:55 -0800 (PST)
+Date: Wed, 25 Nov 2026 11:50:52 +0000
 In-Reply-To: <20261125114932.3198836-1-jpiecuch@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -81,8 +81,9 @@ Precedence: list
 Mime-Version: 1.0
 References: <20261125114932.3198836-1-jpiecuch@google.com>
 X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
-Message-ID: <20261125114932.3198836-3-jpiecuch@google.com>
-Subject: [RFC PATCH 2/2] selftests/sched_ext: Add immed_strand test
+Message-ID: <20261125114932.3198836-2-jpiecuch@google.com>
+Subject: [RFC PATCH 1/2] sched_ext: Reenqueue IMMED tasks when a higher class
+ wins the pick
 From: Kuba Piecuch <jpiecuch@google.com>
 To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
 	Changwoo Min <changwoo@igalia.com>
@@ -90,637 +91,192 @@ Cc: Kuba Piecuch <jpiecuch@google.com>, Peter Zijlstra <peterz@infradead.org>, s
 	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Add a test which strands an SCX_ENQ_IMMED task behind a higher class task
-that takes the CPU without going through wakeup_preempt_scx().
+SCX_ENQ_IMMED relies on rq->next_class to tell whether a higher class task
+is about to take the CPU. rq_is_open() refuses IMMED insertions while
+next_class is above ext and wakeup_preempt_scx() reenqueues IMMED tasks
+when a higher class task raises next_class. However, a higher class task
+can take the CPU without going through wakeup_preempt(), leaving IMMED
+tasks on the local DSQ until it gives the CPU up:
 
-Under core scheduling, an IMMED task gets forced idle by an RT task with a
-different cookie running on the SMT sibling. The forced idle pick resets
-rq->next_class to idle with the IMMED task still on the local DSQ. An RT
-task sharing the sibling's cookie then wakes up on the forced idle CPU,
-goes through wakeup_preempt_idle() and wins the pick.
+- sched_setscheduler() or a PI boost promoting a queued task to RT or DL.
+  sched_change_end() doesn't call wakeup_preempt() for tasks which aren't
+  running, switched_to_rt() only calls resched_curr() and switched_to_dl()
+  calls wakeup_preempt_dl() directly.
 
-The scheduler runs in partial mode and always inserts the test task into
-the test CPU's local DSQ with SCX_ENQ_IMMED. When the task gets
-reenqueued, it's parked and moved back with IMMED on the next dispatch.
-The time the IMMED task spends on the local DSQ while a higher class task
-runs is tracked through ops.running(), the reenqueue and the sched_switch
-tracepoint. The test requires the RT task to be picked with the IMMED task
-queued, the IMMED task never to wait for more than 5ms and the scheduler
-not to exit.
+- DL replenishment, CFS bandwidth unthrottling (in partial mode) and RT
+  group unthrottling make tasks runnable without wakeup_preempt().
 
-The test doesn't cover the other ways a higher class task can take the
-CPU without wakeup_preempt_scx(): sched_setscheduler() or PI boosting of a
-queued task, DL replenishment, bandwidth unthrottling and the ext
-dl_server running out of budget. They reschedule the CPU right away and
-only strand IMMED tasks when racing with an insertion.
+- When the ext dl_server picks an SCX task, next_class becomes ext even
+  though RT tasks are queued. Once the server runs out of budget, RT takes
+  over without a wakeup.
 
-Enable CONFIG_SCHED_CORE in the selftest config, as the test relies on
-core-sched forced idle. It is skipped without SMT siblings or core
-scheduling.
+- With core scheduling, a forced idle pick resets next_class to idle while
+  tasks remain on the local DSQ. An RT task waking up on the CPU then goes
+  through wakeup_preempt_idle() instead of wakeup_preempt_scx().
 
+With proxy execution enabled, scx_proxy_reenqueue_retry() already catches
+these. __schedule() sets rq->next_class from the picked task right before
+calling it, so it reenqueues IMMED tasks whenever a higher class wins the
+pick, whether or not that task went through wakeup_preempt(). Without proxy
+execution (CONFIG_SCHED_PROXY_EXEC=n or sched_proxy_exec=0), nothing does.
+
+Rather than chasing every path which can make a higher class task
+runnable, check once the pick is final, whether or not proxy execution is
+enabled. Add scx_settle_pick(), called by __schedule() after proxy
+resolution, on the path which every pick reaches. If rq->next_class is
+above SCX and the local DSQ has IMMED tasks, schedule a reenqueue. It runs
+right after the context switch. rq_is_open() is false by then, so the
+IMMED tasks go back to the BPF scheduler. With proxy execution,
+rq->next_class is the class of the donor, so a higher class donor running
+an SCX lock owner counts too. Core-sched siblings apply a pick made by
+another CPU in their own __schedule(), so they're covered as well.
+
+This makes the IMMED check in scx_proxy_reenqueue_retry() redundant, so
+remove it. The reenqueue from wakeup_preempt_scx() stays, as it kicks in
+earlier for the common case. When no BPF scheduler is loaded, the new hook
+is a static branch.
+
+Fixes: 98d709cba319 ("sched_ext: Implement SCX_ENQ_IMMED")
+Cc: stable@vger.kernel.org # v7.1+
 Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
 ---
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- tools/testing/selftests/sched_ext/config      |   1 +
- .../selftests/sched_ext/immed_strand.bpf.c    | 174 ++++++++
- .../selftests/sched_ext/immed_strand.c        | 383 ++++++++++++++++++
- 4 files changed, 559 insertions(+)
- create mode 100644 tools/testing/selftests/sched_ext/immed_strand.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/immed_strand.c
+ kernel/sched/core.c    |  1 +
+ kernel/sched/ext/ext.c | 53 +++++++++++++++++++++++++++++++++++-------
+ kernel/sched/ext/ext.h | 13 +++++++++++
+ 3 files changed, 58 insertions(+), 9 deletions(-)
 
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index 9a776a8a36ff..50162ba23ca2 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -178,6 +178,7 @@ auto-test-targets :=			\
- 	enq_select_cpu			\
- 	exit				\
- 	hotplug				\
-+	immed_strand			\
- 	init_enable_count		\
- 	kick				\
- 	maximal				\
-diff --git a/tools/testing/selftests/sched_ext/config b/tools/testing/selftests/sched_ext/config
-index 8173f9170ffe..97f0195bbee9 100644
---- a/tools/testing/selftests/sched_ext/config
-+++ b/tools/testing/selftests/sched_ext/config
-@@ -3,6 +3,7 @@ CONFIG_CGROUPS=y
- CONFIG_CGROUP_SCHED=y
- CONFIG_CPUSETS=y
- CONFIG_EXT_GROUP_SCHED=y
-+CONFIG_SCHED_CORE=y
- CONFIG_BPF=y
- CONFIG_BPF_SYSCALL=y
- CONFIG_DEBUG_INFO=y
-diff --git a/tools/testing/selftests/sched_ext/immed_strand.bpf.c b/tools/testing/selftests/sched_ext/immed_strand.bpf.c
-new file mode 100644
-index 000000000000..1fab4102e7d7
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/immed_strand.bpf.c
-@@ -0,0 +1,174 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Detect %SCX_ENQ_IMMED tasks left behind on a local DSQ while a higher class
-+ * task runs on the CPU.
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index f7a452123ef5..7eb99b833a4a 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -7340,6 +7340,7 @@ static void __sched notrace __schedule(int sched_mode)
+ 	clear_tsk_need_resched(prev);
+ 	clear_preempt_need_resched();
+ keep_resched:
++	scx_settle_pick(rq);
+ 	rq->last_seen_need_resched_ns = 0;
+ 
+ 	is_switch = prev != next;
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index efa1d01d03af..cea7bd9acc8b 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1264,14 +1264,6 @@ void scx_proxy_reenqueue_retry(struct rq *rq, struct task_struct *next)
+ 		scx_proxy_update_tick(rq, next);
+ #endif
+ 
+-	/*
+-	 * A higher priority class may wake up while @rq is transiently idle
+-	 * for proxy resolution. wakeup_preempt_scx() isn't invoked in that
+-	 * case, so reenqueue IMMED donors parked on the local DSQ here.
+-	 */
+-	if (rq->scx.nr_immed && sched_class_above(rq->next_class, &ext_sched_class))
+-		scx_schedule_reenq_local(rq, 0);
+-
+ 	if (rq->scx.flags & SCX_RQ_PROXY_RETRY) {
+ 		rq->scx.flags &= ~SCX_RQ_PROXY_RETRY;
+ 		schedule_deferred_locked(rq);
+@@ -2713,18 +2705,61 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
+ 
+ 	/*
+ 	 * Getting preempted by a higher-priority class. Reenqueue IMMED tasks.
+-	 * This captures all preemption cases including:
++	 * This captures the preemption cases which go through wakeup_preempt()
++	 * including:
+ 	 *
+ 	 * - A SCX task is currently running.
+ 	 *
+ 	 * - @rq is waking from idle due to a SCX task waking to it.
+ 	 *
+ 	 * - A higher-priority wakes up while SCX dispatch is in progress.
++	 *
++	 * The rest is caught by scx_settle_pick() once the higher-priority task
++	 * gets picked.
+ 	 */
+ 	if (rq->scx.nr_immed)
+ 		scx_schedule_reenq_local(rq, 0);
+ }
+ 
++/**
++ * __scx_settle_pick - Reenqueue IMMED tasks left behind by a pick
++ * @rq: rq of the current CPU, locked
 + *
-+ * The scheduler runs in partial mode so that only the test's SCHED_EXT tasks
-+ * are affected. The task identified by immed_pid is always inserted into
-+ * test_cpu's local DSQ with %SCX_ENQ_IMMED. When it gets reenqueued, it's
-+ * parked on PARK_DSQ and moved back with %SCX_ENQ_IMMED the next time
-+ * test_cpu dispatches.
++ * Called by __schedule() once the pick, including proxy resolution, is final.
++ * If rq->next_class is above SCX, IMMED tasks on @rq's local DSQ can't run.
++ * With proxy execution, rq->next_class is the class of the donor. A higher
++ * class can take the CPU without going through wakeup_preempt_scx(), as
++ * rq->next_class doesn't always reflect the highest class with runnable tasks:
 + *
-+ * The sched_switch tracepoint records when test_cpu starts running a higher
-+ * class task with the IMMED task on the local DSQ (a hazard). If the IMMED task
-+ * stays there for more than strand_thresh_ns while the higher class task runs,
-+ * it got stranded. This is accounted when either the IMMED task leaves the
-+ * local DSQ or the higher class task is switched out, whichever comes first.
++ * - A queued task getting promoted to RT or DL by sched_setscheduler() or a PI
++ *   boost only triggers resched_curr() or a class-local preemption check.
 + *
-+ * Copyright (c) 2026 Google LLC.
-+ */
-+
-+#include <scx/common.bpf.h>
-+
-+char _license[] SEC("license") = "GPL";
-+
-+#define SCHED_EXT	7
-+#define MAX_RT_PRIO	100
-+#define PARK_DSQ	0
-+
-+/* set by userspace */
-+const volatile s32 test_cpu = -1;
-+const volatile u64 strand_thresh_ns = 5 * 1000 * 1000;
-+s32 immed_pid;		/* inserted into test_cpu's local DSQ with IMMED */
-+
-+/* immed_pid has been on test_cpu's local DSQ with IMMED since */
-+u64 immed_since;
-+/* test_cpu has been running a higher class task since */
-+u64 higher_since;
-+
-+u64 nr_immed_inserts;
-+u64 nr_immed_reenqs;
-+u64 nr_hazards;
-+u64 nr_strands;
-+u64 max_strand_ns;
-+
-+UEI_DEFINE(uei);
-+
-+static bool is_higher(struct task_struct *p)
-+{
-+	return p->pid && (p->policy != SCHED_EXT || p->prio < MAX_RT_PRIO);
-+}
-+
-+/*
-+ * Account how long the IMMED task sat on the local DSQ while a higher class
-+ * task ran. Called when either ends. Everything runs under test_cpu's rq lock.
-+ */
-+static void account_strand(u64 now)
-+{
-+	u64 since = immed_since, dur;
-+
-+	if (!since || !higher_since)
-+		return;
-+	if (since < higher_since)
-+		since = higher_since;
-+
-+	dur = now - since;
-+	if (dur > strand_thresh_ns)
-+		__sync_fetch_and_add(&nr_strands, 1);
-+	if (dur > max_strand_ns)
-+		max_strand_ns = dur;
-+}
-+
-+s32 BPF_STRUCT_OPS(immed_strand_select_cpu, struct task_struct *p,
-+		   s32 prev_cpu, u64 wake_flags)
-+{
-+	/* no direct dispatch, every enqueue goes through ops.enqueue() */
-+	return prev_cpu;
-+}
-+
-+void BPF_STRUCT_OPS(immed_strand_enqueue, struct task_struct *p, u64 enq_flags)
-+{
-+	if (p->pid != immed_pid) {
-+		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+		return;
-+	}
-+
-+	if (enq_flags & SCX_ENQ_REENQ) {
-+		account_strand(bpf_ktime_get_ns());
-+		immed_since = 0;
-+		__sync_fetch_and_add(&nr_immed_reenqs, 1);
-+		scx_bpf_dsq_insert(p, PARK_DSQ, SCX_SLICE_DFL, enq_flags);
-+		return;
-+	}
-+
-+	/* cleared by ops.running() or by the reenqueue */
-+	immed_since = bpf_ktime_get_ns();
-+	__sync_fetch_and_add(&nr_immed_inserts, 1);
-+	scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
-+			   enq_flags | SCX_ENQ_IMMED);
-+}
-+
-+void BPF_STRUCT_OPS(immed_strand_dispatch, s32 cpu, struct task_struct *prev)
-+{
-+	if (cpu != test_cpu)
-+		return;
-+
-+	/*
-+	 * Only immed_pid is ever parked. If the IMMED insertion gets rejected,
-+	 * the reenqueue is deferred and clears immed_since afterwards.
-+	 */
-+	if (scx_bpf_dsq_move_to_local(PARK_DSQ, SCX_ENQ_IMMED)) {
-+		immed_since = bpf_ktime_get_ns();
-+		__sync_fetch_and_add(&nr_immed_inserts, 1);
-+	}
-+}
-+
-+void BPF_STRUCT_OPS(immed_strand_running, struct task_struct *p)
-+{
-+	/*
-+	 * This runs from the pick, before the sched_switch tracepoint for the
-+	 * outgoing higher class task.
-+	 */
-+	if (p->pid == immed_pid) {
-+		account_strand(bpf_ktime_get_ns());
-+		immed_since = 0;
-+	}
-+}
-+
-+s32 BPF_STRUCT_OPS_SLEEPABLE(immed_strand_init)
-+{
-+	return scx_bpf_create_dsq(PARK_DSQ, -1);
-+}
-+
-+void BPF_STRUCT_OPS(immed_strand_exit, struct scx_exit_info *ei)
-+{
-+	UEI_RECORD(uei, ei);
-+}
-+
-+SEC("tp_btf/sched_switch")
-+int BPF_PROG(immed_strand_sched_switch, bool preempt, struct task_struct *prev,
-+	     struct task_struct *next, unsigned int prev_state)
-+{
-+	u64 now;
-+
-+	if (bpf_get_smp_processor_id() != test_cpu)
-+		return 0;
-+
-+	now = bpf_ktime_get_ns();
-+
-+	if (higher_since) {
-+		account_strand(now);
-+		higher_since = 0;
-+	}
-+
-+	if (is_higher(next)) {
-+		higher_since = now;
-+		if (immed_since)
-+			__sync_fetch_and_add(&nr_hazards, 1);
-+	}
-+
-+	return 0;
-+}
-+
-+SEC(".struct_ops.link")
-+struct sched_ext_ops immed_strand_ops = {
-+	.select_cpu		= (void *)immed_strand_select_cpu,
-+	.enqueue		= (void *)immed_strand_enqueue,
-+	.dispatch		= (void *)immed_strand_dispatch,
-+	.running		= (void *)immed_strand_running,
-+	.init			= (void *)immed_strand_init,
-+	.exit			= (void *)immed_strand_exit,
-+	.flags			= SCX_OPS_SWITCH_PARTIAL,
-+	.name			= "immed_strand",
-+	.timeout_ms		= 10000,
-+};
-diff --git a/tools/testing/selftests/sched_ext/immed_strand.c b/tools/testing/selftests/sched_ext/immed_strand.c
-new file mode 100644
-index 000000000000..bb9e0fb0a1aa
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/immed_strand.c
-@@ -0,0 +1,383 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Verify that %SCX_ENQ_IMMED tasks don't get stranded on a local DSQ when a
-+ * higher class task takes the CPU without going through wakeup_preempt_scx().
++ * - DL replenishment and CFS or RT bandwidth unthrottling make tasks runnable
++ *   without going through wakeup_preempt().
 + *
-+ * Under core scheduling, an IMMED task gets forced idle by an RT task with a
-+ * different cookie running on the SMT sibling. The forced idle pick resets
-+ * rq->next_class to idle with the IMMED task still on the local DSQ. An RT task
-+ * sharing the sibling's cookie then wakes up on the forced idle CPU, goes
-+ * through wakeup_preempt_idle() and wins the pick. The IMMED task must get
-+ * reenqueued instead of waiting for the RT task.
++ * - When the ext dl_server picks an SCX task, rq->next_class is set to ext even
++ *   if RT tasks are queued. RT takes over once the server runs out of budget.
 + *
-+ * Copyright (c) 2026 Google LLC.
++ * - With core scheduling, a forced idle pick resets rq->next_class to idle
++ *   while tasks are still on the local DSQ. A later wakeup goes through
++ *   wakeup_preempt_idle().
++ *
++ * - While @rq is transiently idle for proxy resolution, a higher class task
++ *   waking up also goes through wakeup_preempt_idle().
++ *
++ * Catch all of these here. The reenqueue is deferred and runs right after the
++ * context switch. rq->next_class is still above SCX by then, so rq_is_open() is
++ * false and the IMMED tasks on the local DSQ go back to the BPF scheduler.
 + */
-+#define _GNU_SOURCE
-+#include <bpf/bpf.h>
-+#include <errno.h>
-+#include <sched.h>
-+#include <signal.h>
-+#include <stdbool.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <sys/prctl.h>
-+#include <sys/wait.h>
-+#include <time.h>
-+#include <unistd.h>
-+#include <scx/common.h>
-+#include "immed_strand.bpf.skel.h"
-+#include "scx_test.h"
-+#include "util.h"
++void __scx_settle_pick(struct rq *rq)
++{
++	lockdep_assert_rq_held(rq);
 +
-+#ifndef SCHED_EXT
-+#define SCHED_EXT			7
-+#endif
-+#ifndef PR_SCHED_CORE
-+#define PR_SCHED_CORE			62
-+#endif
-+#ifndef PR_SCHED_CORE_CREATE
-+#define PR_SCHED_CORE_CREATE		1
-+#endif
-+#ifndef PR_SCHED_CORE_SHARE_FROM
-+#define PR_SCHED_CORE_SHARE_FROM	3
-+#endif
-+#ifndef PR_SCHED_CORE_SCOPE_THREAD
-+#define PR_SCHED_CORE_SCOPE_THREAD	0
-+#endif
++	if (rq->scx.nr_immed &&
++	    sched_class_above(rq->next_class, &ext_sched_class))
++		scx_schedule_reenq_local(rq, 0);
++}
 +
-+#define NR_TASKS	3
-+
-+struct strand_ctx {
-+	struct immed_strand *skel;
-+	struct bpf_link *link;
-+	cpu_set_t orig_mask;
-+	int test_cpu;
-+	int sib_cpu;		/* test_cpu's SMT sibling */
-+	pid_t pids[NR_TASKS];
-+};
-+
+ void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct *p,
+ 				      u64 enq_flags, struct rq *dst_rq)
+ {
+diff --git a/kernel/sched/ext/ext.h b/kernel/sched/ext/ext.h
+index d32bc01071b0..c66c4c97a2e0 100644
+--- a/kernel/sched/ext/ext.h
++++ b/kernel/sched/ext/ext.h
+@@ -26,6 +26,7 @@ void scx_proxy_donor_start(struct rq *rq);
+ void scx_proxy_reenqueue_retry(struct rq *rq, struct task_struct *next);
+ void init_sched_ext_class(void);
+ void __scx_update_idle(struct rq *rq, bool idle, bool do_notify);
++void __scx_settle_pick(struct rq *rq);
+ 
+ static inline bool scx_allow_proxy_exec(const struct task_struct *p)
+ {
+@@ -41,6 +42,17 @@ static inline void scx_update_idle(struct rq *rq, bool idle, bool do_notify)
+ 		__scx_update_idle(rq, idle, do_notify);
+ }
+ 
 +/*
-+ * What a forked task does once released. It shares @cookie_from's core cookie
-+ * if set, switches to @policy and moves to @cpu in that order so that it
-+ * doesn't get forced idle on @cpu before it's done setting up. @period_us == 0
-+ * means spin until killed. Otherwise, sleep for @period_us - @run_us and spin
-+ * for @run_us in a loop for @duration_ms.
++ * Called by __schedule() once the pick, including proxy resolution, is final.
++ * A pick which lands in a class above SCX can leave %SCX_ENQ_IMMED tasks behind
++ * on the local DSQ. See __scx_settle_pick().
 + */
-+struct task_spec {
-+	int cpu;
-+	int policy;
-+	int prio;
-+	pid_t cookie_from;
-+	__u64 period_us;
-+	__u64 run_us;
-+	__u64 duration_ms;
-+};
-+
-+static __u64 now_ns(void)
++static inline void scx_settle_pick(struct rq *rq)
 +{
-+	struct timespec ts;
-+
-+	clock_gettime(CLOCK_MONOTONIC, &ts);
-+	return ts.tv_sec * 1000000000ULL + ts.tv_nsec;
++	if (scx_enabled())
++		__scx_settle_pick(rq);
 +}
 +
-+static void spin_us(__u64 us)
-+{
-+	__u64 end = now_ns() + us * 1000;
-+
-+	while (now_ns() < end)
-+		;
-+}
-+
-+static int pin_to_cpu(pid_t pid, int cpu)
-+{
-+	cpu_set_t mask;
-+
-+	CPU_ZERO(&mask);
-+	CPU_SET(cpu, &mask);
-+	return sched_setaffinity(pid, sizeof(mask), &mask);
-+}
-+
-+static bool cpu_is_online(int cpu)
-+{
-+	char path[64];
-+
-+	snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu%d", cpu);
-+	if (access(path, F_OK))
-+		return false;
-+
-+	/* CPUs which can't be offlined don't have the file */
-+	snprintf(path, sizeof(path), "/sys/devices/system/cpu/cpu%d/online", cpu);
-+	if (access(path, F_OK))
-+		return true;
-+
-+	return file_read_long(path) > 0;
-+}
-+
-+static bool find_siblings(int cpu, int sib[2])
-+{
-+	char path[128], buf[64];
-+	FILE *f;
-+	bool ret;
-+
-+	snprintf(path, sizeof(path),
-+		 "/sys/devices/system/cpu/cpu%d/topology/thread_siblings_list", cpu);
-+	f = fopen(path, "r");
-+	if (!f)
-+		return false;
-+	ret = fgets(buf, sizeof(buf), f) &&
-+	      sscanf(buf, "%d%*[,-]%d", &sib[0], &sib[1]) == 2 &&
-+	      sib[0] != sib[1];
-+	fclose(f);
-+	return ret;
-+}
-+
-+static int core_cookie_create(pid_t pid)
-+{
-+	return prctl(PR_SCHED_CORE, PR_SCHED_CORE_CREATE, pid,
-+		     PR_SCHED_CORE_SCOPE_THREAD, 0);
-+}
-+
-+static void task_body(const struct task_spec *spec)
-+{
-+	__u64 end;
-+
-+	if (!spec->period_us) {
-+		while (true)
-+			spin_us(1000);
-+	}
-+
-+	end = now_ns() + spec->duration_ms * 1000000ULL;
-+	while (now_ns() < end) {
-+		usleep(spec->period_us - spec->run_us);
-+		spin_us(spec->run_us);
-+	}
-+}
-+
-+/*
-+ * Fork a task according to @spec. The child blocks until start_task() so that
-+ * the caller can set things up for it first. Returns the child's pid or -1.
-+ */
-+static pid_t fork_task(const struct task_spec *spec, int *go_fd)
-+{
-+	struct sched_param param = { .sched_priority = spec->prio };
-+	int fds[2];
-+	pid_t pid;
-+	char c;
-+
-+	if (pipe(fds))
-+		return -1;
-+
-+	pid = fork();
-+	if (pid < 0) {
-+		close(fds[0]);
-+		close(fds[1]);
-+		return -1;
-+	}
-+
-+	if (!pid) {
-+		close(fds[1]);
-+		if (read(fds[0], &c, 1) != 1)
-+			exit(EXIT_FAILURE);
-+		close(fds[0]);
-+		if (spec->cookie_from &&
-+		    prctl(PR_SCHED_CORE, PR_SCHED_CORE_SHARE_FROM,
-+			  spec->cookie_from, PR_SCHED_CORE_SCOPE_THREAD, 0))
-+			exit(EXIT_FAILURE);
-+		if (spec->policy != SCHED_OTHER &&
-+		    sched_setscheduler(0, spec->policy, &param))
-+			exit(EXIT_FAILURE);
-+		if (pin_to_cpu(0, spec->cpu))
-+			exit(EXIT_FAILURE);
-+		task_body(spec);
-+		exit(EXIT_SUCCESS);
-+	}
-+
-+	close(fds[0]);
-+	*go_fd = fds[1];
-+	return pid;
-+}
-+
-+static void start_task(int go_fd)
-+{
-+	char c = 1;
-+
-+	if (write(go_fd, &c, 1) != 1)
-+		perror("write");
-+	close(go_fd);
-+}
-+
-+static bool wait_task(pid_t pid)
-+{
-+	int status;
-+
-+	if (waitpid(pid, &status, 0) != pid)
-+		return false;
-+	return WIFEXITED(status) && WEXITSTATUS(status) == EXIT_SUCCESS;
-+}
-+
-+static void kill_task(pid_t *pid)
-+{
-+	if (*pid <= 0)
-+		return;
-+	kill(*pid, SIGKILL);
-+	waitpid(*pid, NULL, 0);
-+	*pid = -1;
-+}
-+
-+static void cleanup(void *arg)
-+{
-+	struct strand_ctx *ctx = arg;
-+	int i;
-+
-+	for (i = 0; i < NR_TASKS; i++)
-+		kill_task(&ctx->pids[i]);
-+	bpf_link__destroy(ctx->link);
-+	immed_strand__destroy(ctx->skel);
-+	sched_setaffinity(0, sizeof(ctx->orig_mask), &ctx->orig_mask);
-+	free(ctx);
-+}
-+
-+static enum scx_test_status setup(void **ctxp)
-+{
-+	int nr_cpus = libbpf_num_possible_cpus(), cpu, sib[2], i;
-+	struct strand_ctx *ctx;
-+
-+	/* prefer the highest pair of siblings, away from CPU 0 */
-+	for (cpu = nr_cpus - 1; cpu >= 0; cpu--) {
-+		if (cpu_is_online(cpu) && find_siblings(cpu, sib) &&
-+		    cpu_is_online(sib[0]) && cpu_is_online(sib[1]))
-+			break;
-+	}
-+	if (cpu < 0) {
-+		fprintf(stderr, "No online SMT siblings\n");
-+		return SCX_TEST_SKIP;
-+	}
-+
-+	/* the test itself runs outside of the core */
-+	for (cpu = 0; cpu < nr_cpus; cpu++) {
-+		if (cpu != sib[0] && cpu != sib[1] && cpu_is_online(cpu))
-+			break;
-+	}
-+	if (cpu == nr_cpus) {
-+		fprintf(stderr, "No online CPU outside of the SMT siblings\n");
-+		return SCX_TEST_SKIP;
-+	}
-+
-+	ctx = calloc(1, sizeof(*ctx));
-+	SCX_FAIL_IF(!ctx, "Failed to allocate");
-+	ctx->sib_cpu = sib[0];
-+	ctx->test_cpu = sib[1];
-+	for (i = 0; i < NR_TASKS; i++)
-+		ctx->pids[i] = -1;
-+
-+	if (sched_getaffinity(0, sizeof(ctx->orig_mask), &ctx->orig_mask) ||
-+	    pin_to_cpu(0, cpu)) {
-+		free(ctx);
-+		SCX_FAIL("Failed to pin to CPU %d", cpu);
-+	}
-+
-+	ctx->skel = SCX_OPS_OPEN(immed_strand_ops, immed_strand);
-+	ctx->skel->rodata->test_cpu = ctx->test_cpu;
-+	SCX_OPS_LOAD(ctx->skel, immed_strand_ops, immed_strand, uei);
-+
-+	*ctxp = ctx;
-+	return SCX_TEST_PASS;
-+}
-+
-+static enum scx_test_status run(void *arg)
-+{
-+	struct strand_ctx *ctx = arg;
-+	struct immed_strand__bss *bss = ctx->skel->bss;
-+	struct task_spec rt_hog_spec = {
-+		.cpu = ctx->sib_cpu, .policy = SCHED_FIFO, .prio = 10,
-+	};
-+	struct task_spec immed_spec = {
-+		.cpu = ctx->test_cpu, .policy = SCHED_EXT,
-+		.period_us = 10000, .run_us = 1000, .duration_ms = 10000,
-+	};
-+	struct task_spec rt_spec = {
-+		.cpu = ctx->test_cpu, .policy = SCHED_FIFO, .prio = 10,
-+		.period_us = 100000, .run_us = 100000, .duration_ms = 200,
-+	};
-+	__u64 deadline, since, hazards;
-+	int go_fd;
-+
-+	bpf_map__set_autoattach(ctx->skel->maps.immed_strand_ops, false);
-+	SCX_FAIL_IF(immed_strand__attach(ctx->skel), "Failed to attach tracepoint");
-+	ctx->link = bpf_map__attach_struct_ops(ctx->skel->maps.immed_strand_ops);
-+	SCX_FAIL_IF(!ctx->link, "Failed to attach scheduler");
-+
-+	fprintf(stderr, "immed_strand: siblings %d,%d\n", ctx->sib_cpu, ctx->test_cpu);
-+
-+	/* an RT hog with cookie A on the sibling */
-+	ctx->pids[0] = fork_task(&rt_hog_spec, &go_fd);
-+	SCX_FAIL_IF(ctx->pids[0] < 0, "Failed to fork");
-+	if (core_cookie_create(ctx->pids[0])) {
-+		int err = errno;
-+
-+		close(go_fd);
-+		if (err == EINVAL || err == ENODEV) {
-+			fprintf(stderr, "Core scheduling not supported (%d)\n", err);
-+			return SCX_TEST_SKIP;
-+		}
-+		SCX_FAIL("Failed to create core cookie (%d)", err);
-+	}
-+	start_task(go_fd);
-+
-+	/* an IMMED task with cookie B, forced idle on test_cpu */
-+	ctx->pids[1] = fork_task(&immed_spec, &go_fd);
-+	SCX_FAIL_IF(ctx->pids[1] < 0, "Failed to fork");
-+	if (core_cookie_create(ctx->pids[1])) {
-+		close(go_fd);
-+		SCX_FAIL("Failed to create core cookie (%d)", errno);
-+	}
-+	bss->immed_pid = ctx->pids[1];
-+	start_task(go_fd);
-+
-+	/* wait for the IMMED task to sit on test_cpu's local DSQ */
-+	deadline = now_ns() + 2000000000ULL;
-+	while (true) {
-+		since = bss->immed_since;
-+		if (since && now_ns() - since > 100000000ULL)
-+			break;
-+		SCX_FAIL_IF(now_ns() > deadline,
-+			    "IMMED task didn't get forced idle on CPU %d",
-+			    ctx->test_cpu);
-+		usleep(10000);
-+	}
-+
-+	/* an RT task with cookie A waking up on test_cpu */
-+	hazards = bss->nr_hazards;
-+	rt_spec.cookie_from = ctx->pids[0];
-+	ctx->pids[2] = fork_task(&rt_spec, &go_fd);
-+	SCX_FAIL_IF(ctx->pids[2] < 0, "Failed to fork");
-+	start_task(go_fd);
-+	SCX_FAIL_IF(!wait_task(ctx->pids[2]), "RT task failed");
-+	ctx->pids[2] = -1;
-+
-+	fprintf(stderr,
-+		"immed_strand: CPU %d: inserts=%llu reenqs=%llu hazards=%llu strands=%llu max=%lluus\n",
-+		ctx->test_cpu,
-+		(unsigned long long)bss->nr_immed_inserts,
-+		(unsigned long long)bss->nr_immed_reenqs,
-+		(unsigned long long)bss->nr_hazards,
-+		(unsigned long long)bss->nr_strands,
-+		(unsigned long long)bss->max_strand_ns / 1000);
-+
-+	/* the RT task must have been picked with the IMMED task queued */
-+	SCX_GT(bss->nr_hazards, hazards);
-+	SCX_EQ(bss->nr_strands, 0);
-+	/* e.g. not ejected for reenqueueing the IMMED task too many times */
-+	SCX_EQ(ctx->skel->data->uei.kind, EXIT_KIND(SCX_EXIT_NONE));
-+	return SCX_TEST_PASS;
-+}
-+
-+struct scx_test immed_strand = {
-+	.name = "immed_strand",
-+	.description = "Verify that IMMED tasks aren't stranded on core-sched forced idle CPUs",
-+	.setup = setup,
-+	.run = run,
-+	.cleanup = cleanup,
-+};
-+REGISTER_SCX_TEST(&immed_strand)
+ static inline u32 scx_cpuperf_target(s32 cpu)
+ {
+ 	if (scx_enabled())
+@@ -80,6 +92,7 @@ static inline void scx_proxy_reenqueue_retry(struct rq *rq,
+ 					     struct task_struct *next) {}
+ static inline void init_sched_ext_class(void) {}
+ static inline void scx_update_idle(struct rq *rq, bool idle, bool do_notify) {}
++static inline void scx_settle_pick(struct rq *rq) {}
+ 
+ #endif	/* CONFIG_SCHED_CLASS_EXT */
+ 
 -- 
 2.56.1.839.g22a8290db9-goog
 
