@@ -1,73 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.171
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795708897;
-	b=LRzM3ei8B+Y8bNLPeRTe5UvcPsCV9yiwN/E+2YaNGl1D4zBicByq+/IT05fv+0HnGGbp
-	 BjSWXVArXHOEomvHvareEPTFc/3poefpOvLEF8mPZ7oTTKKixbwf84LqL7rJU/V66Pa69
-	 0B7QQ0MnTWEns59NGGr9rAwtW8ePddN9zfZxS7Rrj9LTLQMXcXnt9ahIvUB7w4yAC7cd0
-	 aqHqqVDqiC/+GpDeffWI/kubKxl7kBFdv7xTsdqd/vkyrtzQ174yq/TMCEjs5bl+81EvD
-	 qcs8JgoXlnIyyOZs8fG2zVq5PKeGaZXzxYAKFLy2IOnJxdsLIpoYIAf0zSdGNK0620g==
+	t=1795710468;
+	b=Q7/NkEIyDBQjDz+dBIFX8gm+lnSRWQJN26zb0ArBk00ZGpYDd05yYDhsTqVgo1Iz6oy8
+	 Y4QT/I/7Yg/YF8O6/cZlAJTvLu54c1RGMcMlWx1n2RHkIUZSbLK32e/OxSOxPryXD7nXI
+	 /unaPBhqEWbW1wkiJuRe+EMkS66xDoGHKwmUoRLTsJ6/FyYxQO7nj8GCJkFiTo+hwsA6L
+	 Cayj3HNHsDJLcZWxMd6Df5Udv5QkUcAdTpr/+dTD+aZhbtYiDyzuxkvpmcooZnnIphPHJ
+	 6U57TRujKxQ1iIVoz3mBTIvWsdwCOv+yWP+2RZ+u7rzhs8uGIV89sPQ/B2gq14tsZ2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795708897;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=I+0p/DOi1/yQUslD6IHt4Ig4oxuCoDb72Zi4u5IuZwY=;
-	b=MZzEcwC4lQOFAF7xAL5DCer89jAsWGewnkVSjA8GiYFnfnJbH9E9PlBvbvjwLUrC3ZgU
-	 CuegmGZf3MS48X1gTQtb6zMiI4L6spPNyV/51H4Zzjkx37HYAk5HMcX04/raH8HazE8nQ
-	 7pWc2VTDF9KyW0gdjZDscur5E1RkR2bVsr6ZhgSuJNvChocxMZ2bWy0oPUEM7WS218dK2
-	 R5GDsgJi/7wloMYRz0bwbCsE3f1DcZOpiVRIqaq14Qs9m2iBWfGGst0RIKWf0lsqVocba
-	 KfLmwius7obwBvapLIcszoB1Lpg3GTsdH5UHyUXzgJBpZKBptoAy1AUZZcDOoNvPQQw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795710468;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=/b7JOvQXXmoQ6+riyfmFa4IOM+ApazbsNDpOEn/4jwQ=;
+	b=mfCI9yp+00ZeOBpypSyTNykPpcBo23dJl3RTvTh7NyDiv3PTddZjinidsk6iRTRw6oq+
+	 iaqyV+2I5+fDsRWA2rC8hRpQK/CZeRSWNoaP+TAeX97/UBpKA07pRRUy6QWG5M7yR0oRS
+	 kDGUtjqWxSfYR+GK06Mg+wB2wLsxgbEdaJ4/pr/ukdcLDFSFMmIPE1FusEbaPldQfo+kq
+	 /AKnLkzU997t3ugZB/H3pGe2Prkbjw4ddowq4kwv9Oya0paCIhoNFlEgM6q1rzK3nVZyt
+	 dOTrtvZWM8yxWCBdpsM5iGax3bXHSi5UrMXY1oe9JM/47VNMjS8SZUdSXFktnBWh0+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=PUk7d4BP;
-	arc=none smtp.remote-ip=90.155.50.34
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nREdLpMq;
+	arc=none smtp.remote-ip=209.85.210.171
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA24606A32D;
-	Thu, 26 Nov 2026 16:01:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DBA24606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C232C606A31C
+	for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 16:27:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C232C606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=PUk7d4BP
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=I+0p/DOi1/yQUslD6IHt4Ig4oxuCoDb72Zi4u5IuZwY=; b=PUk7d4BPYX/VBeB2M27v3SCr8w
-	lDuSUKAjqtjkiINNRsBbbDlVk3zqECQuwhbDRWG0PWNaEFmZd3t7psZvkRqiVBGcBWTVWtRkIAYW8
-	/+vScuXCihwIM8Rq9n/oypsAoRSlW7/YCSdJhacGvq0MNXEdPjgZbxqaKqZTse9GOkiNYUumDYnGd
-	/dTTkimnxxF9/0v2VH1BLBWyyBwnM+PNQUQ8a5/r/zacYWT2kkATUn8EKKhFG0xX7a/CvTu8mKYG+
-	bEuIEF7rTZBX2s8l1XYo0sV6qaf9qCahy54t33OCyjx+/VDQWL/KjSF4TDl61zFrcRKlM8QhsCjgG
-	6qWO9aNg==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xWbua-00000006xDB-4BUM;
-	Thu, 26 Nov 2026 16:01:29 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 1967E302186; Thu, 26 Nov 2026 17:01:28 +0100 (CET)
-Date: Thu, 26 Nov 2026 17:01:28 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	John Stultz <jstultz@google.com>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Tao Cui <cuitao@kylinos.cn>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] sched: Let switching_to() decide whether to keep a
- retained proxy donor
-Message-ID: <20261126160128.GL49833@noisy.programming.kicks-ass.net>
-References: <20261126111649.208476-1-arighi@nvidia.com>
- <20261126111649.208476-2-arighi@nvidia.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nREdLpMq
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8a070781f63so3493688b3a.1
+        for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 08:27:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795710467; x=1796315267; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=/b7JOvQXXmoQ6+riyfmFa4IOM+ApazbsNDpOEn/4jwQ=;
+        b=nREdLpMqYtp9sIfRCE1+yIwiWsWu0rl3K3cl+rd1v25hxtWrbogvD/MSlm8NzLITeu
+         0wQ+DkvlgBW2LLWsaALoUY/DgB6YUElXI4VV9Ff/EnV1C8yrQtUTFza9bFzkMoZ8u4ly
+         OEo1aQN3gOPxgPK2PjBIdxx69eEIb2zC0j3YjWLUjsa17DTQwHEzuApu77hEfTFQzZNZ
+         NX5p1XsROnbhcGVjzxcuy0XcBrl1WccWmqiKRsJ73RRYH76H5fjytopfQ9wjdDkfMcme
+         0rIQ4cqQ3z//13Zx5YQqtzlLnkP2VBNQ8uZz0cXr/PPx6RhiuEbpZy2rAeBK/RpJzmV3
+         Q7VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795710467; x=1796315267;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/b7JOvQXXmoQ6+riyfmFa4IOM+ApazbsNDpOEn/4jwQ=;
+        b=Mdh28Ef65khjhaFC4TinuOiOqTopmCfTX/DKRTlYK8Sjv561MQQtuRrm391+VOKfyR
+         wjUfcAMehC1xmqeHl/bAt4urdmTAOB1uMIqDbzjk6bw4nDhKwmBILi1YaAEA2VEOlWWG
+         cF5VMhSnGXA3IzX1MHBIcfWLVhvbtsMvIL5IQJLsRLVhYDPEExHIkxiiVIBYxnbnAAfo
+         dH7gC+Q1qKpe8VT3HLa2gPopaqn9pgO5pQYqq0mvNcAEseGWK+eAm9KFTpmoS2AXGGbY
+         vVRVrhaE3NRHRV53hf879PBEEZGNJmNH7dJSPTOZDxgF22Pq3tdn/1ipyynn1yIXu0pW
+         xGZA==
+X-Forwarded-Encrypted: i=1; AL+hErEKQt9rRaTBq6yckY2It2Np0xs8fTOFZgKDktFHm8A3oVFgRQ3wB/epEsirp0eNSlz5iHUHM7/I8gE=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/L0kc5FrzutmVRhOwH8Nu4C8rsx+2Hx/ipLb/cpiLYX4teWDN9
+	695KHe9zlNgiDFvG131QSbd+3pXLO7c57VtN1MvGdr5fo+Y/J8wdalse
+X-Gm-Gg: AZFdTZfAe390PvJ2G4Tot0b0dnSbni4XDCoXXo90nPf+J0/vQD58tZ8O0nG/kPviGvO
+	DKwS1pvtiJrYtkj8aerUtNVtgWUOjcmNXmgwaAF7q/9Jm5Yd+LRMIOuOf6ZvNpsfKEHJe9KCKw+
+	Z8fVrfTIz3o1CmP2XeVHMajzhHf3BaPaxxHu1Bly6pIx/VaKkvZgwy0rs58So4u8KlxT8nzdf5q
+	n9xbp+4DY/znPrdeFuGglrvjVtFov/CvmDlqUdcKGi6SE1H2Y56op1wo1t8sBBkIceHZsISkFqM
+	3NDuvNpEIse2NSDHIbiZ+oMXGjAuwGIAwCVqDnQVzYPUJCe9LX4BVz0PIy/rloBGh1l4+4BnJjS
+	XomAlIv0DMwQ2beBhqP9NUu41hzPIXBHUAyDY9G9Zry7QfITNctKFDbmqkFZQkvWF9Xf6KO9eYF
+	bNPIDxF22Pf2nwqscuu6nU28gIjihOCojZD79bisCaktlykDMhOsmjU0Et2+iJSQa2xMFzrseJI
+	c9kbGQnoFUXRn+U/0XFbGY067Bn9U5wivABaCSAbchbxyjJZqwApZRkMFn0Hf3LIKhekH2DToip
+	cQf4alSOieK4AX2mFv4OLCUXHhtsNBILggBTFyaT+vqql6RXmN1EDQtGxEC1jiRtW/5Xy8i0A4k
+	R+i1fM+3gy75UinpyXo9FLExb61WZHeJlFQ==
+X-Received: by 2002:a05:6a00:4405:b0:880:e4a7:b1aa with SMTP id d2e1a72fcca58-8c87daf2130mr20658095b3a.55.1795710466917;
+        Thu, 26 Nov 2026 08:27:46 -0800 (PST)
+Received: from cchengyang.duckdns.org (1-164-86-80.dynamic-ip.hinet.net. [1.164.86.80])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87343f83dsm11037097b3a.39.2026.11.26.08.27.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Nov 2026 08:27:46 -0800 (PST)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: stable@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Rahad Bhuiya <rahadbhuiya2021@gmail.com>,
+	Kang Chen <k.chen@smail.nju.edu.cn>,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	sched-ext@lists.linux.dev
+Subject: [PATCH 7.3.y 0/2] sched_ext: Backport two fixes dropped from 7.3.7-rc1
+Date: Fri, 27 Nov 2026 00:26:56 +0800
+Message-ID: <20261126162700.22257-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -77,69 +106,30 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261126111649.208476-2-arighi@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Nov 26, 2026 at 12:13:57PM +0100, Andrea Righi wrote:
-> @@ -11200,6 +11213,58 @@ struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int
->  	return ctx;
->  }
->  
-> +/*
-> + * Block a mutex-blocked task retained on the rq for proxy execution, because
-> + * the class it is switching to does not accept blocked tasks.
-> + *
-> + * sched_change_begin() already dequeued @p from its old class and put it if
-> + * it was the donor, so finish the job a sleeping dequeue would have done
-> + * without going through a class again.
-> + *
-> + * The caller holds p->pi_lock, so @p cannot wake and migrate once
-> + * __block_task() clears p->on_rq.
-> + */
-> +static void sched_change_block_task(struct rq *rq, struct sched_change_ctx *ctx)
-> +{
-> +	struct task_struct *p = ctx->p;
-> +	unsigned long state = READ_ONCE(p->__state);
-> +
-> +	lockdep_assert_held(&p->pi_lock);
-> +
-> +	if (WARN_ON_ONCE(state == TASK_RUNNING))
-> +		return;
-> +
-> +	/*
-> +	 * Hand the donor role back to the execution context before clearing
-> +	 * p->on_rq. This is proxy_reset_donor() without put_prev_task(), which
-> +	 * sched_change_begin() already did, and without zapping the balance
-> +	 * callbacks: nothing redoes them here, and they include the pull that
-> +	 * switched_from_rt() or switched_from_dl() may have queued.
-> +	 *
-> +	 * If @p is rq->curr, __schedule() retained it and dropped the rq lock
-> +	 * while picking. Block it like any prev that blocks in __schedule():
-> +	 * keep it set, and let the pending pick put it.
-> +	 */
-> +	if (ctx->running && rq->curr != p) {
-> +		struct task_struct *curr = rq->curr;
-> +
-> +		__put_prev_set_next_dl_server(rq, p, curr);
-> +		curr->sched_class->set_next_task(rq, curr, SNT_PICK);
-> +		proxy_set_curr_donor(rq);
-> +		ctx->running = false;
-> +	}
-> +
-> +	p->sched_contributes_to_load = task_state_contributes_to_load(state);
-> +
-> +	/* The DEQUEUE_SAVE in sched_change_begin() skipped these. */
-> +	sched_info_dequeue(rq, p);
-> +	psi_dequeue(p, DEQUEUE_SLEEP);
+These are 7.3 backports of two sched_ext fixes dropped from 7.3.7-rc2
+because their rc1 versions failed to build [1][2].
 
-Should we assert DEQUEUE_SAVE was set? I mean, it should be, but afaict
-nothing screams if someone forgets? And with these changes on, it will
-go a bit funny.
+- Patch1: factor scx_reset_task_fields() out of scx_disable_task()
+		   instead of taking a298fd5f4ee8.
+- Patch2: drop the __SCX_DSQ_ITER_HAS_REENQ context line, so 
+		  b3768d058c98, which adds a new kfunc, isn't needed.
 
-> +	__block_task(rq, p);
-> +
-> +	ctx->queued = false;
-> +}
+Build tested on 7.3.7-rc2 with CONFIG_SCHED_CLASS_EXT=y.
 
-Other than that, this looks good. Let me go read the next patches.
+[1] https://lore.kernel.org/r/0782adf7-20af-45a3-a09b-2a34c76afbac@kernel.org
+[2] https://lore.kernel.org/r/6e2e92cb-6663-457b-8225-0809917f4332@kernel.org
+
+Kang Chen (1):
+  sched_ext: make DSQ iterator stay drained after NULL
+
+Rahad Bhuiya (1):
+  sched_ext: Reset task fields on exit of an SCX_TASK_READY task
+
+ kernel/sched/ext/ext.c | 57 +++++++++++++++++++++++++++++-------------
+ 1 file changed, 39 insertions(+), 18 deletions(-)
+
+-- 
+2.56.0
+
