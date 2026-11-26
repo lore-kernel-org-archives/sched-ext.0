@@ -1,72 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.72
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795728813;
-	b=E9rnoTsUtangO/50Y+AdcYMmrrBQ/oMe5xKM8EIcvKtO3k8xxKqrivUVdDdeaFFd8QdH
-	 6pbeefBWtx+b3X+5eYuERwJl0ixkv7JDR83GUXmfAQt7kJQSHC4LJKRoihn7LbqEu2plJ
-	 j1tqDWB7DjHpJJxGCcSs2TQ7mp1DUQhfL01BbzUFIL0CRQkHNqds0gp8tr/Q9r82a0WVP
-	 x3NFdHkKxw2CvIeSoJpuwuYKBG84qjS5CNFs1e7AMfyhvaq2RWTHf2JSwUy+AttIe6pj0
-	 miGvFCK01qOU5e+hO9ewN3+IytXRs18QaU5ziRkZ9eilqsWpVKHuEFnA8c7GA7fIXLA==
+	t=1795728814;
+	b=i2OXTJH/2mDDPQpKpTG/MUQIndtYV8psdNJx7ej1/nYw4ftScPFLz016O8llwBTYNMaC
+	 h+KEBT9ShBrs6T44M9tGDx+O1pivcPMmVFZt3RoivlWUL5Eo3zGMQKUIGe2hAcm2XwlzG
+	 YLk0q5c1x5quu4xrkR3E1wwESMg3kEC8mfF1Ia+J9Vl5TCPX9sK47d3Qu0+1KBSNa406G
+	 ZGqi4ik8wh+hqF1wkDqqZTvQJZq3aoE2k3WEAuGNyIO4bnbeQDgsjdVqhEVz/YSduSDUY
+	 SXv3vHkcm2SxOv2/W2PoYQipN+egB0bW63aPF7f4Ps1QgB49tJke6shB7N5NTAKnuhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795728813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795728814;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
-	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=Vbo+pKIjO+GhRtx4yJ4Jqz9PMjuckddFrEcKv85cuAU=;
-	b=XQtNq+lMlYX7NQa5/z3dLWcyRRrOSbMUdUrIRmBoSo2yejG99KhITUKz23TnBV8mbcg4
-	 YbUBxexuZCjS0h28IXHyDMQ0O5+rAi/YzN3p/uvr70LjHnz57npvwvvk/csIckd0hESNB
-	 PGMi0rc9ZMkVNU7bhJkwHZjETcnn8xK6fxA/2k/LV+Q7j/AUYID+P0e50tVWb39KLj/4r
-	 acpCuwKiUFhHpvLv0qQFM/7ZVMc/7zTJWezjZ0k8+1OBBDNvVijSmOGne2GNGzlURjPME
-	 KJav6cfKs5WIzDu9+K8YdpPOCAclYDfA8Z3C82XlOgWg1YvaBpZaCxFeLzXpoDEMOrA==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type;
+	bh=TJRJZjUyvgZocQAnVjrGig3CO3gFOqtMC5DjldN85x0=;
+	b=Um0qXKEb5XPEm6dndAsU/I9ZKjP6Di7jhOeOMXM7Xx+mZgVPMW6fC4nUqwt+kDSL6AY4
+	 SoSUANHhUbgU8VWwGdHGoGe5O9ujlI0k/OcmbiZw0ApxnebYkjKsanzDjH541FBZUxlWm
+	 ESBT0fUfUTFaaQMEKdQSkuyOB0MEMCMUPKs6waIkg7TlY7nVi+uJLgrLEJJo8JFWmUh90
+	 e9bPAoy+sseIarDxuw3XnU/s7CidTo0IydresTWLyWa/jpO8DWZragmbSEbUSmK1VUSfY
+	 iS/qz+cT462rnF6BW/syYmiZIZDvd42YLE/7QrOTqJGfhhAz3jd8jZLy467Kzieb3tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="lp/T0w0o";
-	arc=none smtp.remote-ip=209.85.128.72
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=J7BAEjqM;
+	arc=none smtp.remote-ip=209.85.128.71
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14C6606A323
-	for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 21:33:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A14C6606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE4A606A32A
+	for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 21:33:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9EE4A606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=lp/T0w0o
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4a1fdde384cso52960815e9.3
-        for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 13:33:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=J7BAEjqM
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4a009f82bedso52085665e9.0
+        for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 13:33:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795728811; x=1796333611; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Vbo+pKIjO+GhRtx4yJ4Jqz9PMjuckddFrEcKv85cuAU=;
-        b=lp/T0w0ocIl7zt7HKeYNQ04fTq9X67SPCScDNfAgoM+D5gzgsy5PKIdRp76tuP3eNN
-         3N67jcF5aiUznf0B9LFjbF3G2CJaw6G3s0oU0shNTyBsCyXY019ANe2wqbbPuALTs5eF
-         solBe6Y6KI4uy6nM7xa2B+F3cKGVNq61Gx93k0y8t5QSbfQEKwv+LhqZviDjeigQQtCF
-         60nizaidde/dW1bAAC7uoBtY0KakP55hwrrpKuKVZqzO2KstIS9hNoaHA0FG9JvYXXXA
-         5btRTz7rbBZ1xtU1PY9u7up9MmX/rSdVT9ERKmt7Y0LAgff2a9YNfN6RvocNYaPL3k4g
-         +VIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795728811; x=1796333611;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20260707; t=1795728812; x=1796333612; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Vbo+pKIjO+GhRtx4yJ4Jqz9PMjuckddFrEcKv85cuAU=;
-        b=MoswIahETcqXaRda9DwKnAT44ny3cu8NXB6NGDSeeaOwA0AGJMqfzZYBMMxY4+wBdW
-         9BbGHziIld/z7y7i5LQxWrjEvk1vg1qJFNXawPwRaZgagZktbc/HukqF5aIN79wVHRBt
-         5H9pSSTeyWXTZa5ufK0y+SVgtN4jQMb+cv4vFaTvncCSJGgMOVOJOaPqVruVMy2cY8jg
-         G+ISTw0OP222sL4S2vZTrZx5X0DPDRaIcvZUqIkC9MKViapRRovGx1NGdmlPJAbhUSY8
-         ypffYfFGbngfKVHtF9mvBGKi5aXwynpmFGMHqooTohenQtTKfUw6p8jRHn6YZviFzAT9
-         oX+w==
-X-Forwarded-Encrypted: i=1; AL+hErH7YQnBoB0xldQrmAf/E3t25NoRdOre2n/bSEsssaEw+VOGpiF211TXopgNw2lhkQpElelloA0xQLQ=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9UbBBcNpMQ4Mva48YuR5kvGAgkHwtgagjWS6CbWtWsKoAl3a2P
-	c8jp3ZHEcw98DIbPUWZ8D8MnejNOrqUoNDDboiCM686sjmsqtB0zIY7AbqeqwvpRNJDWdAnX9uU
-	/vgjVMYlU09S26Q==
-X-Received: from wmjf12.prod.google.com ([2002:a7b:cd0c:0:b0:4bb:5d5c:ab85])
+        bh=TJRJZjUyvgZocQAnVjrGig3CO3gFOqtMC5DjldN85x0=;
+        b=J7BAEjqM2wr8OhQDlk+vV8WuuXuC3AEL47tPOlHQu9pB1asKJI+oeAGa+1IMNIRXaJ
+         tkhu0Kb4mE1Ihfp8H0WqJxGFUB5zU4FmPn/Z0Q/gj9DGw6/WcaS2/l1NW38EOMBTP9De
+         Aef7nLTQ5WEA5AKtWwxoWiGqBH9nlTmn8Wom/MBBhiuAGHbVR2iBjkFiS5KrObUUzG9v
+         w717mUQvQn6z+4mVn2OAg1+O2vFpnkMdJN+U6PzlO9DxXJuanpz03qT3XhT8ov2byucX
+         KKbfA/VdqAGvhpDm65F3tJBboVd9z+XQUfQbNDM9tLmDyP27TU53vClsT1Vd+AaYkbKs
+         0wNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795728812; x=1796333612;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TJRJZjUyvgZocQAnVjrGig3CO3gFOqtMC5DjldN85x0=;
+        b=r7E8DStGr1xhWyhHJws7k7Dnd75N5BvOyEUQKqiM0k0WXcGwq3l/HS0p5cNu2zsfI9
+         xNuXyX+swY0jNaakG+m4AHohN6HDZ5WScFqj4Hc1tPcbJn9R9T0yx/Nxm27OHTH4ULU9
+         scggYjM1IMNk89X6jsjGa5kwlEy3sbT+i4ERXO2LK045MNOaNhEASdseByF3KE4C2cI0
+         swUF5rc4EktDe2T9rsb693+4iH7H/TLFhz3kzeU58GxGx1x1bSDu55tzOaPlmPD0zd3U
+         wipeWnpRHGjSjgJ64dWuyS57aFCmOm+iQBalkrhGsuJnu2fx0N2vVS4RRVsCwUceoIzF
+         jMSA==
+X-Forwarded-Encrypted: i=1; AL+hErGMkhcPRAgp0pNHcsp34X8Nfg9GaJinGWZB6cNHTdxTHirmRJKJGRK3aqlN1XVXBxYq2OfSFJa3tEE=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/kDaQqZKyDsEUl0WkGJqmcLD3YGZqenJ1tHyU3RnHS4WBSjkAH
+	H0vJur2DoNvu67eWZjOVU+yi4NvhWfNEn9BfY+16RRv/hwVE0TjYFuzWhNOaHqPy5SpmF1nYUqM
+	a7PRL0urdkzR+lw==
+X-Received: from wmsd6.prod.google.com ([2002:a05:600c:3ac6:b0:4a1:fdd5:9c10])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:e549:10b0:4bb:a60a:fc8 with SMTP id 5b1f17b1804b1-4bba60a11d2mr84875965e9.35.1795728810936;
- Thu, 26 Nov 2026 13:33:30 -0800 (PST)
-Date: Thu, 26 Nov 2026 21:33:28 +0000
+ 2002:a05:600c:4e0b:b0:4bb:6f45:2a79 with SMTP id 5b1f17b1804b1-4bb88817920mr480195685e9.22.1795728812035;
+ Thu, 26 Nov 2026 13:33:32 -0800 (PST)
+Date: Thu, 26 Nov 2026 21:33:29 +0000
+In-Reply-To: <20261126213212.3930589-1-jpiecuch@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -76,10 +79,10 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
+References: <20261126213212.3930589-1-jpiecuch@google.com>
 X-Mailer: git-send-email 2.56.1.839.g22a8290db9-goog
-Message-ID: <20261126213212.3930589-1-jpiecuch@google.com>
-Subject: [PATCHSET sched_ext/for-7.4-fixes] sched_ext: Enforce SCX_CAP_BASE in
- core-sched task selection
+Message-ID: <20261126213212.3930589-2-jpiecuch@google.com>
+Subject: [PATCH 1/2] sched_ext: Enforce SCX_CAP_BASE in core-sched task selection
 From: Kuba Piecuch <jpiecuch@google.com>
 To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
 	Changwoo Min <changwoo@igalia.com>
@@ -87,48 +90,65 @@ Cc: Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Under CONFIG_EXT_SUB_SCHED, sched_ext enforces SCX_CAP_BASE on the
-dispatch path via scx_task_can_stay_on_cpu() and scx_rescuee(). However,
-ext_sched_class leaves .task_is_throttled unset. Under CONFIG_SCHED_CORE,
-sched_core_find() and try_steal_cookie() select tasks directly from
-rq->core_tree and rely on sched_task_is_throttled() to filter ineligible
-tasks before bypassing pick_task_scx(). As a result, a sub-scheduler task
-sharing a core-scheduling cookie with an SMT sibling can be picked or
-stolen onto a CPU where its sub-scheduler lacks SCX_CAP_BASE.
+Under CONFIG_EXT_SUB_SCHED, a sub-scheduler is only allowed to run tasks
+on CPUs where it holds SCX_CAP_BASE (apart from migration-disabled tasks
+and a task admitted as rq->scx.rescue.curr). The sched_ext dispatch path
+enforces this via scx_task_can_stay_on_cpu() and scx_rescuee().
 
-Patch 1 implements task_is_throttled_scx() under CONFIG_SCHED_CORE and
-wires it to ext_sched_class.task_is_throttled.
+However, ext_sched_class leaves .task_is_throttled NULL. Under
+CONFIG_SCHED_CORE, pick_next_task() calls sched_core_find() on sibling
+runqueues and sched_core_balance() calls try_steal_cookie() across CPUs,
+both of which select directly from rq->core_tree and rely on
+sched_task_is_throttled() to filter ineligible tasks before bypassing
+pick_task_scx(). With .task_is_throttled unset, a sub-scheduler task
+sharing a core-scheduling cookie with a sibling can be picked by
+sched_core_find() or stolen by try_steal_cookie() onto a CPU where its
+sub-scheduler lacks SCX_CAP_BASE, running without ops.dispatch() and
+bypassing sub-scheduler CPU isolation.
 
-Patch 2 adds the sub_core_caps selftest exercising a cid-form root
-scheduler and child sub-scheduler on an SMT pair, verifying that a
-cookie-matching sub-scheduler task is not picked on a denied sibling and
-runs once SCX_CAP_BASE is granted. It requires CONFIG_SCHED_CORE=y (not
-enabled by default in tools/testing/selftests/sched_ext/config) and an
-SMT pair plus a third CPU. Without patch 1, the selftest fails with:
+Implement task_is_throttled_scx() under CONFIG_SCHED_CORE, returning true
+when !scx_task_can_stay_on_cpu(rq, p) && p != scx_rescuee(rq), and wire
+it to ext_sched_class.task_is_throttled. Both callers hold cpu_rq(cpu)'s
+lock, and scx_task_can_stay_on_cpu() already fast-paths !scx_has_subs()
+(and CONFIG_EXT_SUB_SCHED=n), allows local migration-disabled tasks, and
+resolves bypass via scx_exec_sched().
 
-  ERR: sub_core_caps.c:534
-  Sub task ran on denied CPU 1 via core-sched (run=6 deq_cse=6)
+Fixes: 46a85ae6fe5b ("sched_ext: Tie cpu occupancy to SCX_CAP_BASE through the task slice")
+Cc: stable@vger.kernel.org # v7.3+
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ kernel/sched/ext/ext.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-The patches were written with the help of an AI coding assistant. I have
-reviewed the patches and verified the tests run by the tool.
-
-Kuba Piecuch (2):
-  sched_ext: Enforce SCX_CAP_BASE in core-sched task selection
-  selftests/sched_ext: Add sub_core_caps test for core-sched
-    SCX_CAP_BASE
-
- kernel/sched/ext/ext.c                        |  11 +
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- .../selftests/sched_ext/sub_core_caps.c       | 616 ++++++++++++++++++
- .../sched_ext/sub_core_caps_root.bpf.c        |  78 +++
- .../sched_ext/sub_core_caps_sub.bpf.c         |  84 +++
- 5 files changed, 790 insertions(+)
- create mode 100644 tools/testing/selftests/sched_ext/sub_core_caps.c
- create mode 100644 tools/testing/selftests/sched_ext/sub_core_caps_root.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/sub_core_caps_sub.bpf.c
-
-
-base-commit: 0919f8bea37e7e354b342c2dff52dd8f5b958d6a
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 3a69100e47f7..a4a93ed97f7b 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -4261,6 +4261,13 @@ bool scx_prio_less(const struct task_struct *a, const struct task_struct *b,
+ 
+ 	return time_after(a->scx.runnable_at, b->scx.runnable_at);
+ }
++
++static int task_is_throttled_scx(struct task_struct *p, int cpu)
++{
++	struct rq *rq = cpu_rq(cpu);
++
++	return !scx_task_can_stay_on_cpu(rq, p) && p != scx_rescuee(rq);
++}
+ #endif	/* CONFIG_SCHED_CORE */
+ 
+ static int select_task_rq_scx(struct task_struct *p, int prev_cpu, int wake_flags)
+@@ -5959,6 +5966,10 @@ DEFINE_SCHED_CLASS(ext) = {
+ 
+ 	.update_curr		= update_curr_scx,
+ 
++#ifdef CONFIG_SCHED_CORE
++	.task_is_throttled	= task_is_throttled_scx,
++#endif
++
+ #ifdef CONFIG_UCLAMP_TASK
+ 	.uclamp_enabled		= 1,
+ #endif
 -- 
 2.56.1.839.g22a8290db9-goog
 
