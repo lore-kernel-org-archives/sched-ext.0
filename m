@@ -1,102 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795710472;
-	b=qNr007gidayvDa3OlGgFVmDlqYlovVeRQa9MvCs+atj+ioZRxM7mVmhLFjB+/Yi2pbgZ
-	 ReBVUK2Z+5WugdlAGHxXxpOeW9JAlVTnOJcvxaHRnMHjowhm7TiS9Gj/0O8UR+e+Oi82z
-	 yOFF+mKOVx0xUUfc1Yk3R9p5pflxXcMkQ89XO5lCOnW3iAkugeLKojChabjB6zB9UjhVz
-	 OGZmRACJXnMq5tZbH7OJAMKHt+tBB0TUfFbEk1VdYbaDkguFkCPwwXOhbQ8Uja2Zu1frX
-	 uurFOC0OI+PCYwHcR/SYqH0R+9CDJdh5MsnzR/eqbuSeVhzUiomyY0MfutMw57cvPQw==
+	t=1795710476;
+	b=FFrWgVJlmDhyAvBabdDmvEYJwD46YBDFnR5PwGF9RmScGvOLvNEfUfPWIRY3wJBwO5yZ
+	 i+QDnLlUBh2MIbz8nrW2gujKoo89B40/TUZYNeo5I7pvH0WugsmG6CW3Paj+4anEmWKqU
+	 XHmdRhKVM4FPHdh2i/Czwe/v+5fggkVC8oSewWtS1/aYqIzUc7QhurxuryeuVMED6vOK1
+	 Jbt4ka50jnV/ifkliqEbjAM0aN256VA73coK65X3IHvZp2dSgyCO+7vvWnGbE79MDZ0ub
+	 mRqeCGxiUosaIWIAtI68JmiR22DuTqpqRPyjeJwysLmQ1aDmVNiLQjDLdHLRsyJNtMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795710472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795710476;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FP0roxHyrWk88AZNLgTy+sqCX40+tPZRlLLzxGj21Iw=;
-	b=jzQoCR69VEmiAYsMNIME6qOQof7uG3dW5FFbd0JitBHUWL/h2ypWpC0+tAHvbvxWx3Xi
-	 tNFrFIr5q9fznCJaCC19BeNeZJMuABUuI4irvcFxhTDp9WjJmSdwYkS+eezpX/RTddqlU
-	 VJg41GY7xX3LpWWT/f9V2PZAF47n8mZTmuw7HHnkPaQIiqYm83jtrlyvZ1VmMXttr6H7v
-	 s4qp2UY4qIJ4tQlxqVVJu5iDgtCxqvINeYQDvAE5mrItFW45MXseJ5lGa1qVUu5ahb4Q/
-	 SgA1/S45Qb8VchGA8W8OJ+pzSvlHdlP3pa5LNw9U2+8/CiNf0uq1cMhqHSa6HWFNtbg==
+	bh=zx2PX5ffkPJPf6TzIozB55NAQJzc9RQ5Aq9V1KvYSuQ=;
+	b=BGttHXJC/yrDQIVwwXFMxQ0c9Ua6c3FoCR/g2opuxQlgbBSUNBZ/fN2+wsAzZZYXQHzd
+	 Kt3fzWRj72EFY6QYTqLokByHk4bb0/02VPAZIroD+8ZgJ/1kPPq/xXK+4PrH3xBOWGN7M
+	 /uQq6P/KQv90TSIAM7meJE7YTxEit0pfEfLrZ3S6CNnEy5akGwkzsMRyNL4q5KqGRxY6f
+	 34oAQcfr0ZJJYOZg5MQkQz91a5U5u1h8M1cv5AZUxMDV2RuWsUXNl09fo9oo5rjZPgvyr
+	 ZX5lHl+cCwX0zAvDthsjX0U8VWjWvRTJ8bm8Wf2da42HmYjbCa8Eszpf/WoqCAer8dQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=famD3Qpf;
-	arc=none smtp.remote-ip=209.85.210.181
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AugCr7ty;
+	arc=none smtp.remote-ip=209.85.210.179
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06326606A31E
-	for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 16:27:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 06326606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2150606A31C
+	for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 16:27:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F2150606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=famD3Qpf
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8b32bc605d9so3534231b3a.2
-        for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 08:27:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AugCr7ty
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8d1aec63541so287039b3a.3
+        for <sched-ext@lists.linux.dev>; Thu, 26 Nov 2026 08:27:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795710471; x=1796315271; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1795710475; x=1796315275; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=FP0roxHyrWk88AZNLgTy+sqCX40+tPZRlLLzxGj21Iw=;
-        b=famD3Qpfac5yon4wvHjUOPOv/GlTc/qpm8rRyn/TBNjDoe9jXrjcPWsYxDLXYF5Kwf
-         7Snkzmp7JTdbM1dX/M/9um+pKMMWavKKJ8CjG9oADNvCxxkszkBv8hLPhM005ZdQfImo
-         fDZryx8BreWKaoQtTI1q/c4jpEa8lrqhQMnTNOGuxIgMA6rjmZLirSSGVeVudFgbEzJ0
-         nwiiZhFM4nhYYi8fmlKgaRHU71u3ScQSOJXjgBeVqn0LNFeEaQZSvLlvk17etbCImq6Q
-         3FHuJaRZcUXs0G4hoQMxpgU7eMWVGxRKTxh6PW6lTFGvEJrCTAiuX4xwRVy4Og+6wrli
-         9owQ==
+        bh=zx2PX5ffkPJPf6TzIozB55NAQJzc9RQ5Aq9V1KvYSuQ=;
+        b=AugCr7tyFEFYGU127YiRLOw0VHwddnJ4vMwIj4JksPjVhuHm3amSk6xFNYAmHVAXz7
+         0pbHUQRd+7wfOy6mlri+NT4WoEvfyQH49v3Wmqdp2p1SDxZLPxE5jEg0RJFBydddCsLL
+         UqF7JsPD6po1IRnBoicA6iFTJ7MRRm9Z3iJBE5qfqbQMJRePKwJzQmDBOmA0AsjS/k9x
+         EvcatApBOUXVifUGMJbDHKkFjS4uj7VDLJlcY7/ZCY9QvcWsSCP9UCY997Qf8YJY/LBZ
+         MuUeuruJ5C4Fptb6FD2zGoqXjXnt3CI2LDmqmTFXGMK77SAhi+X54bbtOuX7yQU2yazB
+         Ephw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795710471; x=1796315271;
+        d=1e100.net; s=20260707; t=1795710475; x=1796315275;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FP0roxHyrWk88AZNLgTy+sqCX40+tPZRlLLzxGj21Iw=;
-        b=eASTJUebUnsKFhMdEf4uOjfgkqv6+++Fw5r74+syGE7/4ObY7pI7ap9W4BSQPOgUZO
-         EyJJe5vKOFwK3noyzK9UvPvGECH7tzXMFscS9I3tgjWHbTs056bDL7xs3R0IVzSiCbFP
-         3FXVkk+2JjC+XnBEwjqngQMwO9DDcEC9Yx5HeZyv/bM2LStm8+P7hFHCJHS8H1Q7SPo2
-         45eDL7q1UET+3x9nZbBiEg9pJ9Uu3ThiJEK7vk7P5gWBSJLuQ1gTeeXJIxSIAUqr5QAL
-         sQwwjYJJKz8e3OcppOCZ3vfDFrO84YvI3oesRKvI8Vyoi5BiFkMEl5tB1RrRjJvT7EGd
-         Fa0g==
-X-Forwarded-Encrypted: i=1; AL+hErEwwyoLX2uuaZEdPXUTZ2aqTCBZlruqc3RyA/EAuFjhR2GSo1RXfyOgA3sPxi1s8cOXpJBiaZeVsJA=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9c63JeQawZChFxlPuk+9/DOK6/MKZlEfY3IxhhOgCt2jAiDYn+
-	OBvdgvOli9WnBkc8GsEk/4bUFBShwDL9OgHf243e16z3NeYEkvkZ2H4X
-X-Gm-Gg: AZFdTZcIqdatpKUcw2EkFSKF+QUDjYHYq4OIsk3JtuFtOr4t7mfd+m/6rrvEjxwNKGc
-	V+GNLMFE8hSVojpsbOfkALEAwL7F0HPYC9ThdTVYCXcR+ASHoA9Nmisq+zxPkAHPL17rF4/wxh1
-	69a+WSEFWTgkHsGicjdGe+kqH4td7YX8UHiE6BAaspT3yCu/NdhAJYPmyI0FQTMD1DWdmc3pNw1
-	v6VNJvj2runL1AW2IZ9ApFnblEA6stExR8VTGvv8X8DEkhahAI3I6RcIu3XrkmvZVOAKFB35Q9z
-	uym/GY/wzPFq/PMH3hNKwHUN+CBcb354bzBjVVOG7ZnwavcwwnLwk2fHR+Xl62FQ4hk3cYGC9Ju
-	O0kn02GmMhCwoIvOhXv1n+Y2sUEov7eflhTHNa0j4UtBqeeayDNKb7CEI741PkD2bqAi5UCsbny
-	eMhU+XbwTD1vrnTIFW3aNyrhqVimjAtijenHCiuSc5aZzBKq6+Qh0yXiYRFeXjlfbUjlLU0qiWS
-	elpv+REoB2a62/pyk3fL4BNXuwzwx0++TvdNgtBk8w52NRmyzgL1ZCAInuI3m59EJz+8q4Phm4V
-	k4o5d/FEqQaPDTjKon1wp/DRd2MTMLvudTKRpOJkr0xUIzRMzxJZqNTD8SQ6P8zQpM0BoNhULC8
-	Vjk076DGUeoqQZrIr+Enzjdb1AyqfWHiE5Q8=
-X-Received: by 2002:aa7:930b:0:b0:8b5:f9b1:a8cf with SMTP id d2e1a72fcca58-8c87d32a732mr21318565b3a.51.1795710471016;
-        Thu, 26 Nov 2026 08:27:51 -0800 (PST)
+        bh=zx2PX5ffkPJPf6TzIozB55NAQJzc9RQ5Aq9V1KvYSuQ=;
+        b=QRM5dtZFj5cpVC5lSl9OPvXTR0jxH4qLF+KwL/dmZFaBNldEnvw0Vcmd4LkBhkaO9z
+         WWcB4VsNbz5qd0VTLsoscrzeJpeLNVVUpvVjwQuJ6cnwkSvbT5pmyAolJ2+7bgWI1/5F
+         deOHHJmm6LUxkQ4OlzDY3c/VuEuyR+93zs1KkmHr2POI5u20q0eLbKDJNpLZ4QjZh27t
+         bxe5mikTeDjYI08qB8+eDup5FyjhaSrk7+I7eksxL11YBuVLqyD8e6TRB7DM2Hzuhdjj
+         8ghPLSJdWaDd7QYZJx8HykRu+9HkVRYpCjZIChp5rEGHa7ntmzU3F+XRa2/JXnkVgq9y
+         znLg==
+X-Forwarded-Encrypted: i=1; AL+hErFJZ0rqD7DBowvNUCExYHmZIoyS95+ImwsVwnxD8P2R/RMqKKt6aEi24LNVqRwGIeWsW6NZ/ZXFZ6M=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/lbRLlsb+etHew7x/Rpxy/N47NH+0QfAmldPLy0XzGHYkaJVxw
+	0NUsI7VGCNrZV9sU19uVRxtFkU/p2nW95+uqeoI57F72iNJo0m7VE+X0
+X-Gm-Gg: AZFdTZfQLtLcqDhFhoIsF+GZyY5ywPhxBqGKWo8vqk5BYNnFDUrWvO3zu6EdTI0CdkZ
+	C2yfLDJIK/MYAGsuWZtcWTm5nd0oiEG/zdYdGORR2ypWwAnYSmGuJLBLnFoM8VQZi+996gEvUPp
+	/SKqh5xTKcDtI5AEMx3/xIIN7TFJaYYFWBc1e+nrFqe3lr17UOyP1io2y7eHYirgnI/xTVthQcE
+	NaRPu4BiDcNrJhxll8g8odeK4wn15or2trvD7C4rAa3KaYueDIWY19Ga0pOVVfXrLncOGFpMZfx
+	imZsnBn6GctvteUTRmGUUcqKI8ksfKVJPWe33agG0lgtr6DF2WCPpKTBQs46DxFlsoBFaPnFqYN
+	a2ZlC3SexiOzjsp2FkQGzmtuA1bGDdD7j5IKKQJms84IrgnMpEewYbDxjKUpGi+d1FwOZC2sOMV
+	ueKrd67GN42hScoUF2XfAii9jIJr3GYfA7fGVFmgScMzNlYK+WUSRRHpst3xnehzPPehm8jXuOL
+	/xFp+wh778ghiUuqYJcYplxmBzlkUrUmpgKog932baAs41c9l+tBXv7kDTtbTCHnLBgxQYBBdXy
+	rnghPT0ddEuagMWXTJou5alXnhSS6oI0pz1ZjnSXKklPalx6EEs3f036SHyiqkYBlToLmVYFWQg
+	Wrf5BgQiESiIpVta9fINqr6n0hjw7vvGcUQ==
+X-Received: by 2002:a05:6a00:14cc:b0:886:a52a:316f with SMTP id d2e1a72fcca58-8c8792b6925mr19988696b3a.4.1795710475202;
+        Thu, 26 Nov 2026 08:27:55 -0800 (PST)
 Received: from cchengyang.duckdns.org (1-164-86-80.dynamic-ip.hinet.net. [1.164.86.80])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87343f83dsm11037097b3a.39.2026.11.26.08.27.47
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87343f83dsm11037097b3a.39.2026.11.26.08.27.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Nov 2026 08:27:50 -0800 (PST)
+        Thu, 26 Nov 2026 08:27:54 -0800 (PST)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: stable@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>
-Cc: Rahad Bhuiya <rahadbhuiya2021@gmail.com>,
+Cc: Kang Chen <k.chen@smail.nju.edu.cn>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Jiri Slaby <jirislaby@kernel.org>,
-	Kang Chen <k.chen@smail.nju.edu.cn>,
+	Rahad Bhuiya <rahadbhuiya2021@gmail.com>,
 	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
 	Chia-Ping Tsai <chia7712@gmail.com>,
 	sched-ext@lists.linux.dev,
 	Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: [PATCH 7.3.y 1/2] sched_ext: Reset task fields on exit of an SCX_TASK_READY task
-Date: Fri, 27 Nov 2026 00:26:57 +0800
-Message-ID: <20261126162700.22257-2-yphbchou0911@gmail.com>
+Subject: [PATCH 7.3.y 2/2] sched_ext: make DSQ iterator stay drained after NULL
+Date: Fri, 27 Nov 2026 00:26:58 +0800
+Message-ID: <20261126162700.22257-3-yphbchou0911@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261126162700.22257-1-yphbchou0911@gmail.com>
 References: <20261126162700.22257-1-yphbchou0911@gmail.com>
@@ -111,101 +111,79 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Rahad Bhuiya <rahadbhuiya2021@gmail.com>
+From: Kang Chen <k.chen@smail.nju.edu.cn>
 
-commit 564405c424f49d70b13debe7fe5b550234ad6b84 upstream.
+commit fcbff7b56a881bbe041b6c5ba12831a3c1ac1bb4 upstream.
 
-Tasks in SCX_TASK_READY are attached to a scheduler but outside the ext
-class, such as RT/DL tasks, or non-SCHED_EXT tasks under a partial switch.
-The scheduler's BPF code can still update their dsq_vtime and slice (for
-instance, via ops.cgroup_move() as done by scx_flatcg).
+nldsq_cursor_next_task() unlinks the iteration cursor when it reaches the
+end of the DSQ.  A later call sees list_empty(&cursor->node), starts
+from the DSQ head again, and returns the first task of the same
+iteration.
 
-Because __scx_disable_and_exit_task() currently breaks out of the state
-switch for SCX_TASK_READY without calling scx_reset_task_fields(), these
-fields are not cleared when the task leaves the scheduler. If the task is
-subsequently moved to another cgroup/sub-scheduler and later switches to
-SCHED_NORMAL, the new scheduler's ops.enable() sees stale dsq_vtime from
-the previous scheduler's clock.
+The verifier relies on the iterator contract that once next() returns
+NULL it keeps returning NULL: process_iter_next_call() marks the
+iterator DRAINED and treats the result of later next() calls as the
+constant zero.  A restarted DSQ iteration therefore hands the BPF
+program a task pointer while the verifier believes R0 == 0.
 
-Call scx_reset_task_fields() in the SCX_TASK_READY case of
-__scx_disable_and_exit_task() to ensure SCX-managed fields are properly
-reset when leaving the scheduler.
+Remember the drained state in the cursor flags and return NULL on every
+later next() call.  The cursor has spare flag bits and the BPF-visible
+iterator layout is unchanged.
 
-Fixes: 5771e79e461e ("sched_ext: Reset dsq_vtime and slice when a task leaves SCX")
-Signed-off-by: Rahad Bhuiya <rahadbhuiya2021@gmail.com>
+Fixes: 650ba21b131e ("sched_ext: Implement DSQ iterator")
+Signed-off-by: Kang Chen <k.chen@smail.nju.edu.cn>
 Signed-off-by: Tejun Heo <tj@kernel.org>
-[ chengyang: 7.3 lacks scx_reset_task_fields(), so factor it out of
-  scx_disable_task() ]
+[ chengyang: drop __SCX_DSQ_ITER_HAS_REENQ, which 7.3 lacks ]
 Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
- kernel/sched/ext/ext.c | 40 ++++++++++++++++++++++++----------------
- 1 file changed, 24 insertions(+), 16 deletions(-)
+ kernel/sched/ext/ext.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index cc8d09924fa1..1049a0914d60 100644
+index 1049a0914d60..6db6ca912bb3 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -4159,6 +4159,27 @@ void scx_enable_task(struct scx_sched *sch, struct task_struct *p)
- 	scx_set_task_state(p, SCX_TASK_ENABLED);
+@@ -492,11 +492,13 @@ enum scx_dsq_iter_flags {
+ 	/* iterate in the reverse dispatch order */
+ 	SCX_DSQ_ITER_REV		= 1U << 16,
+ 
++	__SCX_DSQ_ITER_DRAINED		= 1U << 28,
+ 	__SCX_DSQ_ITER_HAS_SLICE	= 1U << 30,
+ 	__SCX_DSQ_ITER_HAS_VTIME	= 1U << 31,
+ 
+ 	__SCX_DSQ_ITER_USER_FLAGS	= SCX_DSQ_ITER_REV,
+ 	__SCX_DSQ_ITER_ALL_FLAGS	= __SCX_DSQ_ITER_USER_FLAGS |
++					  __SCX_DSQ_ITER_DRAINED |
+ 					  __SCX_DSQ_ITER_HAS_SLICE |
+ 					  __SCX_DSQ_ITER_HAS_VTIME,
+ };
+@@ -10255,13 +10257,24 @@ __bpf_kfunc int bpf_iter_scx_dsq_new(struct bpf_iter_scx_dsq *it, u64 dsq_id,
+ __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *it)
+ {
+ 	struct bpf_iter_scx_dsq_kern *kit = (void *)it;
++	struct task_struct *p;
+ 
+-	if (!kit->dsq)
++	if (!kit->dsq || (kit->cursor.flags & __SCX_DSQ_ITER_DRAINED))
+ 		return NULL;
+ 
+ 	guard(raw_spinlock_irqsave)(&kit->dsq->lock);
+ 
+-	return nldsq_cursor_next_task(&kit->cursor, kit->dsq);
++	p = nldsq_cursor_next_task(&kit->cursor, kit->dsq);
++	/*
++	 * nldsq_cursor_next_task() unlinks the cursor and starts from the DSQ
++	 * head when it is called again.  The verifier relies on an iterator
++	 * which returned NULL to keep returning NULL (see
++	 * process_iter_next_call()), so remember the drained state.
++	 */
++	if (!p)
++		kit->cursor.flags |= __SCX_DSQ_ITER_DRAINED;
++
++	return p;
  }
  
-+/*
-+ * Reset the SCX-managed fields when @p leaves the BPF scheduler's control.
-+ */
-+static void scx_reset_task_fields(struct rq *rq, struct task_struct *p)
-+{
-+	lockdep_assert_rq_held(rq);
-+
-+	p->scx.dsq_vtime = 0;
-+	scx_task_slice_ended(rq, p);
-+	scx_set_task_slice(p, 0);
-+	p->scx.reenq_cnt = 0;
-+
-+	/*
-+	 * If @p is runnable but not running, its wait started at runnable_at,
-+	 * which ops_dequeue() didn't reset. Leaving the scheduler ends the
-+	 * wait. Reset runnable_at the next time @p is enqueued on SCX, so that
-+	 * the watchdog doesn't count the time @p spends elsewhere.
-+	 */
-+	p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
-+}
-+
- static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
- {
- 	struct rq *rq = task_rq(p);
-@@ -4172,22 +4193,8 @@ static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
- 		SCX_CALL_OP_TASK(sch, disable, rq, p);
- 	scx_set_task_state(p, SCX_TASK_READY);
- 
--	/*
--	 * Reset the SCX-managed fields when @p leaves the BPF scheduler's
--	 * control, after ops.disable() has observed their final values.
--	 */
--	p->scx.dsq_vtime = 0;
--	scx_task_slice_ended(rq, p);
--	scx_set_task_slice(p, 0);
--	p->scx.reenq_cnt = 0;
--
--	/*
--	 * If @p is runnable but not running, its wait started at runnable_at,
--	 * which ops_dequeue() didn't reset. Leaving @sch ends the wait. Reset
--	 * runnable_at the next time @p is enqueued on SCX, so that the watchdog
--	 * doesn't count the time @p spends elsewhere.
--	 */
--	p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
-+	/* after ops.disable() has observed the final values */
-+	scx_reset_task_fields(rq, p);
- 
- 	/*
- 	 * Verify the task is not in BPF scheduler's custody. If flag
-@@ -4213,6 +4220,7 @@ void __scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p)
- 		args.cancelled = true;
- 		break;
- 	case SCX_TASK_READY:
-+		scx_reset_task_fields(task_rq(p), p);
- 		break;
- 	case SCX_TASK_ENABLED:
- 		scx_disable_task(sch, p);
+ /**
 -- 
 2.56.0
 
