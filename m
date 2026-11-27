@@ -1,68 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795794259;
-	b=4hED0607uAC7GZPALuv74zuYgBOTtO3qCTQUbygjiKG0RLESCcDVSxq+6l0tBPNOVm4f
-	 CJju4G4j6wWJ07nKa5q5VNhzvHKNhCNvaroR4QC1L76SSODZTp2WKvH8kerK8NGe2X1Dr
-	 m1LBYG+cIrZKb0DfP2DtIfUEwOc7GNcVHztiz5/sTsk4xa6CNo2UYxlZNcCA9sBZ8YgnR
-	 fkpWPjU+D/nXBUeoprybZ3dbIG5SnO9yhFhWlSbP1hX1RGzoXHkb/cPAtuSvWCACD+7Cu
-	 tcUYn5RMzmt1jZ39LFCmTy3DyRAY1uk4ymS6B9jkPf3VlMstRplSuXReuG0da8tGHIg==
+	t=1795798898;
+	b=eEOLDWgRoQQvJorv/6iCg9yvTwB9HnryMTh5M7oX0v6VDZcp/k32TZWxxb2b9S8IyjJm
+	 F4kBkZtPf4bA+DkIAgV+FvA2jZz8PeURn36Ziw6GkBnfoLgjiplNTYKJec7HM4sG4vLS+
+	 OZ63Mj/xC+ZNw9i/qPu/xBSoywQRz54sQgBTT0oatvMi2mQKL1L0z1I4ndy/g2V1TLICJ
+	 1K51o5JuEPL2FV0nhr25jfHbitpCiLiqBANat8AFV7snLiBBuhHZzm+LMArry0ugnNMdT
+	 c3n+nlvXvR1FSDzl0LhPIbjHw+eB198G/PWK1Gbpou87ydqeeYiPe+kx/8v6EYQ6Q5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795794259;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=X6AFLb9s7u+Xon8/nUZ2rh6cB0uMWRXakMaXootNgic=;
-	b=VEnDHuS2gTl7BOQT+HYQgnzsmfVtU9oJZ8W/Kw2ohhz0WebKlUITwjAaOSNXuwJPgEWG
-	 5gGG4bjOM1v7Suxft3NWVNTce/A1IbMq0ROCfQmCNlKz/0kp29QGiL/ko47ag9MFVxy0v
-	 65/EhwaykfKXYXn1LBY9uuAACOy8nn+7Rn+L9wqJKaKPu4i1+jOZS9E9OQj920zBK4KjH
-	 3GOh/IEm5GAyGgcCLDF+zkh0sDqylEB8k6NJ+yPpGLlEdogIE2leMaKnqTbYD0QPn/eWH
-	 E4bmgC93SazP+y0qqs0VNR9bgqcTG9g4D3bg0UFVBjHTIgDY2OJDPM83LVqgbAk75rg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795798898;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=fnICLWlEpr8hKNV++Wh8sUclv+RkfltPKWrdO8+U1kM=;
+	b=eYI19hVy8ZH1R6Vt0hqmtuc1rCcNLmzhtb/vKX6kamywAO2YdDkUe/TguRMqHt3EN/y5
+	 HqsnYUnl+Y0QjwqS41ktymewgjH4/7Crh1Sb53TemGRv7VNuQNUd+hreAlC0fbIbYnJ+r
+	 FTbXKdF52RG2hPCMQd4jpzhd/Y3TJSQIJ/rbx9uaY2nN/C1LrVnqbmdR5L9p+mdG18jCB
+	 kZNsJNq1wM6ySRzSF9rz0Z8pENU/fExQGSZtpua79LE16gXyUYTE08bflq5TPXDhe2Lcr
+	 o5SAYDUPA6/xuDTNAi22rJ1P5qON/WqN1v32dsjHYSPegxfQPqNDbT507Q2Iglzj6pA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=U7WiL7JL;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TiFIYGHX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B783606A31F;
-	Fri, 27 Nov 2026 15:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B650606A31C;
+	Fri, 27 Nov 2026 17:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=U7WiL7JL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B56E1F0089B;
-	Fri, 27 Nov 2026 15:44:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TiFIYGHX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC14D1F00898;
+	Fri, 27 Nov 2026 17:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795794258;
-	bh=X6AFLb9s7u+Xon8/nUZ2rh6cB0uMWRXakMaXootNgic=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=U7WiL7JLSPg7FvatCbumCgs1MGCMjm9Nm5y728QK+G7lRYVXHxwktT87qi2z9USQK
-	 tDWnZL+HxqlZMLRFj1KJHedUeab6URm4r0Uv2OTQKVhpKQjWsCKzLcriLdjNAovbpK
-	 0R7JEoih7INrYNO47/8vIEr44ZIvoo2oHi/D3hfh9gMHjxju1dpUm/LvnJO/ZbrxN1
-	 pYO9eLVNLP7zSudBIgi2eY7O8asntAHPpJ1+hdfUVKUv73zm4JVJjU/3qcDuOARfKx
-	 BT+g4tF+qZn3EQpiudxCFZQ89wNGcDsvkp53ogmEhKowAHGut0cmezPb4vTRPERhta
-	 jkSwYk0a/Rrmw==
-Date: Fri, 27 Nov 2026 05:44:17 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
+	s=k20260515; t=1795798897;
+	bh=fnICLWlEpr8hKNV++Wh8sUclv+RkfltPKWrdO8+U1kM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=TiFIYGHX4jnneuyPztjYqi0ETsOX0JMxwEDuxXhqMof/Quk8qGNsxasuJaTHbqgAy
+	 alCY2zsNacms4Rza3julcOqRjPSyvh4+F0Qq5EOUXMRGbEiOwL9ULRrre2ZItACidd
+	 irXat+sOq4jtXd9O3QhqwdJF94MmcDk+76JFmfTu4jYucwHmfqWaZNGM+7iFrHjvpk
+	 oRskpG3tC1KJhkBKHMtbGyvMDgsp8YRPLmt0iXXnhnNFO0/rQNdk4LIHMe/zvyn9X1
+	 EmHWPDvYbR1rSzin3m34X4sBLkbwr5MFcL4Yluhvl9Pk7itg290KtsRsfVn1fqjI2q
+	 qwvwllyCxwf6w==
+From: Sasha Levin <sashal@kernel.org>
+To: stable@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Hang Zhengyang <hang.zhengyang1010@gmail.com>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.5] sched_ext: Start ext_server from
- the tick
-Message-ID: <awmlUc3KmK8uSQoz@slm.duckdns.org>
-References: <20261125103420.2785659-1-tj@kernel.org>
- <20261125135723.GD2668804@noisy.programming.kicks-ass.net>
- <c3516afe34fa11bb42976188b7546233@kernel.org>
+	Changwoo Min <changwoo@igalia.com>
+Cc: Sasha Levin <sashal@kernel.org>,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Rahad Bhuiya <rahadbhuiya2021@gmail.com>,
+	Kang Chen <k.chen@smail.nju.edu.cn>,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	sched-ext@lists.linux.dev
+Subject: Re: [PATCH 7.3.y 0/2] sched_ext: Backport two fixes dropped from 7.3.7-rc1
+Date: Fri, 27 Nov 2026 12:00:50 -0500
+Message-ID: <2026-11-26-1-daily-reply-0002@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261126162700.22257-1-yphbchou0911@gmail.com>
+References: <20261126162700.22257-1-yphbchou0911@gmail.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -72,32 +69,13 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c3516afe34fa11bb42976188b7546233@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Nov 25, 2026 at 06:56:14AM -1000, Tejun Heo wrote:
-> Hello, Peter.
-> 
-> On Wed, Nov 25, 2026 at 02:57:23PM +0100, Peter Zijlstra wrote:
-> > Could you perhaps punt the responsibility to the DSQ? Each DSQ has both:
-> >
-> >  - a count of how many tasks it has
-> >  - a sense of what CPUs it targets
-> >
-> > Right? So can it make sure nr_tasks CPUs of its destination are running
-> > ext_server?
-> 
-> The problem is that runnable tasks may not be on any DSQ. The BPF scheduler
-> can hold tasks in its own data structures between ops.enqueue() and
-> ops.dispatch(), and the newer schedulers do. Also, only local DSQs have
-> target CPUs. Any CPU's ops.dispatch() can consume from a user DSQ. So, all
-> the kernel can tell is that something is runnable, and only ops.dispatch()
-> knows which CPU it is for.
+> These are 7.3 backports of two sched_ext fixes dropped from 7.3.7-rc2
+> because their rc1 versions failed to build [1][2].
 
-Any thoughts on this?
-
-Thanks.
+Queued the series for 7.3, thanks.
 
 -- 
-tejun
+Thanks,
+Sasha
