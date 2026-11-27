@@ -1,65 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795798898;
-	b=eEOLDWgRoQQvJorv/6iCg9yvTwB9HnryMTh5M7oX0v6VDZcp/k32TZWxxb2b9S8IyjJm
-	 F4kBkZtPf4bA+DkIAgV+FvA2jZz8PeURn36Ziw6GkBnfoLgjiplNTYKJec7HM4sG4vLS+
-	 OZ63Mj/xC+ZNw9i/qPu/xBSoywQRz54sQgBTT0oatvMi2mQKL1L0z1I4ndy/g2V1TLICJ
-	 1K51o5JuEPL2FV0nhr25jfHbitpCiLiqBANat8AFV7snLiBBuhHZzm+LMArry0ugnNMdT
-	 c3n+nlvXvR1FSDzl0LhPIbjHw+eB198G/PWK1Gbpou87ydqeeYiPe+kx/8v6EYQ6Q5Q==
+	t=1795798921;
+	b=uo7iQeUkHRSM7DI2nnEhY6rCuXfH8d7uHpXyS6shAP9tcKBhUPcVhrFqENqE4AUMKMpU
+	 6IgZ8gX29ntZYyH08BVIrVcb04ooGeHrfvb/52MMARdgWHIJdQ22SN2FBw8XG42/BN6TJ
+	 sEBZSRwuwJHlJs6iqs1tVu7Edxic2hG4elM5zUHTPSnni/liM1qRg3Pcp+z/wbn/j9Cs8
+	 6g2bo/whzvvm3ewcJo6v4I6OAAxgI3rL1g0+SwInGFyyfNHuN3/nYaXlce3dQawFm5lbn
+	 77QrVyOXTZxBIWCScMmmHzWjVWMSofiwP61Mh4zlGQSsUuUCtasQ+hi1LbAk5yrCrrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795798898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795798921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=fnICLWlEpr8hKNV++Wh8sUclv+RkfltPKWrdO8+U1kM=;
-	b=eYI19hVy8ZH1R6Vt0hqmtuc1rCcNLmzhtb/vKX6kamywAO2YdDkUe/TguRMqHt3EN/y5
-	 HqsnYUnl+Y0QjwqS41ktymewgjH4/7Crh1Sb53TemGRv7VNuQNUd+hreAlC0fbIbYnJ+r
-	 FTbXKdF52RG2hPCMQd4jpzhd/Y3TJSQIJ/rbx9uaY2nN/C1LrVnqbmdR5L9p+mdG18jCB
-	 kZNsJNq1wM6ySRzSF9rz0Z8pENU/fExQGSZtpua79LE16gXyUYTE08bflq5TPXDhe2Lcr
-	 o5SAYDUPA6/xuDTNAi22rJ1P5qON/WqN1v32dsjHYSPegxfQPqNDbT507Q2Iglzj6pA==
+	bh=MC0ZOrLDH4fTK8u/4XFXAJb6CALxPf5Qbceq2GSaxAM=;
+	b=gBrSrwp4eo1ID/0nGRJzEmJ/hL8nCvUcFf4dUPA6zTsRVMua49qz64XeAHGTWzj2nzHc
+	 ChqjcWSz0EIEDmfTuhV5Pwom5NbuckFKtnV+AZGs3C/DMjIJG53xsYXwGvQDIJskw+Gk/
+	 DUZts5tLurDO2DWyNIDlVMN8py+rBHuFNQuHUhL2TwDbS8AXR1hclDprg4e5SwanLp5P1
+	 iKlrMcesut+HOUu2k8vYb7vT2tq6CxpB7kv9L9XNO6VLyjmKnpjWJGLTscNhBzJVaPZH8
+	 hE0vrVpHJjzJquty3mXTQi6mCjD4PgMrBTyxcuE3AZ6oa9HwBJdwO3XfQ59W8vO8cLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TiFIYGHX;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZkstVbq1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B650606A31C;
-	Fri, 27 Nov 2026 17:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9570D606A31C;
+	Fri, 27 Nov 2026 17:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TiFIYGHX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC14D1F00898;
-	Fri, 27 Nov 2026 17:01:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZkstVbq1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E8E1F00897;
+	Fri, 27 Nov 2026 17:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795798897;
-	bh=fnICLWlEpr8hKNV++Wh8sUclv+RkfltPKWrdO8+U1kM=;
+	s=k20260515; t=1795798921;
+	bh=MC0ZOrLDH4fTK8u/4XFXAJb6CALxPf5Qbceq2GSaxAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TiFIYGHX4jnneuyPztjYqi0ETsOX0JMxwEDuxXhqMof/Quk8qGNsxasuJaTHbqgAy
-	 alCY2zsNacms4Rza3julcOqRjPSyvh4+F0Qq5EOUXMRGbEiOwL9ULRrre2ZItACidd
-	 irXat+sOq4jtXd9O3QhqwdJF94MmcDk+76JFmfTu4jYucwHmfqWaZNGM+7iFrHjvpk
-	 oRskpG3tC1KJhkBKHMtbGyvMDgsp8YRPLmt0iXXnhnNFO0/rQNdk4LIHMe/zvyn9X1
-	 EmHWPDvYbR1rSzin3m34X4sBLkbwr5MFcL4Yluhvl9Pk7itg290KtsRsfVn1fqjI2q
-	 qwvwllyCxwf6w==
+	b=ZkstVbq1dDX42iHvaob/roKuZQoYRKqnnSnBpPEByQBf8G77Fr6HFdiopnEN1Wpdm
+	 hVg1IGOArp/DlJQnkOoq6DBlH7cQMmS3lOCcQZHGNpgbpeEwEKysPxujO7ET8p/Wm1
+	 /821Ji7wy8lGW+ZprYo9otQhrBLmKvg+O9hv+DKCDzbdzdwgKP0A4w2pau9PZjcdp5
+	 yATzxPCqa8A4U6F6RYezv5Ps4zvyZ5EFkTp8d/L9ARfsvaBk8Pu/Xf5WH6/b/zDcJn
+	 CCRIelqYNfys/F9wm83CDXZRKM4/qqqb2M7j8erjgHq9uujIfv3KRLk1Wp2AblOxtS
+	 3SYR/LKlY0L/w==
 From: Sasha Levin <sashal@kernel.org>
-To: stable@vger.kernel.org,
+To: stable@vger.kernel.org
+Cc: Sasha Levin <sashal@kernel.org>,
+	Kuba Piecuch <jpiecuch@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Sasha Levin <sashal@kernel.org>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Rahad Bhuiya <rahadbhuiya2021@gmail.com>,
-	Kang Chen <k.chen@smail.nju.edu.cn>,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	sched-ext@lists.linux.dev
-Subject: Re: [PATCH 7.3.y 0/2] sched_ext: Backport two fixes dropped from 7.3.7-rc1
-Date: Fri, 27 Nov 2026 12:00:50 -0500
-Message-ID: <2026-11-26-1-daily-reply-0002@kernel.org>
+	Changwoo Min <changwoo@igalia.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6.18.y] sched_ext: Read exit_kind before flushing in scx_flush_disable_work()
+Date: Fri, 27 Nov 2026 12:01:04 -0500
+Message-ID: <2026-11-26-1-daily-reply-0016@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261126162700.22257-1-yphbchou0911@gmail.com>
-References: <20261126162700.22257-1-yphbchou0911@gmail.com>
+In-Reply-To: <20261125134541.3432982-1-jpiecuch@google.com>
+References: <20261125134541.3432982-1-jpiecuch@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -71,10 +68,13 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> These are 7.3 backports of two sched_ext fixes dropped from 7.3.7-rc2
-> because their rc1 versions failed to build [1][2].
+> scx_disable_workfn() sets exit_kind to SCX_EXIT_DONE before it tears the
+> scheduler down. scx_flush_disable_work() reads exit_kind after syncing
+> disable_irq_work and flushing disable_work, so it can observe DONE from
+> a disable_work that was queued after its flush and return while the
+> teardown is still running:
 
-Queued the series for 7.3, thanks.
+Queued for 6.18, thanks.
 
 -- 
 Thanks,
